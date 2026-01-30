@@ -1,48 +1,49 @@
 @import 'tailwindcss';
 
-/* Quidkey Website Theme - Clean, Modern, Stripe-inspired */
+/* Quidkey Website — Bold, Refined, Fintech Aesthetic */
 @theme {
-  /* Font families */
-  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  /* Typography — Distinctive font pairing */
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-sans: 'DM Sans', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
-  /* Radius */
-  --radius-sm: 0.375rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1rem;
-  --radius-2xl: 1.5rem;
+  /* Generous radius for modern feel */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
   --radius-full: 9999px;
 
-  /* Colors - Clean light theme with purple accent (similar to Stripe) */
-  --color-background: oklch(0.995 0 0);
-  --color-foreground: oklch(0.13 0.02 260);
+  /* Dark-forward color scheme with vibrant accents */
+  --color-background: oklch(0.98 0 0);
+  --color-foreground: oklch(0.12 0.02 260);
 
-  /* Primary - Deep purple/indigo like Stripe */
-  --color-primary: oklch(0.5 0.22 270);
+  /* Primary — Deep indigo/purple */
+  --color-primary: oklch(0.45 0.25 270);
   --color-primary-foreground: oklch(0.99 0 0);
-  --color-primary-hover: oklch(0.45 0.22 270);
+  --color-primary-hover: oklch(0.38 0.25 270);
 
   /* Secondary */
   --color-secondary: oklch(0.96 0.01 270);
-  --color-secondary-foreground: oklch(0.35 0.02 260);
+  --color-secondary-foreground: oklch(0.3 0.02 260);
 
   /* Muted */
-  --color-muted: oklch(0.97 0 0);
-  --color-muted-foreground: oklch(0.5 0.01 260);
+  --color-muted: oklch(0.95 0 0);
+  --color-muted-foreground: oklch(0.45 0.01 260);
 
-  /* Accent - Gradient colors */
-  --color-accent-1: oklch(0.7 0.18 40);  /* Orange */
-  --color-accent-2: oklch(0.6 0.22 320); /* Pink */
-  --color-accent-3: oklch(0.55 0.2 270); /* Purple */
+  /* Accent colors for gradient */
+  --color-accent-pink: oklch(0.65 0.25 340);
+  --color-accent-blue: oklch(0.6 0.2 250);
+  --color-accent-cyan: oklch(0.75 0.15 200);
 
   /* Border */
-  --color-border: oklch(0.92 0 0);
-  --color-border-hover: oklch(0.85 0 0);
+  --color-border: oklch(0.9 0 0);
+  --color-border-hover: oklch(0.82 0 0);
 
   /* Success/Warning */
-  --color-success: oklch(0.65 0.2 145);
-  --color-warning: oklch(0.75 0.15 85);
+  --color-success: oklch(0.6 0.2 145);
+  --color-warning: oklch(0.75 0.18 85);
 }
 
 /* Base styles */
@@ -52,16 +53,37 @@
   }
 
   html {
-    @apply scroll-smooth;
+    color-scheme: light;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply bg-background text-foreground font-sans;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Headings use display font */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+    text-wrap: balance;
   }
 
   /* Selection */
   ::selection {
-    @apply bg-primary/20;
+    background: oklch(0.45 0.25 270 / 0.2);
+  }
+
+  /* Focus visible */
+  :focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
+  }
+
+  /* Smooth scroll with offset for fixed header */
+  [id] {
+    scroll-margin-top: 5rem;
   }
 }
 
@@ -71,25 +93,29 @@
     text-wrap: balance;
   }
 
-  /* Gradient text like Stripe */
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* Quidkey gradient — vibrant multi-color */
   .gradient-text {
     background: linear-gradient(
       135deg,
-      oklch(0.5 0.22 270) 0%,
-      oklch(0.6 0.22 320) 50%,
-      oklch(0.7 0.18 40) 100%
+      oklch(0.65 0.25 340) 0%,
+      oklch(0.55 0.25 280) 50%,
+      oklch(0.6 0.2 250) 100%
     );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  /* Hero gradient background */
+  /* Hero gradient background — atmospheric */
   .hero-gradient {
     background: 
-      radial-gradient(ellipse 80% 50% at 50% -20%, oklch(0.9 0.1 270 / 0.3), transparent),
-      radial-gradient(ellipse 60% 40% at 80% 0%, oklch(0.85 0.15 40 / 0.2), transparent),
-      radial-gradient(ellipse 50% 30% at 20% 10%, oklch(0.9 0.12 320 / 0.15), transparent);
+      radial-gradient(ellipse 80% 60% at 50% -10%, oklch(0.9 0.12 280 / 0.4), transparent 60%),
+      radial-gradient(ellipse 50% 40% at 85% 20%, oklch(0.9 0.15 340 / 0.25), transparent 50%),
+      radial-gradient(ellipse 40% 30% at 15% 30%, oklch(0.9 0.12 250 / 0.2), transparent 40%);
   }
 
   /* Card hover effect */
@@ -98,52 +124,61 @@
   }
   
   .card-hover:hover {
-    @apply -translate-y-1 shadow-lg;
+    @apply -translate-y-1;
+    box-shadow: 
+      0 4px 12px oklch(0 0 0 / 0.08),
+      0 20px 40px oklch(0 0 0 / 0.08);
   }
 
-  /* Subtle shadow */
+  /* Soft elevated shadow */
   .shadow-soft {
     box-shadow:
-      0 1px 3px rgba(0, 0, 0, 0.04),
-      0 4px 12px rgba(0, 0, 0, 0.06);
+      0 1px 2px oklch(0 0 0 / 0.04),
+      0 4px 12px oklch(0 0 0 / 0.06),
+      0 16px 32px oklch(0 0 0 / 0.04);
   }
 
   /* Glass effect */
   .glass {
-    @apply backdrop-blur-md bg-white/80;
+    @apply backdrop-blur-xl;
+    background: oklch(1 0 0 / 0.85);
+  }
+
+  /* Noise texture overlay */
+  .noise::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
   }
 }
 
 /* Animations */
 @keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slide-in-right {
-  from {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; transform: translateX(24px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 oklch(0.45 0.25 270 / 0.4); }
+  50% { box-shadow: 0 0 20px 4px oklch(0.45 0.25 270 / 0.2); }
 }
 
 .animate-fade-in {
@@ -151,22 +186,34 @@
 }
 
 .animate-fade-up {
-  animation: fade-up 0.6s ease-out forwards;
+  animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-slide-in-right {
   animation: slide-in-right 0.6s ease-out forwards;
 }
 
-/* Stagger children animations */
-.stagger-children > * {
-  opacity: 0;
-  animation: fade-up 0.5s ease-out forwards;
+.animate-float {
+  animation: float 4s ease-in-out infinite;
 }
 
-.stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
-.stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
-.stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
-.stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
-.stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
-.stagger-children > *:nth-child(6) { animation-delay: 0.6s; }
+/* Staggered children - immediate visibility with animation enhancement */
+.stagger-children > * {
+  animation: fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.25s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.3s; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
