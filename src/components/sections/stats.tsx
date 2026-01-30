@@ -3,7 +3,7 @@ export function StatsSection() {
     { value: '1-3.5%', label: 'All-in fees (typical)' },
     { value: '3-6%', label: 'Card fees you can avoid' },
     { value: '10-20 hrs', label: 'Finance ops saved per month' },
-    { value: 'US + EU + UK + AU', label: 'One integration, global coverage' },
+    { value: 'Global coverage', label: 'One integration' },
   ]
 
   return (

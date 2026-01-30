@@ -5,7 +5,7 @@ export function ProductLayersSection() {
     {
       icon: Zap,
       title: 'Payment Intelligence',
-      subtitle: 'The Wedge',
+      subtitle: 'Checkout',
       description:
         'AI bank prediction + risk decisions that improve with every transaction. Win checkout conversion while cutting costs versus cards.',
       features: ['Predictive bank selection', 'Cross-business fraud intelligence', 'One integration: US + EU + UK + AU'],
@@ -14,7 +14,7 @@ export function ProductLayersSection() {
     {
       icon: GitBranch,
       title: 'Clearing & Routing',
-      subtitle: 'The Infrastructure',
+      subtitle: 'Clearing',
       description:
         'A global clearing layer that orchestrates regulated partners to collect, clear, and route funds into the right accounts automatically.',
       features: ['Automatic tax routing', 'Local + cross-border settlement', 'Fast refunds and reversals'],
@@ -23,7 +23,7 @@ export function ProductLayersSection() {
     {
       icon: Workflow,
       title: 'Programmable Treasury',
-      subtitle: 'The Moat',
+      subtitle: 'Treasury',
       description:
         'Plain English intent becomes deterministic execution. Automate tax holds, FX, splits, and payouts without building a finance ops team.',
       features: ['Plain-English workflows', 'CEL-compiled execution', 'Audit-ready ledgers'],

@@ -792,7 +792,7 @@ export function HowItWorksSection() {
             How It Works
           </h2>
           <p className="text-lg text-muted-foreground">
-            See an end-to-end pay by bank flow, plus one popular workflow: sales tax is calculated and routed into a dedicated tax account.
+            Quidkey handles payments end to end, from checkout to intelligent routing and programmable treasury.
           </p>
         </div>
 
@@ -801,7 +801,7 @@ export function HowItWorksSection() {
 
         {/* Caption */}
         <p className="text-center text-sm text-muted-foreground mt-8 max-w-lg mx-auto">
-          Payment flows from customer's bank through Quidkey. Tax is calculated by jurisdiction and automatically routed to your tax account.
+          Payment flows from customer's bank through Quidkey. Tax is calculated by jurisdiction and automatically routed to your tax account, with the net amount paid out to the business account.
         </p>
       </div>
     </section>

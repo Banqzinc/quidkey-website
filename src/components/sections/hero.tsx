@@ -34,7 +34,7 @@ export function HeroSection() {
 
   const benefits = [
     '1-3.5% all-in fees',
-    'AI bank prediction at checkout',
+    'Intelligent bank prediction',
     'Programmable treasury workflows',
   ]
 
@@ -63,8 +63,8 @@ export function HeroSection() {
 
             {/* Subheadline */}
             <p className="text-lg lg:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 mb-8 text-pretty">
-              Quidkey is an AI-native clearing house that unifies payment collection, intelligent routing, and programmable treasury into a single stack.
-              Available in the US, UK, EU, and Australia.
+              Quidkey unifies payment collection, intelligent routing, and programmable treasury into a single stack.
+              Global coverage with one integration.
             </p>
 
             {/* Benefits list */}
@@ -157,7 +157,7 @@ export function HeroSection() {
                     height={16}
                     className="w-4 h-4"
                   />
-                  <span className="text-[11px] font-medium text-foreground/70">Intelligent bank prediction</span>
+                  <span className="text-[11px] font-medium text-foreground/70">One-click pay by bank</span>
                 </div>
               </div>
             </div>
