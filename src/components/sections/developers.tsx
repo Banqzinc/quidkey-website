@@ -59,26 +59,71 @@ export function DevelopersSection() {
             </div>
 
             {/* Code content */}
-            <pre className="p-4 md:p-6 text-sm overflow-x-auto">
-              <code className="text-white/80 font-mono">
-{`const payment = await quidkey.payments.create({
-  amount: 9999,
-  currency: 'USD',
-  customer: {
-    email: 'customer@example.com'
-  },
-  workflow: {
-    // Plain English treasury rules
-    rules: [
-      'Hold US sales tax by jurisdiction',
-      'Split 80/20 with partner',
-      'Convert remainder to USD'
-    ]
-  }
-});
-
-// Redirect to hosted checkout
-redirect(payment.checkout_url);`}
+            <pre className="p-4 md:p-6 text-sm overflow-x-auto font-mono leading-relaxed">
+              <code>
+                <span className="text-purple-400">const</span>{' '}
+                <span className="text-blue-300">payment</span>{' '}
+                <span className="text-pink-400">=</span>{' '}
+                <span className="text-purple-400">await</span>{' '}
+                <span className="text-blue-300">quidkey</span>
+                <span className="text-white/60">.</span>
+                <span className="text-blue-300">payments</span>
+                <span className="text-white/60">.</span>
+                <span className="text-yellow-300">create</span>
+                <span className="text-white/60">{'({'}</span>
+                {'\n'}
+                {'  '}<span className="text-cyan-300">amount</span>
+                <span className="text-white/60">:</span>{' '}
+                <span className="text-orange-300">9999</span>
+                <span className="text-white/60">,</span>
+                {'\n'}
+                {'  '}<span className="text-cyan-300">currency</span>
+                <span className="text-white/60">:</span>{' '}
+                <span className="text-green-400">'USD'</span>
+                <span className="text-white/60">,</span>
+                {'\n'}
+                {'  '}<span className="text-cyan-300">customer</span>
+                <span className="text-white/60">:</span>{' '}
+                <span className="text-white/60">{'{'}</span>
+                {'\n'}
+                {'    '}<span className="text-cyan-300">email</span>
+                <span className="text-white/60">:</span>{' '}
+                <span className="text-green-400">'customer@example.com'</span>
+                {'\n'}
+                {'  '}<span className="text-white/60">{'},'}</span>
+                {'\n'}
+                {'  '}<span className="text-cyan-300">workflow</span>
+                <span className="text-white/60">:</span>{' '}
+                <span className="text-white/60">{'{'}</span>
+                {'\n'}
+                {'    '}<span className="text-white/40">{'// Plain English treasury rules'}</span>
+                {'\n'}
+                {'    '}<span className="text-cyan-300">rules</span>
+                <span className="text-white/60">:</span>{' '}
+                <span className="text-white/60">{'['}</span>
+                {'\n'}
+                {'      '}<span className="text-green-400">'Hold US sales tax by jurisdiction'</span>
+                <span className="text-white/60">,</span>
+                {'\n'}
+                {'      '}<span className="text-green-400">'Split 80/20 with partner'</span>
+                <span className="text-white/60">,</span>
+                {'\n'}
+                {'      '}<span className="text-green-400">'Convert remainder to USD'</span>
+                {'\n'}
+                {'    '}<span className="text-white/60">{']'}</span>
+                {'\n'}
+                {'  '}<span className="text-white/60">{'}'}</span>
+                {'\n'}
+                <span className="text-white/60">{'});'}</span>
+                {'\n\n'}
+                <span className="text-white/40">{'// Redirect to hosted checkout'}</span>
+                {'\n'}
+                <span className="text-yellow-300">redirect</span>
+                <span className="text-white/60">(</span>
+                <span className="text-blue-300">payment</span>
+                <span className="text-white/60">.</span>
+                <span className="text-cyan-300">checkout_url</span>
+                <span className="text-white/60">);</span>
               </code>
             </pre>
           </div>
