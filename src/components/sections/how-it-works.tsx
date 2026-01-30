@@ -12,8 +12,7 @@ type AnimationStep =
   | 'tax-step-3'          // Taxable product
   | 'tax-step-4'          // Calculating tax...
   | 'tax-calculated'      // Shows the calculation result
-  | 'travel-to-tax-account'
-  | 'travel-to-merchant'
+  | 'travel-to-outputs'   // Both cards travel together
   | 'complete'
 
 type NodeKey = 'customer' | 'collection' | 'tax' | 'taxAccount' | 'merchant'
@@ -329,9 +328,8 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
       { step: 'tax-step-3', delay: 4100 },          // Taxable product
       { step: 'tax-step-4', delay: 4900 },          // Calculating tax...
       { step: 'tax-calculated', delay: 5700 },      // Shows result
-      { step: 'travel-to-tax-account', delay: 6500 }, // Tax card travels
-      { step: 'travel-to-merchant', delay: 7000 },    // Net card travels
-      { step: 'complete', delay: 7800 },
+      { step: 'travel-to-outputs', delay: 6500 },   // Both cards travel together
+      { step: 'complete', delay: 7300 },
     ]
 
     const timeouts = steps.map(({ step: nextStep, delay }) =>
@@ -341,7 +339,7 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
     const loopTimeout = window.setTimeout(() => {
       setStep('idle')
       setCycle((prev) => prev + 1)
-    }, 9500)
+    }, 9000)
 
     return () => {
       timeouts.forEach((timeout) => window.clearTimeout(timeout))
@@ -356,24 +354,23 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
   // Derive active states
   const customerActive = ['customer-active', 'travel-to-collection'].includes(step)
   const collectionActive = ['collection-active', 'travel-to-tax'].includes(step)
-  const taxActive = isProcessing || ['travel-to-tax-account', 'travel-to-merchant'].includes(step)
-  const taxAccountActive = ['travel-to-tax-account', 'travel-to-merchant', 'complete'].includes(step)
-  const merchantActive = ['travel-to-merchant', 'complete'].includes(step)
+  const taxActive = isProcessing || step === 'travel-to-outputs'
+  const taxAccountActive = ['travel-to-outputs', 'complete'].includes(step)
+  const merchantActive = ['travel-to-outputs', 'complete'].includes(step)
 
   const showCollectionAmount = !['idle', 'customer-active', 'travel-to-collection'].includes(step)
-  const showTaxDetails = ['tax-calculated', 'travel-to-tax-account', 'travel-to-merchant', 'complete'].includes(step)
+  const showTaxDetails = ['tax-calculated', 'travel-to-outputs', 'complete'].includes(step)
   const showOutputAmounts = ['complete'].includes(step)
 
   // Card visibility states
   const showTravelingCard = ['customer-active', 'travel-to-collection', 'collection-active', 'travel-to-tax'].includes(step)
   const showProcessingCard = isProcessing
-  const showTaxCard = ['travel-to-tax-account', 'travel-to-merchant', 'complete'].includes(step)
-  const showNetCard = ['travel-to-merchant', 'complete'].includes(step)
+  const showSplitCards = ['travel-to-outputs', 'complete'].includes(step)
 
   // Connection line active states
   const connection1Active = step === 'travel-to-collection'
   const connection2Active = step === 'travel-to-tax'
-  const connection3Active = ['travel-to-tax-account', 'travel-to-merchant'].includes(step)
+  const connection3Active = step === 'travel-to-outputs'
 
   // Card position along main path (0-100%)
   const mainOffset = step === 'customer-active'
@@ -384,9 +381,8 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
     ? 50
     : 100  // At tax node
 
-  // Output card positions
-  const taxCardOffset = step === 'travel-to-tax-account' ? 50 : 100
-  const netCardOffset = step === 'travel-to-merchant' ? 50 : 100
+  // Output cards travel together
+  const outputOffset = step === 'travel-to-outputs' ? 50 : 100
 
   // Current processing step index (0-4)
   const processingStepIndex = processingSteps.indexOf(step)
@@ -596,48 +592,46 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
         </motion.div>
       )}
 
-      {/* Tax card - travels to Tax Account */}
-      {showTaxCard && (
-        <motion.div
-          className="payment-flow-card payment-flow-card--tax"
-          initial={{ opacity: 0 }}
-          animate={{
-            opacity: 1,
-            offsetDistance: `${taxCardOffset}%`,
-          }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          style={
-            {
-              offsetPath: `path('${layout.paths.tax}')`,
-              offsetRotate: '0deg',
-            } as React.CSSProperties
-          }
-        >
-          <div className="payment-flow-card__label">Tax</div>
-          <div className="payment-flow-card__amount">{formatMoney(taxAmount)}</div>
-        </motion.div>
-      )}
-      
-      {/* Net card - travels to Merchant Bank */}
-      {showNetCard && (
-        <motion.div
-          className="payment-flow-card payment-flow-card--net"
-          initial={{ opacity: 0 }}
-          animate={{
-            opacity: 1,
-            offsetDistance: `${netCardOffset}%`,
-          }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          style={
-            {
-              offsetPath: `path('${layout.paths.net}')`,
-              offsetRotate: '0deg',
-            } as React.CSSProperties
-          }
-        >
-          <div className="payment-flow-card__label">Net</div>
-          <div className="payment-flow-card__amount">{formatMoney(netAmount)}</div>
-        </motion.div>
+      {/* Both cards travel together to their destinations */}
+      {showSplitCards && (
+        <>
+          <motion.div
+            className="payment-flow-card payment-flow-card--tax"
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: 1,
+              offsetDistance: `${outputOffset}%`,
+            }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            style={
+              {
+                offsetPath: `path('${layout.paths.tax}')`,
+                offsetRotate: '0deg',
+              } as React.CSSProperties
+            }
+          >
+            <div className="payment-flow-card__label">Tax</div>
+            <div className="payment-flow-card__amount">{formatMoney(taxAmount)}</div>
+          </motion.div>
+          <motion.div
+            className="payment-flow-card payment-flow-card--net"
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: 1,
+              offsetDistance: `${outputOffset}%`,
+            }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            style={
+              {
+                offsetPath: `path('${layout.paths.net}')`,
+                offsetRotate: '0deg',
+              } as React.CSSProperties
+            }
+          >
+            <div className="payment-flow-card__label">Net</div>
+            <div className="payment-flow-card__amount">{formatMoney(netAmount)}</div>
+          </motion.div>
+        </>
       )}
     </div>
   )
