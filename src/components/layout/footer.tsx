@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router'
 
-const LOGO_URL = 'https://storage.googleapis.com/quidkey-resources-public/quidkey-logo-fav.png'
+const LOGO_URL = 'https://storage.googleapis.com/quidkey-resources-public/quidkey-logo-black.svg'
 
 export function Footer() {
   const footerLinks = {
@@ -65,15 +65,13 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-8 border-t border-background/20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2.5">
+          <Link to="/" className="flex items-center">
             <img 
               src={LOGO_URL} 
               alt="Quidkey" 
-              width={28} 
-              height={28} 
-              className="w-7 h-7"
+              height={24} 
+              className="h-6 w-auto invert"
             />
-            <span className="font-display font-semibold text-lg text-background">quidkey</span>
           </Link>
 
           {/* Social & Contact */}

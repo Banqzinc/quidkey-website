@@ -1,10 +1,10 @@
 import { Button } from '@/components/ui/button'
-import { ArrowRight, Check } from 'lucide-react'
+import { ArrowRight, Check, CreditCard } from 'lucide-react'
 import { useState, useEffect } from 'react'
 
 const LOGO_DEV_TOKEN = 'pk_DsNHFndhT3yo-85c5vdKKg'
 
-// Bank data with logo.dev URLs
+// Bank data - using domain-based lookup
 const banks = [
   { name: 'Chase', domain: 'chase.com' },
   { name: 'Bank of America', domain: 'bankofamerica.com' },
@@ -124,29 +124,34 @@ export function HeroSection() {
                     
                     {/* Other options */}
                     <div className="flex items-center gap-3 p-3 rounded-xl border border-border/50 opacity-50">
-                      <div className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center text-sm">💳</div>
+                      <div className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center">
+                        <CreditCard className="w-5 h-5 text-muted-foreground" />
+                      </div>
                       <span className="text-sm text-muted-foreground">Credit Card</span>
                     </div>
                     
                     <div className="flex items-center gap-3 p-3 rounded-xl border border-border/50 opacity-50">
-                      <div className="w-10 h-10 bg-foreground rounded-lg flex items-center justify-center">
-                        <span className="text-white text-sm"></span>
-                      </div>
+                      <img 
+                        src={`https://img.logo.dev/apple.com?token=${LOGO_DEV_TOKEN}`}
+                        alt="Apple Pay logo"
+                        width={40}
+                        height={40}
+                        className="w-10 h-10 object-contain"
+                      />
                       <span className="text-sm text-muted-foreground">Apple Pay</span>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Floating annotation */}
-              <div className="absolute -right-4 md:-right-8 top-1/4 bg-white rounded-xl shadow-soft border border-border/50 p-4 max-w-[200px] animate-fade-in" style={{ animationDelay: '1s' }}>
-                <div className="flex items-center gap-2 mb-2">
+              {/* Floating annotation - elegant indicator */}
+              <div 
+                className="absolute -right-2 md:-right-4 top-[38%] bg-white rounded-full shadow-md border border-border/40 px-3 py-1.5"
+              >
+                <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-success animate-pulse" />
-                  <span className="text-xs font-semibold text-foreground uppercase tracking-wide">AI Prediction</span>
+                  <span className="text-xs font-medium text-foreground/70">AI Predicted</span>
                 </div>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  Bank auto-selected for one-click checkout
-                </p>
               </div>
             </div>
           </div>

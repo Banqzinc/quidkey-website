@@ -20,7 +20,7 @@ import {
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
-const LOGO_URL = 'https://storage.googleapis.com/quidkey-resources-public/quidkey-logo-fav.png'
+const LOGO_URL = 'https://storage.googleapis.com/quidkey-resources-public/quidkey-logo-black.svg'
 
 interface MenuItem {
   label: string
@@ -88,15 +88,13 @@ export function MegaMenu() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2.5 group">
+          <Link to="/" className="flex items-center group">
             <img 
               src={LOGO_URL} 
               alt="Quidkey" 
-              width={32} 
-              height={32} 
-              className="w-8 h-8 transition-transform duration-300 group-hover:scale-105"
+              height={28} 
+              className="h-7 w-auto transition-transform duration-300 group-hover:scale-[1.02]"
             />
-            <span className="font-display font-semibold text-xl tracking-tight text-foreground">quidkey</span>
           </Link>
 
           {/* Desktop Navigation */}
