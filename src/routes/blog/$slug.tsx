@@ -2,21 +2,31 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { MegaMenu } from '@/components/layout/mega-menu'
 import { Footer } from '@/components/layout/footer'
 import { getBlogPost } from '@/lib/blog-posts'
-import { buildSeo } from '@/lib/seo'
+import { buildSeo, buildArticleSchema, SITE_URL } from '@/lib/seo'
 
 export const Route = createFileRoute('/blog/$slug')({
   head: ({ params }) => {
     const post = getBlogPost(params.slug)
-    const title = post ? `${post.title} | Quidkey` : 'Blog | Quidkey'
-    const description =
-      post?.description ??
-      'Insights on pay by bank, clearing infrastructure, and programmable treasury.'
+
+    if (!post) {
+      return buildSeo({
+        title: 'Blog | Quidkey',
+        description:
+          'Insights on pay by bank, clearing infrastructure, and programmable treasury.',
+        path: '/blog',
+      })
+    }
 
     return buildSeo({
-      title,
-      description,
-      path: post ? (`/blog/${params.slug}` as const) : '/blog',
+      title: post.seoTitle,
+      description: post.description,
+      path: `/blog/${params.slug}` as const,
       ogType: 'article',
+      article: {
+        datePublished: post.dateISO,
+        author: post.author,
+        headline: post.title,
+      },
     })
   },
   component: BlogPostPage,
@@ -26,9 +36,29 @@ function BlogPostPage() {
   const { slug } = Route.useParams()
   const post = getBlogPost(slug)
 
+  // Generate JSON-LD schema for the article
+  const articleSchema = post
+    ? buildArticleSchema({
+        title: post.title,
+        description: post.description,
+        datePublished: post.dateISO,
+        author: post.author,
+        url: `${SITE_URL}/blog/${post.slug}`,
+      })
+    : null
+
   return (
     <div className="min-h-screen">
       <MegaMenu />
+
+      {/* JSON-LD Structured Data */}
+      {articleSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+        />
+      )}
+
       <main className="pt-24 pb-16 md:pt-32 md:pb-24">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           {!post ? (
@@ -57,7 +87,11 @@ function BlogPostPage() {
                 <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight mt-4 mb-3">
                   {post.title}
                 </h1>
-                <p className="text-sm text-muted-foreground">{post.date}</p>
+                <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                  <time dateTime={post.dateISO}>{post.date}</time>
+                  <span>•</span>
+                  <span>By {post.author}</span>
+                </div>
                 <p className="text-lg text-muted-foreground mt-4">
                   {post.description}
                 </p>

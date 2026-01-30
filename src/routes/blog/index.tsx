@@ -9,8 +9,9 @@ export const Route = createFileRoute('/blog/')({
   component: BlogPage,
   head: () =>
     buildSeo({
-      title: 'Blog | Quidkey',
-      description: 'Insights on pay by bank, clearing infrastructure, and programmable treasury.',
+      title: 'Pay by Bank Blog: A2A Payments, Open Banking & Fintech | Quidkey',
+      description:
+        'Expert insights on pay by bank, A2A payments, open banking, and cross-border payment infrastructure. Learn how to reduce fees and improve conversion.',
       path: '/blog',
     }),
 })

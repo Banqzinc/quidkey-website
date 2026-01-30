@@ -4,9 +4,20 @@ export type BlogPostBlock =
 
 export type BlogPost = {
   slug: string
+  /** Display date (e.g., "December 12, 2025") */
   date: string
+  /** ISO 8601 date for structured data (e.g., "2025-12-12") */
+  dateISO: string
+  /** Full title for the page */
   title: string
+  /** SEO-optimized title (50-60 chars, keyword first) - used in <title> tag */
+  seoTitle: string
+  /** Meta description (150-160 chars) */
   description: string
+  /** Primary keyword for this article */
+  keyword: string
+  /** Author name */
+  author: string
   blocks: BlogPostBlock[]
   featured?: boolean
 }
@@ -15,9 +26,13 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'quidkey-achieves-soc-2-type-ii-compliance-strengthening-security-for-global-payments',
     date: 'December 12, 2025',
+    dateISO: '2025-12-12',
     title: 'Quidkey Achieves SOC 2 Type II Compliance, Strengthening Security for Global Payments',
+    seoTitle: 'SOC 2 Type II Compliance for Global Payments | Quidkey',
     description:
-      'Bnqz Inc. (Quidkey), a leading provider of API-driven global payments infrastructure, proudly announces the successful completion of its SOC 2 Type II audit.',
+      'Quidkey completes SOC 2 Type II audit by Sensiba LLP, validating enterprise-grade security for API-driven global payments infrastructure.',
+    keyword: 'SOC 2 Type II compliance',
+    author: 'Quidkey Team',
     featured: true,
     blocks: [
       {
@@ -74,9 +89,13 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'quidkey-a-global-clearing-house-for-modern-payments',
     date: 'December 8, 2025',
+    dateISO: '2025-12-08',
     title: 'Quidkey: A Global Clearing House for Modern Payments',
+    seoTitle: 'Global Clearing House for A2A Payments | Quidkey',
     description:
-      'Chief Operating Officer Bhavna Saraf gives us the lowdown on the genesis of Quidkey and how it is leveraging APIs & AI to transform open banking networks into merchant-ready solutions.',
+      'COO Bhavna Saraf explains how Quidkey uses APIs and AI to transform open banking into merchant-ready A2A payment solutions.',
+    keyword: 'global clearing house',
+    author: 'Bhavna Saraf',
     blocks: [
       {
         type: 'p',
@@ -178,9 +197,13 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'quidkey-announces-strategic-partnership-with-tryp-com-to-power-next-generation-pay-by-bank-travel-payments',
     date: 'October 29, 2025',
+    dateISO: '2025-10-29',
     title: 'Quidkey Announces Strategic Partnership with Tryp.com to Power Next-Generation "Pay by Bank" Travel Payments',
+    seoTitle: 'Quidkey Partners with Tryp.com for Pay by Bank Travel Payments',
     description:
-      'Quidkey partners with Tryp.com, one of Europe\'s fastest-growing OTAs, to integrate its Pay by Bank solution, delivering instant settlement, loyalty rewards, and a frictionless checkout.',
+      'Quidkey and Tryp.com partner to deliver instant settlement and 3x lower payment costs for travel bookings using Pay by Bank.',
+    keyword: 'pay by bank travel payments',
+    author: 'Quidkey Team',
     blocks: [
       {
         type: 'p',
@@ -230,9 +253,13 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'refunds-rewards-and-real-time-settlement-unlocking-merchant-payments',
     date: 'October 26, 2025',
+    dateISO: '2025-10-26',
     title: 'Refunds, Rewards, and Real-Time Settlement: Unlocking Merchant Payments',
+    seoTitle: 'Real-Time Settlement and Instant Refunds for Merchants | Quidkey',
     description:
-      'Quidkey empowers merchants with real-time settlements, seamless refunds, and loyalty rewards. Learn how Open Banking is transforming merchant payments.',
+      'Learn how Open Banking enables real-time settlement, seamless refunds, and loyalty rewards to improve merchant cash flow by 15-30%.',
+    keyword: 'real-time settlement',
+    author: 'Quidkey Team',
     blocks: [
       {
         type: 'p',
@@ -303,9 +330,13 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'quidkey-and-transfermate-drive-down-card-costs-for-merchants',
     date: 'October 14, 2025',
+    dateISO: '2025-10-14',
     title: 'Quidkey and TransferMate Drive Down Card Costs for Merchants',
+    seoTitle: 'Reduce Card Payment Costs with A2A Payments | Quidkey',
     description:
-      "Quidkey has chosen TransferMate, the world's leading provider of embedded B2B payments infrastructure, to power global A2A payments for e-commerce merchants.",
+      'Quidkey partners with TransferMate to offer merchants a faster, cheaper alternative to card payments using global A2A infrastructure.',
+    keyword: 'reduce card costs',
+    author: 'Quidkey Team',
     blocks: [
       {
         type: 'p',
@@ -362,9 +393,13 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'pay-by-bank-the-future-of-payments',
     date: 'October 8, 2025',
+    dateISO: '2025-10-08',
     title: 'Pay by Bank: The Future of Payments',
+    seoTitle: 'Pay by Bank Explained: Lower Fees, No Chargebacks | Quidkey',
     description:
-      'Skip the cards, go direct. Pay by Bank lets customers pay straight from their bank account with no intermediaries, fraud, or chargebacks.',
+      'Pay by Bank lets customers pay directly from their bank. Lower fees, instant settlement, no chargebacks. Learn how it works globally.',
+    keyword: 'pay by bank',
+    author: 'Quidkey Team',
     blocks: [
       { type: 'h2', text: 'What is Pay by Bank?' },
       {
@@ -465,9 +500,13 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'open-banking-payments-in-the-uk',
     date: 'September 10, 2025',
+    dateISO: '2025-09-10',
     title: 'Open Banking Payments in the UK',
+    seoTitle: 'Open Banking Payments UK: How to Accept Bank Payments | Quidkey',
     description:
-      'Ditch cards. Go bank-direct. Quidkey turns Open Banking into a high-converting, fraud-free payment experience — with instant payouts, lower fees, and seamless integration.',
+      'Accept Open Banking payments in the UK with instant settlement, no chargebacks, and lower fees. Complete guide for UK merchants.',
+    keyword: 'open banking payments UK',
+    author: 'Quidkey Team',
     blocks: [
       { type: 'h2', text: 'What is Open Banking in the UK?' },
       {
@@ -593,9 +632,13 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'a2a-payments-explained-why-traditional-payment-fees-hurt-merchants-profit-margins-and-how-to-fix-it',
     date: 'March 18, 2025',
+    dateISO: '2025-03-18',
     title: 'A2A Payments Explained: Why Traditional Payment Fees Hurt Merchants Profit Margins and How to Fix It',
+    seoTitle: 'A2A Payments: Cut Transaction Fees by 60% | Quidkey',
     description:
-      'Merchants are switching to A2A payments for 60% lower transaction fees, instant bank transfers, and zero chargebacks.',
+      'A2A payments offer 60% lower fees than cards, instant settlement, and zero chargebacks. Learn why UK merchants are switching.',
+    keyword: 'A2A payments',
+    author: 'Quidkey Team',
     blocks: [
       {
         type: 'p',
