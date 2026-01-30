@@ -9,9 +9,9 @@ const banks = [
   { name: 'Chase', domain: 'chase.com' },
   { name: 'Bank of America', domain: 'bankofamerica.com' },
   { name: 'Wells Fargo', domain: 'wellsfargo.com' },
-  { name: 'Barclays', domain: 'barclays.co.uk' },
-  { name: 'Santander', domain: 'santander.com' },
-  { name: 'HSBC', domain: 'hsbc.com' },
+  { name: 'Citi', domain: 'citi.com' },
+  { name: 'Capital One', domain: 'capitalone.com' },
+  { name: 'U.S. Bank', domain: 'usbank.com' },
 ]
 
 export function HeroSection() {
@@ -33,10 +33,9 @@ export function HeroSection() {
   const currentBank = banks[currentBankIndex]
 
   const benefits = [
-    'No Setup Fees',
-    'No Contracts',
-    'Predicted Bank at Checkout',
-    'Cross Border Enabled',
+    '1-3.5% all-in fees',
+    'AI bank prediction at checkout',
+    'Programmable treasury workflows',
   ]
 
   return (
@@ -52,20 +51,20 @@ export function HeroSection() {
             {/* Badge */}
             <div className="inline-flex items-center gap-2.5 rounded-full bg-foreground/5 border border-foreground/10 px-4 py-2 text-sm font-medium text-foreground mb-8">
               <span className="h-2 w-2 rounded-full bg-success animate-pulse" aria-hidden="true" />
-              AI-Native Clearing Infrastructure
+              AI-native global clearing house
             </div>
 
             {/* Main headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight mb-6 leading-[1.1]">
-              <span className="text-foreground">Pay by Bank.</span>
+              <span className="text-foreground">Pay by bank.</span>
               <br />
-              <span className="gradient-text">Faster. Cheaper. Safer.</span>
+              <span className="gradient-text">Built for global commerce.</span>
             </h1>
 
             {/* Subheadline */}
             <p className="text-lg lg:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 mb-8 text-pretty">
-              Pay 1–3.5% instead of 6–10%. Eliminate chargebacks and 10–20 hours of monthly treasury work. 
-              Stay seller-of-record with full control.
+              Quidkey is an AI-native clearing house that unifies payment collection, intelligent routing, and programmable treasury into a single stack.
+              Available in the US, UK, EU, and Australia.
             </p>
 
             {/* Benefits list */}
@@ -81,11 +80,11 @@ export function HeroSection() {
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Button size="lg" className="group shadow-lg shadow-primary/25 hover:shadow-primary/40">
-                Start Accepting Payments
+                Get a demo
                 <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
               </Button>
               <Button variant="outline" size="lg">
-                Contact Sales
+                Talk to sales
               </Button>
             </div>
           </div>

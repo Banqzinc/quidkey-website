@@ -1,21 +1,21 @@
 export function WorkflowsSection() {
   const workflows = [
     {
-      command: '"Hold sales tax by jurisdiction."',
-      description: 'Automatic tax calculation and segregation by product and region. Funds held in isolated currency accounts.',
+      command: '"Hold US sales tax by state, county, and city."',
+      description: 'Automatically calculate and segregate tax at the moment of payment. Route funds into dedicated tax sub-accounts for clean remittance.',
     },
     {
       command: '"Split 70/30 with supplier, hold 10% for returns."',
-      description: 'Instant multi-party splits with escrow for refunds. Currency conversion and settlement to multiple parties.',
+      description: 'Automated splits with a returns reserve and dispute holds. Reconcile once, no spreadsheets, no manual payouts.',
     },
     {
       command: '"Convert to USD weekly at best rate."',
-      description: 'Automated FX at optimal rates. Net funds settled directly into your operating account.',
+      description: 'Schedule FX and settlement into your operating account. Deterministic execution with full audit trails.',
     },
   ]
 
   return (
-    <section id="how-it-works" className="py-16 md:py-24 lg:py-32 bg-foreground text-background">
+    <section id="workflows" className="py-16 md:py-24 lg:py-32 bg-foreground text-background">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">

@@ -1,8 +1,8 @@
 @import 'tailwindcss';
 
-/* Quidkey Website — Bold, Refined, Fintech Aesthetic */
+/* Quidkey Website - Bold, Refined, Fintech Aesthetic */
 @theme {
-  /* Typography — Distinctive font pairing */
+  /* Typography - Distinctive font pairing */
   --font-display: 'Space Grotesk', system-ui, sans-serif;
   --font-sans: 'DM Sans', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
@@ -19,7 +19,7 @@
   --color-background: oklch(0.98 0 0);
   --color-foreground: oklch(0.12 0.02 260);
 
-  /* Primary — Deep indigo/purple */
+  /* Primary - Deep indigo/purple */
   --color-primary: oklch(0.45 0.25 270);
   --color-primary-foreground: oklch(0.99 0 0);
   --color-primary-hover: oklch(0.38 0.25 270);
@@ -97,7 +97,7 @@
     text-wrap: pretty;
   }
 
-  /* Quidkey gradient — vibrant multi-color */
+  /* Quidkey gradient - vibrant multi-color */
   .gradient-text {
     background: linear-gradient(
       135deg,
@@ -110,7 +110,7 @@
     background-clip: text;
   }
 
-  /* Hero gradient background — atmospheric */
+  /* Hero gradient background - atmospheric */
   .hero-gradient {
     background: 
       radial-gradient(ellipse 80% 60% at 50% -10%, oklch(0.9 0.12 280 / 0.4), transparent 60%),
@@ -535,13 +535,13 @@
   margin-bottom: 20px;
 }
 
-.checkout-merchant {
+.checkout-business {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.checkout-merchant-icon {
+.checkout-business-icon {
   width: 40px;
   height: 40px;
   background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
@@ -552,13 +552,13 @@
   font-size: 20px;
 }
 
-.checkout-merchant-name {
+.checkout-business-name {
   font-weight: 600;
   font-size: 15px;
   color: #0f172a;
 }
 
-.checkout-merchant-url {
+.checkout-business-url {
   font-size: 12px;
   color: #64748b;
 }

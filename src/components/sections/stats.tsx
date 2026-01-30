@@ -1,9 +1,9 @@
 export function StatsSection() {
   const stats = [
-    { value: '60%+', label: 'Lower fees vs cards' },
-    { value: '3,500+', label: 'Banks connected' },
-    { value: '500M+', label: 'Customers reachable' },
-    { value: '<1 min', label: 'Integration time' },
+    { value: '1-3.5%', label: 'All-in fees (typical)' },
+    { value: '3-6%', label: 'Card fees you can avoid' },
+    { value: '10-20 hrs', label: 'Finance ops saved per month' },
+    { value: 'US + EU + UK + AU', label: 'One integration, global coverage' },
   ]
 
   return (

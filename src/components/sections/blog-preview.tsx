@@ -1,28 +1,9 @@
 import { ArrowRight } from 'lucide-react'
 import { Link } from '@tanstack/react-router'
+import { blogPosts } from '@/lib/blog-posts'
 
 export function BlogPreviewSection() {
-  const posts = [
-    {
-      date: 'December 12, 2025',
-      title: 'Quidkey Achieves SOC 2 Type II Compliance',
-      description: 'Strengthening security for global payments with enterprise-grade compliance.',
-      href: '/blog/soc2-compliance',
-      featured: true,
-    },
-    {
-      date: 'December 8, 2025',
-      title: 'A Global Clearing House for Modern Payments',
-      description: 'How Quidkey is leveraging APIs & AI to transform payment infrastructure.',
-      href: '/blog/global-clearing-house',
-    },
-    {
-      date: 'October 29, 2025',
-      title: 'Strategic Partnership with Tryp.com',
-      description: 'Powering next-generation "Pay by Bank" travel payments.',
-      href: '/blog/tryp-partnership',
-    },
-  ]
+  const posts = blogPosts.slice(0, 3)
 
   return (
     <section className="py-16 md:py-24 lg:py-32 bg-secondary/30">
@@ -51,10 +32,8 @@ export function BlogPreviewSection() {
           {posts.map((post, index) => (
             <Link
               key={index}
-              to={post.href}
-              className={`group bg-white rounded-2xl border border-border overflow-hidden card-hover ${
-                post.featured ? 'md:col-span-1' : ''
-              }`}
+              to={`/blog/${post.slug}`}
+              className="group bg-white rounded-2xl border border-border overflow-hidden card-hover"
             >
               {/* Image placeholder */}
               <div className="aspect-[16/9] bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">

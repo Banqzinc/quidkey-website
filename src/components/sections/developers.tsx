@@ -5,7 +5,7 @@ export function DevelopersSection() {
     {
       icon: Code,
       title: 'Single API',
-      description: 'One integration for payments, treasury, and compliance across EU, UK, US, and AU.',
+      description: 'One integration for pay by bank, clearing, and programmable treasury, US-first with global coverage.',
     },
     {
       icon: Plug,
@@ -63,14 +63,14 @@ export function DevelopersSection() {
               <code className="text-white/80 font-mono">
 {`const payment = await quidkey.payments.create({
   amount: 9999,
-  currency: 'EUR',
+  currency: 'USD',
   customer: {
     email: 'customer@example.com'
   },
   workflow: {
     // Plain English treasury rules
     rules: [
-      'Hold VAT by jurisdiction',
+      'Hold US sales tax by jurisdiction',
       'Split 80/20 with partner',
       'Convert remainder to USD'
     ]
