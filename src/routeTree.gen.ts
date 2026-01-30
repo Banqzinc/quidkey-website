@@ -10,8 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WorkflowsRouteImport } from './routes/workflows'
-import { Route as BlogRouteImport } from './routes/blog'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as SolutionsTravelRouteImport } from './routes/solutions/travel'
 import { Route as SolutionsSaasRouteImport } from './routes/solutions/saas'
 import { Route as SolutionsProfessionalServicesRouteImport } from './routes/solutions/professional-services'
@@ -34,14 +34,14 @@ const WorkflowsRoute = WorkflowsRouteImport.update({
   path: '/workflows',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlogRoute = BlogRouteImport.update({
-  id: '/blog',
-  path: '/blog',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SolutionsTravelRoute = SolutionsTravelRouteImport.update({
@@ -121,14 +121,13 @@ const ProductsHostedCheckoutRoute = ProductsHostedCheckoutRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogSlugRoute = BlogSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => BlogRoute,
+  id: '/blog/$slug',
+  path: '/blog/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/blog': typeof BlogRouteWithChildren
   '/workflows': typeof WorkflowsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/products/hosted-checkout': typeof ProductsHostedCheckoutRoute
@@ -146,10 +145,10 @@ export interface FileRoutesByFullPath {
   '/solutions/professional-services': typeof SolutionsProfessionalServicesRoute
   '/solutions/saas': typeof SolutionsSaasRoute
   '/solutions/travel': typeof SolutionsTravelRoute
+  '/blog/': typeof BlogIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/blog': typeof BlogRouteWithChildren
   '/workflows': typeof WorkflowsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/products/hosted-checkout': typeof ProductsHostedCheckoutRoute
@@ -167,11 +166,11 @@ export interface FileRoutesByTo {
   '/solutions/professional-services': typeof SolutionsProfessionalServicesRoute
   '/solutions/saas': typeof SolutionsSaasRoute
   '/solutions/travel': typeof SolutionsTravelRoute
+  '/blog': typeof BlogIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/blog': typeof BlogRouteWithChildren
   '/workflows': typeof WorkflowsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/products/hosted-checkout': typeof ProductsHostedCheckoutRoute
@@ -189,12 +188,12 @@ export interface FileRoutesById {
   '/solutions/professional-services': typeof SolutionsProfessionalServicesRoute
   '/solutions/saas': typeof SolutionsSaasRoute
   '/solutions/travel': typeof SolutionsTravelRoute
+  '/blog/': typeof BlogIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/blog'
     | '/workflows'
     | '/blog/$slug'
     | '/products/hosted-checkout'
@@ -212,10 +211,10 @@ export interface FileRouteTypes {
     | '/solutions/professional-services'
     | '/solutions/saas'
     | '/solutions/travel'
+    | '/blog/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/blog'
     | '/workflows'
     | '/blog/$slug'
     | '/products/hosted-checkout'
@@ -233,10 +232,10 @@ export interface FileRouteTypes {
     | '/solutions/professional-services'
     | '/solutions/saas'
     | '/solutions/travel'
+    | '/blog'
   id:
     | '__root__'
     | '/'
-    | '/blog'
     | '/workflows'
     | '/blog/$slug'
     | '/products/hosted-checkout'
@@ -254,12 +253,13 @@ export interface FileRouteTypes {
     | '/solutions/professional-services'
     | '/solutions/saas'
     | '/solutions/travel'
+    | '/blog/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  BlogRoute: typeof BlogRouteWithChildren
   WorkflowsRoute: typeof WorkflowsRoute
+  BlogSlugRoute: typeof BlogSlugRoute
   ProductsHostedCheckoutRoute: typeof ProductsHostedCheckoutRoute
   ProductsIframeRoute: typeof ProductsIframeRoute
   ProductsLocalAccountsRoute: typeof ProductsLocalAccountsRoute
@@ -275,6 +275,7 @@ export interface RootRouteChildren {
   SolutionsProfessionalServicesRoute: typeof SolutionsProfessionalServicesRoute
   SolutionsSaasRoute: typeof SolutionsSaasRoute
   SolutionsTravelRoute: typeof SolutionsTravelRoute
+  BlogIndexRoute: typeof BlogIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -286,18 +287,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WorkflowsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog': {
-      id: '/blog'
-      path: '/blog'
-      fullPath: '/blog'
-      preLoaderRoute: typeof BlogRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/solutions/travel': {
@@ -407,28 +408,18 @@ declare module '@tanstack/react-router' {
     }
     '/blog/$slug': {
       id: '/blog/$slug'
-      path: '/$slug'
+      path: '/blog/$slug'
       fullPath: '/blog/$slug'
       preLoaderRoute: typeof BlogSlugRouteImport
-      parentRoute: typeof BlogRoute
+      parentRoute: typeof rootRouteImport
     }
   }
 }
 
-interface BlogRouteChildren {
-  BlogSlugRoute: typeof BlogSlugRoute
-}
-
-const BlogRouteChildren: BlogRouteChildren = {
-  BlogSlugRoute: BlogSlugRoute,
-}
-
-const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  BlogRoute: BlogRouteWithChildren,
   WorkflowsRoute: WorkflowsRoute,
+  BlogSlugRoute: BlogSlugRoute,
   ProductsHostedCheckoutRoute: ProductsHostedCheckoutRoute,
   ProductsIframeRoute: ProductsIframeRoute,
   ProductsLocalAccountsRoute: ProductsLocalAccountsRoute,
@@ -444,6 +435,7 @@ const rootRouteChildren: RootRouteChildren = {
   SolutionsProfessionalServicesRoute: SolutionsProfessionalServicesRoute,
   SolutionsSaasRoute: SolutionsSaasRoute,
   SolutionsTravelRoute: SolutionsTravelRoute,
+  BlogIndexRoute: BlogIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

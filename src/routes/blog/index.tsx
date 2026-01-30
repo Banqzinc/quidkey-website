@@ -5,7 +5,7 @@ import { Link } from '@tanstack/react-router'
 import { blogPosts } from '@/lib/blog-posts'
 import { buildSeo } from '@/lib/seo'
 
-export const Route = createFileRoute('/blog')({
+export const Route = createFileRoute('/blog/')({
   component: BlogPage,
   head: () =>
     buildSeo({
