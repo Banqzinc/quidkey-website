@@ -158,7 +158,7 @@ export function HeroSection() {
                     height={16}
                     className="w-4 h-4"
                   />
-                  <span className="text-[11px] font-medium text-foreground/70">Bank predicted</span>
+                  <span className="text-[11px] font-medium text-foreground/70">Intelligent bank prediction</span>
                 </div>
               </div>
             </div>
