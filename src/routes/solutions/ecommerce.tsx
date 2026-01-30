@@ -1,15 +1,17 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA } from '@/components/layout/page-layout'
 import { ShoppingCart, TrendingDown, Shield, Globe, Zap, BarChart3 } from 'lucide-react'
+import { buildSeo } from '@/lib/seo'
 
 export const Route = createFileRoute('/solutions/ecommerce')({
   component: EcommercePage,
-  head: () => ({
-    meta: [
-      { title: 'Pay by Bank for Ecommerce | Quidkey' },
-      { name: 'description', content: 'Reduce payment fees to 1-3.5% and eliminate chargebacks for your ecommerce business. Pay by bank checkout with intelligent bank prediction.' },
-    ],
-  }),
+  head: () =>
+    buildSeo({
+      title: 'Pay by Bank for Ecommerce | Quidkey',
+      description:
+        'Reduce payment fees to 1-3.5% and eliminate chargebacks for your ecommerce business. Pay by bank checkout with intelligent bank prediction.',
+      path: '/solutions/ecommerce',
+    }),
 })
 
 function EcommercePage() {

@@ -1,15 +1,17 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA } from '@/components/layout/page-layout'
 import { Store, GitBranch, Shield, Clock, Globe, Wallet } from 'lucide-react'
+import { buildSeo } from '@/lib/seo'
 
 export const Route = createFileRoute('/solutions/marketplaces')({
   component: MarketplacesPage,
-  head: () => ({
-    meta: [
-      { title: 'Pay by Bank for Marketplaces | Quidkey' },
-      { name: 'description', content: 'Programmable splits, escrow, and payouts for marketplaces. Accept payments, split to sellers, hold for disputes—all automated.' },
-    ],
-  }),
+  head: () =>
+    buildSeo({
+      title: 'Pay by Bank for Marketplaces | Quidkey',
+      description:
+        'Programmable splits, escrow, and payouts for marketplaces. Accept payments, split to sellers, and hold for disputes, all automated.',
+      path: '/solutions/marketplaces',
+    }),
 })
 
 function MarketplacesPage() {

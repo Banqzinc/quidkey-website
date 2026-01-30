@@ -12,9 +12,17 @@ import { UseCasesSection } from '@/components/sections/use-cases'
 import { DevelopersSection } from '@/components/sections/developers'
 import { BlogPreviewSection } from '@/components/sections/blog-preview'
 import { CTASection } from '@/components/sections/cta'
+import { buildSeo } from '@/lib/seo'
 
 export const Route = createFileRoute('/')({
   component: HomePage,
+  head: () =>
+    buildSeo({
+      title: 'Quidkey | AI-native clearing house for pay by bank',
+      description:
+        'Quidkey is an AI-native global clearing house for pay by bank. Unify payment collection, intelligent routing, and programmable treasury into a single stack. Pay 1-3.5% all-in.',
+      path: '/',
+    }),
 })
 
 function HomePage() {

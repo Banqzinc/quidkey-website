@@ -1,15 +1,17 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA } from '@/components/layout/page-layout'
 import { Landmark, Palette, Zap, Globe, Code, Shield } from 'lucide-react'
+import { buildSeo } from '@/lib/seo'
 
 export const Route = createFileRoute('/solutions/fintechs')({
   component: FintechsPage,
-  head: () => ({
-    meta: [
-      { title: 'White-Label Pay by Bank for Fintechs | Quidkey' },
-      { name: 'description', content: 'White-label pay by bank infrastructure for fintechs. Scale faster with our clearing house rails, your brand, your customer relationships.' },
-    ],
-  }),
+  head: () =>
+    buildSeo({
+      title: 'White-Label Pay by Bank for Fintechs | Quidkey',
+      description:
+        'White-label pay by bank infrastructure for fintechs. Scale faster with our clearing house rails, your brand, your customer relationships.',
+      path: '/solutions/fintechs',
+    }),
 })
 
 function FintechsPage() {
@@ -63,7 +65,7 @@ function FintechsPage() {
       stat: 'Zero',
       statLabel: 'regulatory burden',
       title: 'We handle compliance',
-      description: 'Regulated partners, AML, KYC—all managed. You stay focused on product.',
+      description: 'Regulated partners, AML, KYC, all managed. You stay focused on product.',
     },
   ]
 

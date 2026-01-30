@@ -2,6 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { MegaMenu } from '@/components/layout/mega-menu'
 import { Footer } from '@/components/layout/footer'
 import { getBlogPost } from '@/lib/blog-posts'
+import { buildSeo } from '@/lib/seo'
 
 export const Route = createFileRoute('/blog/$slug')({
   head: ({ params }) => {
@@ -11,15 +12,12 @@ export const Route = createFileRoute('/blog/$slug')({
       post?.description ??
       'Insights on pay by bank, clearing infrastructure, and programmable treasury.'
 
-    return {
-      meta: [
-        { title },
-        { name: 'description', content: description },
-        { property: 'og:title', content: title },
-        { property: 'og:description', content: description },
-        { property: 'og:type', content: 'article' },
-      ],
-    }
+    return buildSeo({
+      title,
+      description,
+      path: post ? (`/blog/${params.slug}` as const) : '/blog',
+      ogType: 'article',
+    })
   },
   component: BlogPostPage,
 })

@@ -1,15 +1,17 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA } from '@/components/layout/page-layout'
 import { ExternalLink, Palette, Zap, Shield, Clock, Settings } from 'lucide-react'
+import { buildSeo } from '@/lib/seo'
 
 export const Route = createFileRoute('/products/hosted-checkout')({
   component: HostedCheckoutPage,
-  head: () => ({
-    meta: [
-      { title: 'Hosted Pay by Bank Checkout | Quidkey' },
-      { name: 'description', content: 'Ready-to-use hosted checkout page for pay by bank. Go live in minutes with our fully managed, conversion-optimized checkout experience.' },
-    ],
-  }),
+  head: () =>
+    buildSeo({
+      title: 'Hosted Pay by Bank Checkout | Quidkey',
+      description:
+        'Ready-to-use hosted checkout page for pay by bank. Go live in minutes with our fully managed, conversion-optimized checkout experience.',
+      path: '/products/hosted-checkout',
+    }),
 })
 
 function HostedCheckoutPage() {

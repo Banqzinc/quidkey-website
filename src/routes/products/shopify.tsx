@@ -1,15 +1,17 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA } from '@/components/layout/page-layout'
 import { ShoppingCart, Zap, Shield, TrendingUp, Clock, CreditCard } from 'lucide-react'
+import { buildSeo } from '@/lib/seo'
 
 export const Route = createFileRoute('/products/shopify')({
   component: ShopifyPage,
-  head: () => ({
-    meta: [
-      { title: 'Shopify Pay by Bank App | Quidkey' },
-      { name: 'description', content: 'Shopify-approved pay by bank app. Reduce payment fees to 1-3.5% and eliminate chargebacks. One-click bank payments for your Shopify store.' },
-    ],
-  }),
+  head: () =>
+    buildSeo({
+      title: 'Shopify Pay by Bank App | Quidkey',
+      description:
+        'Shopify-approved pay by bank app. Reduce payment fees to 1-3.5% and eliminate chargebacks. One-click bank payments for your Shopify store.',
+      path: '/products/shopify',
+    }),
 })
 
 function ShopifyPage() {

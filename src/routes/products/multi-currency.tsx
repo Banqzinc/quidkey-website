@@ -1,15 +1,17 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA } from '@/components/layout/page-layout'
 import { Wallet, ArrowRightLeft, TrendingUp, Clock, Shield, BarChart3 } from 'lucide-react'
+import { buildSeo } from '@/lib/seo'
 
 export const Route = createFileRoute('/products/multi-currency')({
   component: MultiCurrencyPage,
-  head: () => ({
-    meta: [
-      { title: 'Multi-Currency Wallets & Balances | Quidkey' },
-      { name: 'description', content: 'Hold, convert, and manage multiple currencies in one place. Real-time balances, competitive FX rates, and automated currency operations.' },
-    ],
-  }),
+  head: () =>
+    buildSeo({
+      title: 'Multi-Currency Wallets & Balances | Quidkey',
+      description:
+        'Hold, convert, and manage multiple currencies in one place. Real-time balances, competitive FX rates, and automated currency operations.',
+      path: '/products/multi-currency',
+    }),
 })
 
 function MultiCurrencyPage() {

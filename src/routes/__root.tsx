@@ -2,8 +2,7 @@ import { HeadContent, Outlet, Scripts, createRootRoute } from '@tanstack/react-r
 
 import appCss from '../styles.css?url'
 
-const LOGO_URL = 'https://storage.googleapis.com/quidkey-resources-public/quidkey-logo-fav.png'
-const SITE_URL = 'https://quidkey.com'
+const ICON_URL = 'https://storage.googleapis.com/quidkey-resources-public/quidkey-logo-fav.png'
 
 export const Route = createRootRoute({
   head: () => ({
@@ -16,31 +15,6 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'Quidkey | AI-native clearing house for pay by bank',
-      },
-      {
-        name: 'description',
-        content:
-          'Quidkey is an AI-native global clearing house for pay by bank. Unify payment collection, intelligent routing, and programmable treasury into a single stack. Pay 1-3.5% all-in.',
-      },
-      { property: 'og:title', content: 'Quidkey | AI-native clearing house for pay by bank' },
-      {
-        property: 'og:description',
-        content:
-          'AI-native global clearing house for pay by bank. Unify payment collection, routing, and programmable treasury into a single stack. Pay 1-3.5% all-in.',
-      },
-      { property: 'og:type', content: 'website' },
-      { property: 'og:url', content: SITE_URL },
-      { property: 'og:image', content: LOGO_URL },
-      { name: 'twitter:card', content: 'summary_large_image' },
-      { name: 'twitter:title', content: 'Quidkey | AI-native clearing house for pay by bank' },
-      {
-        name: 'twitter:description',
-        content:
-          'AI-native global clearing house for pay by bank. Unify collection, routing, and programmable treasury into a single stack.',
-      },
-      { name: 'twitter:image', content: LOGO_URL },
-      {
         name: 'theme-color',
         content: '#0a0a0a',
       },
@@ -51,17 +25,13 @@ export const Route = createRootRoute({
         href: appCss,
       },
       {
-        rel: 'canonical',
-        href: SITE_URL,
-      },
-      {
         rel: 'icon',
         type: 'image/png',
-        href: LOGO_URL,
+        href: ICON_URL,
       },
       {
         rel: 'apple-touch-icon',
-        href: LOGO_URL,
+        href: ICON_URL,
       },
       {
         rel: 'preconnect',

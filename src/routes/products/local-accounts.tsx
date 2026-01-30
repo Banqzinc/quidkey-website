@@ -1,15 +1,17 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA } from '@/components/layout/page-layout'
 import { Building2, Globe, Shield, Banknote, ArrowRightLeft, FileCheck } from 'lucide-react'
+import { buildSeo } from '@/lib/seo'
 
 export const Route = createFileRoute('/products/local-accounts')({
   component: LocalAccountsPage,
-  head: () => ({
-    meta: [
-      { title: 'Local Collection Accounts | Quidkey' },
-      { name: 'description', content: 'Collect payments locally in GBP, EUR, USD, and AUD without a local entity. Reduce FX costs and improve customer experience with local bank accounts.' },
-    ],
-  }),
+  head: () =>
+    buildSeo({
+      title: 'Local Collection Accounts | Quidkey',
+      description:
+        'Collect payments locally in GBP, EUR, USD, and AUD without a local entity. Reduce FX costs and improve customer experience with local bank accounts.',
+      path: '/products/local-accounts',
+    }),
 })
 
 function LocalAccountsPage() {

@@ -1,15 +1,17 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA } from '@/components/layout/page-layout'
 import { Code, Zap, GitBranch, Bell, Shield, Settings } from 'lucide-react'
+import { buildSeo } from '@/lib/seo'
 
 export const Route = createFileRoute('/products/rules-engine')({
   component: RulesEnginePage,
-  head: () => ({
-    meta: [
-      { title: 'Event-Driven Rules Engine | Quidkey' },
-      { name: 'description', content: 'Define event-driven rules for money movement. Trigger actions on payments, refunds, settlements, and custom events.' },
-    ],
-  }),
+  head: () =>
+    buildSeo({
+      title: 'Event-Driven Rules Engine | Quidkey',
+      description:
+        'Define event-driven rules for money movement. Trigger actions on payments, refunds, settlements, and custom events.',
+      path: '/products/rules-engine',
+    }),
 })
 
 function RulesEnginePage() {

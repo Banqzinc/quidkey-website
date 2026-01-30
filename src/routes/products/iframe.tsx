@@ -1,15 +1,17 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA } from '@/components/layout/page-layout'
 import { Code, Palette, Zap, Shield, Globe, Smartphone } from 'lucide-react'
+import { buildSeo } from '@/lib/seo'
 
 export const Route = createFileRoute('/products/iframe')({
   component: IframePage,
-  head: () => ({
-    meta: [
-      { title: 'Embedded Pay by Bank iFrame | Quidkey' },
-      { name: 'description', content: 'Embed pay by bank directly into your checkout with our customizable iFrame. White-label, brand-matched bank payments for any platform.' },
-    ],
-  }),
+  head: () =>
+    buildSeo({
+      title: 'Embedded Pay by Bank iFrame | Quidkey',
+      description:
+        'Embed pay by bank directly into your checkout with our customizable iFrame. White-label, brand-matched bank payments for any platform.',
+      path: '/products/iframe',
+    }),
 })
 
 function IframePage() {

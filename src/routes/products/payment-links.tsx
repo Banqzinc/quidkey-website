@@ -1,15 +1,17 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA } from '@/components/layout/page-layout'
 import { Link as LinkIcon, Mail, Clock, Shield, Globe, BarChart3 } from 'lucide-react'
+import { buildSeo } from '@/lib/seo'
 
 export const Route = createFileRoute('/products/payment-links')({
   component: PaymentLinksPage,
-  head: () => ({
-    meta: [
-      { title: 'Pay by Bank Payment Links | Quidkey' },
-      { name: 'description', content: 'Create no-code pay by bank payment links in seconds. Share via email, SMS, or anywhere. Perfect for invoices, deposits, and one-time payments.' },
-    ],
-  }),
+  head: () =>
+    buildSeo({
+      title: 'Pay by Bank Payment Links | Quidkey',
+      description:
+        'Create no-code pay by bank payment links in seconds. Share via email, SMS, or anywhere. Perfect for invoices, deposits, and one-time payments.',
+      path: '/products/payment-links',
+    }),
 })
 
 function PaymentLinksPage() {

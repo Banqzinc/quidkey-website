@@ -3,15 +3,17 @@ import { MegaMenu } from '@/components/layout/mega-menu'
 import { Footer } from '@/components/layout/footer'
 import { Button } from '@/components/ui/button'
 import { ArrowRight, Check, MessageSquare, Cog, Shield, GitBranch, FileCheck, Zap, Calculator, ArrowRightLeft, Wallet, Users, RotateCcw } from 'lucide-react'
+import { buildSeo } from '@/lib/seo'
 
 export const Route = createFileRoute('/workflows')({
   component: WorkflowsPage,
-  head: () => ({
-    meta: [
-      { title: 'Programmable Treasury Workflows | Quidkey' },
-      { name: 'description', content: 'Define treasury workflows in plain English. Quidkey compiles them into deterministic, auditable execution. Tax holds, splits, FX, and payouts—automated.' },
-    ],
-  }),
+  head: () =>
+    buildSeo({
+      title: 'Treasury Workflows (Plain English) | Quidkey',
+      description:
+        'Define treasury workflows in plain English. Quidkey compiles them into deterministic, auditable execution. Tax holds, splits, FX, and payouts automated.',
+      path: '/workflows',
+    }),
 })
 
 function WorkflowsPage() {
@@ -56,7 +58,7 @@ function HeroSection() {
         </h1>
 
         <p className="text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 text-pretty">
-          Define how money moves after payment. Tax holds, revenue splits, FX conversion, and settlements—all automated with programmable workflows.
+          Define how money moves after payment. Tax holds, revenue splits, FX conversion, and settlements, all automated with programmable workflows.
         </p>
 
         <ul className="flex flex-wrap justify-center gap-x-5 gap-y-3 mb-10" role="list">

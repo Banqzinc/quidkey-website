@@ -1,15 +1,17 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA } from '@/components/layout/page-layout'
 import { Briefcase, Link as LinkIcon, FileText, Globe, Clock, Shield } from 'lucide-react'
+import { buildSeo } from '@/lib/seo'
 
 export const Route = createFileRoute('/solutions/professional-services')({
   component: ProfessionalServicesPage,
-  head: () => ({
-    meta: [
-      { title: 'Pay by Bank for Professional Services | Quidkey' },
-      { name: 'description', content: 'Accept high-value invoice payments at 1-3.5%. Payment links for consultants, agencies, and service businesses. No code required.' },
-    ],
-  }),
+  head: () =>
+    buildSeo({
+      title: 'Pay by Bank for Professional Services | Quidkey',
+      description:
+        'Accept high-value invoice payments at 1-3.5%. Payment links for consultants, agencies, and service businesses. No code required.',
+      path: '/solutions/professional-services',
+    }),
 })
 
 function ProfessionalServicesPage() {

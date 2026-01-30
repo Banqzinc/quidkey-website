@@ -1,15 +1,17 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA } from '@/components/layout/page-layout'
 import { RotateCcw, Zap, Shield, Globe, Clock, CheckCircle } from 'lucide-react'
+import { buildSeo } from '@/lib/seo'
 
 export const Route = createFileRoute('/products/refunds')({
   component: RefundsPage,
-  head: () => ({
-    meta: [
-      { title: 'Fast Bank-to-Bank Refunds | Quidkey' },
-      { name: 'description', content: 'Process refunds instantly back to customer bank accounts. No card network delays, no disputes. Fast, transparent, and cost-effective.' },
-    ],
-  }),
+  head: () =>
+    buildSeo({
+      title: 'Fast Bank-to-Bank Refunds | Quidkey',
+      description:
+        'Process refunds instantly back to customer bank accounts. No card network delays, no disputes. Fast, transparent, and cost-effective.',
+      path: '/products/refunds',
+    }),
 })
 
 function RefundsPage() {

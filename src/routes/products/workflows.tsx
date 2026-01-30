@@ -1,15 +1,17 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA } from '@/components/layout/page-layout'
 import { Workflow, MessageSquare, Cog, Shield, GitBranch, FileCheck } from 'lucide-react'
+import { buildSeo } from '@/lib/seo'
 
 export const Route = createFileRoute('/products/workflows')({
   component: WorkflowsPage,
-  head: () => ({
-    meta: [
-      { title: 'Programmable Treasury Workflows | Quidkey' },
-      { name: 'description', content: 'Define how money moves after payment in plain English. Automate tax holds, splits, FX, and payouts with programmable treasury workflows.' },
-    ],
-  }),
+  head: () =>
+    buildSeo({
+      title: 'Programmable Treasury Workflows (Tax, Splits, FX) | Quidkey',
+      description:
+        'Define how money moves after payment in plain English. Automate tax holds, splits, FX, and payouts with programmable treasury workflows.',
+      path: '/products/workflows',
+    }),
 })
 
 function WorkflowsPage() {
@@ -91,7 +93,7 @@ function WorkflowsPage() {
         badge="Programmable Treasury"
         title="Plain English becomes"
         titleGradient="deterministic execution."
-        description="Define how money moves after payment. Tax holds, splits, FX, and settlements—all automated with programmable workflows."
+        description="Define how money moves after payment. Tax holds, splits, FX, and settlements, all automated with programmable workflows."
         features={['Plain English input', 'CEL-compiled execution', 'Audit-ready logs']}
       />
 

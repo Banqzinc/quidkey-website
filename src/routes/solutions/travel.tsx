@@ -1,15 +1,17 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA } from '@/components/layout/page-layout'
 import { Plane, TrendingDown, Shield, Banknote, Globe, Clock } from 'lucide-react'
+import { buildSeo } from '@/lib/seo'
 
 export const Route = createFileRoute('/solutions/travel')({
   component: TravelPage,
-  head: () => ({
-    meta: [
-      { title: 'Pay by Bank for Travel & Hospitality | Quidkey' },
-      { name: 'description', content: 'Accept high-value travel bookings at 1-3.5% fees. Handle deposits, multi-currency payments, and supplier payouts with programmable treasury.' },
-    ],
-  }),
+  head: () =>
+    buildSeo({
+      title: 'Pay by Bank for Travel & Hospitality | Quidkey',
+      description:
+        'Accept high-value travel bookings at 1-3.5% fees. Handle deposits, multi-currency payments, and supplier payouts with programmable treasury.',
+      path: '/solutions/travel',
+    }),
 })
 
 function TravelPage() {

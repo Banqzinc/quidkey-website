@@ -1,15 +1,17 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA } from '@/components/layout/page-layout'
 import { Monitor, RefreshCw, TrendingDown, Globe, FileCheck, Shield } from 'lucide-react'
+import { buildSeo } from '@/lib/seo'
 
 export const Route = createFileRoute('/solutions/saas')({
   component: SaaSPage,
-  head: () => ({
-    meta: [
-      { title: 'Pay by Bank for SaaS & Subscriptions | Quidkey' },
-      { name: 'description', content: 'Accept recurring payments at 1-3.5% fees. Stay seller-of-record while automating tax, FX, and settlements across global markets.' },
-    ],
-  }),
+  head: () =>
+    buildSeo({
+      title: 'Pay by Bank for SaaS & Subscriptions | Quidkey',
+      description:
+        'Accept recurring payments at 1-3.5% fees. Stay seller-of-record while automating tax, FX, and settlements across global markets.',
+      path: '/solutions/saas',
+    }),
 })
 
 function SaaSPage() {
@@ -42,7 +44,7 @@ function SaaSPage() {
     {
       icon: Shield,
       title: 'No Chargebacks',
-      description: 'B2B SaaS has low chargeback risk anyway—but zero is still better.',
+      description: 'B2B SaaS has low chargeback risk anyway, but zero is still better.',
     },
   ]
 
