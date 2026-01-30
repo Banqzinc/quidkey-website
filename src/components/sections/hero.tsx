@@ -48,12 +48,6 @@ export function HeroSection() {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Left column - Content */}
           <div className="text-center lg:text-left">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2.5 rounded-full bg-foreground/5 border border-foreground/10 px-4 py-2 text-sm font-medium text-foreground mb-8">
-              <span className="h-2 w-2 rounded-full bg-success animate-pulse" aria-hidden="true" />
-              AI-native global clearing house
-            </div>
-
             {/* Main headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight mb-6 leading-[1.1]">
               <span className="text-foreground">Pay by bank.</span>
