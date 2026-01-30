@@ -209,6 +209,258 @@
 .stagger-children > *:nth-child(5) { animation-delay: 0.25s; }
 .stagger-children > *:nth-child(6) { animation-delay: 0.3s; }
 
+/* ========================================
+   Payment Flow Animation
+   ======================================== */
+
+/* Electricity flow effect for connection lines */
+@keyframes electricity-flow {
+  0% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -20; }
+}
+
+/* Node glow effects */
+@keyframes node-glow-indigo {
+  0%, 100% { 
+    box-shadow: 0 1px 3px oklch(0 0 0 / 0.04), 0 1px 2px oklch(0 0 0 / 0.06);
+  }
+  50% { 
+    box-shadow: 0 0 0 4px oklch(0.45 0.25 270 / 0.15), 
+                0 4px 16px oklch(0.45 0.25 270 / 0.2);
+  }
+}
+
+@keyframes node-glow-teal {
+  0%, 100% { 
+    box-shadow: 0 2px 8px oklch(0.55 0.15 175 / 0.15);
+  }
+  50% { 
+    box-shadow: 0 0 0 4px oklch(0.55 0.15 175 / 0.2), 
+                0 4px 16px oklch(0.55 0.15 175 / 0.25);
+  }
+}
+
+@keyframes node-glow-green {
+  0%, 100% { 
+    box-shadow: 0 1px 3px oklch(0 0 0 / 0.04), 0 1px 2px oklch(0 0 0 / 0.06);
+  }
+  50% { 
+    box-shadow: 0 0 0 4px oklch(0.6 0.2 145 / 0.15), 
+                0 4px 16px oklch(0.6 0.2 145 / 0.2);
+  }
+}
+
+@keyframes node-glow-red {
+  0%, 100% { 
+    box-shadow: 0 1px 3px oklch(0 0 0 / 0.04), 0 1px 2px oklch(0 0 0 / 0.06);
+  }
+  50% { 
+    box-shadow: 0 0 0 4px oklch(0.6 0.25 25 / 0.15), 
+                0 4px 16px oklch(0.6 0.25 25 / 0.2);
+  }
+}
+
+/* Payment card animations */
+@keyframes card-appear {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes card-fade-out {
+  0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+}
+
+/* Amount reveal animation */
+@keyframes amount-reveal {
+  0% { opacity: 0; transform: translateY(4px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Payment flow container */
+.payment-flow {
+  position: relative;
+  width: 100%;
+}
+
+.payment-flow-diagram {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, oklch(0.985 0.005 270 / 0.5) 0%, oklch(0.98 0 0) 100%);
+  border: 1px solid oklch(0.92 0.01 270);
+  overflow: visible;
+}
+
+@media (min-width: 768px) {
+  .payment-flow-diagram {
+    height: 320px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .payment-flow-diagram {
+    height: 300px;
+  }
+}
+
+/* Node base styles */
+.payment-flow-node {
+  background: #ffffff;
+  border: 1px solid oklch(0.92 0 0);
+  border-radius: 16px;
+  padding: 14px 18px;
+  box-shadow: 
+    0 1px 2px oklch(0 0 0 / 0.03),
+    0 4px 12px oklch(0 0 0 / 0.04);
+  transition: 
+    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.3s ease;
+  min-width: 140px;
+  max-width: 160px;
+}
+
+@media (min-width: 768px) {
+  .payment-flow-node {
+    min-width: 155px;
+    max-width: 175px;
+    padding: 12px 16px;
+  }
+}
+
+.payment-flow-node-position {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+}
+
+.payment-flow-node--indigo {
+  border-left: 3px solid #6366f1;
+}
+
+.payment-flow-node--teal {
+  background: linear-gradient(145deg, #f0fdfa 0%, #ccfbf1 100%);
+  border: 2px solid #14b8a6;
+  border-radius: 18px;
+  box-shadow: 
+    0 2px 8px oklch(0.55 0.15 175 / 0.12),
+    inset 0 1px 0 oklch(1 0 0 / 0.5);
+}
+
+.payment-flow-node--green {
+  border-left: 3px solid #22c55e;
+}
+
+.payment-flow-node--red {
+  border-left: 3px solid #ef4444;
+}
+
+/* Node active states */
+.payment-flow-node--active.payment-flow-node--indigo {
+  animation: node-glow-indigo 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: scale(1.02);
+}
+
+.payment-flow-node--active.payment-flow-node--teal {
+  animation: node-glow-teal 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: scale(1.02);
+}
+
+.payment-flow-node--active.payment-flow-node--green {
+  animation: node-glow-green 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: scale(1.02);
+}
+
+.payment-flow-node--active.payment-flow-node--red {
+  animation: node-glow-red 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: scale(1.02);
+}
+
+/* SVG connection lines */
+.payment-flow-edges {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.payment-flow-edge {
+  stroke: oklch(0.7 0.02 260);
+  stroke-width: 1.5;
+  stroke-dasharray: 8 6;
+  stroke-linecap: round;
+  fill: none;
+  opacity: 0.6;
+}
+
+.payment-flow-edge--active {
+  stroke: #6366f1;
+  stroke-width: 2;
+  opacity: 1;
+  animation: electricity-flow 0.5s linear infinite;
+}
+
+/* Traveling payment card */
+.payment-flow-card {
+  position: absolute;
+  background: #ffffff;
+  border: 1px solid oklch(0.92 0 0);
+  border-left: 4px solid #6366f1;
+  border-radius: 14px;
+  padding: 10px 16px;
+  box-shadow: 
+    0 4px 6px oklch(0 0 0 / 0.05),
+    0 10px 24px oklch(0 0 0 / 0.1),
+    0 0 0 1px oklch(0 0 0 / 0.02);
+  z-index: 5;
+  pointer-events: none;
+  white-space: nowrap;
+  backdrop-filter: blur(8px);
+}
+
+.payment-flow-card--tax {
+  border-left-color: #ef4444;
+}
+
+.payment-flow-card--net {
+  border-left-color: #22c55e;
+}
+
+.payment-flow-card__label {
+  font-size: 9px;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 3px;
+}
+
+.payment-flow-card__amount {
+  font-size: 16px;
+  font-weight: 800;
+  color: #0f172a;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+/* Amount display in nodes */
+.payment-flow-amount {
+  opacity: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+  font-variant-numeric: tabular-nums;
+  min-height: 1.25em;
+}
+
+.payment-flow-amount--visible {
+  animation: amount-reveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
