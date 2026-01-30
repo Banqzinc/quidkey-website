@@ -481,9 +481,15 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
                 <motion.button
                   className={`checkout-pay-button ${isButtonClicked ? 'checkout-pay-button--clicked' : ''}`}
                   animate={{ 
-                    scale: isButtonClicked ? 0.97 : 1,
+                    scale: isButtonClicked ? [1, 0.95, 1] : 1,
                   }}
-                  transition={{ duration: 0.1 }}
+                  transition={{ 
+                    scale: { 
+                      duration: 0.3, 
+                      times: [0, 0.3, 1],
+                      ease: 'easeOut'
+                    }
+                  }}
                 >
                   <img 
                     src={`https://img.logo.dev/chase.com?token=${LOGO_DEV_TOKEN}`}
@@ -499,13 +505,13 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
                   initial={{ opacity: 0 }}
                   animate={{ 
                     opacity: showCheckout ? 1 : 0,
-                    scale: isButtonClicked ? 0.8 : 1,
-                    y: isButtonClicked ? 2 : 0,
+                    scale: isButtonClicked ? [1, 0.75, 1] : 1,
+                    y: isButtonClicked ? [0, 3, 0] : 0,
                   }}
                   transition={{ 
                     opacity: { duration: 0.3, delay: 0.8 },
-                    scale: { duration: 0.12, ease: 'easeInOut' },
-                    y: { duration: 0.12, ease: 'easeInOut' },
+                    scale: { duration: 0.3, times: [0, 0.3, 1], ease: 'easeOut' },
+                    y: { duration: 0.3, times: [0, 0.3, 1], ease: 'easeOut' },
                   }}
                 >
                   {/* Pointer cursor icon */}
