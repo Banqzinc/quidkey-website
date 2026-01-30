@@ -506,18 +506,19 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
       {showProcessingCard && (
         <motion.div
           className="payment-flow-card payment-flow-card--processing"
-          initial={{ opacity: 0, scale: 0.9 }}
+          initial={{ opacity: 0, scale: 0.9, x: '-50%', y: '-50%' }}
           animate={{ 
             opacity: 1, 
             scale: 1,
+            x: '-50%',
+            y: '-50%',
           }}
           exit={{ opacity: 0, scale: 0.9 }}
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           style={{
             position: 'absolute',
             left: layout.nodes.tax.x,
-            top: layout.nodes.tax.y - 85,
-            transform: 'translateX(-50%)',
+            top: layout.nodes.tax.y,
             zIndex: 10,
           }}
         >
