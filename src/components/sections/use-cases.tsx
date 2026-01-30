@@ -7,21 +7,18 @@ export function UseCasesSection() {
       title: 'Cross-border commerce selling into the US',
       description:
         'Accept US pay by bank while staying seller-of-record. Cut fees, reduce chargebacks, and automate tax holds, splits, and settlements.',
-      audience: '$1-$100M revenue',
     },
     {
       icon: Repeat,
       title: 'Global SaaS subscriptions',
       description:
         'Avoid MoR take rates. Collect recurring payments via bank transfer and automate multi-jurisdiction tax, FX, and payouts.',
-      audience: '$50k-$1M MRR',
     },
     {
       icon: Building2,
       title: 'Platforms & Marketplaces',
       description:
         'Programmable escrow and multi-party payouts. Real-time splits with dispute holds. Reconciliation that your finance team can actually trust.',
-      audience: 'Coming soon',
     },
   ]
 
@@ -52,12 +49,9 @@ export function UseCasesSection() {
               </div>
 
               {/* Content */}
-              <h3 className="text-xl font-semibold text-foreground mb-2">
+              <h3 className="text-xl font-semibold text-foreground mb-3">
                 {useCase.title}
               </h3>
-              <p className="text-sm text-muted-foreground mb-4">
-                {useCase.audience}
-              </p>
               <p className="text-muted-foreground">
                 {useCase.description}
               </p>
