@@ -1,6 +1,8 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 
+const LOGO_DEV_TOKEN = 'pk_DsNHFndhT3yo-85c5vdKKg'
+
 type AnimationStep =
   | 'idle'
   | 'show-checkout'       // Show checkout UI
@@ -16,7 +18,8 @@ type AnimationStep =
   | 'tax-step-4'          // Calculating tax...
   | 'tax-calculated'      // Shows the calculation result
   | 'travel-to-outputs'   // Both cards travel together
-  | 'complete'
+  | 'arrived'             // Cards arrived, show amounts in boxes
+  | 'complete'            // Final state, pause before restart
 
 type NodeKey = 'customer' | 'collection' | 'tax' | 'taxAccount' | 'merchant'
 
@@ -240,11 +243,11 @@ function TaxCalculateNode({ isActive, showDetails }: { isActive: boolean; showDe
         <div className="text-center">
           <div className="text-[10px] font-bold text-teal-700 uppercase tracking-wider">Tax Workflow</div>
           <div 
-            className={`text-[11px] font-semibold text-teal-600 transition-all duration-300 ${
+            className={`text-[10px] font-medium text-teal-600 transition-all duration-300 ${
               showDetails ? 'opacity-100 mt-0.5' : 'opacity-0 h-0 overflow-hidden'
             }`}
           >
-            CA @ 8.25%
+            Dos Palos, CA: 8.25%
           </div>
         </div>
       </div>
@@ -335,7 +338,8 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
       { step: 'tax-step-4', delay: 8500 },          // Calculating tax...
       { step: 'tax-calculated', delay: 9300 },      // Shows result
       { step: 'travel-to-outputs', delay: 10100 },  // Both cards travel together
-      { step: 'complete', delay: 10900 },
+      { step: 'arrived', delay: 10900 },            // Cards arrived at destinations
+      { step: 'complete', delay: 11700 },           // Show final amounts in boxes
     ]
 
     const timeouts = steps.map(({ step: nextStep, delay }) =>
@@ -345,7 +349,7 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
     const loopTimeout = window.setTimeout(() => {
       setStep('idle')
       setCycle((prev) => prev + 1)
-    }, 12700)
+    }, 14000)
 
     return () => {
       timeouts.forEach((timeout) => window.clearTimeout(timeout))
@@ -370,17 +374,17 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
   const customerActive = ['customer-active', 'travel-to-collection'].includes(step)
   const collectionActive = ['collection-active', 'travel-to-tax'].includes(step)
   const taxActive = isProcessing || step === 'travel-to-outputs'
-  const taxAccountActive = ['travel-to-outputs', 'complete'].includes(step)
-  const merchantActive = ['travel-to-outputs', 'complete'].includes(step)
+  const taxAccountActive = ['travel-to-outputs', 'arrived', 'complete'].includes(step)
+  const merchantActive = ['travel-to-outputs', 'arrived', 'complete'].includes(step)
 
   const showCollectionAmount = !['idle', 'show-checkout', 'click-pay', 'payment-sent', 'customer-active', 'travel-to-collection'].includes(step)
-  const showTaxDetails = ['tax-calculated', 'travel-to-outputs', 'complete'].includes(step)
-  const showOutputAmounts = ['complete'].includes(step)
+  const showTaxDetails = ['tax-calculated', 'travel-to-outputs', 'arrived', 'complete'].includes(step)
+  const showOutputAmounts = ['arrived', 'complete'].includes(step)
 
   // Card visibility states
   const showTravelingCard = ['customer-active', 'travel-to-collection', 'collection-active', 'travel-to-tax'].includes(step)
   const showProcessingCard = isProcessing
-  const showSplitCards = ['travel-to-outputs', 'complete'].includes(step)
+  const showSplitCards = ['travel-to-outputs'].includes(step) // Hide once arrived
 
   // Connection line active states
   const connection1Active = step === 'travel-to-collection'
@@ -479,15 +483,12 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
                 }}
                 transition={{ duration: 0.15 }}
               >
-                <span className="checkout-pay-text">Pay with</span>
-                <div className="checkout-chase-brand">
-                  {/* Chase octagon logo */}
-                  <svg className="checkout-chase-icon" viewBox="0 0 32 32" fill="currentColor">
-                    <path d="M16 0l8 4v8l-8 4-8-4V4l8-4zm0 16l8 4v8l-8 4-8-4v-8l8-4z"/>
-                    <path d="M0 8l8 4v8l-8 4V8zm32 0v16l-8 4v-8l8-4V8z"/>
-                  </svg>
-                  <span className="checkout-chase-name">Chase</span>
-                </div>
+                <img 
+                  src={`https://img.logo.dev/chase.com?token=${LOGO_DEV_TOKEN}`}
+                  alt="Chase logo"
+                  className="checkout-bank-logo"
+                />
+                <span className="checkout-pay-text">Pay with Chase</span>
                 {isButtonClicked && (
                   <motion.div
                     className="checkout-pay-check"
@@ -679,7 +680,7 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.3 }}
               >
-                <span className="text-teal-600 font-semibold">CA @ 8.25% = {formatMoney(taxAmount)}</span>
+                <span className="text-teal-600 font-semibold">Dos Palos, CA: {formatMoney(taxAmount)}</span>
               </motion.div>
             )}
           </div>
