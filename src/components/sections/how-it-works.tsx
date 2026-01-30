@@ -337,9 +337,9 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
       { step: 'tax-step-3', delay: 7700 },          // Taxable product
       { step: 'tax-step-4', delay: 8500 },          // Calculating tax...
       { step: 'tax-calculated', delay: 9300 },      // Shows result
-      { step: 'travel-to-outputs', delay: 10100 },  // Both cards travel together
-      { step: 'arrived', delay: 10900 },            // Cards arrived at destinations
-      { step: 'complete', delay: 11700 },           // Show final amounts in boxes
+      { step: 'travel-to-outputs', delay: 10100 },  // Both cards start traveling
+      { step: 'arrived', delay: 11000 },            // Cards reached destinations, fade out
+      { step: 'complete', delay: 11800 },           // Show final amounts in boxes
     ]
 
     const timeouts = steps.map(({ step: nextStep, delay }) =>
@@ -349,7 +349,7 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
     const loopTimeout = window.setTimeout(() => {
       setStep('idle')
       setCycle((prev) => prev + 1)
-    }, 14000)
+    }, 14500)
 
     return () => {
       timeouts.forEach((timeout) => window.clearTimeout(timeout))
@@ -384,7 +384,8 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
   // Card visibility states
   const showTravelingCard = ['customer-active', 'travel-to-collection', 'collection-active', 'travel-to-tax'].includes(step)
   const showProcessingCard = isProcessing
-  const showSplitCards = ['travel-to-outputs'].includes(step) // Hide once arrived
+  const showSplitCards = ['travel-to-outputs', 'arrived'].includes(step) // Show until arrived, then fade
+  const cardsArrived = step === 'arrived' // Cards have reached destination, fade them out
 
   // Connection line active states
   const connection1Active = step === 'travel-to-collection'
@@ -400,8 +401,8 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
     ? 50
     : 100  // At tax node
 
-  // Output cards travel together
-  const outputOffset = step === 'travel-to-outputs' ? 50 : 100
+  // Output cards travel together - start at 0, travel to 100%
+  const outputOffset = step === 'travel-to-outputs' ? 100 : 100 // Travel all the way
 
   // Current processing step index (0-4)
   const processingStepIndex = processingSteps.indexOf(step)
@@ -476,32 +477,63 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
             </div>
             <div className="checkout-divider" />
             <div className="checkout-payment-method">
-              <motion.button
-                className={`checkout-pay-button ${isButtonClicked ? 'checkout-pay-button--clicked' : ''}`}
-                animate={{ 
-                  scale: isButtonClicked ? 0.97 : 1,
-                }}
-                transition={{ duration: 0.15 }}
-              >
-                <img 
-                  src={`https://img.logo.dev/chase.com?token=${LOGO_DEV_TOKEN}`}
-                  alt="Chase logo"
-                  className="checkout-bank-logo"
-                />
-                <span className="checkout-pay-text">Pay with Chase</span>
-                {isButtonClicked && (
-                  <motion.div
-                    className="checkout-pay-check"
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ type: 'spring', stiffness: 500, damping: 25 }}
+              <div className="checkout-button-wrapper">
+                <motion.button
+                  className={`checkout-pay-button ${isButtonClicked ? 'checkout-pay-button--clicked' : ''}`}
+                  animate={{ 
+                    scale: isButtonClicked ? 0.97 : 1,
+                  }}
+                  transition={{ duration: 0.1 }}
+                >
+                  <img 
+                    src={`https://img.logo.dev/chase.com?token=${LOGO_DEV_TOKEN}`}
+                    alt="Chase logo"
+                    className="checkout-bank-logo"
+                  />
+                  <span className="checkout-pay-text">Pay with Chase</span>
+                </motion.button>
+                
+                {/* Animated cursor */}
+                <motion.div
+                  className="checkout-cursor"
+                  initial={{ opacity: 0, x: 80, y: 50 }}
+                  animate={{ 
+                    opacity: showCheckout ? 1 : 0,
+                    x: isButtonClicked ? 20 : 80,
+                    y: isButtonClicked ? 8 : 50,
+                    scale: isButtonClicked ? 0.85 : 1,
+                  }}
+                  transition={{ 
+                    opacity: { duration: 0.4, delay: 0.6 },
+                    x: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] },
+                    y: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] },
+                    scale: { duration: 0.15, ease: 'easeInOut' }
+                  }}
+                >
+                  {/* Pointer cursor icon */}
+                  <svg 
+                    viewBox="0 0 24 24" 
+                    fill="none" 
+                    className="checkout-cursor-icon"
                   >
-                    <svg fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </motion.div>
-                )}
-              </motion.button>
+                    <path 
+                      d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87a.5.5 0 0 0 .35-.85L6.35 2.86a.5.5 0 0 0-.85.35Z" 
+                      fill="#1e293b"
+                      stroke="#fff"
+                      strokeWidth="1.5"
+                    />
+                  </svg>
+                  {/* Click ripple effect */}
+                  {isButtonClicked && (
+                    <motion.div
+                      className="checkout-cursor-ripple"
+                      initial={{ scale: 0, opacity: 0.7 }}
+                      animate={{ scale: 3, opacity: 0 }}
+                      transition={{ duration: 0.5, ease: 'easeOut' }}
+                    />
+                  )}
+                </motion.div>
+              </div>
             </div>
             {isPaymentSending && (
               <motion.div 
@@ -692,10 +724,11 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
         <>
           <motion.div
             className="payment-flow-card payment-flow-card--tax"
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 0, offsetDistance: '0%' }}
             animate={{
-              opacity: 1,
+              opacity: cardsArrived ? 0 : 1,
               offsetDistance: `${outputOffset}%`,
+              scale: cardsArrived ? 0.8 : 1,
             }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             style={
@@ -710,10 +743,11 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
           </motion.div>
           <motion.div
             className="payment-flow-card payment-flow-card--net"
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 0, offsetDistance: '0%' }}
             animate={{
-              opacity: 1,
+              opacity: cardsArrived ? 0 : 1,
               offsetDistance: `${outputOffset}%`,
+              scale: cardsArrived ? 0.8 : 1,
             }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             style={

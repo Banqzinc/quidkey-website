@@ -597,14 +597,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 14px 24px;
+  gap: 10px;
+  padding: 14px 48px;
   border: none;
   border-radius: 12px;
   background: linear-gradient(135deg, #117ACA 0%, #0a5a9c 100%);
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: 0 2px 8px rgba(17, 122, 202, 0.3);
+  width: 100%;
 }
 
 .checkout-pay-button:hover {
@@ -630,19 +631,32 @@
   color: white;
 }
 
-.checkout-pay-check {
-  width: 22px;
-  height: 22px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #4ade80;
-  margin-left: 6px;
+.checkout-button-wrapper {
+  position: relative;
 }
 
-.checkout-pay-check svg {
-  width: 20px;
-  height: 20px;
+.checkout-cursor {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.checkout-cursor-icon {
+  width: 24px;
+  height: 24px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
+}
+
+.checkout-cursor-ripple {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
 }
 
 .checkout-sending {
