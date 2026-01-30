@@ -1,6 +1,22 @@
 import { HeadContent, Outlet, Scripts, createRootRoute } from '@tanstack/react-router'
+import { useEffect } from 'react'
 
 import appCss from '../styles.css?url'
+
+// Replace with your Featurebase organization ID from your dashboard
+const FEATUREBASE_APP_ID = 'quidkey'
+
+// Featurebase SDK types
+type FeaturebaseFunction = {
+  (method: string, options: Record<string, unknown>): void
+  q?: unknown[][]
+}
+
+declare global {
+  interface Window {
+    Featurebase: FeaturebaseFunction
+  }
+}
 
 const ICON_URL = 'https://storage.googleapis.com/quidkey-resources-public/quidkey-logo-fav.png'
 
@@ -61,6 +77,32 @@ function RootComponent() {
 }
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  // Initialize Featurebase feedback widget
+  useEffect(() => {
+    // Load the Featurebase SDK
+    const scriptId = 'featurebase-sdk'
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement('script')
+      script.id = scriptId
+      script.src = 'https://do.featurebase.app/js/sdk.js'
+      document.head.appendChild(script)
+    }
+
+    // Define Featurebase function if not exists
+    if (typeof window.Featurebase !== 'function') {
+      window.Featurebase = function (...args: unknown[]) {
+        ;(window.Featurebase.q = window.Featurebase.q || []).push(args)
+      }
+    }
+
+    // Boot Featurebase
+    window.Featurebase('boot', {
+      appId: FEATUREBASE_APP_ID,
+      theme: 'dark',
+      language: 'en',
+    })
+  }, [])
+
   return (
     <html lang="en" className="scroll-smooth">
       <head>
