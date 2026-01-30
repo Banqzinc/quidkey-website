@@ -17,11 +17,15 @@ export const Route = createFileRoute('/blog/$slug')({
       })
     }
 
+    // Use absolute URL for OG image
+    const imageUrl = `${SITE_URL}${post.image}`
+
     return buildSeo({
       title: post.seoTitle,
       description: post.description,
       path: `/blog/${params.slug}` as const,
       ogType: 'article',
+      imageUrl,
       article: {
         datePublished: post.dateISO,
         author: post.author,
@@ -44,6 +48,7 @@ function BlogPostPage() {
         datePublished: post.dateISO,
         author: post.author,
         url: `${SITE_URL}/blog/${post.slug}`,
+        imageUrl: `${SITE_URL}${post.image}`,
       })
     : null
 
@@ -97,8 +102,14 @@ function BlogPostPage() {
                 </p>
               </div>
 
-              {/* Divider */}
-              <div className="border-t border-border mb-8" />
+              {/* Featured Image */}
+              <div className="aspect-[16/9] rounded-2xl overflow-hidden mb-10">
+                <img
+                  src={post.image}
+                  alt={post.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
 
               {/* Content */}
               <div className="space-y-5">

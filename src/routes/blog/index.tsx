@@ -42,8 +42,12 @@ function BlogPage() {
             className="group block mb-12 md:mb-16"
           >
             <div className="grid md:grid-cols-2 gap-8 items-center bg-secondary/30 rounded-2xl p-6 md:p-8 card-hover">
-              <div className="aspect-[16/9] bg-gradient-to-br from-primary/20 to-primary/5 rounded-xl flex items-center justify-center">
-                <div className="text-6xl opacity-50">📰</div>
+              <div className="aspect-[16/9] rounded-xl overflow-hidden">
+                <img
+                  src={featuredPost.image}
+                  alt={featuredPost.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
               </div>
               <div>
                 <div className="inline-block text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded mb-3">
@@ -69,8 +73,12 @@ function BlogPage() {
                 params={{ slug: post.slug }}
                 className="group bg-white rounded-2xl border border-border overflow-hidden card-hover"
               >
-                <div className="aspect-[16/9] bg-gradient-to-br from-secondary to-secondary/50 flex items-center justify-center">
-                  <div className="text-4xl opacity-30">📄</div>
+                <div className="aspect-[16/9] overflow-hidden">
+                  <img
+                    src={post.image}
+                    alt={post.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
                 </div>
                 <div className="p-6">
                   <div className="text-sm text-muted-foreground mb-2">{post.date}</div>
