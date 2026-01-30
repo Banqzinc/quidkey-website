@@ -3,8 +3,8 @@ import { useEffect } from 'react'
 
 import appCss from '../styles.css?url'
 
-// Replace with your Featurebase organization ID from your dashboard
-const FEATUREBASE_APP_ID = 'quidkey'
+// Featurebase Feedback Widget uses your workspace subdomain/slug (e.g. https://quidkey.featurebase.app)
+const FEATUREBASE_ORG_SLUG = 'quidkey'
 
 // Featurebase SDK types
 type FeaturebaseFunction = {
@@ -79,28 +79,30 @@ function RootComponent() {
 function RootDocument({ children }: { children: React.ReactNode }) {
   // Initialize Featurebase feedback widget
   useEffect(() => {
-    // Load the Featurebase SDK
-    const scriptId = 'featurebase-sdk'
-    if (!document.getElementById(scriptId)) {
-      const script = document.createElement('script')
-      script.id = scriptId
-      script.src = 'https://do.featurebase.app/js/sdk.js'
-      document.head.appendChild(script)
-    }
-
-    // Define Featurebase function if not exists
+    // Define Featurebase queue function before loading script
     if (typeof window.Featurebase !== 'function') {
       window.Featurebase = function (...args: unknown[]) {
         ;(window.Featurebase.q = window.Featurebase.q || []).push(args)
       }
     }
 
-    // Boot Featurebase
-    window.Featurebase('boot', {
-      appId: FEATUREBASE_APP_ID,
+    // Initialize the feedback widget with floating button
+    window.Featurebase('initialize_feedback_widget', {
+      organization: FEATUREBASE_ORG_SLUG,
       theme: 'dark',
-      language: 'en',
+      placement: 'right', // Shows floating "Feedback" button on right side
     })
+
+    // Load the Featurebase SDK
+    const scriptId = 'featurebase-sdk'
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement('script')
+      script.id = scriptId
+      script.src = 'https://do.featurebase.app/js/sdk.js'
+      script.async = true
+      const firstScript = document.getElementsByTagName('script')[0]
+      firstScript?.parentNode?.insertBefore(script, firstScript)
+    }
   }, [])
 
   return (
@@ -108,7 +110,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body className="antialiased">
+      {/* suppressHydrationWarning: TanStack Start's <Scripts /> can cause minor SSR/client differences */}
+      <body className="antialiased" suppressHydrationWarning>
         {children}
         <Scripts />
       </body>
