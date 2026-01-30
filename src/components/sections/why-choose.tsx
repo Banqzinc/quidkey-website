@@ -4,23 +4,23 @@ export function WhyChooseSection() {
   const reasons = [
     {
       icon: TrendingUp,
-      title: 'Increased Conversion',
-      description: 'Streamlined checkout process, reduced payment failures, higher customer satisfaction.',
+      title: 'Higher margin, better unit economics',
+      description: 'Replace 3-6% card fees and 6-10% MoR take rates with 1-3.5% all-in pay by bank.',
     },
     {
       icon: Globe,
-      title: 'Cross-Border Transactions',
-      description: 'Increase revenue and reach new customers, markets, and opportunities.',
+      title: 'Sell into the US without giving up control',
+      description: 'Stay seller-of-record while collecting and settling cross-border, built for global businesses expanding into the US.',
     },
     {
       icon: Zap,
-      title: 'Instant Payouts',
-      description: 'Instant access to revenue, enhanced cash flow, greater financial flexibility.',
+      title: 'Treasury workflows, automated',
+      description: 'Hold tax, split revenue, run FX, and schedule payouts automatically, defined in plain English and executed deterministically.',
     },
     {
       icon: Shield,
-      title: 'Bank Security & Fraud Protection',
-      description: 'Bank-owned security with top-tier encryption minimizes fraud-related chargebacks and disputes.',
+      title: 'AI risk + deterministic execution',
+      description: 'Network-trained fraud intelligence improves outcomes across the platform. Workflows compile to CEL for audit-ready correctness.',
     },
   ]
 
@@ -30,7 +30,7 @@ export function WhyChooseSection() {
         {/* Section header */}
         <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight mb-4">
-            Why Merchants Choose Quidkey
+            Why Businesses Choose Quidkey
           </h2>
           <p className="text-lg text-muted-foreground">
             Infrastructure, not a fintech app. A category leader, not a feature.

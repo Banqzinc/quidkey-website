@@ -9,9 +9,9 @@ const banks = [
   { name: 'Chase', domain: 'chase.com' },
   { name: 'Bank of America', domain: 'bankofamerica.com' },
   { name: 'Wells Fargo', domain: 'wellsfargo.com' },
-  { name: 'Barclays', domain: 'barclays.co.uk' },
-  { name: 'Santander', domain: 'santander.com' },
-  { name: 'HSBC', domain: 'hsbc.com' },
+  { name: 'Citi', domain: 'citi.com' },
+  { name: 'Capital One', domain: 'capitalone.com' },
+  { name: 'U.S. Bank', domain: 'usbank.com' },
 ]
 
 export function HeroSection() {
@@ -33,10 +33,9 @@ export function HeroSection() {
   const currentBank = banks[currentBankIndex]
 
   const benefits = [
-    'No Setup Fees',
-    'No Contracts',
-    'Predicted Bank at Checkout',
-    'Cross Border Enabled',
+    '1-3.5% all-in fees',
+    'Intelligent bank prediction',
+    'Programmable treasury workflows',
   ]
 
   return (
@@ -52,20 +51,20 @@ export function HeroSection() {
             {/* Badge */}
             <div className="inline-flex items-center gap-2.5 rounded-full bg-foreground/5 border border-foreground/10 px-4 py-2 text-sm font-medium text-foreground mb-8">
               <span className="h-2 w-2 rounded-full bg-success animate-pulse" aria-hidden="true" />
-              AI-Native Clearing Infrastructure
+              AI-native global clearing house
             </div>
 
             {/* Main headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight mb-6 leading-[1.1]">
-              <span className="text-foreground">Pay by Bank.</span>
+              <span className="text-foreground">Pay by bank.</span>
               <br />
-              <span className="gradient-text">Faster. Cheaper. Safer.</span>
+              <span className="gradient-text">Built for global commerce.</span>
             </h1>
 
             {/* Subheadline */}
             <p className="text-lg lg:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 mb-8 text-pretty">
-              Pay 1–3.5% instead of 6–10%. Eliminate chargebacks and 10–20 hours of monthly treasury work. 
-              Stay seller-of-record with full control.
+              Quidkey unifies payment collection, intelligent routing, and programmable treasury into a single stack.
+              Global coverage with one integration.
             </p>
 
             {/* Benefits list */}
@@ -81,11 +80,11 @@ export function HeroSection() {
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Button size="lg" className="group shadow-lg shadow-primary/25 hover:shadow-primary/40">
-                Start Accepting Payments
+                Get a demo
                 <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
               </Button>
               <Button variant="outline" size="lg">
-                Contact Sales
+                Talk to sales
               </Button>
             </div>
           </div>
@@ -94,73 +93,86 @@ export function HeroSection() {
           <div className="relative flex justify-center lg:justify-end" aria-hidden="true">
             <div className="relative animate-float" style={{ animationDelay: '0.5s' }}>
               {/* Phone mockup */}
-              <div className="w-64 md:w-72 bg-foreground rounded-[2.5rem] p-2 shadow-2xl shadow-foreground/20">
-                <div className="bg-white rounded-[2rem] overflow-hidden">
-                  {/* Product card */}
-                  <div className="p-4 border-b border-border">
-                    <div className="text-xs text-muted-foreground mb-1 font-mono">$149</div>
-                    <div className="w-full h-32 bg-gradient-to-br from-secondary to-secondary/50 rounded-xl flex items-center justify-center">
-                      <span className="text-5xl">👟</span>
+              <div className="relative w-64 md:w-72">
+                {/* Side buttons */}
+                <div className="pointer-events-none absolute left-0 top-24 -translate-x-[10px] h-14 w-1.5 rounded-full bg-foreground/50 shadow-sm" />
+                <div className="pointer-events-none absolute left-0 top-44 -translate-x-[10px] h-10 w-1.5 rounded-full bg-foreground/45 shadow-sm" />
+                <div className="pointer-events-none absolute right-0 top-36 translate-x-[10px] h-16 w-1.5 rounded-full bg-foreground/55 shadow-sm" />
+
+                <div className="relative rounded-[3rem] bg-gradient-to-b from-foreground to-foreground/80 p-[10px] shadow-2xl shadow-foreground/20 ring-1 ring-foreground/10">
+                  <div className="relative rounded-[2.45rem] bg-white overflow-hidden">
+                    {/* Screen reflection */}
+                    <div className="pointer-events-none absolute inset-0">
+                      <div className="absolute -left-16 -top-20 h-56 w-56 rotate-12 rounded-full bg-white/50 blur-2xl opacity-35" />
+                      <div className="absolute -right-24 -bottom-28 h-72 w-72 rounded-full bg-primary/10 blur-3xl opacity-60" />
                     </div>
-                  </div>
-                  
-                  {/* Payment options */}
-                  <div className="p-4 space-y-3">
-                    {/* Bank prediction - highlighted with switching animation */}
-                    <div className="flex items-center gap-3 p-3.5 bg-primary/5 rounded-xl border-2 border-primary">
-                      <img 
-                        src={`https://img.logo.dev/${currentBank.domain}?token=${LOGO_DEV_TOKEN}`}
-                        alt={`${currentBank.name} logo`}
-                        width={40}
-                        height={40}
-                        className={`w-10 h-10 rounded-full object-contain transition-all duration-300 ${isTransitioning ? 'opacity-0 scale-90' : 'opacity-100 scale-100'}`}
-                      />
-                      <span 
-                        className={`text-sm font-semibold text-foreground transition-all duration-300 ${isTransitioning ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}
-                      >
-                        Pay with {currentBank.name}
-                      </span>
-                    </div>
-                    
-                    {/* Other options */}
-                    <div className="flex items-center gap-3 p-3 rounded-xl border border-border/50 opacity-50">
-                      <div className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center">
-                        <CreditCard className="w-5 h-5 text-muted-foreground" />
+
+                    {/* Notch */}
+                    <div className="pointer-events-none absolute left-1/2 top-2 -translate-x-1/2 h-7 w-28 rounded-full bg-foreground/95 shadow-sm">
+                      <div className="flex h-full items-center justify-center gap-2">
+                        <div className="h-1.5 w-12 rounded-full bg-white/20" />
+                        <div className="h-2 w-2 rounded-full bg-white/15" />
                       </div>
-                      <span className="text-sm text-muted-foreground">Credit Card</span>
                     </div>
-                    
-                    <div className="flex items-center gap-3 p-3 rounded-xl border border-border/50 opacity-50">
-                      <div className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center">
-                        <img 
-                          src={`https://img.logo.dev/apple.com?token=${LOGO_DEV_TOKEN}`}
-                          alt="Apple Pay logo"
-                          width={20}
-                          height={20}
-                          className="w-5 h-5 object-contain"
-                        />
+
+                    <div className="relative pt-10">
+                      {/* Product card */}
+                      <div className="p-4 border-b border-border">
+                        <div className="text-xs text-muted-foreground mb-1 font-mono">$149</div>
+                        <div className="w-full h-32 bg-gradient-to-br from-secondary to-secondary/50 rounded-xl flex items-center justify-center">
+                          <span className="text-5xl">👟</span>
+                        </div>
                       </div>
-                      <span className="text-sm text-muted-foreground">Apple Pay</span>
+                      
+                      {/* Payment options */}
+                      <div className="p-4 space-y-3 pb-5">
+                        {/* Bank prediction - highlighted with switching animation */}
+                        <div className="flex items-center gap-3 p-3.5 bg-primary/5 rounded-xl border-2 border-primary">
+                          <img 
+                            src={`https://img.logo.dev/${currentBank.domain}?token=${LOGO_DEV_TOKEN}`}
+                            alt={`${currentBank.name} logo`}
+                            width={40}
+                            height={40}
+                            className={`w-10 h-10 rounded-full object-contain transition-all duration-300 ${isTransitioning ? 'opacity-0 scale-90' : 'opacity-100 scale-100'}`}
+                          />
+                          <span 
+                            className={`text-sm font-semibold text-foreground transition-all duration-300 ${isTransitioning ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}
+                          >
+                            Pay with {currentBank.name}
+                          </span>
+                        </div>
+                        
+                        {/* Other options */}
+                        <div className="flex items-center gap-3 p-3 rounded-xl border border-border/50 opacity-50">
+                          <div className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center">
+                            <CreditCard className="w-5 h-5 text-muted-foreground" />
+                          </div>
+                          <span className="text-sm text-muted-foreground">Credit Card</span>
+                        </div>
+                        
+                        <div className="flex items-center gap-3 p-3 rounded-xl border border-border/50 opacity-50">
+                          <div className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center">
+                            <img 
+                              src={`https://img.logo.dev/apple.com?token=${LOGO_DEV_TOKEN}`}
+                              alt="Apple Pay logo"
+                              width={20}
+                              height={20}
+                              className="w-5 h-5 object-contain"
+                            />
+                          </div>
+                          <span className="text-sm text-muted-foreground">Apple Pay</span>
+                        </div>
+
+                        {/* Home indicator */}
+                        <div className="pt-1">
+                          <div className="mx-auto h-1 w-24 rounded-full bg-foreground/10" />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Floating annotation - Quidkey prediction indicator */}
-              <div 
-                className="absolute -right-2 md:-right-4 top-[38%] bg-white rounded-full shadow-md border border-border/40 px-2.5 py-1"
-              >
-                <div className="flex items-center gap-1.5">
-                  <img 
-                    src="https://storage.googleapis.com/quidkey-resources-public/quidkey-logo-fav.png"
-                    alt="Quidkey"
-                    width={16}
-                    height={16}
-                    className="w-4 h-4"
-                  />
-                  <span className="text-[11px] font-medium text-foreground/70">Intelligent bank prediction</span>
-                </div>
-              </div>
             </div>
           </div>
         </div>

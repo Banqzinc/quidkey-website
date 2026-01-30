@@ -5,25 +5,28 @@ export function ProductLayersSection() {
     {
       icon: Zap,
       title: 'Payment Intelligence',
-      subtitle: 'The Wedge',
-      description: 'AI-powered bank prediction increases transaction volumes, lowers fees, and reduces chargebacks/fraud. One-click checkout with instant bank authentication.',
-      features: ['Predictive bank selection', 'Cross-merchant fraud graph', 'Global coverage: EU, UK, US, AU'],
+      subtitle: 'Checkout',
+      description:
+        'AI bank prediction + risk decisions that improve with every transaction. Win checkout conversion while cutting costs versus cards.',
+      features: ['Predictive bank selection', 'Cross-business fraud intelligence', 'One integration: US + EU + UK + AU'],
       gradient: 'from-[oklch(0.7_0.18_40)] to-[oklch(0.6_0.2_30)]',
     },
     {
       icon: GitBranch,
       title: 'Clearing & Routing',
-      subtitle: 'The Infrastructure',
-      description: 'Intelligent fund routing to tax accounts, suppliers, and reserves. Instant clearing in UK/EU/AU with 1-3 business days in US.',
-      features: ['Automatic tax jurisdiction routing', 'Local and cross-border settlement', 'Instant refunds'],
+      subtitle: 'Clearing',
+      description:
+        'A global clearing layer that orchestrates regulated partners to collect, clear, and route funds into the right accounts automatically.',
+      features: ['Automatic tax routing', 'Local + cross-border settlement', 'Fast refunds and reversals'],
       gradient: 'from-[oklch(0.6_0.22_320)] to-[oklch(0.5_0.22_290)]',
     },
     {
       icon: Workflow,
       title: 'Programmable Treasury',
-      subtitle: 'The Moat',
-      description: 'Plain English intent becomes deterministic execution. Automate tax holds, FX conversion, splits, and payouts in real time.',
-      features: ['Natural language workflows', 'CEL-compiled execution', 'Audit-ready ledgers'],
+      subtitle: 'Treasury',
+      description:
+        'Plain English intent becomes deterministic execution. Automate tax holds, FX, splits, and payouts without building a finance ops team.',
+      features: ['Plain-English workflows', 'CEL-compiled execution', 'Audit-ready ledgers'],
       gradient: 'from-[oklch(0.55_0.2_270)] to-[oklch(0.45_0.22_280)]',
     },
   ]
@@ -34,14 +37,14 @@ export function ProductLayersSection() {
         {/* Section header */}
         <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
           <div className="inline-flex items-center gap-2 rounded-full bg-secondary px-4 py-1.5 text-sm text-secondary-foreground mb-4">
-            AI Clearing House
+            Global AI Clearing House
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight mb-4">
             <span className="text-foreground">Three layers. </span>
             <span className="gradient-text">One platform.</span>
           </h2>
           <p className="text-lg text-muted-foreground">
-            Quidkey unifies what today requires Stripe, Plaid, and Paddle — into a single programmable clearing layer.
+            Quidkey unifies payment collection, intelligent routing, and programmable treasury into a single AI-native clearing stack.
           </p>
         </div>
 

@@ -4,21 +4,21 @@ export function UseCasesSection() {
   const useCases = [
     {
       icon: ShoppingBag,
-      title: 'Cross-border eCommerce',
-      description: 'Reduce fees from 6-10% to 1-3.5%. Eliminate chargebacks with pay-by-bank. Automate tax holds and supplier splits.',
-      audience: '$1-100M revenue',
+      title: 'Cross-border commerce selling into the US',
+      description:
+        'Accept US pay by bank while staying seller-of-record. Cut fees, reduce chargebacks, and automate tax holds, splits, and settlements.',
     },
     {
       icon: Repeat,
-      title: 'Global SaaS',
-      description: 'Skip merchant-of-record fees. Automate multi-jurisdiction tax compliance. Collect subscriptions via bank transfer.',
-      audience: '$50k-$1M MRR',
+      title: 'Global SaaS subscriptions',
+      description:
+        'Avoid MoR take rates. Collect recurring payments via bank transfer and automate multi-jurisdiction tax, FX, and payouts.',
     },
     {
       icon: Building2,
       title: 'Platforms & Marketplaces',
-      description: 'Programmable escrow and multi-party payouts. Real-time splits with dispute holds. Complex reconciliation simplified.',
-      audience: 'Coming soon',
+      description:
+        'Programmable escrow and multi-party payouts. Real-time splits with dispute holds. Reconciliation that your finance team can actually trust.',
     },
   ]
 
@@ -32,7 +32,7 @@ export function UseCasesSection() {
             <span className="gradient-text">global businesses.</span>
           </h2>
           <p className="text-lg text-muted-foreground">
-            From DTC brands to enterprise SaaS, Quidkey adapts to your business model.
+            US-first pay by bank, global clearing, and programmable treasury designed for CFO outcomes.
           </p>
         </div>
 
@@ -49,12 +49,9 @@ export function UseCasesSection() {
               </div>
 
               {/* Content */}
-              <h3 className="text-xl font-semibold text-foreground mb-2">
+              <h3 className="text-xl font-semibold text-foreground mb-3">
                 {useCase.title}
               </h3>
-              <p className="text-sm text-muted-foreground mb-4">
-                {useCase.audience}
-              </p>
               <p className="text-muted-foreground">
                 {useCase.description}
               </p>

@@ -21,7 +21,7 @@ type AnimationStep =
   | 'arrived'             // Cards arrived, show amounts in boxes
   | 'complete'            // Final state, pause before restart
 
-type NodeKey = 'customer' | 'collection' | 'tax' | 'taxAccount' | 'merchant'
+type NodeKey = 'customer' | 'collection' | 'tax' | 'taxAccount' | 'business'
 
 type FlowLayout = {
   width: number
@@ -146,21 +146,21 @@ function useFlowLayout(containerRef: React.RefObject<HTMLDivElement | null>, isD
             collection: { x: width * 0.28, y: height * 0.5 },
             tax: { x: width * 0.50, y: height * 0.5 },
             taxAccount: { x: width * 0.80, y: height * 0.28 },
-            merchant: { x: width * 0.80, y: height * 0.72 },
+            business: { x: width * 0.80, y: height * 0.72 },
           }
         : {
             customer: { x: width * 0.5, y: height * 0.10 },
             collection: { x: width * 0.5, y: height * 0.30 },
             tax: { x: width * 0.5, y: height * 0.52 },
             taxAccount: { x: width * 0.28, y: height * 0.82 },
-            merchant: { x: width * 0.72, y: height * 0.82 },
+            business: { x: width * 0.72, y: height * 0.82 },
           }
 
       // Main path goes through all nodes smoothly
       // Split paths start from Tax node center and branch out
       const main = buildPath([nodes.customer, nodes.collection, nodes.tax], isDesktop)
       const tax = buildPath([nodes.tax, nodes.taxAccount], isDesktop)
-      const net = buildPath([nodes.tax, nodes.merchant], isDesktop)
+      const net = buildPath([nodes.tax, nodes.business], isDesktop)
 
       setLayout({
         width,
@@ -279,15 +279,15 @@ function TaxAccountNode({ isActive, amount }: { isActive: boolean; amount: numbe
   )
 }
 
-function MerchantAccountNode({ isActive, amount }: { isActive: boolean; amount: number | null }) {
+function BusinessAccountNode({ isActive, amount }: { isActive: boolean; amount: number | null }) {
   return (
     <div 
       className={`payment-flow-node payment-flow-node--green ${isActive ? 'payment-flow-node--active' : ''}`}
-      data-node="merchant"
+      data-node="business"
     >
       <div className="flex items-center gap-2.5">
         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-green-50">
-          {/* Bank building icon for merchant's bank account */}
+          {/* Bank building icon for business bank account */}
           <svg className="h-5 w-5 text-green-600" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 2L2 7v2h20V7L12 2zM4 11v8h3v-8H4zm6 0v8h4v-8h-4zm7 0v8h3v-8h-3zM2 21h20v2H2v-2z"/>
           </svg>
@@ -375,7 +375,7 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
   const collectionActive = ['collection-active', 'travel-to-tax'].includes(step)
   const taxActive = isProcessing || step === 'travel-to-outputs'
   const taxAccountActive = ['travel-to-outputs', 'arrived', 'complete'].includes(step)
-  const merchantActive = ['travel-to-outputs', 'arrived', 'complete'].includes(step)
+  const businessActive = ['travel-to-outputs', 'arrived', 'complete'].includes(step)
 
   const showCollectionAmount = !['idle', 'show-checkout', 'click-pay', 'payment-sent', 'customer-active', 'travel-to-collection'].includes(step)
   const showTaxDetails = ['tax-calculated', 'travel-to-outputs', 'arrived', 'complete'].includes(step)
@@ -440,9 +440,9 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
         </div>
         <div
           className="payment-flow-node-position"
-          style={{ left: layout.nodes.merchant.x, top: layout.nodes.merchant.y }}
+          style={{ left: layout.nodes.business.x, top: layout.nodes.business.y }}
         >
-          <MerchantAccountNode isActive={false} amount={netAmount} />
+          <BusinessAccountNode isActive={false} amount={netAmount} />
         </div>
       </div>
     )
@@ -465,11 +465,11 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
         >
           <div className="checkout-card">
             <div className="checkout-header">
-              <div className="checkout-merchant">
-                <div className="checkout-merchant-icon">🛒</div>
+              <div className="checkout-business">
+                <div className="checkout-business-icon">🛒</div>
                 <div>
-                  <div className="checkout-merchant-name">Acme Store</div>
-                  <div className="checkout-merchant-url">checkout.acme.com</div>
+                  <div className="checkout-business-name">Acme Store</div>
+                  <div className="checkout-business-url">checkout.acme.com</div>
                 </div>
               </div>
             </div>
@@ -607,9 +607,9 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
         </div>
         <div
           className="payment-flow-node-position"
-          style={{ left: layout.nodes.merchant.x, top: layout.nodes.merchant.y }}
+          style={{ left: layout.nodes.business.x, top: layout.nodes.business.y }}
         >
-          <MerchantAccountNode isActive={merchantActive} amount={showOutputAmounts ? netAmount : null} />
+          <BusinessAccountNode isActive={businessActive} amount={showOutputAmounts ? netAmount : null} />
         </div>
       </motion.div>
 
@@ -792,7 +792,7 @@ export function HowItWorksSection() {
             How It Works
           </h2>
           <p className="text-lg text-muted-foreground">
-            Watch how Quidkey automatically calculates and routes US sales tax from a customer payment.
+            Quidkey handles payments end to end, from checkout to intelligent routing and programmable treasury.
           </p>
         </div>
 
@@ -801,7 +801,7 @@ export function HowItWorksSection() {
 
         {/* Caption */}
         <p className="text-center text-sm text-muted-foreground mt-8 max-w-lg mx-auto">
-          Payment flows from customer's bank through Quidkey. Tax is calculated by jurisdiction and automatically routed to your tax account.
+          Payment flows from customer's bank through Quidkey. Tax is calculated by jurisdiction and automatically routed to your tax account, with the net amount paid out to the business account.
         </p>
       </div>
     </section>
