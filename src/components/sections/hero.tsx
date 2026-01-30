@@ -1,7 +1,37 @@
 import { Button } from '@/components/ui/button'
 import { ArrowRight, Check } from 'lucide-react'
+import { useState, useEffect } from 'react'
+
+const LOGO_DEV_TOKEN = 'pk_DsNHFndhT3yo-85c5vdKKg'
+
+// Bank data with logo.dev URLs
+const banks = [
+  { name: 'Chase', domain: 'chase.com' },
+  { name: 'Bank of America', domain: 'bankofamerica.com' },
+  { name: 'Wells Fargo', domain: 'wellsfargo.com' },
+  { name: 'Barclays', domain: 'barclays.co.uk' },
+  { name: 'Santander', domain: 'santander.com' },
+  { name: 'HSBC', domain: 'hsbc.com' },
+]
 
 export function HeroSection() {
+  const [currentBankIndex, setCurrentBankIndex] = useState(0)
+  const [isTransitioning, setIsTransitioning] = useState(false)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsTransitioning(true)
+      setTimeout(() => {
+        setCurrentBankIndex((prev) => (prev + 1) % banks.length)
+        setIsTransitioning(false)
+      }, 200)
+    }, 2500)
+
+    return () => clearInterval(interval)
+  }, [])
+
+  const currentBank = banks[currentBankIndex]
+
   const benefits = [
     'No Setup Fees',
     'No Contracts',
@@ -68,7 +98,7 @@ export function HeroSection() {
                 <div className="bg-white rounded-[2rem] overflow-hidden">
                   {/* Product card */}
                   <div className="p-4 border-b border-border">
-                    <div className="text-xs text-muted-foreground mb-1 font-mono">£115</div>
+                    <div className="text-xs text-muted-foreground mb-1 font-mono">$149</div>
                     <div className="w-full h-32 bg-gradient-to-br from-secondary to-secondary/50 rounded-xl flex items-center justify-center">
                       <span className="text-5xl">👟</span>
                     </div>
@@ -76,25 +106,30 @@ export function HeroSection() {
                   
                   {/* Payment options */}
                   <div className="p-4 space-y-3">
-                    {/* Bank prediction - highlighted */}
-                    <div className="flex items-center gap-3 p-3.5 bg-primary/5 rounded-xl border-2 border-primary transition-all duration-300 hover:bg-primary/10">
-                      <div className="w-9 h-9 bg-[#024731] rounded-full flex items-center justify-center">
-                        <span className="text-white text-sm font-bold">L</span>
-                      </div>
-                      <div>
-                        <span className="text-sm font-semibold text-foreground block">Pay with Lloyds</span>
-                        <span className="text-xs text-muted-foreground">Predicted for you</span>
-                      </div>
+                    {/* Bank prediction - highlighted with switching animation */}
+                    <div className="flex items-center gap-3 p-3.5 bg-primary/5 rounded-xl border-2 border-primary">
+                      <img 
+                        src={`https://img.logo.dev/${currentBank.domain}?token=${LOGO_DEV_TOKEN}`}
+                        alt={`${currentBank.name} logo`}
+                        width={40}
+                        height={40}
+                        className={`w-10 h-10 rounded-full object-contain transition-all duration-300 ${isTransitioning ? 'opacity-0 scale-90' : 'opacity-100 scale-100'}`}
+                      />
+                      <span 
+                        className={`text-sm font-semibold text-foreground transition-all duration-300 ${isTransitioning ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}
+                      >
+                        Pay with {currentBank.name}
+                      </span>
                     </div>
                     
                     {/* Other options */}
                     <div className="flex items-center gap-3 p-3 rounded-xl border border-border/50 opacity-50">
-                      <div className="w-9 h-9 bg-secondary rounded-lg flex items-center justify-center text-sm">💳</div>
+                      <div className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center text-sm">💳</div>
                       <span className="text-sm text-muted-foreground">Credit Card</span>
                     </div>
                     
                     <div className="flex items-center gap-3 p-3 rounded-xl border border-border/50 opacity-50">
-                      <div className="w-9 h-9 bg-foreground rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-foreground rounded-lg flex items-center justify-center">
                         <span className="text-white text-sm"></span>
                       </div>
                       <span className="text-sm text-muted-foreground">Apple Pay</span>
