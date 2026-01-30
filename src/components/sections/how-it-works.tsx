@@ -327,19 +327,19 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
     const steps: { step: AnimationStep; delay: number }[] = [
       { step: 'show-checkout', delay: 0 },          // Show checkout UI
       { step: 'click-pay', delay: 1800 },           // Click Pay with Chase
-      { step: 'payment-sent', delay: 2800 },        // Payment sending
-      { step: 'customer-active', delay: 3600 },     // Start workflow
-      { step: 'travel-to-collection', delay: 4100 },
-      { step: 'collection-active', delay: 4800 },
-      { step: 'travel-to-tax', delay: 5400 },
-      { step: 'tax-step-1', delay: 6100 },          // Gathering payment data
-      { step: 'tax-step-2', delay: 6900 },          // California customer
-      { step: 'tax-step-3', delay: 7700 },          // Taxable product
-      { step: 'tax-step-4', delay: 8500 },          // Calculating tax...
-      { step: 'tax-calculated', delay: 9300 },      // Shows result
-      { step: 'travel-to-outputs', delay: 10100 },  // Both cards start traveling
-      { step: 'arrived', delay: 11000 },            // Cards reached destinations, fade out
-      { step: 'complete', delay: 11800 },           // Show final amounts in boxes
+      { step: 'payment-sent', delay: 2600 },        // Payment sending (quicker transition)
+      { step: 'customer-active', delay: 3200 },     // Start workflow (overlaps slightly)
+      { step: 'travel-to-collection', delay: 3700 },
+      { step: 'collection-active', delay: 4400 },
+      { step: 'travel-to-tax', delay: 5000 },
+      { step: 'tax-step-1', delay: 5700 },          // Gathering payment data
+      { step: 'tax-step-2', delay: 6500 },          // California customer
+      { step: 'tax-step-3', delay: 7300 },          // Taxable product
+      { step: 'tax-step-4', delay: 8100 },          // Calculating tax...
+      { step: 'tax-calculated', delay: 8900 },      // Shows result
+      { step: 'travel-to-outputs', delay: 9700 },   // Both cards start traveling
+      { step: 'arrived', delay: 10600 },            // Cards reached destinations, fade out
+      { step: 'complete', delay: 11400 },           // Show final amounts in boxes
     ]
 
     const timeouts = steps.map(({ step: nextStep, delay }) =>
@@ -349,7 +349,7 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
     const loopTimeout = window.setTimeout(() => {
       setStep('idle')
       setCycle((prev) => prev + 1)
-    }, 14500)
+    }, 14000)
 
     return () => {
       timeouts.forEach((timeout) => window.clearTimeout(timeout))
@@ -457,9 +457,11 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ 
             opacity: isPaymentSending ? 0 : 1, 
-            scale: isPaymentSending ? 0.9 : 1 
+            scale: isPaymentSending ? 0.85 : 1,
+            x: isPaymentSending ? -100 : 0,
+            filter: isPaymentSending ? 'blur(4px)' : 'blur(0px)',
           }}
-          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
         >
           <div className="checkout-card">
             <div className="checkout-header">
@@ -556,8 +558,12 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
       <motion.div
         className="payment-flow-workflow"
         initial={false}
-        animate={{ opacity: showWorkflow ? 1 : 0 }}
-        transition={{ duration: 0.4 }}
+        animate={{ 
+          opacity: showWorkflow ? 1 : 0,
+          x: showWorkflow ? 0 : 40,
+          filter: showWorkflow ? 'blur(0px)' : 'blur(4px)',
+        }}
+        transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1], delay: showWorkflow ? 0.1 : 0 }}
         style={{ pointerEvents: showWorkflow ? 'auto' : 'none' }}
       >
         <svg className="payment-flow-edges" viewBox={`0 0 ${layout.width} ${layout.height}`} preserveAspectRatio="none">
