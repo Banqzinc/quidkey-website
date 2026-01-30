@@ -36,9 +36,13 @@ export function BlogPreviewSection() {
               params={{ slug: post.slug }}
               className="group bg-white rounded-2xl border border-border overflow-hidden card-hover"
             >
-              {/* Image placeholder */}
-              <div className="aspect-[16/9] bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
-                <div className="text-4xl opacity-50">📰</div>
+              {/* Image */}
+              <div className="aspect-[16/9] overflow-hidden">
+                <img
+                  src={post.image}
+                  alt={post.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
               </div>
               
               {/* Content */}
