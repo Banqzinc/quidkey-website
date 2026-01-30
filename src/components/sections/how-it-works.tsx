@@ -1,8 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion'
-import { useEffect, useMemo, useRef, useState } from 'react'
-
-const ANIMATION_DURATION = 6000
-const STEP_DURATION = 600
+import { useEffect, useRef, useState } from 'react'
 
 type AnimationStep =
   | 'idle'
@@ -10,9 +7,13 @@ type AnimationStep =
   | 'travel-to-collection'
   | 'collection-active'
   | 'travel-to-tax'
-  | 'tax-active'
-  | 'travel-to-outputs'
-  | 'outputs-active'
+  | 'tax-step-1'          // Gathering payment data
+  | 'tax-step-2'          // California customer
+  | 'tax-step-3'          // Taxable product
+  | 'tax-step-4'          // Calculating tax...
+  | 'tax-calculated'      // Shows the calculation result
+  | 'travel-to-tax-account'
+  | 'travel-to-merchant'
   | 'complete'
 
 type NodeKey = 'customer' | 'collection' | 'tax' | 'taxAccount' | 'merchant'
@@ -119,7 +120,7 @@ function useMediaQuery(query: string) {
   return matches
 }
 
-function useFlowLayout(containerRef: React.RefObject<HTMLDivElement>, isDesktop: boolean) {
+function useFlowLayout(containerRef: React.RefObject<HTMLDivElement | null>, isDesktop: boolean) {
   const [layout, setLayout] = useState<FlowLayout | null>(null)
 
   useEffect(() => {
@@ -150,6 +151,8 @@ function useFlowLayout(containerRef: React.RefObject<HTMLDivElement>, isDesktop:
             merchant: { x: width * 0.72, y: height * 0.82 },
           }
 
+      // Main path goes through all nodes smoothly
+      // Split paths start from Tax node center and branch out
       const main = buildPath([nodes.customer, nodes.collection, nodes.tax], isDesktop)
       const tax = buildPath([nodes.tax, nodes.taxAccount], isDesktop)
       const net = buildPath([nodes.tax, nodes.merchant], isDesktop)
@@ -178,13 +181,13 @@ function CustomerBankNode({ isActive }: { isActive: boolean }) {
     >
       <div className="flex items-center gap-2.5">
         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-50">
-          <svg className="h-4 w-4 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <rect x="3" y="8" width="18" height="12" rx="2" />
-            <path d="M7 15h.01M12 15h.01M17 15h.01" />
+          {/* Chase-style bank icon */}
+          <svg className="h-5 w-5 text-indigo-600" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2L2 7v2h20V7L12 2zM4 11v8h3v-8H4zm6 0v8h4v-8h-4zm7 0v8h3v-8h-3zM2 21h20v2H2v-2z"/>
           </svg>
         </div>
         <div>
-          <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Customer</div>
+          <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Paid via</div>
           <div className="text-xs font-bold text-slate-800">Chase Bank</div>
         </div>
       </div>
@@ -233,7 +236,7 @@ function TaxCalculateNode({ isActive, showDetails }: { isActive: boolean; showDe
           </svg>
         </div>
         <div className="text-center">
-          <div className="text-[10px] font-bold text-teal-700 uppercase tracking-wider">US Sales Tax</div>
+          <div className="text-[10px] font-bold text-teal-700 uppercase tracking-wider">Tax Workflow</div>
           <div 
             className={`text-[11px] font-semibold text-teal-600 transition-all duration-300 ${
               showDetails ? 'opacity-100 mt-0.5' : 'opacity-0 h-0 overflow-hidden'
@@ -261,7 +264,7 @@ function TaxAccountNode({ isActive, amount }: { isActive: boolean; amount: numbe
           </svg>
         </div>
         <div>
-          <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Tax</div>
+          <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Tax Account</div>
           <div className={`payment-flow-amount text-xs ${amount !== null ? 'payment-flow-amount--visible' : ''}`}>
             {amount !== null ? formatMoney(amount) : '\u00A0'}
           </div>
@@ -279,13 +282,13 @@ function MerchantAccountNode({ isActive, amount }: { isActive: boolean; amount: 
     >
       <div className="flex items-center gap-2.5">
         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-green-50">
-          <svg className="h-4 w-4 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <rect x="2" y="4" width="20" height="16" rx="2" />
-            <path d="M12 9v6M9 12h6" />
+          {/* Bank building icon for merchant's bank account */}
+          <svg className="h-5 w-5 text-green-600" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2L2 7v2h20V7L12 2zM4 11v8h3v-8H4zm6 0v8h4v-8h-4zm7 0v8h3v-8h-3zM2 21h20v2H2v-2z"/>
           </svg>
         </div>
         <div>
-          <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Merchant</div>
+          <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Your Bank</div>
           <div className={`payment-flow-amount text-xs ${amount !== null ? 'payment-flow-amount--visible' : ''}`}>
             {amount !== null ? formatMoney(amount) : '\u00A0'}
           </div>
@@ -315,15 +318,20 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
       return
     }
 
+    // Slower timing with step-by-step processing at Tax Workflow
     const steps: { step: AnimationStep; delay: number }[] = [
       { step: 'customer-active', delay: 0 },
-      { step: 'travel-to-collection', delay: STEP_DURATION },
-      { step: 'collection-active', delay: STEP_DURATION * 2 },
-      { step: 'travel-to-tax', delay: STEP_DURATION * 3 },
-      { step: 'tax-active', delay: STEP_DURATION * 4 },
-      { step: 'travel-to-outputs', delay: STEP_DURATION * 5 },
-      { step: 'outputs-active', delay: STEP_DURATION * 6 },
-      { step: 'complete', delay: STEP_DURATION * 7 },
+      { step: 'travel-to-collection', delay: 500 },
+      { step: 'collection-active', delay: 1200 },
+      { step: 'travel-to-tax', delay: 1800 },
+      { step: 'tax-step-1', delay: 2500 },          // Gathering payment data
+      { step: 'tax-step-2', delay: 3300 },          // California customer
+      { step: 'tax-step-3', delay: 4100 },          // Taxable product
+      { step: 'tax-step-4', delay: 4900 },          // Calculating tax...
+      { step: 'tax-calculated', delay: 5700 },      // Shows result
+      { step: 'travel-to-tax-account', delay: 6500 }, // Tax card travels
+      { step: 'travel-to-merchant', delay: 7000 },    // Net card travels
+      { step: 'complete', delay: 7800 },
     ]
 
     const timeouts = steps.map(({ step: nextStep, delay }) =>
@@ -333,7 +341,7 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
     const loopTimeout = window.setTimeout(() => {
       setStep('idle')
       setCycle((prev) => prev + 1)
-    }, ANIMATION_DURATION)
+    }, 9500)
 
     return () => {
       timeouts.forEach((timeout) => window.clearTimeout(timeout))
@@ -341,29 +349,47 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
     }
   }, [isPlaying, prefersReducedMotion, cycle])
 
+  // Processing steps for animated display
+  const processingSteps = ['tax-step-1', 'tax-step-2', 'tax-step-3', 'tax-step-4', 'tax-calculated']
+  const isProcessing = processingSteps.includes(step)
+
+  // Derive active states
   const customerActive = ['customer-active', 'travel-to-collection'].includes(step)
   const collectionActive = ['collection-active', 'travel-to-tax'].includes(step)
-  const taxActive = ['tax-active', 'travel-to-outputs'].includes(step)
-  const outputsActive = ['outputs-active', 'complete'].includes(step)
+  const taxActive = isProcessing || ['travel-to-tax-account', 'travel-to-merchant'].includes(step)
+  const taxAccountActive = ['travel-to-tax-account', 'travel-to-merchant', 'complete'].includes(step)
+  const merchantActive = ['travel-to-merchant', 'complete'].includes(step)
 
-  const showCollectionAmount = ['collection-active', 'travel-to-tax', 'tax-active', 'travel-to-outputs', 'outputs-active', 'complete'].includes(step)
-  const showTaxDetails = ['tax-active', 'travel-to-outputs', 'outputs-active', 'complete'].includes(step)
-  const showOutputAmounts = ['outputs-active', 'complete'].includes(step)
+  const showCollectionAmount = !['idle', 'customer-active', 'travel-to-collection'].includes(step)
+  const showTaxDetails = ['tax-calculated', 'travel-to-tax-account', 'travel-to-merchant', 'complete'].includes(step)
+  const showOutputAmounts = ['complete'].includes(step)
 
-  const showMainCard = ['customer-active', 'travel-to-collection', 'collection-active', 'travel-to-tax', 'tax-active'].includes(step)
-  const showSplitCards = ['travel-to-outputs', 'outputs-active'].includes(step)
+  // Card visibility states
+  const showTravelingCard = ['customer-active', 'travel-to-collection', 'collection-active', 'travel-to-tax'].includes(step)
+  const showProcessingCard = isProcessing
+  const showTaxCard = ['travel-to-tax-account', 'travel-to-merchant', 'complete'].includes(step)
+  const showNetCard = ['travel-to-merchant', 'complete'].includes(step)
 
+  // Connection line active states
   const connection1Active = step === 'travel-to-collection'
   const connection2Active = step === 'travel-to-tax'
-  const connection3Active = step === 'travel-to-outputs'
+  const connection3Active = ['travel-to-tax-account', 'travel-to-merchant'].includes(step)
 
+  // Card position along main path (0-100%)
   const mainOffset = step === 'customer-active'
     ? 0
-    : step === 'travel-to-collection' || step === 'collection-active'
+    : step === 'travel-to-collection'
     ? 50
-    : 100
+    : step === 'collection-active'
+    ? 50
+    : 100  // At tax node
 
-  const outputOffset = step === 'travel-to-outputs' ? 0 : 100
+  // Output card positions
+  const taxCardOffset = step === 'travel-to-tax-account' ? 50 : 100
+  const netCardOffset = step === 'travel-to-merchant' ? 50 : 100
+
+  // Current processing step index (0-4)
+  const processingStepIndex = processingSteps.indexOf(step)
 
   if (!layout) {
     return <div ref={containerRef} className="payment-flow-diagram" />
@@ -445,24 +471,25 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
         className="payment-flow-node-position"
         style={{ left: layout.nodes.taxAccount.x, top: layout.nodes.taxAccount.y }}
       >
-        <TaxAccountNode isActive={outputsActive} amount={showOutputAmounts ? taxAmount : null} />
+        <TaxAccountNode isActive={taxAccountActive} amount={showOutputAmounts ? taxAmount : null} />
       </div>
       <div
         className="payment-flow-node-position"
         style={{ left: layout.nodes.merchant.x, top: layout.nodes.merchant.y }}
       >
-        <MerchantAccountNode isActive={outputsActive} amount={showOutputAmounts ? netAmount : null} />
+        <MerchantAccountNode isActive={merchantActive} amount={showOutputAmounts ? netAmount : null} />
       </div>
 
-      {showMainCard && (
+      {/* Traveling payment card - moves along the path */}
+      {showTravelingCard && (
         <motion.div
           className="payment-flow-card"
           initial={false}
           animate={{
-            opacity: showMainCard ? 1 : 0,
+            opacity: 1,
             offsetDistance: `${mainOffset}%`,
           }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           style={
             {
               offsetPath: `path('${layout.paths.main}')`,
@@ -475,45 +502,141 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
         </motion.div>
       )}
 
-      {showSplitCards && (
-        <>
-          <motion.div
-            className="payment-flow-card payment-flow-card--tax"
-            initial={false}
-            animate={{
-              opacity: showSplitCards ? 1 : 0,
-              offsetDistance: `${outputOffset}%`,
-            }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-            style={
-              {
-                offsetPath: `path('${layout.paths.tax}')`,
-                offsetRotate: '0deg',
-              } as React.CSSProperties
-            }
-          >
-            <div className="payment-flow-card__label">Tax</div>
-            <div className="payment-flow-card__amount">{formatMoney(taxAmount)}</div>
-          </motion.div>
-          <motion.div
-            className="payment-flow-card payment-flow-card--net"
-            initial={false}
-            animate={{
-              opacity: showSplitCards ? 1 : 0,
-              offsetDistance: `${outputOffset}%`,
-            }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-            style={
-              {
-                offsetPath: `path('${layout.paths.net}')`,
-                offsetRotate: '0deg',
-              } as React.CSSProperties
-            }
-          >
-            <div className="payment-flow-card__label">Net</div>
-            <div className="payment-flow-card__amount">{formatMoney(netAmount)}</div>
-          </motion.div>
-        </>
+      {/* Processing card - expands at Tax Workflow to show smart calculation */}
+      {showProcessingCard && (
+        <motion.div
+          className="payment-flow-card payment-flow-card--processing"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ 
+            opacity: 1, 
+            scale: 1,
+          }}
+          exit={{ opacity: 0, scale: 0.9 }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          style={{
+            position: 'absolute',
+            left: layout.nodes.tax.x,
+            top: layout.nodes.tax.y - 85,
+            transform: 'translateX(-50%)',
+            zIndex: 10,
+          }}
+        >
+          <div className="payment-flow-card__label">Processing</div>
+          <div className="payment-flow-card__amount">{formatMoney(paymentAmount)}</div>
+          <div className="payment-flow-card__steps">
+            {/* Step 1: Gathering payment data */}
+            <motion.div 
+              className="payment-flow-card__step"
+              initial={{ opacity: 0, x: -8 }}
+              animate={{ 
+                opacity: processingStepIndex >= 0 ? 1 : 0,
+                x: processingStepIndex >= 0 ? 0 : -8
+              }}
+              transition={{ duration: 0.3 }}
+            >
+              <span className="payment-flow-card__step-icon">📋</span>
+              <span>Gathering payment data...</span>
+            </motion.div>
+            
+            {/* Step 2: California customer */}
+            <motion.div 
+              className="payment-flow-card__step"
+              initial={{ opacity: 0, x: -8 }}
+              animate={{ 
+                opacity: processingStepIndex >= 1 ? 1 : 0,
+                x: processingStepIndex >= 1 ? 0 : -8
+              }}
+              transition={{ duration: 0.3 }}
+            >
+              <span className="payment-flow-card__step-icon">📍</span>
+              <span>California customer</span>
+            </motion.div>
+            
+            {/* Step 3: Taxable product */}
+            <motion.div 
+              className="payment-flow-card__step"
+              initial={{ opacity: 0, x: -8 }}
+              animate={{ 
+                opacity: processingStepIndex >= 2 ? 1 : 0,
+                x: processingStepIndex >= 2 ? 0 : -8
+              }}
+              transition={{ duration: 0.3 }}
+            >
+              <span className="payment-flow-card__step-icon">🏷️</span>
+              <span>Taxable product</span>
+            </motion.div>
+            
+            {/* Step 4: Calculating tax */}
+            <motion.div 
+              className="payment-flow-card__step"
+              initial={{ opacity: 0, x: -8 }}
+              animate={{ 
+                opacity: processingStepIndex >= 3 ? 1 : 0,
+                x: processingStepIndex >= 3 ? 0 : -8
+              }}
+              transition={{ duration: 0.3 }}
+            >
+              <span className="payment-flow-card__step-icon">🧮</span>
+              <span>{processingStepIndex >= 4 ? 'Tax calculated!' : 'Calculating tax...'}</span>
+            </motion.div>
+            
+            {/* Result */}
+            {processingStepIndex >= 4 && (
+              <motion.div 
+                className="payment-flow-card__result"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3 }}
+              >
+                <span className="text-teal-600 font-semibold">CA @ 8.25% = {formatMoney(taxAmount)}</span>
+              </motion.div>
+            )}
+          </div>
+        </motion.div>
+      )}
+
+      {/* Tax card - travels to Tax Account */}
+      {showTaxCard && (
+        <motion.div
+          className="payment-flow-card payment-flow-card--tax"
+          initial={{ opacity: 0 }}
+          animate={{
+            opacity: 1,
+            offsetDistance: `${taxCardOffset}%`,
+          }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          style={
+            {
+              offsetPath: `path('${layout.paths.tax}')`,
+              offsetRotate: '0deg',
+            } as React.CSSProperties
+          }
+        >
+          <div className="payment-flow-card__label">Tax</div>
+          <div className="payment-flow-card__amount">{formatMoney(taxAmount)}</div>
+        </motion.div>
+      )}
+      
+      {/* Net card - travels to Merchant Bank */}
+      {showNetCard && (
+        <motion.div
+          className="payment-flow-card payment-flow-card--net"
+          initial={{ opacity: 0 }}
+          animate={{
+            opacity: 1,
+            offsetDistance: `${netCardOffset}%`,
+          }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          style={
+            {
+              offsetPath: `path('${layout.paths.net}')`,
+              offsetRotate: '0deg',
+            } as React.CSSProperties
+          }
+        >
+          <div className="payment-flow-card__label">Net</div>
+          <div className="payment-flow-card__amount">{formatMoney(netAmount)}</div>
+        </motion.div>
       )}
     </div>
   )
