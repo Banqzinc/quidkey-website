@@ -48,6 +48,12 @@ export function HeroSection() {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Left column - Content */}
           <div className="text-center lg:text-left">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2.5 rounded-full bg-foreground/5 border border-foreground/10 px-4 py-2 text-sm font-medium text-foreground mb-8">
+              <span className="h-2 w-2 rounded-full bg-success animate-pulse" aria-hidden="true" />
+              AI-native global clearing house
+            </div>
+
             {/* Main headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight mb-6 leading-[1.1]">
               <span className="text-foreground">Pay by bank.</span>
@@ -167,21 +173,6 @@ export function HeroSection() {
                 </div>
               </div>
 
-              {/* Floating annotation - Quidkey prediction indicator */}
-              <div 
-                className="absolute -right-2 md:-right-4 top-[38%] bg-white rounded-full shadow-md border border-border/40 px-2.5 py-1"
-              >
-                <div className="flex items-center gap-1.5">
-                  <img 
-                    src="https://storage.googleapis.com/quidkey-resources-public/quidkey-logo-fav.png"
-                    alt="Quidkey"
-                    width={16}
-                    height={16}
-                    className="w-4 h-4"
-                  />
-                  <span className="text-[11px] font-medium text-foreground/70">One-click pay by bank</span>
-                </div>
-              </div>
             </div>
           </div>
         </div>
