@@ -1,6 +1,8 @@
 const LOGO_DEV_TOKEN = 'pk_DsNHFndhT3yo-85c5vdKKg'
 
 const partners = [
+  { name: 'Shopify', domain: 'shopify.com' },
+  { name: 'WooCommerce', domain: 'woocommerce.com' },
   { name: 'Tryp.com', domain: 'tryp.com' },
   { name: 'TransferMate', domain: 'transfermate.com' },
   { name: 'SKUTopia', domain: 'skutopia.com' },

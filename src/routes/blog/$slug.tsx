@@ -63,13 +63,16 @@ function BlogPostPage() {
                   if (block.type === 'h2') return <h2 key={idx}>{block.text}</h2>
                   if (block.type === 'h3') return <h3 key={idx}>{block.text}</h3>
                   if (block.type === 'p') return <p key={idx}>{block.text}</p>
-                  return (
-                    <ul key={idx}>
-                      {block.items.map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </ul>
-                  )
+                  if (block.type === 'ul') {
+                    return (
+                      <ul key={idx}>
+                        {block.items.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    )
+                  }
+                  return null
                 })}
               </div>
             </article>

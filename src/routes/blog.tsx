@@ -29,7 +29,8 @@ function BlogPage() {
 
           {/* Featured post */}
           <Link
-            to={`/blog/${featuredPost.slug}`}
+            to="/blog/$slug"
+            params={{ slug: featuredPost.slug }}
             className="group block mb-12 md:mb-16"
           >
             <div className="grid md:grid-cols-2 gap-8 items-center bg-secondary/30 rounded-2xl p-6 md:p-8 card-hover">
@@ -56,7 +57,8 @@ function BlogPage() {
             {otherPosts.map((post, index) => (
               <Link
                 key={index}
-                to={`/blog/${post.slug}`}
+                to="/blog/$slug"
+                params={{ slug: post.slug }}
                 className="group bg-white rounded-2xl border border-border overflow-hidden card-hover"
               >
                 <div className="aspect-[16/9] bg-gradient-to-br from-secondary to-secondary/50 flex items-center justify-center">

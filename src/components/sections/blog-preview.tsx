@@ -32,7 +32,8 @@ export function BlogPreviewSection() {
           {posts.map((post, index) => (
             <Link
               key={index}
-              to={`/blog/${post.slug}`}
+              to="/blog/$slug"
+              params={{ slug: post.slug }}
               className="group bg-white rounded-2xl border border-border overflow-hidden card-hover"
             >
               {/* Image placeholder */}
