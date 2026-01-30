@@ -493,21 +493,19 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
                   <span className="checkout-pay-text">Pay with Chase</span>
                 </motion.button>
                 
-                {/* Animated cursor */}
+                {/* Animated cursor - appears on button and clicks */}
                 <motion.div
                   className="checkout-cursor"
-                  initial={{ opacity: 0, x: 80, y: 50 }}
+                  initial={{ opacity: 0 }}
                   animate={{ 
                     opacity: showCheckout ? 1 : 0,
-                    x: isButtonClicked ? 20 : 80,
-                    y: isButtonClicked ? 8 : 50,
-                    scale: isButtonClicked ? 0.85 : 1,
+                    scale: isButtonClicked ? 0.8 : 1,
+                    y: isButtonClicked ? 2 : 0,
                   }}
                   transition={{ 
-                    opacity: { duration: 0.4, delay: 0.6 },
-                    x: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] },
-                    y: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] },
-                    scale: { duration: 0.15, ease: 'easeInOut' }
+                    opacity: { duration: 0.3, delay: 0.8 },
+                    scale: { duration: 0.12, ease: 'easeInOut' },
+                    y: { duration: 0.12, ease: 'easeInOut' },
                   }}
                 >
                   {/* Pointer cursor icon */}
@@ -527,9 +525,9 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
                   {isButtonClicked && (
                     <motion.div
                       className="checkout-cursor-ripple"
-                      initial={{ scale: 0, opacity: 0.7 }}
-                      animate={{ scale: 3, opacity: 0 }}
-                      transition={{ duration: 0.5, ease: 'easeOut' }}
+                      initial={{ scale: 0, opacity: 0.6 }}
+                      animate={{ scale: 2.5, opacity: 0 }}
+                      transition={{ duration: 0.4, ease: 'easeOut' }}
                     />
                   )}
                 </motion.div>
