@@ -131,26 +131,34 @@ export function HeroSection() {
                     </div>
                     
                     <div className="flex items-center gap-3 p-3 rounded-xl border border-border/50 opacity-50">
-                      <img 
-                        src={`https://img.logo.dev/apple.com?token=${LOGO_DEV_TOKEN}`}
-                        alt="Apple Pay logo"
-                        width={40}
-                        height={40}
-                        className="w-10 h-10 object-contain"
-                      />
+                      <div className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center">
+                        <img 
+                          src={`https://img.logo.dev/apple.com?token=${LOGO_DEV_TOKEN}`}
+                          alt="Apple Pay logo"
+                          width={20}
+                          height={20}
+                          className="w-5 h-5 object-contain"
+                        />
+                      </div>
                       <span className="text-sm text-muted-foreground">Apple Pay</span>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Floating annotation - elegant indicator */}
+              {/* Floating annotation - Quidkey prediction indicator */}
               <div 
-                className="absolute -right-2 md:-right-4 top-[38%] bg-white rounded-full shadow-md border border-border/40 px-3 py-1.5"
+                className="absolute -right-2 md:-right-4 top-[38%] bg-white rounded-full shadow-md border border-border/40 px-2.5 py-1"
               >
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-success animate-pulse" />
-                  <span className="text-xs font-medium text-foreground/70">AI Predicted</span>
+                <div className="flex items-center gap-1.5">
+                  <img 
+                    src="https://storage.googleapis.com/quidkey-resources-public/quidkey-logo-fav.png"
+                    alt="Quidkey"
+                    width={16}
+                    height={16}
+                    className="w-4 h-4"
+                  />
+                  <span className="text-[11px] font-medium text-foreground/70">Bank predicted</span>
                 </div>
               </div>
             </div>
