@@ -1,8 +1,8 @@
 export function StatsSection() {
   const stats = [
-    { value: '1–3.5%', label: 'All-in fees' },
+    { value: '1-3.5%', label: 'All-in fees' },
     { value: '70%', label: 'Savings on card fees' },
-    { value: '10–20 hrs', label: 'Finance ops saved monthly' },
+    { value: '10-20 hrs', label: 'Finance ops saved monthly' },
     { value: 'Global', label: 'One integration' },
   ]
 

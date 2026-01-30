@@ -120,14 +120,14 @@ export function HeroSection() {
                       <div className="p-4 border-b border-border">
                         <div className="text-xs text-muted-foreground mb-1 font-mono">$149</div>
                         <div className="w-full h-32 bg-gradient-to-br from-secondary to-secondary/50 rounded-xl flex items-center justify-center">
-                          <span className="text-5xl">👟</span>
+                          <span className="text-7xl">👟</span>
                         </div>
                       </div>
                       
                       {/* Payment options */}
                       <div className="p-4 space-y-3 pb-5">
                         {/* Bank prediction - highlighted with switching animation */}
-                        <div className="flex items-center gap-3 p-3.5 bg-primary/5 rounded-xl border-2 border-primary">
+                        <div className="flex items-center gap-3 p-3.5 bg-primary/5 rounded-lg border-2 border-primary">
                           <img 
                             src={`https://img.logo.dev/${currentBank.domain}?token=${LOGO_DEV_TOKEN}`}
                             alt={`${currentBank.name} logo`}

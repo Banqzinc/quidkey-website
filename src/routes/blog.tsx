@@ -3,9 +3,16 @@ import { MegaMenu } from '@/components/layout/mega-menu'
 import { Footer } from '@/components/layout/footer'
 import { Link } from '@tanstack/react-router'
 import { blogPosts } from '@/lib/blog-posts'
+import { buildSeo } from '@/lib/seo'
 
 export const Route = createFileRoute('/blog')({
   component: BlogPage,
+  head: () =>
+    buildSeo({
+      title: 'Blog | Quidkey',
+      description: 'Insights on pay by bank, clearing infrastructure, and programmable treasury.',
+      path: '/blog',
+    }),
 })
 
 function BlogPage() {

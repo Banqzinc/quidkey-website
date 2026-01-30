@@ -337,9 +337,9 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
       { step: 'tax-step-3', delay: 7300 },          // Taxable product
       { step: 'tax-step-4', delay: 8100 },          // Calculating tax...
       { step: 'tax-calculated', delay: 8900 },      // Shows result
-      { step: 'travel-to-outputs', delay: 9700 },   // Both cards start traveling
-      { step: 'arrived', delay: 10600 },            // Cards reached destinations, fade out
-      { step: 'complete', delay: 11400 },           // Show final amounts in boxes
+      { step: 'travel-to-outputs', delay: 10700 },  // Both cards start traveling (+1s pause for reading)
+      { step: 'arrived', delay: 11600 },            // Cards reached destinations, fade out
+      { step: 'complete', delay: 12400 },           // Show final amounts in boxes
     ]
 
     const timeouts = steps.map(({ step: nextStep, delay }) =>
@@ -349,7 +349,7 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
     const loopTimeout = window.setTimeout(() => {
       setStep('idle')
       setCycle((prev) => prev + 1)
-    }, 14000)
+    }, 15000)
 
     return () => {
       timeouts.forEach((timeout) => window.clearTimeout(timeout))

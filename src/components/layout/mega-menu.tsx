@@ -185,9 +185,9 @@ export function MegaMenu() {
             </div>
 
             {/* Simple links */}
-            <a href="#workflows" className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Link to="/workflows" className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
               Workflows
-            </a>
+            </Link>
             <a href="#developers" className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
               Developers
             </a>
@@ -259,9 +259,9 @@ export function MegaMenu() {
             </div>
 
             {/* Simple links */}
-            <a href="#workflows" className="block py-2 font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>
+            <Link to="/workflows" className="block py-2 font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>
               Workflows
-            </a>
+            </Link>
             <a href="#developers" className="block py-2 font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>
               Developers
             </a>

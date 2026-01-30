@@ -1,3 +1,7 @@
+import { Link } from '@tanstack/react-router'
+import { Button } from '@/components/ui/button'
+import { ArrowRight } from 'lucide-react'
+
 export function WorkflowsSection() {
   const workflows = [
     {
@@ -54,11 +58,20 @@ export function WorkflowsSection() {
           ))}
         </div>
 
-        {/* Note */}
-        <p className="text-center text-sm text-background/50 mt-12 max-w-xl mx-auto">
-          Not a GPT wrapper. LLMs parse natural language, but execution is deterministic. 
-          Every workflow compiles to CEL (Common Expression Language) with zero ambiguity.
-        </p>
+        {/* Note and CTA */}
+        <div className="text-center mt-12 space-y-6">
+          <p className="text-sm text-background/50 max-w-xl mx-auto">
+            Not a GPT wrapper. LLMs parse natural language, but execution is deterministic. 
+            Every workflow compiles to CEL (Common Expression Language) with zero ambiguity.
+          </p>
+          
+          <Link to="/workflows">
+            <Button variant="secondary" size="lg" className="group">
+              Explore all workflows
+              <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+            </Button>
+          </Link>
+        </div>
       </div>
     </section>
   )
