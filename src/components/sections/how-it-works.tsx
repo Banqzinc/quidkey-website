@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 
 const LOGO_DEV_TOKEN = 'pk_DsNHFndhT3yo-85c5vdKKg'
@@ -125,6 +125,22 @@ function useMediaQuery(query: string) {
   return matches
 }
 
+// Avoid SSR hydration mismatches by only reading media queries after mount.
+function usePrefersReducedMotion() {
+  const [prefersReduced, setPrefersReduced] = useState(false)
+
+  useEffect(() => {
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)')
+    setPrefersReduced(media.matches)
+
+    const listener = (event: MediaQueryListEvent) => setPrefersReduced(event.matches)
+    media.addEventListener('change', listener)
+    return () => media.removeEventListener('change', listener)
+  }, [])
+
+  return prefersReduced
+}
+
 function useFlowLayout(containerRef: React.RefObject<HTMLDivElement | null>, isDesktop: boolean) {
   const [layout, setLayout] = useState<FlowLayout | null>(null)
 
@@ -180,7 +196,7 @@ function useFlowLayout(containerRef: React.RefObject<HTMLDivElement | null>, isD
 // Node Components - Compact and refined
 function CustomerBankNode({ isActive }: { isActive: boolean }) {
   return (
-    <div 
+    <div
       className={`payment-flow-node payment-flow-node--indigo ${isActive ? 'payment-flow-node--active' : ''}`}
       data-node="customer"
     >
@@ -202,7 +218,7 @@ function CustomerBankNode({ isActive }: { isActive: boolean }) {
 
 function CollectionNode({ isActive, amount }: { isActive: boolean; amount: number | null }) {
   return (
-    <div 
+    <div
       className={`payment-flow-node payment-flow-node--indigo ${isActive ? 'payment-flow-node--active' : ''}`}
       data-node="collection"
     >
@@ -227,7 +243,7 @@ function CollectionNode({ isActive, amount }: { isActive: boolean; amount: numbe
 
 function TaxCalculateNode({ isActive, showDetails }: { isActive: boolean; showDetails: boolean }) {
   return (
-    <div 
+    <div
       className={`payment-flow-node payment-flow-node--teal ${isActive ? 'payment-flow-node--active' : ''}`}
       data-node="tax"
     >
@@ -242,7 +258,7 @@ function TaxCalculateNode({ isActive, showDetails }: { isActive: boolean; showDe
         </div>
         <div className="text-center">
           <div className="text-[10px] font-bold text-teal-700 uppercase tracking-wider">Tax Workflow</div>
-          <div 
+          <div
             className={`text-[10px] font-medium text-teal-600 transition-all duration-300 ${
               showDetails ? 'opacity-100 mt-0.5' : 'opacity-0 h-0 overflow-hidden'
             }`}
@@ -257,7 +273,7 @@ function TaxCalculateNode({ isActive, showDetails }: { isActive: boolean; showDe
 
 function TaxAccountNode({ isActive, amount }: { isActive: boolean; amount: number | null }) {
   return (
-    <div 
+    <div
       className={`payment-flow-node payment-flow-node--red ${isActive ? 'payment-flow-node--active' : ''}`}
       data-node="tax-account"
     >
@@ -281,7 +297,7 @@ function TaxAccountNode({ isActive, amount }: { isActive: boolean; amount: numbe
 
 function BusinessAccountNode({ isActive, amount }: { isActive: boolean; amount: number | null }) {
   return (
-    <div 
+    <div
       className={`payment-flow-node payment-flow-node--green ${isActive ? 'payment-flow-node--active' : ''}`}
       data-node="business"
     >
@@ -307,7 +323,7 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
   const [step, setStep] = useState<AnimationStep>('idle')
   const [cycle, setCycle] = useState(0)
   const containerRef = useRef<HTMLDivElement>(null)
-  const prefersReducedMotion = useReducedMotion()
+  const prefersReducedMotion = usePrefersReducedMotion()
   const isDesktop = useMediaQuery('(min-width: 768px)')
 
   const layout = useFlowLayout(containerRef, isDesktop)
@@ -455,8 +471,8 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
         <motion.div
           className="checkout-overlay"
           initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ 
-            opacity: isPaymentSending ? 0 : 1, 
+          animate={{
+            opacity: isPaymentSending ? 0 : 1,
             scale: isPaymentSending ? 0.85 : 1,
             x: isPaymentSending ? -100 : 0,
             filter: isPaymentSending ? 'blur(4px)' : 'blur(0px)',
@@ -482,48 +498,48 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
               <div className="checkout-button-wrapper">
                 <motion.button
                   className={`checkout-pay-button ${isButtonClicked ? 'checkout-pay-button--clicked' : ''}`}
-                  animate={{ 
+                  animate={{
                     scale: isButtonClicked ? [1, 0.95, 1] : 1,
                   }}
-                  transition={{ 
-                    scale: { 
-                      duration: 0.3, 
+                  transition={{
+                    scale: {
+                      duration: 0.3,
                       times: [0, 0.3, 1],
                       ease: 'easeOut'
                     }
                   }}
                 >
-                  <img 
+                  <img
                     src={`https://img.logo.dev/chase.com?token=${LOGO_DEV_TOKEN}`}
                     alt="Chase logo"
                     className="checkout-bank-logo"
                   />
                   <span className="checkout-pay-text">Pay with Chase</span>
                 </motion.button>
-                
+
                 {/* Animated cursor - appears on button and clicks */}
                 <motion.div
                   className="checkout-cursor"
                   initial={{ opacity: 0 }}
-                  animate={{ 
+                  animate={{
                     opacity: showCheckout ? 1 : 0,
                     scale: isButtonClicked ? [1, 0.75, 1] : 1,
                     y: isButtonClicked ? [0, 3, 0] : 0,
                   }}
-                  transition={{ 
+                  transition={{
                     opacity: { duration: 0.3, delay: 0.8 },
                     scale: { duration: 0.3, times: [0, 0.3, 1], ease: 'easeOut' },
                     y: { duration: 0.3, times: [0, 0.3, 1], ease: 'easeOut' },
                   }}
                 >
                   {/* Pointer cursor icon */}
-                  <svg 
-                    viewBox="0 0 24 24" 
-                    fill="none" 
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
                     className="checkout-cursor-icon"
                   >
-                    <path 
-                      d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87a.5.5 0 0 0 .35-.85L6.35 2.86a.5.5 0 0 0-.85.35Z" 
+                    <path
+                      d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87a.5.5 0 0 0 .35-.85L6.35 2.86a.5.5 0 0 0-.85.35Z"
                       fill="#1e293b"
                       stroke="#fff"
                       strokeWidth="1.5"
@@ -542,7 +558,7 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
               </div>
             </div>
             {isPaymentSending && (
-              <motion.div 
+              <motion.div
                 className="checkout-sending"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -558,7 +574,7 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
       <motion.div
         className="payment-flow-workflow"
         initial={false}
-        animate={{ 
+        animate={{
           opacity: showWorkflow ? 1 : 0,
           x: showWorkflow ? 0 : 40,
           filter: showWorkflow ? 'blur(0px)' : 'blur(4px)',
@@ -640,8 +656,8 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
         <motion.div
           className="payment-flow-card payment-flow-card--processing"
           initial={{ opacity: 0, scale: 0.9, x: '-50%', y: '-50%' }}
-          animate={{ 
-            opacity: 1, 
+          animate={{
+            opacity: 1,
             scale: 1,
             x: '-50%',
             y: '-50%',
@@ -659,10 +675,10 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
           <div className="payment-flow-card__amount">{formatMoney(paymentAmount)}</div>
           <div className="payment-flow-card__steps">
             {/* Step 1: Gathering payment data */}
-            <motion.div 
+            <motion.div
               className="payment-flow-card__step"
               initial={{ opacity: 0, x: -8 }}
-              animate={{ 
+              animate={{
                 opacity: processingStepIndex >= 0 ? 1 : 0,
                 x: processingStepIndex >= 0 ? 0 : -8
               }}
@@ -671,12 +687,12 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
               <span className="payment-flow-card__step-icon">📋</span>
               <span>Gathering payment data...</span>
             </motion.div>
-            
+
             {/* Step 2: California customer */}
-            <motion.div 
+            <motion.div
               className="payment-flow-card__step"
               initial={{ opacity: 0, x: -8 }}
-              animate={{ 
+              animate={{
                 opacity: processingStepIndex >= 1 ? 1 : 0,
                 x: processingStepIndex >= 1 ? 0 : -8
               }}
@@ -685,12 +701,12 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
               <span className="payment-flow-card__step-icon">📍</span>
               <span>California customer</span>
             </motion.div>
-            
+
             {/* Step 3: Taxable product */}
-            <motion.div 
+            <motion.div
               className="payment-flow-card__step"
               initial={{ opacity: 0, x: -8 }}
-              animate={{ 
+              animate={{
                 opacity: processingStepIndex >= 2 ? 1 : 0,
                 x: processingStepIndex >= 2 ? 0 : -8
               }}
@@ -699,12 +715,12 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
               <span className="payment-flow-card__step-icon">🏷️</span>
               <span>Taxable product</span>
             </motion.div>
-            
+
             {/* Step 4: Calculating tax */}
-            <motion.div 
+            <motion.div
               className="payment-flow-card__step"
               initial={{ opacity: 0, x: -8 }}
-              animate={{ 
+              animate={{
                 opacity: processingStepIndex >= 3 ? 1 : 0,
                 x: processingStepIndex >= 3 ? 0 : -8
               }}
@@ -713,10 +729,10 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
               <span className="payment-flow-card__step-icon">🧮</span>
               <span>{processingStepIndex >= 4 ? 'Tax calculated!' : 'Calculating tax...'}</span>
             </motion.div>
-            
+
             {/* Result */}
             {processingStepIndex >= 4 && (
-              <motion.div 
+              <motion.div
                 className="payment-flow-card__result"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -780,9 +796,9 @@ export function HowItWorksSection() {
   const { ref, isInView } = useInView()
 
   return (
-    <section 
-      ref={ref as React.RefObject<HTMLElement>} 
-      id="how-it-works" 
+    <section
+      ref={ref as React.RefObject<HTMLElement>}
+      id="how-it-works"
       className="py-16 md:py-24 lg:py-32 bg-secondary/50"
     >
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">

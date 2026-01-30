@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router'
 
 const LOGO_URL = 'https://storage.googleapis.com/quidkey-resources-public/quidkey-logo-black.svg'
+const COPYRIGHT_YEAR = new Date().getFullYear()
 
 export function Footer() {
   const footerLinks = {
@@ -94,7 +95,7 @@ export function Footer() {
 
           {/* Copyright */}
           <p className="text-sm text-background/60">
-            © {new Date().getFullYear()} Bnqz Inc. (Quidkey). All rights reserved.
+            © {COPYRIGHT_YEAR} Bnqz Inc. (Quidkey). All rights reserved.
           </p>
         </div>
       </div>
