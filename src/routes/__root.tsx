@@ -1,22 +1,6 @@
 import { HeadContent, Outlet, Scripts, createRootRoute } from '@tanstack/react-router'
-import { useEffect } from 'react'
 
 import appCss from '../styles.css?url'
-
-// Featurebase Feedback Widget uses your workspace subdomain/slug (e.g. https://quidkey.featurebase.app)
-const FEATUREBASE_ORG_SLUG = 'quidkey'
-
-// Featurebase SDK types
-type FeaturebaseFunction = {
-  (method: string, options: Record<string, unknown>): void
-  q?: unknown[][]
-}
-
-declare global {
-  interface Window {
-    Featurebase: FeaturebaseFunction
-  }
-}
 
 const ICON_URL = 'https://storage.googleapis.com/quidkey-resources-public/quidkey-logo-fav.png'
 
@@ -77,45 +61,6 @@ function RootComponent() {
 }
 
 function RootDocument({ children }: { children: React.ReactNode }) {
-  // Initialize Featurebase feedback widget after hydration settles
-  useEffect(() => {
-    // Delay initialization to ensure hydration is complete
-    const timeoutId = setTimeout(() => {
-      // Check if Featurebase widget is already initialized by looking for its DOM elements
-      // The widget adds elements with 'fb-feedback-widget' class when initialized
-      const existingWidget = document.querySelector('[class*="fb-feedback-widget"]')
-      if (existingWidget) {
-        return // Widget already exists, don't reinitialize
-      }
-
-      // Define Featurebase queue function before loading script
-      if (typeof window.Featurebase !== 'function') {
-        window.Featurebase = function (...args: unknown[]) {
-          ;(window.Featurebase.q = window.Featurebase.q || []).push(args)
-        }
-      }
-
-      // Initialize the feedback widget with floating button
-      window.Featurebase('initialize_feedback_widget', {
-        organization: FEATUREBASE_ORG_SLUG,
-        theme: 'dark',
-        placement: 'right', // Shows floating "Feedback" button on right side
-      })
-
-      // Load the Featurebase SDK
-      const scriptId = 'featurebase-sdk'
-      if (!document.getElementById(scriptId)) {
-        const script = document.createElement('script')
-        script.id = scriptId
-        script.src = 'https://do.featurebase.app/js/sdk.js'
-        script.async = true
-        document.head.appendChild(script)
-      }
-    }, 100) // Small delay to let hydration complete
-
-    return () => clearTimeout(timeoutId)
-  }, [])
-
   return (
     <html lang="en" className="scroll-smooth">
       <head>
