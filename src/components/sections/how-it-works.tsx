@@ -1,8 +1,13 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 
+const LOGO_DEV_TOKEN = 'pk_DsNHFndhT3yo-85c5vdKKg'
+
 type AnimationStep =
   | 'idle'
+  | 'show-checkout'       // Show checkout UI
+  | 'click-pay'           // Click the Pay button
+  | 'payment-sent'        // Payment initiated, fade out checkout
   | 'customer-active'
   | 'travel-to-collection'
   | 'collection-active'
@@ -13,7 +18,8 @@ type AnimationStep =
   | 'tax-step-4'          // Calculating tax...
   | 'tax-calculated'      // Shows the calculation result
   | 'travel-to-outputs'   // Both cards travel together
-  | 'complete'
+  | 'arrived'             // Cards arrived, show amounts in boxes
+  | 'complete'            // Final state, pause before restart
 
 type NodeKey = 'customer' | 'collection' | 'tax' | 'taxAccount' | 'merchant'
 
@@ -237,11 +243,11 @@ function TaxCalculateNode({ isActive, showDetails }: { isActive: boolean; showDe
         <div className="text-center">
           <div className="text-[10px] font-bold text-teal-700 uppercase tracking-wider">Tax Workflow</div>
           <div 
-            className={`text-[11px] font-semibold text-teal-600 transition-all duration-300 ${
+            className={`text-[10px] font-medium text-teal-600 transition-all duration-300 ${
               showDetails ? 'opacity-100 mt-0.5' : 'opacity-0 h-0 overflow-hidden'
             }`}
           >
-            CA @ 8.25%
+            Dos Palos, CA: 8.25%
           </div>
         </div>
       </div>
@@ -317,19 +323,23 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
       return
     }
 
-    // Slower timing with step-by-step processing at Tax Workflow
+    // Animation timing with checkout initiation (slower checkout phase)
     const steps: { step: AnimationStep; delay: number }[] = [
-      { step: 'customer-active', delay: 0 },
-      { step: 'travel-to-collection', delay: 500 },
-      { step: 'collection-active', delay: 1200 },
-      { step: 'travel-to-tax', delay: 1800 },
-      { step: 'tax-step-1', delay: 2500 },          // Gathering payment data
-      { step: 'tax-step-2', delay: 3300 },          // California customer
-      { step: 'tax-step-3', delay: 4100 },          // Taxable product
-      { step: 'tax-step-4', delay: 4900 },          // Calculating tax...
-      { step: 'tax-calculated', delay: 5700 },      // Shows result
-      { step: 'travel-to-outputs', delay: 6500 },   // Both cards travel together
-      { step: 'complete', delay: 7300 },
+      { step: 'show-checkout', delay: 0 },          // Show checkout UI
+      { step: 'click-pay', delay: 1800 },           // Click Pay with Chase
+      { step: 'payment-sent', delay: 2600 },        // Payment sending (quicker transition)
+      { step: 'customer-active', delay: 3200 },     // Start workflow (overlaps slightly)
+      { step: 'travel-to-collection', delay: 3700 },
+      { step: 'collection-active', delay: 4400 },
+      { step: 'travel-to-tax', delay: 5000 },
+      { step: 'tax-step-1', delay: 5700 },          // Gathering payment data
+      { step: 'tax-step-2', delay: 6500 },          // California customer
+      { step: 'tax-step-3', delay: 7300 },          // Taxable product
+      { step: 'tax-step-4', delay: 8100 },          // Calculating tax...
+      { step: 'tax-calculated', delay: 8900 },      // Shows result
+      { step: 'travel-to-outputs', delay: 9700 },   // Both cards start traveling
+      { step: 'arrived', delay: 10600 },            // Cards reached destinations, fade out
+      { step: 'complete', delay: 11400 },           // Show final amounts in boxes
     ]
 
     const timeouts = steps.map(({ step: nextStep, delay }) =>
@@ -339,7 +349,7 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
     const loopTimeout = window.setTimeout(() => {
       setStep('idle')
       setCycle((prev) => prev + 1)
-    }, 9000)
+    }, 14000)
 
     return () => {
       timeouts.forEach((timeout) => window.clearTimeout(timeout))
@@ -347,25 +357,35 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
     }
   }, [isPlaying, prefersReducedMotion, cycle])
 
+  // Checkout visibility
+  const checkoutSteps = ['show-checkout', 'click-pay', 'payment-sent']
+  const showCheckout = checkoutSteps.includes(step)
+  const isButtonClicked = ['click-pay', 'payment-sent'].includes(step)
+  const isPaymentSending = step === 'payment-sent'
+
   // Processing steps for animated display
   const processingSteps = ['tax-step-1', 'tax-step-2', 'tax-step-3', 'tax-step-4', 'tax-calculated']
   const isProcessing = processingSteps.includes(step)
+
+  // Workflow visibility (hide during checkout)
+  const showWorkflow = !checkoutSteps.includes(step) && step !== 'idle'
 
   // Derive active states
   const customerActive = ['customer-active', 'travel-to-collection'].includes(step)
   const collectionActive = ['collection-active', 'travel-to-tax'].includes(step)
   const taxActive = isProcessing || step === 'travel-to-outputs'
-  const taxAccountActive = ['travel-to-outputs', 'complete'].includes(step)
-  const merchantActive = ['travel-to-outputs', 'complete'].includes(step)
+  const taxAccountActive = ['travel-to-outputs', 'arrived', 'complete'].includes(step)
+  const merchantActive = ['travel-to-outputs', 'arrived', 'complete'].includes(step)
 
-  const showCollectionAmount = !['idle', 'customer-active', 'travel-to-collection'].includes(step)
-  const showTaxDetails = ['tax-calculated', 'travel-to-outputs', 'complete'].includes(step)
-  const showOutputAmounts = ['complete'].includes(step)
+  const showCollectionAmount = !['idle', 'show-checkout', 'click-pay', 'payment-sent', 'customer-active', 'travel-to-collection'].includes(step)
+  const showTaxDetails = ['tax-calculated', 'travel-to-outputs', 'arrived', 'complete'].includes(step)
+  const showOutputAmounts = ['arrived', 'complete'].includes(step)
 
   // Card visibility states
   const showTravelingCard = ['customer-active', 'travel-to-collection', 'collection-active', 'travel-to-tax'].includes(step)
   const showProcessingCard = isProcessing
-  const showSplitCards = ['travel-to-outputs', 'complete'].includes(step)
+  const showSplitCards = ['travel-to-outputs', 'arrived'].includes(step) // Show until arrived, then fade
+  const cardsArrived = step === 'arrived' // Cards have reached destination, fade them out
 
   // Connection line active states
   const connection1Active = step === 'travel-to-collection'
@@ -381,8 +401,8 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
     ? 50
     : 100  // At tax node
 
-  // Output cards travel together
-  const outputOffset = step === 'travel-to-outputs' ? 50 : 100
+  // Output cards travel together - start at 0, travel to 100%
+  const outputOffset = step === 'travel-to-outputs' ? 100 : 100 // Travel all the way
 
   // Current processing step index (0-4)
   const processingStepIndex = processingSteps.indexOf(step)
@@ -430,51 +450,168 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
 
   return (
     <div ref={containerRef} className="payment-flow-diagram">
-      <svg className="payment-flow-edges" viewBox={`0 0 ${layout.width} ${layout.height}`} preserveAspectRatio="none">
-        <path
-          d={layout.paths.main}
-          className={`payment-flow-edge ${connection1Active || connection2Active ? 'payment-flow-edge--active' : ''}`}
-        />
-        <path
-          d={layout.paths.tax}
-          className={`payment-flow-edge ${connection3Active ? 'payment-flow-edge--active' : ''}`}
-        />
-        <path
-          d={layout.paths.net}
-          className={`payment-flow-edge ${connection3Active ? 'payment-flow-edge--active' : ''}`}
-        />
-      </svg>
+      {/* Checkout UI - shown at start of animation */}
+      {showCheckout && (
+        <motion.div
+          className="checkout-overlay"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ 
+            opacity: isPaymentSending ? 0 : 1, 
+            scale: isPaymentSending ? 0.85 : 1,
+            x: isPaymentSending ? -100 : 0,
+            filter: isPaymentSending ? 'blur(4px)' : 'blur(0px)',
+          }}
+          transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+        >
+          <div className="checkout-card">
+            <div className="checkout-header">
+              <div className="checkout-merchant">
+                <div className="checkout-merchant-icon">🛒</div>
+                <div>
+                  <div className="checkout-merchant-name">Acme Store</div>
+                  <div className="checkout-merchant-url">checkout.acme.com</div>
+                </div>
+              </div>
+            </div>
+            <div className="checkout-amount">
+              <span className="checkout-amount-label">Total</span>
+              <span className="checkout-amount-value">{formatMoney(paymentAmount)}</span>
+            </div>
+            <div className="checkout-divider" />
+            <div className="checkout-payment-method">
+              <div className="checkout-button-wrapper">
+                <motion.button
+                  className={`checkout-pay-button ${isButtonClicked ? 'checkout-pay-button--clicked' : ''}`}
+                  animate={{ 
+                    scale: isButtonClicked ? [1, 0.95, 1] : 1,
+                  }}
+                  transition={{ 
+                    scale: { 
+                      duration: 0.3, 
+                      times: [0, 0.3, 1],
+                      ease: 'easeOut'
+                    }
+                  }}
+                >
+                  <img 
+                    src={`https://img.logo.dev/chase.com?token=${LOGO_DEV_TOKEN}`}
+                    alt="Chase logo"
+                    className="checkout-bank-logo"
+                  />
+                  <span className="checkout-pay-text">Pay with Chase</span>
+                </motion.button>
+                
+                {/* Animated cursor - appears on button and clicks */}
+                <motion.div
+                  className="checkout-cursor"
+                  initial={{ opacity: 0 }}
+                  animate={{ 
+                    opacity: showCheckout ? 1 : 0,
+                    scale: isButtonClicked ? [1, 0.75, 1] : 1,
+                    y: isButtonClicked ? [0, 3, 0] : 0,
+                  }}
+                  transition={{ 
+                    opacity: { duration: 0.3, delay: 0.8 },
+                    scale: { duration: 0.3, times: [0, 0.3, 1], ease: 'easeOut' },
+                    y: { duration: 0.3, times: [0, 0.3, 1], ease: 'easeOut' },
+                  }}
+                >
+                  {/* Pointer cursor icon */}
+                  <svg 
+                    viewBox="0 0 24 24" 
+                    fill="none" 
+                    className="checkout-cursor-icon"
+                  >
+                    <path 
+                      d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87a.5.5 0 0 0 .35-.85L6.35 2.86a.5.5 0 0 0-.85.35Z" 
+                      fill="#1e293b"
+                      stroke="#fff"
+                      strokeWidth="1.5"
+                    />
+                  </svg>
+                  {/* Click ripple effect */}
+                  {isButtonClicked && (
+                    <motion.div
+                      className="checkout-cursor-ripple"
+                      initial={{ scale: 0, opacity: 0.6 }}
+                      animate={{ scale: 2.5, opacity: 0 }}
+                      transition={{ duration: 0.4, ease: 'easeOut' }}
+                    />
+                  )}
+                </motion.div>
+              </div>
+            </div>
+            {isPaymentSending && (
+              <motion.div 
+                className="checkout-sending"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+              >
+                Initiating payment...
+              </motion.div>
+            )}
+          </div>
+        </motion.div>
+      )}
 
-      <div
-        className="payment-flow-node-position"
-        style={{ left: layout.nodes.customer.x, top: layout.nodes.customer.y }}
+      {/* Workflow visualization */}
+      <motion.div
+        className="payment-flow-workflow"
+        initial={false}
+        animate={{ 
+          opacity: showWorkflow ? 1 : 0,
+          x: showWorkflow ? 0 : 40,
+          filter: showWorkflow ? 'blur(0px)' : 'blur(4px)',
+        }}
+        transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1], delay: showWorkflow ? 0.1 : 0 }}
+        style={{ pointerEvents: showWorkflow ? 'auto' : 'none' }}
       >
-        <CustomerBankNode isActive={customerActive} />
-      </div>
-      <div
-        className="payment-flow-node-position"
-        style={{ left: layout.nodes.collection.x, top: layout.nodes.collection.y }}
-      >
-        <CollectionNode isActive={collectionActive} amount={showCollectionAmount ? paymentAmount : null} />
-      </div>
-      <div
-        className="payment-flow-node-position"
-        style={{ left: layout.nodes.tax.x, top: layout.nodes.tax.y }}
-      >
-        <TaxCalculateNode isActive={taxActive} showDetails={showTaxDetails} />
-      </div>
-      <div
-        className="payment-flow-node-position"
-        style={{ left: layout.nodes.taxAccount.x, top: layout.nodes.taxAccount.y }}
-      >
-        <TaxAccountNode isActive={taxAccountActive} amount={showOutputAmounts ? taxAmount : null} />
-      </div>
-      <div
-        className="payment-flow-node-position"
-        style={{ left: layout.nodes.merchant.x, top: layout.nodes.merchant.y }}
-      >
-        <MerchantAccountNode isActive={merchantActive} amount={showOutputAmounts ? netAmount : null} />
-      </div>
+        <svg className="payment-flow-edges" viewBox={`0 0 ${layout.width} ${layout.height}`} preserveAspectRatio="none">
+          <path
+            d={layout.paths.main}
+            className={`payment-flow-edge ${connection1Active || connection2Active ? 'payment-flow-edge--active' : ''}`}
+          />
+          <path
+            d={layout.paths.tax}
+            className={`payment-flow-edge ${connection3Active ? 'payment-flow-edge--active' : ''}`}
+          />
+          <path
+            d={layout.paths.net}
+            className={`payment-flow-edge ${connection3Active ? 'payment-flow-edge--active' : ''}`}
+          />
+        </svg>
+
+        <div
+          className="payment-flow-node-position"
+          style={{ left: layout.nodes.customer.x, top: layout.nodes.customer.y }}
+        >
+          <CustomerBankNode isActive={customerActive} />
+        </div>
+        <div
+          className="payment-flow-node-position"
+          style={{ left: layout.nodes.collection.x, top: layout.nodes.collection.y }}
+        >
+          <CollectionNode isActive={collectionActive} amount={showCollectionAmount ? paymentAmount : null} />
+        </div>
+        <div
+          className="payment-flow-node-position"
+          style={{ left: layout.nodes.tax.x, top: layout.nodes.tax.y }}
+        >
+          <TaxCalculateNode isActive={taxActive} showDetails={showTaxDetails} />
+        </div>
+        <div
+          className="payment-flow-node-position"
+          style={{ left: layout.nodes.taxAccount.x, top: layout.nodes.taxAccount.y }}
+        >
+          <TaxAccountNode isActive={taxAccountActive} amount={showOutputAmounts ? taxAmount : null} />
+        </div>
+        <div
+          className="payment-flow-node-position"
+          style={{ left: layout.nodes.merchant.x, top: layout.nodes.merchant.y }}
+        >
+          <MerchantAccountNode isActive={merchantActive} amount={showOutputAmounts ? netAmount : null} />
+        </div>
+      </motion.div>
 
       {/* Traveling payment card - moves along the path */}
       {showTravelingCard && (
@@ -585,7 +722,7 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.3 }}
               >
-                <span className="text-teal-600 font-semibold">CA @ 8.25% = {formatMoney(taxAmount)}</span>
+                <span className="text-teal-600 font-semibold">Dos Palos, CA: {formatMoney(taxAmount)}</span>
               </motion.div>
             )}
           </div>
@@ -597,10 +734,11 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
         <>
           <motion.div
             className="payment-flow-card payment-flow-card--tax"
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 0, offsetDistance: '0%' }}
             animate={{
-              opacity: 1,
+              opacity: cardsArrived ? 0 : 1,
               offsetDistance: `${outputOffset}%`,
+              scale: cardsArrived ? 0.8 : 1,
             }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             style={
@@ -615,10 +753,11 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
           </motion.div>
           <motion.div
             className="payment-flow-card payment-flow-card--net"
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 0, offsetDistance: '0%' }}
             animate={{
-              opacity: 1,
+              opacity: cardsArrived ? 0 : 1,
               offsetDistance: `${outputOffset}%`,
+              scale: cardsArrived ? 0.8 : 1,
             }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             style={
