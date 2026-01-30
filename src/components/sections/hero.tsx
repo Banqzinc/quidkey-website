@@ -120,7 +120,7 @@ export function HeroSection() {
                       <div className="p-4 border-b border-border">
                         <div className="text-xs text-muted-foreground mb-1 font-mono">$149</div>
                         <div className="w-full h-32 bg-gradient-to-br from-secondary to-secondary/50 rounded-xl flex items-center justify-center">
-                          <span className="text-5xl">👟</span>
+                          <span className="text-7xl">👟</span>
                         </div>
                       </div>
                       
