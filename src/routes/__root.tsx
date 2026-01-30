@@ -81,6 +81,13 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     // Delay initialization to ensure hydration is complete
     const timeoutId = setTimeout(() => {
+      // Check if Featurebase widget is already initialized by looking for its DOM elements
+      // The widget adds elements with 'fb-feedback-widget' class when initialized
+      const existingWidget = document.querySelector('[class*="fb-feedback-widget"]')
+      if (existingWidget) {
+        return // Widget already exists, don't reinitialize
+      }
+
       // Define Featurebase queue function before loading script
       if (typeof window.Featurebase !== 'function') {
         window.Featurebase = function (...args: unknown[]) {
