@@ -7,9 +7,9 @@ export const Route = createFileRoute('/solutions/saas')({
   component: SaaSPage,
   head: () =>
     buildSeo({
-      title: 'Pay by Bank for SaaS & Subscriptions | Quidkey',
+      title: 'SaaS | Quidkey',
       description:
-        'Accept recurring payments at 1-3.5% fees. Stay seller-of-record while automating tax, FX, and settlements across global markets.',
+        'Recurring payments at 1-3.5%. Stay seller-of-record. Automate tax.',
       path: '/solutions/saas',
     }),
 })
@@ -18,33 +18,33 @@ function SaaSPage() {
   const features = [
     {
       icon: RefreshCw,
-      title: 'Recurring Payments',
-      description: 'Variable recurring payments (VRP) for subscriptions. Automatic collection on your schedule.',
+      title: 'Recurring payments',
+      description: 'Automatic collection.',
     },
     {
       icon: TrendingDown,
-      title: 'Lower Than Cards',
-      description: 'SaaS margins matter. Pay 1-3.5% instead of 3-6% card fees on every renewal.',
+      title: 'Lower than cards',
+      description: '1-3.5% per renewal.',
     },
     {
       icon: Globe,
-      title: 'Global Subscriptions',
-      description: 'Collect in GBP, EUR, USD, and AUD. Local currency for local customers.',
+      title: 'Global',
+      description: 'GBP, EUR, USD, AUD.',
     },
     {
       icon: FileCheck,
-      title: 'Automatic Tax Compliance',
-      description: 'Calculate and hold sales tax by jurisdiction. No more manual tax operations.',
+      title: 'Auto tax',
+      description: 'Calculate by jurisdiction.',
     },
     {
       icon: Monitor,
-      title: 'Stay Seller-of-Record',
-      description: 'Keep your customer relationships. Avoid 5-10% MoR fees from Paddle/Fastspring.',
+      title: 'Stay seller-of-record',
+      description: 'Keep your customers.',
     },
     {
       icon: Shield,
-      title: 'No Chargebacks',
-      description: 'B2B SaaS has low chargeback risk anyway, but zero is still better.',
+      title: 'No chargebacks',
+      description: 'Zero is better.',
     },
   ]
 
@@ -52,66 +52,66 @@ function SaaSPage() {
     {
       stat: '5-10%',
       statLabel: 'vs MoR fees',
-      title: 'Better than Paddle/Fastspring',
-      description: 'Keep seller-of-record status and pay 1-3.5% instead of MoR take rates.',
+      title: 'Better than Paddle',
+      description: '1-3.5% not 5-10%.',
     },
     {
       stat: '10-20h',
       statLabel: 'saved monthly',
       title: 'Automate treasury',
-      description: 'Tax, FX, and settlement workflows run automatically. CFO time freed up.',
+      description: 'Tax and FX handled.',
     },
     {
       stat: 'B2B ready',
       statLabel: 'no disputes',
-      title: 'Built for business buyers',
-      description: 'Business customers often prefer bank payments. No personal card needed.',
+      title: 'For business buyers',
+      description: 'No personal card needed.',
     },
   ]
 
   const steps = [
     {
       step: '1',
-      title: 'Connect billing system',
-      description: 'Integrate with your subscription platform. API works with any billing stack.',
+      title: 'Connect billing',
+      description: 'Works with any stack.',
     },
     {
       step: '2',
-      title: 'Enable recurring payments',
-      description: 'Customers authorize variable recurring payments. Collections happen automatically.',
+      title: 'Enable recurring',
+      description: 'Customers authorize.',
     },
     {
       step: '3',
-      title: 'Automate operations',
-      description: 'Configure tax workflows, FX rules, and settlement schedules.',
+      title: 'Automate',
+      description: 'Tax, FX, settlement.',
     },
   ]
 
   return (
     <PageLayout>
       <PageHero
-        badge="SaaS & Subscriptions"
+        badge="SaaS"
         title="Subscriptions without"
         titleGradient="the MoR tax."
-        description="Accept recurring payments at 1-3.5%. Stay seller-of-record, automate tax compliance, and scale globally without operational complexity."
-        features={['Recurring payments', 'Stay seller-of-record', 'Automatic tax']}
+        description="1-3.5% recurring. Stay seller-of-record. Automate tax."
+        features={['Recurring', 'Seller-of-record', 'Auto tax']}
       />
 
       <FeatureGrid
-        title="Built for SaaS economics"
-        subtitle="Maximize margin while minimizing operations."
+        title="Built for SaaS"
+        subtitle="Maximize margin."
         features={features}
       />
 
       <BenefitsSection
-        title="Why SaaS companies choose Quidkey"
-        subtitle="Better unit economics, less work."
+        title="Why SaaS chooses Quidkey"
+        subtitle="Better unit economics."
         benefits={benefits}
       />
 
       <HowItWorksSteps
-        title="Launch recurring pay by bank"
-        subtitle="From integration to automated collections."
+        title="Launch recurring"
+        subtitle="Integration to collections."
         steps={steps}
       />
 

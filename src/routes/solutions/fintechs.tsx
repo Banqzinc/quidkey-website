@@ -1,15 +1,15 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA } from '@/components/layout/page-layout'
-import { Landmark, Palette, Zap, Globe, Code, Shield } from 'lucide-react'
+import { Building2, Zap, Globe, Shield, Code2, BarChart3 } from 'lucide-react'
 import { buildSeo } from '@/lib/seo'
 
 export const Route = createFileRoute('/solutions/fintechs')({
   component: FintechsPage,
   head: () =>
     buildSeo({
-      title: 'White-Label Pay by Bank for Fintechs | Quidkey',
+      title: 'Fintechs | Quidkey',
       description:
-        'White-label pay by bank infrastructure for fintechs. Scale faster with our clearing house rails, your brand, your customer relationships.',
+        'White-label payments. One integration. Multi-region.',
       path: '/solutions/fintechs',
     }),
 })
@@ -17,73 +17,73 @@ export const Route = createFileRoute('/solutions/fintechs')({
 function FintechsPage() {
   const features = [
     {
-      icon: Palette,
-      title: 'Fully White-Label',
-      description: 'Your brand, your checkout, your customer relationships. Quidkey powers the rails invisibly.',
+      icon: Code2,
+      title: 'One API',
+      description: 'Multi-region from one codebase.',
     },
     {
       icon: Globe,
-      title: 'Global Coverage',
-      description: 'UK, EU, US, and Australia from day one. Expand internationally without new integrations.',
+      title: 'Global',
+      description: 'UK, EU, US, AU covered.',
     },
     {
-      icon: Zap,
-      title: 'Fast Time-to-Market',
-      description: 'Skip years of bank partnerships and regulatory work. Go live in weeks, not years.',
-    },
-    {
-      icon: Code,
-      title: 'API-First Design',
-      description: 'RESTful APIs, webhooks, and SDKs. Build any payment experience on our infrastructure.',
+      icon: Building2,
+      title: 'White-label',
+      description: 'Your brand, our rails.',
     },
     {
       icon: Shield,
-      title: 'Compliance Handled',
-      description: 'We manage the regulatory complexity. You focus on product and growth.',
+      title: 'Compliant',
+      description: 'SOC 2 Type II.',
     },
     {
-      icon: Landmark,
-      title: 'Treasury Services',
-      description: 'Offer local accounts, FX, and programmable payouts. Full stack financial services.',
+      icon: Zap,
+      title: 'Real-time',
+      description: 'Webhooks. Instant status.',
+    },
+    {
+      icon: BarChart3,
+      title: 'Treasury tools',
+      description: 'Rules engine. FX. Payouts.',
     },
   ]
 
   const benefits = [
     {
-      stat: 'Weeks',
-      statLabel: 'not years',
-      title: 'Accelerate your roadmap',
-      description: 'Building bank connectivity takes years. Our infrastructure is ready now.',
+      stat: '1',
+      statLabel: 'integration',
+      title: 'Ship faster',
+      description: 'One API. Four regions.',
     },
     {
-      stat: '60%+',
-      statLabel: 'gross margins',
-      title: 'Better unit economics',
-      description: 'Transparent pricing lets you build profitable products on our rails.',
+      stat: 'SOC 2',
+      statLabel: 'Type II',
+      title: 'Enterprise ready',
+      description: 'Pass security reviews.',
     },
     {
-      stat: 'Zero',
-      statLabel: 'regulatory burden',
-      title: 'We handle compliance',
-      description: 'Regulated partners, AML, KYC, all managed. You stay focused on product.',
+      stat: 'White-label',
+      statLabel: 'everything',
+      title: 'Your brand',
+      description: 'Customers see you.',
     },
   ]
 
   const steps = [
     {
       step: '1',
-      title: 'Technical integration',
-      description: 'Connect via API. Configure white-label branding, webhooks, and flows.',
+      title: 'Integrate',
+      description: 'Single API call.',
     },
     {
       step: '2',
-      title: 'Compliance onboarding',
-      description: 'Complete partner verification. We handle the regulatory setup.',
+      title: 'Configure',
+      description: 'Regions, branding, flows.',
     },
     {
       step: '3',
-      title: 'Launch your product',
-      description: 'Go live with your branded pay by bank product. Scale without infrastructure limits.',
+      title: 'Launch',
+      description: 'Your product, our rails.',
     },
   ]
 
@@ -91,27 +91,27 @@ function FintechsPage() {
     <PageLayout>
       <PageHero
         badge="Fintechs"
-        title="Scale faster with"
-        titleGradient="white-label infrastructure."
-        description="Full pay by bank infrastructure for fintechs. Your brand, our rails. Go live in weeks, scale without limits."
-        features={['White-label ready', 'Global coverage', 'API-first']}
+        title="Infrastructure for"
+        titleGradient="fintech products."
+        description="One API. Multi-region. White-label. SOC 2."
+        features={['One integration', 'White-label', 'SOC 2 Type II']}
       />
 
       <FeatureGrid
-        title="Infrastructure that scales with you"
-        subtitle="Everything fintechs need to build payment products."
+        title="Built for fintechs"
+        subtitle="Ship faster."
         features={features}
       />
 
       <BenefitsSection
-        title="Why fintechs partner with Quidkey"
-        subtitle="Focus on product, not infrastructure."
+        title="Why fintechs choose Quidkey"
+        subtitle="Build, don't stitch."
         benefits={benefits}
       />
 
       <HowItWorksSteps
-        title="From integration to launch"
-        subtitle="The path to your white-label product."
+        title="Get started"
+        subtitle="API to launch."
         steps={steps}
       />
 

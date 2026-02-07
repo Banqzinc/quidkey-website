@@ -7,9 +7,9 @@ export const Route = createFileRoute('/products/rules-engine')({
   component: RulesEnginePage,
   head: () =>
     buildSeo({
-      title: 'Event-Driven Rules Engine | Quidkey',
+      title: 'Rules Engine | Quidkey',
       description:
-        'Define event-driven rules for money movement. Trigger actions on payments, refunds, settlements, and custom events.',
+        'Event-driven rules for money movement. Real-time triggers and actions.',
       path: '/products/rules-engine',
     }),
 })
@@ -18,33 +18,33 @@ function RulesEnginePage() {
   const features = [
     {
       icon: Zap,
-      title: 'Event-Driven Triggers',
-      description: 'React to payment events in real time: completed, failed, refunded, settled.',
+      title: 'Event triggers',
+      description: 'React to payments, refunds, settlements.',
     },
     {
       icon: GitBranch,
-      title: 'Conditional Logic',
-      description: 'Define conditions: if amount > $1000, if currency = EUR, if customer.country = US.',
+      title: 'Conditions',
+      description: 'If amount > $1000, if currency = EUR.',
     },
     {
       icon: Code,
-      title: 'CEL Expressions',
-      description: 'Write rules in Common Expression Language. Powerful, type-safe, and auditable.',
+      title: 'CEL expressions',
+      description: 'Type-safe. Auditable.',
     },
     {
       icon: Bell,
-      title: 'Webhook Actions',
-      description: 'Trigger webhooks to external systems. Notify your ERP, CRM, or custom backend.',
+      title: 'Webhooks',
+      description: 'Notify external systems.',
     },
     {
       icon: Shield,
-      title: 'Fraud Prevention',
-      description: 'Build custom fraud rules. Flag suspicious patterns, block high-risk transactions.',
+      title: 'Fraud rules',
+      description: 'Flag suspicious patterns.',
     },
     {
       icon: Settings,
-      title: 'No-Code Builder',
-      description: 'Visual rule builder for simple cases. Code editor for complex logic. Your choice.',
+      title: 'Visual builder',
+      description: 'No-code for simple rules.',
     },
   ]
 
@@ -53,37 +53,37 @@ function RulesEnginePage() {
       stat: 'Real-time',
       statLabel: 'execution',
       title: 'Instant reactions',
-      description: 'Rules fire as events occur. No batch processing, no delays.',
+      description: 'Rules fire as events occur.',
     },
     {
       stat: 'Unlimited',
       statLabel: 'rules',
-      title: 'Scale without limits',
-      description: 'Create as many rules as needed. No per-rule pricing.',
+      title: 'No limits',
+      description: 'Create as many as needed.',
     },
     {
       stat: 'Full',
       statLabel: 'audit trail',
       title: 'Complete visibility',
-      description: 'See which rules fired, what conditions matched, and what actions executed.',
+      description: 'See what fired and why.',
     },
   ]
 
   const steps = [
     {
       step: '1',
-      title: 'Define the trigger',
-      description: 'Select the event that starts the rule: payment.completed, refund.initiated, etc.',
+      title: 'Pick trigger',
+      description: 'Payment completed, refund initiated, etc.',
     },
     {
       step: '2',
       title: 'Set conditions',
-      description: 'Add conditions that must be true: amount thresholds, currencies, customer attributes.',
+      description: 'What must be true.',
     },
     {
       step: '3',
-      title: 'Specify actions',
-      description: 'Define what happens when conditions match: route funds, send webhook, flag for review.',
+      title: 'Define action',
+      description: 'What happens when triggered.',
     },
   ]
 
@@ -93,25 +93,25 @@ function RulesEnginePage() {
         badge="Programmable Treasury"
         title="Rules that react."
         titleGradient="Events that trigger action."
-        description="Build event-driven rules for money movement. Trigger on payments, refunds, and settlements. Execute actions in real time."
-        features={['Event-driven', 'CEL expressions', 'Real-time execution']}
+        description="Event-driven rules for money movement. Trigger on payments. Execute in real time."
+        features={['Event-driven', 'Real-time', 'Auditable']}
       />
 
       <FeatureGrid
-        title="Complete control over money flow"
-        subtitle="React to every event with custom logic."
+        title="Control money flow"
+        subtitle="React to every event."
         features={features}
       />
 
       <BenefitsSection
         title="Power without complexity"
-        subtitle="Simple rules, powerful results."
+        subtitle="Simple rules. Powerful results."
         benefits={benefits}
       />
 
       <HowItWorksSteps
-        title="Build rules in three steps"
-        subtitle="From event to action."
+        title="Build rules in 3 steps"
+        subtitle="Trigger to action."
         steps={steps}
       />
 

@@ -1,15 +1,15 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA } from '@/components/layout/page-layout'
-import { Briefcase, Link as LinkIcon, FileText, Globe, Clock, Shield } from 'lucide-react'
+import { Briefcase, Receipt, TrendingDown, Clock, Shield, Globe } from 'lucide-react'
 import { buildSeo } from '@/lib/seo'
 
 export const Route = createFileRoute('/solutions/professional-services')({
   component: ProfessionalServicesPage,
   head: () =>
     buildSeo({
-      title: 'Pay by Bank for Professional Services | Quidkey',
+      title: 'Professional Services | Quidkey',
       description:
-        'Accept high-value invoice payments at 1-3.5%. Payment links for consultants, agencies, and service businesses. No code required.',
+        'Accept invoice payments at 1-3.5%. No card limits.',
       path: '/solutions/professional-services',
     }),
 })
@@ -17,73 +17,73 @@ export const Route = createFileRoute('/solutions/professional-services')({
 function ProfessionalServicesPage() {
   const features = [
     {
-      icon: LinkIcon,
-      title: 'Payment Links',
-      description: 'Create payment links in seconds. Add to invoices, emails, or anywhere clients see.',
+      icon: Receipt,
+      title: 'Invoice payments',
+      description: 'Payment links by email.',
     },
     {
-      icon: FileText,
-      title: 'Invoice Integration',
-      description: 'Embed payment links in invoices. Clients click and pay directly from the document.',
-    },
-    {
-      icon: Globe,
-      title: 'International Clients',
-      description: 'Accept GBP, EUR, USD, and AUD. Clients pay in their currency, you receive in yours.',
+      icon: TrendingDown,
+      title: 'Lower fees',
+      description: '1-3.5% on any amount.',
     },
     {
       icon: Clock,
-      title: 'Faster Collection',
-      description: 'Bank payments settle faster than card payments. Improve your cash flow.',
-    },
-    {
-      icon: Shield,
-      title: 'No Chargebacks',
-      description: 'Service businesses face dispute risk. Bank payments eliminate chargebacks entirely.',
+      title: 'Fast settlement',
+      description: 'Funds land quickly.',
     },
     {
       icon: Briefcase,
-      title: 'No Code Required',
-      description: 'Create links from the dashboard. No developer, no integration, no technical work.',
+      title: 'B2B optimized',
+      description: 'Business accounts work.',
+    },
+    {
+      icon: Shield,
+      title: 'No disputes',
+      description: 'Authenticated payments.',
+    },
+    {
+      icon: Globe,
+      title: 'International',
+      description: 'Accept cross-border.',
     },
   ]
 
   const benefits = [
     {
-      stat: '$0',
-      statLabel: 'setup cost',
-      title: 'Start for free',
-      description: 'No monthly fees, no setup costs. Pay only when you\'re paid.',
+      stat: '60%',
+      statLabel: 'fee savings',
+      title: 'Better margins',
+      description: 'On high-value invoices.',
     },
     {
-      stat: '30 sec',
-      statLabel: 'per link',
-      title: 'Fast invoicing',
-      description: 'Create a payment link, add to invoice, send. That\'s it.',
+      stat: 'No limits',
+      statLabel: 'on invoices',
+      title: 'Any size',
+      description: 'Banks handle any amount.',
     },
     {
-      stat: '1-3.5%',
-      statLabel: 'all-in',
-      title: 'Simple pricing',
-      description: 'Transparent fees. No hidden costs, no monthly minimums.',
+      stat: 'B2B native',
+      statLabel: 'payment flow',
+      title: 'Business friendly',
+      description: 'No personal card needed.',
     },
   ]
 
   const steps = [
     {
       step: '1',
-      title: 'Create an account',
-      description: 'Sign up and verify your business. Takes minutes, not days.',
+      title: 'Send link',
+      description: 'Attach to invoice.',
     },
     {
       step: '2',
-      title: 'Generate payment links',
-      description: 'Create links with amount, description, and your branding.',
+      title: 'Client pays',
+      description: 'Bank auth. Done.',
     },
     {
       step: '3',
-      title: 'Get paid',
-      description: 'Add links to invoices. Clients pay, funds settle to your bank.',
+      title: 'Receive',
+      description: 'Funds to your bank.',
     },
   ]
 
@@ -91,27 +91,27 @@ function ProfessionalServicesPage() {
     <PageLayout>
       <PageHero
         badge="Professional Services"
-        title="Get paid faster."
-        titleGradient="No code required."
-        description="Accept high-value invoice payments at 1-3.5%. Create payment links in seconds, add to invoices, and get paid directly to your bank."
-        features={['No code', 'No setup fees', 'International clients']}
+        title="Invoice payments at"
+        titleGradient="1-3.5%."
+        description="Accept high-value invoice payments. No limits. No disputes."
+        features={['No limits', 'No disputes', 'Fast settlement']}
       />
 
       <FeatureGrid
-        title="Built for service businesses"
-        subtitle="Simple tools for consultants, agencies, and freelancers."
+        title="Built for services"
+        subtitle="Designed for B2B."
         features={features}
       />
 
       <BenefitsSection
-        title="Simple, affordable, effective"
-        subtitle="Payment tools that work for service businesses."
+        title="Why services choose Quidkey"
+        subtitle="Better for high-value."
         benefits={benefits}
       />
 
       <HowItWorksSteps
-        title="Start accepting payments today"
-        subtitle="No technical setup required."
+        title="Get started"
+        subtitle="Send links today."
         steps={steps}
       />
 

@@ -7,9 +7,9 @@ export const Route = createFileRoute('/products/refunds')({
   component: RefundsPage,
   head: () =>
     buildSeo({
-      title: 'Fast Bank-to-Bank Refunds | Quidkey',
+      title: 'Bank Refunds | Quidkey',
       description:
-        'Process refunds instantly back to customer bank accounts. No card network delays, no disputes. Fast, transparent, and cost-effective.',
+        'Instant refunds back to customer bank accounts. No card delays.',
       path: '/products/refunds',
     }),
 })
@@ -18,33 +18,33 @@ function RefundsPage() {
   const features = [
     {
       icon: RotateCcw,
-      title: 'Instant Initiation',
-      description: 'Initiate refunds with one API call or click. No manual bank transfers, no waiting.',
+      title: 'One-click refund',
+      description: 'Initiate with one API call or click.',
     },
     {
       icon: Zap,
-      title: 'Same-Day Settlement',
-      description: 'Refunds reach customer accounts the same day in UK/EU. 1-2 days in the US.',
+      title: 'Same-day',
+      description: 'Same day in UK/EU. 1-2 days US.',
     },
     {
       icon: Shield,
-      title: 'No Disputes',
-      description: 'Bank-to-bank refunds eliminate chargeback risk. Clear audit trail for every transaction.',
+      title: 'No disputes',
+      description: 'Clear audit trail. No chargebacks.',
     },
     {
       icon: Globe,
-      title: 'Cross-Border Support',
-      description: 'Refund to any bank account in supported regions. FX handled automatically if needed.',
+      title: 'Cross-border',
+      description: 'Refund to any supported bank.',
     },
     {
       icon: Clock,
-      title: 'Real-Time Status',
-      description: 'Track refund status from initiation to completion. Know exactly when funds arrive.',
+      title: 'Real-time status',
+      description: 'Track from start to finish.',
     },
     {
       icon: CheckCircle,
-      title: 'Partial Refunds',
-      description: 'Full or partial refunds supported. Flexible amounts for complex return scenarios.',
+      title: 'Partial refunds',
+      description: 'Full or partial amounts.',
     },
   ]
 
@@ -53,37 +53,37 @@ function RefundsPage() {
       stat: '< 24h',
       statLabel: 'to customer',
       title: 'Faster than cards',
-      description: 'Card refunds take 5-10 business days. Bank refunds arrive in hours.',
+      description: 'Cards take 5-10 days. Banks take hours.',
     },
     {
       stat: '$0',
       statLabel: 'dispute fees',
       title: 'No chargebacks',
-      description: 'Bank authentication means no unauthorized transactions. No disputes to manage.',
+      description: 'No unauthorized transactions.',
     },
     {
       stat: '1 click',
       statLabel: 'to process',
-      title: 'Effortless operations',
-      description: 'Process refunds from the dashboard or via API. No manual bank transfers.',
+      title: 'Easy operations',
+      description: 'No manual bank transfers.',
     },
   ]
 
   const steps = [
     {
       step: '1',
-      title: 'Initiate the refund',
-      description: 'Select the original transaction and specify the refund amount. Full or partial.',
+      title: 'Initiate refund',
+      description: 'Select transaction. Set amount.',
     },
     {
       step: '2',
       title: 'Automatic routing',
-      description: 'Quidkey routes the refund back to the original customer bank account.',
+      description: 'Routes to original bank account.',
     },
     {
       step: '3',
-      title: 'Customer receives funds',
-      description: 'Funds arrive in the customer\'s account. You receive confirmation.',
+      title: 'Customer receives',
+      description: 'Funds arrive. You get confirmation.',
     },
   ]
 
@@ -93,25 +93,25 @@ function RefundsPage() {
         badge="Treasury"
         title="Refunds that just work."
         titleGradient="Fast. Simple. Direct."
-        description="Process refunds instantly back to customer bank accounts. No card network delays, no dispute risk. Same-day settlement in UK/EU."
-        features={['Same-day settlement', 'No chargebacks', 'Cross-border support']}
+        description="Refunds back to customer bank accounts. Same-day in UK/EU. No disputes."
+        features={['Same-day', 'No chargebacks', 'Cross-border']}
       />
 
       <FeatureGrid
-        title="Better refunds for everyone"
-        subtitle="Faster for customers, simpler for you."
+        title="Better refunds"
+        subtitle="Faster for customers. Simpler for you."
         features={features}
       />
 
       <BenefitsSection
-        title="Why bank refunds win"
-        subtitle="Speed, simplicity, and zero disputes."
+        title="Why bank refunds"
+        subtitle="Speed and simplicity."
         benefits={benefits}
       />
 
       <HowItWorksSteps
-        title="Refunds in three steps"
-        subtitle="From initiation to customer receipt."
+        title="3 step refunds"
+        subtitle="Initiation to receipt."
         steps={steps}
       />
 

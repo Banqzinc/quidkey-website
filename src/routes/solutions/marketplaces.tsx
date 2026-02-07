@@ -1,15 +1,15 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA } from '@/components/layout/page-layout'
-import { Store, GitBranch, Shield, Clock, Globe, Wallet } from 'lucide-react'
+import { Network, TrendingDown, Shield, Banknote, Zap, FileCheck } from 'lucide-react'
 import { buildSeo } from '@/lib/seo'
 
 export const Route = createFileRoute('/solutions/marketplaces')({
   component: MarketplacesPage,
   head: () =>
     buildSeo({
-      title: 'Pay by Bank for Marketplaces | Quidkey',
+      title: 'Marketplaces | Quidkey',
       description:
-        'Programmable splits, escrow, and payouts for marketplaces. Accept payments, split to sellers, and hold for disputes, all automated.',
+        'Collect at 1-3.5%. Split to sellers. Automate payouts.',
       path: '/solutions/marketplaces',
     }),
 })
@@ -17,73 +17,73 @@ export const Route = createFileRoute('/solutions/marketplaces')({
 function MarketplacesPage() {
   const features = [
     {
-      icon: GitBranch,
-      title: 'Programmable Splits',
-      description: 'Split payments to multiple sellers automatically. Define percentages or fixed amounts.',
+      icon: Network,
+      title: 'Automated splits',
+      description: 'Revenue to sellers.',
     },
     {
-      icon: Wallet,
-      title: 'Escrow & Holds',
-      description: 'Hold funds for disputes, returns, or delivery confirmation. Release on your terms.',
+      icon: TrendingDown,
+      title: 'Lower fees',
+      description: '1-3.5% not 3-6%.',
     },
     {
-      icon: Clock,
-      title: 'Scheduled Payouts',
-      description: 'Pay sellers daily, weekly, or on custom schedules. Batch payouts automatically.',
+      icon: Banknote,
+      title: 'Seller payouts',
+      description: 'Instant or scheduled.',
     },
     {
       icon: Shield,
-      title: 'Platform Protection',
-      description: 'Hold reserves for fraud, returns, and disputes. Protect platform economics.',
+      title: 'No chargebacks',
+      description: 'Authenticated payments.',
     },
     {
-      icon: Globe,
-      title: 'Multi-Currency Sellers',
-      description: 'Sellers in different countries get paid in their currency. FX handled automatically.',
+      icon: FileCheck,
+      title: 'Tax automation',
+      description: 'Hold and remit.',
     },
     {
-      icon: Store,
-      title: 'Seller Onboarding',
-      description: 'Add sellers with bank accounts. KYC and verification handled through the platform.',
+      icon: Zap,
+      title: 'Fast integration',
+      description: 'API or hosted.',
     },
   ]
 
   const benefits = [
     {
-      stat: '1 click',
-      statLabel: 'splits',
-      title: 'Automatic distribution',
-      description: 'Define split rules once. Every payment distributes automatically.',
+      stat: '60%',
+      statLabel: 'lower cost',
+      title: 'Better take rate',
+      description: 'Keep more per sale.',
     },
     {
-      stat: 'Flexible',
-      statLabel: 'holds',
-      title: 'Control fund release',
-      description: 'Hold for delivery, approval, or dispute period. Release when ready.',
+      stat: 'Instant',
+      statLabel: 'seller payouts',
+      title: 'Happy sellers',
+      description: 'Fast money = loyalty.',
     },
     {
-      stat: 'Global',
-      statLabel: 'payouts',
-      title: 'Pay sellers anywhere',
-      description: 'Sellers in UK, EU, US, and Australia receive funds in local currency.',
+      stat: 'Auto',
+      statLabel: 'tax handling',
+      title: 'No manual work',
+      description: 'Hold, calculate, remit.',
     },
   ]
 
   const steps = [
     {
       step: '1',
-      title: 'Onboard sellers',
-      description: 'Add sellers with bank account details. Complete verification requirements.',
+      title: 'Connect',
+      description: 'API integration.',
     },
     {
       step: '2',
-      title: 'Configure splits',
-      description: 'Define how payments divide: platform fee, seller share, tax holds, reserves.',
+      title: 'Collect',
+      description: 'Buyer pays by bank.',
     },
     {
       step: '3',
-      title: 'Automate payouts',
-      description: 'Set payout schedules. Funds distribute automatically to seller accounts.',
+      title: 'Split',
+      description: 'Sellers get paid.',
     },
   ]
 
@@ -91,27 +91,27 @@ function MarketplacesPage() {
     <PageLayout>
       <PageHero
         badge="Marketplaces"
-        title="End-to-end"
-        titleGradient="marketplace payments."
-        description="Accept payments, split to sellers, hold for disputes, and payout on schedule. Programmable treasury for complex marketplace flows."
-        features={['Programmable splits', 'Escrow & holds', 'Global payouts']}
+        title="Collect, split,"
+        titleGradient="payout automatically."
+        description="1-3.5% collection. Auto splits. Instant seller payouts."
+        features={['Auto splits', 'Instant payouts', 'Tax handled']}
       />
 
       <FeatureGrid
-        title="Built for marketplace complexity"
-        subtitle="Everything multi-seller platforms need."
+        title="Built for marketplaces"
+        subtitle="End-to-end money movement."
         features={features}
       />
 
       <BenefitsSection
         title="Why marketplaces choose Quidkey"
-        subtitle="Complex flows, simple operations."
+        subtitle="Better economics."
         benefits={benefits}
       />
 
       <HowItWorksSteps
-        title="Launch marketplace payments"
-        subtitle="From onboarding to automated payouts."
+        title="Get started"
+        subtitle="Collection to payout."
         steps={steps}
       />
 

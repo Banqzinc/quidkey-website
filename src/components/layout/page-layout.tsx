@@ -237,10 +237,10 @@ export function PageCTA() {
     <section className="py-16 md:py-24 bg-foreground text-background">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-4">
-          Ready to get started?
+          Start saving today.
         </h2>
         <p className="text-lg text-background/70 mb-8 max-w-2xl mx-auto">
-          Join global businesses using Quidkey to reduce payment costs and automate treasury operations.
+          1-3.5% fees. Zero chargebacks. Live in days.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button size="lg" variant="secondary" className="group">

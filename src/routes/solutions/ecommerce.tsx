@@ -7,9 +7,9 @@ export const Route = createFileRoute('/solutions/ecommerce')({
   component: EcommercePage,
   head: () =>
     buildSeo({
-      title: 'Pay by Bank for Ecommerce | Quidkey',
+      title: 'Ecommerce | Quidkey',
       description:
-        'Reduce payment fees to 1-3.5% and eliminate chargebacks for your ecommerce business. Pay by bank checkout with intelligent bank prediction.',
+        '1-3.5% fees. Zero chargebacks. Pay by bank for online retail.',
       path: '/solutions/ecommerce',
     }),
 })
@@ -18,33 +18,33 @@ function EcommercePage() {
   const features = [
     {
       icon: TrendingDown,
-      title: 'Cut Payment Costs',
-      description: 'Replace 3-6% card fees with 1-3.5% pay by bank. On $1M revenue, save $25-45k annually.',
+      title: 'Lower fees',
+      description: '1-3.5% instead of 3-6%.',
     },
     {
       icon: Shield,
-      title: 'Zero Chargebacks',
-      description: 'Bank authentication eliminates friendly fraud. No disputes, no chargeback fees, no headaches.',
+      title: 'Zero chargebacks',
+      description: 'Bank auth. No disputes.',
     },
     {
       icon: Zap,
-      title: 'Higher Conversion',
-      description: 'Bank prediction shows the customer\'s bank at checkout. One-click payments convert better.',
+      title: 'Higher conversion',
+      description: 'Bank prediction. One-click.',
     },
     {
       icon: Globe,
-      title: 'Sell Globally',
-      description: 'Accept payments in UK, EU, US, and Australia. One integration, four major markets.',
+      title: 'Sell globally',
+      description: 'UK, EU, US, Australia.',
     },
     {
       icon: ShoppingCart,
-      title: 'Platform Integrations',
-      description: 'Native apps for Shopify. iFrame and hosted checkout for custom platforms.',
+      title: 'Platform integrations',
+      description: 'Shopify, iFrame, hosted.',
     },
     {
       icon: BarChart3,
-      title: 'Treasury Automation',
-      description: 'Automate tax holds, supplier splits, and settlements. Reduce manual finance work.',
+      title: 'Treasury automation',
+      description: 'Tax, splits, settlements.',
     },
   ]
 
@@ -52,38 +52,38 @@ function EcommercePage() {
     {
       stat: '60%',
       statLabel: 'lower fees',
-      title: 'Transform your unit economics',
-      description: 'Every percentage point saved goes straight to margin. Pay by bank changes the math.',
+      title: 'Better margins',
+      description: 'Savings go straight to profit.',
     },
     {
       stat: '0%',
       statLabel: 'chargebacks',
-      title: 'Eliminate fraud losses',
-      description: 'Ecommerce averages 1-3% chargeback costs. Bank payments require customer authentication.',
+      title: 'No fraud losses',
+      description: 'Bank payments are authenticated.',
     },
     {
       stat: '15%',
       statLabel: 'checkout share',
-      title: 'Growing customer preference',
-      description: 'Pay by bank adoption is accelerating. Offer the payment method customers want.',
+      title: 'Growing adoption',
+      description: 'Customers choosing bank.',
     },
   ]
 
   const steps = [
     {
       step: '1',
-      title: 'Connect your store',
-      description: 'Install our Shopify app or integrate via API. Go live in minutes.',
+      title: 'Connect',
+      description: 'Shopify app or API.',
     },
     {
       step: '2',
-      title: 'Offer pay by bank',
-      description: 'Customers see their bank at checkout with one-click payment option.',
+      title: 'Offer bank pay',
+      description: 'Customers see their bank.',
     },
     {
       step: '3',
-      title: 'Receive settlements',
-      description: 'Funds settle directly to your bank. Automate tax and supplier payments.',
+      title: 'Settle',
+      description: 'Funds to your bank.',
     },
   ]
 
@@ -93,25 +93,25 @@ function EcommercePage() {
         badge="Ecommerce"
         title="Better margins for"
         titleGradient="online retail."
-        description="Reduce payment fees to 1-3.5% and eliminate chargebacks. Pay by bank checkout designed for high-volume ecommerce."
+        description="1-3.5% fees. Zero chargebacks. Pay by bank checkout for ecommerce."
         features={['60% lower fees', 'Zero chargebacks', 'Shopify native']}
       />
 
       <FeatureGrid
-        title="Built for ecommerce growth"
-        subtitle="Everything online retailers need to scale profitably."
+        title="Built for ecommerce"
+        subtitle="Scale profitably."
         features={features}
       />
 
       <BenefitsSection
-        title="Real results for real stores"
-        subtitle="Numbers that matter for ecommerce."
+        title="Real results"
+        subtitle="What stores are seeing."
         benefits={benefits}
       />
 
       <HowItWorksSteps
-        title="Get started in three steps"
-        subtitle="From integration to live payments."
+        title="Get started"
+        subtitle="Live today."
         steps={steps}
       />
 

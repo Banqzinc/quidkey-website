@@ -7,9 +7,9 @@ export const Route = createFileRoute('/products/payment-links')({
   component: PaymentLinksPage,
   head: () =>
     buildSeo({
-      title: 'Pay by Bank Payment Links | Quidkey',
+      title: 'Payment Links | Quidkey',
       description:
-        'Create no-code pay by bank payment links in seconds. Share via email, SMS, or anywhere. Perfect for invoices, deposits, and one-time payments.',
+        'Create pay by bank links in seconds. Share anywhere. Get paid.',
       path: '/products/payment-links',
     }),
 })
@@ -18,33 +18,33 @@ function PaymentLinksPage() {
   const features = [
     {
       icon: LinkIcon,
-      title: 'No-Code Creation',
-      description: 'Create payment links from the dashboard in seconds. No developer required.',
+      title: 'No code',
+      description: 'Create links from the dashboard.',
     },
     {
       icon: Mail,
-      title: 'Share Anywhere',
-      description: 'Email, SMS, WhatsApp, social media. Share your payment link wherever your customers are.',
+      title: 'Share anywhere',
+      description: 'Email, SMS, WhatsApp, social.',
     },
     {
       icon: Clock,
-      title: 'Instant Settlement',
-      description: 'Funds move directly from customer bank to yours. Instant in UK/EU, 1-3 days in US.',
+      title: 'Fast settlement',
+      description: 'Instant in UK/EU. 1-3 days in US.',
     },
     {
       icon: Shield,
-      title: 'Secure & Authenticated',
-      description: 'Bank-level authentication protects every payment. No chargebacks, no disputes.',
+      title: 'Secure',
+      description: 'Bank authentication. No chargebacks.',
     },
     {
       icon: Globe,
-      title: 'Multi-Currency Support',
-      description: 'Accept GBP, EUR, USD, and AUD. Automatic currency detection based on customer location.',
+      title: 'Multi-currency',
+      description: 'GBP, EUR, USD, AUD.',
     },
     {
       icon: BarChart3,
-      title: 'Real-Time Tracking',
-      description: 'Track link opens, payment attempts, and completions. Know exactly where customers are.',
+      title: 'Track everything',
+      description: 'Opens, attempts, completions.',
     },
   ]
 
@@ -52,38 +52,38 @@ function PaymentLinksPage() {
     {
       stat: '30 sec',
       statLabel: 'to create',
-      title: 'Go live instantly',
-      description: 'Create a payment link, copy the URL, and start collecting payments. No integration needed.',
+      title: 'Instant setup',
+      description: 'Create, copy, share.',
     },
     {
       stat: '90%',
-      statLabel: 'completion rate',
+      statLabel: 'completion',
       title: 'High conversion',
-      description: 'Bank prediction and streamlined flow mean more customers complete their payments.',
+      description: 'Bank prediction helps.',
     },
     {
       stat: '$0',
-      statLabel: 'monthly fees',
-      title: 'Pay only when you\'re paid',
-      description: 'No monthly fees, no setup costs. Just 1-3.5% per successful transaction.',
+      statLabel: 'monthly',
+      title: 'Pay per transaction',
+      description: '1-3.5% when you get paid.',
     },
   ]
 
   const steps = [
     {
       step: '1',
-      title: 'Create a payment link',
-      description: 'Set the amount, add a description, and generate your unique payment link.',
+      title: 'Create a link',
+      description: 'Set amount, add description.',
     },
     {
       step: '2',
-      title: 'Share with your customer',
-      description: 'Send the link via email, SMS, or any channel. Embed it on your website or invoices.',
+      title: 'Share it',
+      description: 'Send to customer any way.',
     },
     {
       step: '3',
-      title: 'Get paid directly',
-      description: 'Customer pays from their bank. Funds settle to your account automatically.',
+      title: 'Get paid',
+      description: 'Funds settle to your account.',
     },
   ]
 
@@ -91,27 +91,27 @@ function PaymentLinksPage() {
     <PageLayout>
       <PageHero
         badge="No-Code Payments"
-        title="Payment links that work."
+        title="Payment links."
         titleGradient="Create. Share. Get paid."
-        description="Generate pay by bank payment links in seconds. No code, no integration. Perfect for invoices, deposits, and one-time payments."
-        features={['No code required', 'Share anywhere', 'Instant setup']}
+        description="Generate pay by bank links in seconds. No code, no integration. Perfect for invoices and one-time payments."
+        features={['No code', 'Share anywhere', 'Instant setup']}
       />
 
       <FeatureGrid
-        title="Everything you need to get paid"
-        subtitle="Simple, powerful payment links for any use case."
+        title="Simple payments"
+        subtitle="Everything you need to get paid."
         features={features}
       />
 
       <BenefitsSection
-        title="Simple pricing, real results"
-        subtitle="No hidden fees. No monthly minimums. Just payments."
+        title="Simple pricing"
+        subtitle="No hidden fees."
         benefits={benefits}
       />
 
       <HowItWorksSteps
-        title="Get paid in three steps"
-        subtitle="Create your first payment link in under a minute."
+        title="Get paid in 3 steps"
+        subtitle="Create your first link in under a minute."
         steps={steps}
       />
 

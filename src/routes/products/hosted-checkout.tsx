@@ -7,9 +7,9 @@ export const Route = createFileRoute('/products/hosted-checkout')({
   component: HostedCheckoutPage,
   head: () =>
     buildSeo({
-      title: 'Hosted Pay by Bank Checkout | Quidkey',
+      title: 'Hosted Checkout | Quidkey',
       description:
-        'Ready-to-use hosted checkout page for pay by bank. Go live in minutes with our fully managed, conversion-optimized checkout experience.',
+        'Ready-to-use pay by bank checkout. Go live in minutes. No frontend code.',
       path: '/products/hosted-checkout',
     }),
 })
@@ -18,33 +18,33 @@ function HostedCheckoutPage() {
   const features = [
     {
       icon: ExternalLink,
-      title: 'Redirect & Return',
-      description: 'Create a checkout session, redirect the customer, and receive a webhook when they pay.',
+      title: 'Redirect & return',
+      description: 'Create session, redirect, receive webhook.',
     },
     {
       icon: Palette,
-      title: 'Customizable Branding',
-      description: 'Add your logo, colors, and messaging. The checkout feels like an extension of your site.',
+      title: 'Your branding',
+      description: 'Add your logo and colors.',
     },
     {
       icon: Zap,
-      title: 'Conversion Optimized',
-      description: 'Bank prediction, smart defaults, and streamlined flow. Every element designed for conversion.',
+      title: 'High conversion',
+      description: 'Bank prediction and smart defaults.',
     },
     {
       icon: Shield,
-      title: 'Fully Hosted Security',
-      description: 'We handle all security, compliance, and bank connections. You focus on your business.',
+      title: 'Fully hosted',
+      description: 'We handle security and compliance.',
     },
     {
       icon: Clock,
-      title: 'Live in Minutes',
-      description: 'One API call creates a checkout session. No frontend code, no iFrame embedding.',
+      title: 'Live in minutes',
+      description: 'One API call. No frontend code.',
     },
     {
       icon: Settings,
-      title: 'Flexible Configuration',
-      description: 'Set success/cancel URLs, metadata, and expiration. Control the flow without code changes.',
+      title: 'Flexible',
+      description: 'Custom URLs, metadata, expiration.',
     },
   ]
 
@@ -52,38 +52,38 @@ function HostedCheckoutPage() {
     {
       stat: '5 min',
       statLabel: 'to go live',
-      title: 'Fastest path to production',
-      description: 'One API call, one redirect. The hosted checkout handles everything else.',
+      title: 'Fastest integration',
+      description: 'One API call, one redirect.',
     },
     {
       stat: 'Zero',
       statLabel: 'maintenance',
-      title: 'We handle updates',
-      description: 'Bank integrations, conversion optimization, and compliance updates happen automatically.',
+      title: 'Always current',
+      description: 'We update, you benefit.',
     },
     {
       stat: '4 regions',
       statLabel: 'supported',
-      title: 'Global out of the box',
-      description: 'UK, EU, US, and Australia. Automatic bank selection based on customer location.',
+      title: 'Global ready',
+      description: 'UK, EU, US, Australia.',
     },
   ]
 
   const steps = [
     {
       step: '1',
-      title: 'Create a checkout session',
-      description: 'Call our API with amount, currency, and redirect URLs. Get back a checkout URL.',
+      title: 'Create session',
+      description: 'Call API with amount and URLs.',
     },
     {
       step: '2',
-      title: 'Redirect your customer',
-      description: 'Send the customer to the checkout URL. They select their bank and authenticate.',
+      title: 'Redirect customer',
+      description: 'They select bank and pay.',
     },
     {
       step: '3',
-      title: 'Receive the webhook',
-      description: 'Customer returns to your success URL. Webhook confirms payment completion.',
+      title: 'Receive webhook',
+      description: 'Payment confirmed.',
     },
   ]
 
@@ -93,25 +93,25 @@ function HostedCheckoutPage() {
         badge="Hosted Checkout"
         title="Pay by bank checkout."
         titleGradient="Ready in minutes."
-        description="Fully hosted, conversion-optimized pay by bank checkout. One API call to create a session, one redirect to collect payment."
-        features={['No frontend code', 'Conversion optimized', 'Fully managed']}
+        description="One API call to create a session. One redirect to collect payment. No frontend code."
+        features={['No frontend code', 'High conversion', 'Fully managed']}
       />
 
       <FeatureGrid
-        title="Everything handled for you"
-        subtitle="A complete checkout experience, fully hosted and managed."
+        title="Everything handled"
+        subtitle="A complete checkout experience."
         features={features}
       />
 
       <BenefitsSection
-        title="The fastest way to accept pay by bank"
-        subtitle="Go live today without building a checkout."
+        title="Why hosted"
+        subtitle="The fastest path to pay by bank."
         benefits={benefits}
       />
 
       <HowItWorksSteps
-        title="Three steps to payments"
-        subtitle="The simplest integration path to pay by bank."
+        title="3 steps to payments"
+        subtitle="The simplest integration."
         steps={steps}
       />
 
