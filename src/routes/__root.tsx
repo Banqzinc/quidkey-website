@@ -1,12 +1,15 @@
 import { HeadContent, Outlet, Scripts, createRootRoute } from '@tanstack/react-router'
 import { useEffect } from 'react'
+import { useRouterState } from '@tanstack/react-router'
 
 import appCss from '../styles.css?url'
 import { initClarityWithCookiebot } from '@/lib/clarity'
+import { trackPageView, updateGoogleConsentFromCookiebot } from '@/lib/google-analytics'
 
 const ICON_URL = 'https://storage.googleapis.com/quidkey-resources-public/quidkey-logo-fav.png'
 const COOKIEBOT_DOMAIN_GROUP_ID = import.meta.env.VITE_COOKIEBOT_DOMAIN_GROUP_ID as string | undefined
 const CLARITY_PROJECT_ID = import.meta.env.VITE_CLARITY_PROJECT_ID as string | undefined
+const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID as string | undefined
 
 export const Route = createRootRoute({
   head: () => ({
@@ -77,12 +80,45 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             type="text/javascript"
           />
         ) : null}
+        {GA_MEASUREMENT_ID ? (
+          <>
+            {/* Google Consent Mode v2 defaults must run before any gtag config/event calls */}
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('consent', 'default', {
+  ad_storage: 'denied',
+  ad_user_data: 'denied',
+  ad_personalization: 'denied',
+  analytics_storage: 'denied',
+  wait_for_update: 500
+});
+`,
+              }}
+            />
+            {/* Google tag (gtag.js) */}
+            <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} />
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${GA_MEASUREMENT_ID}', { send_page_view: false });
+`,
+              }}
+            />
+          </>
+        ) : null}
         <HeadContent />
       </head>
       {/* suppressHydrationWarning: TanStack Start's <Scripts /> can cause minor SSR/client differences */}
       <body className="antialiased" suppressHydrationWarning>
         {children}
         <ClarityCookiebotBridge />
+        <GoogleAnalyticsCookiebotBridge />
         <Scripts />
       </body>
     </html>
@@ -94,6 +130,43 @@ function ClarityCookiebotBridge() {
     if (!CLARITY_PROJECT_ID) return
     return initClarityWithCookiebot(CLARITY_PROJECT_ID)
   }, [])
+
+  return null
+}
+
+function GoogleAnalyticsCookiebotBridge() {
+  const location = useRouterState({ select: (s) => s.location })
+
+  useEffect(() => {
+    if (!GA_MEASUREMENT_ID) return
+
+    const apply = () => {
+      const { analyticsGranted } = updateGoogleConsentFromCookiebot()
+      if (analyticsGranted) {
+        trackPageView(GA_MEASUREMENT_ID)
+      }
+    }
+
+    window.addEventListener('CookiebotOnConsentReady', apply)
+    window.addEventListener('CookiebotOnAccept', apply)
+    window.addEventListener('CookiebotOnDecline', apply)
+
+    // Try once on mount (covers already-ready cases).
+    apply()
+
+    return () => {
+      window.removeEventListener('CookiebotOnConsentReady', apply)
+      window.removeEventListener('CookiebotOnAccept', apply)
+      window.removeEventListener('CookiebotOnDecline', apply)
+    }
+  }, [])
+
+  // SPA pageviews: only emit when Statistics consent is granted.
+  useEffect(() => {
+    if (!GA_MEASUREMENT_ID) return
+    if (!window.Cookiebot?.consent?.statistics) return
+    trackPageView(GA_MEASUREMENT_ID)
+  }, [location.pathname, location.search])
 
   return null
 }
