@@ -5,8 +5,8 @@ import { ArrowRight } from 'lucide-react'
 export function WorkflowsSection() {
   const workflows = [
     {
-      command: '"Hold US sales tax by state, county, and city."',
-      description: 'Automatically calculate and segregate tax at the moment of payment. Route funds into dedicated tax sub-accounts for clean remittance.',
+      command: '"Hold US sales tax by state, county, and city and product type."',
+      description: 'Tax is automatically calculated and saved in separate tax accounts.',
     },
     {
       command: '"Hold 10% for refunds. Per Jurisdiction."',

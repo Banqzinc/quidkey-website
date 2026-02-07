@@ -45,7 +45,7 @@ function HeroSection() {
     <section className="relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden">
       <div className="absolute inset-0 hero-gradient" aria-hidden="true" />
       <div className="absolute inset-0 noise" aria-hidden="true" />
-      
+
       <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
         <div className="inline-flex items-center gap-2.5 rounded-full bg-foreground/5 border border-foreground/10 px-4 py-2 text-sm font-medium text-foreground mb-6">
           Programmable Treasury
@@ -160,7 +160,7 @@ function WorkflowExamplesSection() {
         </div>
 
         <p className="text-center text-sm text-background/50 mt-12 max-w-xl mx-auto">
-          Not a GPT wrapper. LLMs parse natural language, but execution is deterministic. 
+          Not a GPT wrapper. LLMs parse natural language, but execution is deterministic.
           Every workflow compiles to CEL (Common Expression Language) with zero ambiguity.
         </p>
       </div>
@@ -227,8 +227,8 @@ function HowItWorksSection() {
         <div className="mt-12 p-6 rounded-2xl bg-secondary/50 border border-border">
           <h4 className="font-semibold text-foreground mb-2">Why CEL?</h4>
           <p className="text-sm text-muted-foreground">
-            Common Expression Language (CEL) is used by Google, Kubernetes, and major infrastructure platforms. 
-            It's type-safe, sandboxed, and fast. Unlike arbitrary code execution, CEL is inherently safe and auditable. 
+            Common Expression Language (CEL) is used by Google, Kubernetes, and major infrastructure platforms.
+            It's type-safe, sandboxed, and fast. Unlike arbitrary code execution, CEL is inherently safe and auditable.
             Your workflows cannot have side effects beyond what Quidkey explicitly allows.
           </p>
         </div>
