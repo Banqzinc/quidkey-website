@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { PageLayout, PageCTA } from '@/components/layout/page-layout'
 import { buttonVariants } from '@/components/ui/button'
-import { DEMO_PLAYGROUND_URL } from '@/lib/urls'
+import { MERCHANTS_SIGNUP_URL } from '@/lib/urls'
 import { cn } from '@/lib/utils'
 import { buildSeo } from '@/lib/seo'
 import { Check, ArrowRight, Zap, Globe, Shield, Clock } from 'lucide-react'
@@ -178,7 +178,7 @@ function PricingPage() {
           {/* Single CTA below cards */}
           <div className="text-center">
             <a
-              href={DEMO_PLAYGROUND_URL}
+              href={MERCHANTS_SIGNUP_URL}
               target="_blank"
               rel="noopener noreferrer"
               className={cn(buttonVariants({ size: 'lg' }), 'group shadow-lg shadow-primary/25 hover:shadow-primary/40')}
