@@ -808,7 +808,7 @@ export function HowItWorksSection() {
             How It Works
           </h2>
           <p className="text-lg text-muted-foreground">
-            Quidkey handles payments end to end, from checkout to intelligent routing and programmable treasury.
+            From intelligent checkout through to programmable routing and treasury.
           </p>
         </div>
 
@@ -817,7 +817,7 @@ export function HowItWorksSection() {
 
         {/* Caption */}
         <p className="text-center text-sm text-muted-foreground mt-8 max-w-lg mx-auto">
-          Payment flows from customer's bank through Quidkey. Tax is calculated by jurisdiction and automatically routed to your tax account, with the net amount paid out to the business account.
+        Smart tax calculation. Automatic fund routing. Zero manual work.
         </p>
       </div>
     </section>
