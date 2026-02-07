@@ -33,8 +33,8 @@ function HomePage() {
         <HeroSection />
         <TrustBadgesSection />
         <StatsSection />
-        <WhyChooseSection />
         <HowItWorksSection />
+        <WhyChooseSection />
         <ProductLayersSection />
         <WorkflowsSection />
         <UseCasesSection />
