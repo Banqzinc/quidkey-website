@@ -17,7 +17,8 @@ import {
   Menu,
   X,
 } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
+import { MERCHANTS_LOGIN_URL, MERCHANTS_SIGNUP_URL } from '@/lib/urls'
 
 const LOGO_URL = 'https://storage.googleapis.com/quidkey-resources-public/quidkey-logo-black.svg'
 
@@ -190,12 +191,22 @@ export function MegaMenu() {
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-3">
-            <Button variant="ghost" size="sm">
+            <a
+              href={MERCHANTS_LOGIN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }))}
+            >
               Login
-            </Button>
-            <Button size="sm">
+            </a>
+            <a
+              href={MERCHANTS_SIGNUP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(buttonVariants({ size: 'sm' }))}
+            >
               Get Started
-            </Button>
+            </a>
           </div>
 
           {/* Mobile menu button */}
@@ -263,12 +274,22 @@ export function MegaMenu() {
 
             {/* CTAs */}
             <div className="pt-4 border-t border-border space-y-3">
-              <Button variant="outline" className="w-full">
+              <a
+                href={MERCHANTS_LOGIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(buttonVariants({ variant: 'outline' }), 'w-full')}
+              >
                 Login
-              </Button>
-              <Button className="w-full">
+              </a>
+              <a
+                href={MERCHANTS_SIGNUP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(buttonVariants(), 'w-full')}
+              >
                 Get Started
-              </Button>
+              </a>
             </div>
           </nav>
         </div>

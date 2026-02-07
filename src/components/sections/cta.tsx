@@ -1,4 +1,6 @@
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
+import { DEMO_PLAYGROUND_URL } from '@/lib/urls'
+import { cn } from '@/lib/utils'
 import { ArrowRight } from 'lucide-react'
 
 export function CTASection() {
@@ -21,10 +23,15 @@ export function CTASection() {
               Get a US-first pay by bank checkout, plus a global clearing layer and programmable treasury, without giving up seller-of-record control.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" variant="secondary" className="group bg-white text-primary hover:bg-white/90">
+              <a
+                href={DEMO_PLAYGROUND_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(buttonVariants({ size: 'lg', variant: 'secondary' }), 'group bg-white text-primary hover:bg-white/90')}
+              >
                 Get a demo
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Button>
+              </a>
               <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10">
                 Talk to sales
               </Button>

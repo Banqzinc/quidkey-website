@@ -1,7 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { MegaMenu } from '@/components/layout/mega-menu'
 import { Footer } from '@/components/layout/footer'
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
+import { DEMO_PLAYGROUND_URL } from '@/lib/urls'
+import { cn } from '@/lib/utils'
 import { ArrowRight, Check, Calculator, GitBranch, ArrowRightLeft, Wallet, Users, RotateCcw } from 'lucide-react'
 import { buildSeo } from '@/lib/seo'
 
@@ -69,10 +71,15 @@ function HeroSection() {
         </ul>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button size="lg" className="group shadow-lg shadow-primary/25 hover:shadow-primary/40">
+          <a
+            href={DEMO_PLAYGROUND_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(buttonVariants({ size: 'lg' }), 'group shadow-lg shadow-primary/25 hover:shadow-primary/40')}
+          >
             Get a demo
             <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
-          </Button>
+          </a>
           <Button variant="outline" size="lg">
             Talk to sales
           </Button>
@@ -296,10 +303,15 @@ function CTASection() {
           Stop moving money manually. Start writing rules.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button size="lg" variant="secondary" className="group">
+          <a
+            href={DEMO_PLAYGROUND_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(buttonVariants({ size: 'lg', variant: 'secondary' }), 'group')}
+          >
             Get a demo
             <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-          </Button>
+          </a>
           <Button size="lg" variant="outline" className="border-background/30 text-background hover:bg-background/10">
             Talk to sales
           </Button>

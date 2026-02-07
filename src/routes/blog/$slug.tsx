@@ -2,6 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { MegaMenu } from '@/components/layout/mega-menu'
 import { Footer } from '@/components/layout/footer'
 import { getBlogPost } from '@/lib/blog-posts'
+import { MERCHANTS_SIGNUP_URL } from '@/lib/urls'
 import { buildSeo, buildArticleSchema, SITE_URL } from '@/lib/seo'
 
 export const Route = createFileRoute('/blog/$slug')({
@@ -172,12 +173,14 @@ function BlogPostPage() {
                     Add Quidkey to your checkout and start accepting bank
                     payments today.
                   </p>
-                  <Link
-                    to="/"
+                  <a
+                    href={MERCHANTS_SIGNUP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center justify-center rounded-full bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary-hover transition-colors"
                   >
                     Get Started
-                  </Link>
+                  </a>
                 </div>
               </div>
             </article>

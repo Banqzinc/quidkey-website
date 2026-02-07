@@ -1,4 +1,6 @@
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
+import { DEMO_PLAYGROUND_URL } from '@/lib/urls'
+import { cn } from '@/lib/utils'
 import { ArrowRight, Check, CreditCard } from 'lucide-react'
 import { useState, useEffect } from 'react'
 
@@ -78,10 +80,15 @@ export function HeroSection() {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button size="lg" className="group shadow-lg shadow-primary/25 hover:shadow-primary/40">
+              <a
+                href={DEMO_PLAYGROUND_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(buttonVariants({ size: 'lg' }), 'group shadow-lg shadow-primary/25 hover:shadow-primary/40')}
+              >
                 Get a demo
                 <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
-              </Button>
+              </a>
               <Button variant="outline" size="lg">
                 Talk to sales
               </Button>
