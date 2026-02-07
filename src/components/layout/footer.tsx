@@ -68,10 +68,10 @@ export function Footer() {
           {/* Logo and trust badge */}
           <div className="flex items-center gap-6">
             <Link to="/" className="flex items-center">
-              <img 
-                src={LOGO_URL} 
-                alt="Quidkey" 
-                height={24} 
+              <img
+                src={LOGO_URL}
+                alt="Quidkey"
+                height={24}
                 className="h-6 w-auto invert"
               />
             </Link>
@@ -83,15 +83,15 @@ export function Footer() {
 
           {/* Social & Contact */}
           <div className="flex items-center gap-6">
-            <a 
-              href="mailto:support@quidkey.com" 
+            <a
+              href="mailto:support@quidkey.com"
               className="text-sm text-background/60 hover:text-background transition-colors"
             >
               support@quidkey.com
             </a>
-            <a 
-              href="https://linkedin.com/company/quidkey" 
-              target="_blank" 
+            <a
+              href="https://linkedin.com/company/quidkey"
+              target="_blank"
               rel="noopener noreferrer"
               className="text-sm text-background/60 hover:text-background transition-colors"
             >
