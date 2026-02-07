@@ -1,5 +1,4 @@
-import { HeadContent, Outlet, Scripts, createRootRoute, useLocation } from '@tanstack/react-router'
-import { useEffect, useRef } from 'react'
+import { HeadContent, Outlet, Scripts, createRootRoute } from '@tanstack/react-router'
 
 import appCss from '../styles.css?url'
 
@@ -53,43 +52,9 @@ export const Route = createRootRoute({
   component: RootComponent,
 })
 
-/** Tracks whether the last navigation was browser back/forward so we don't override scroll restoration. */
-let lastNavWasPop = false
-if (typeof window !== 'undefined') {
-  window.addEventListener('popstate', () => {
-    lastNavWasPop = true
-  })
-}
-
-function ScrollToTop() {
-  const { pathname } = useLocation()
-  const prevPathname = useRef<string | null>(null)
-
-  useEffect(() => {
-    // Only scroll on pathname change (link navigation), not on back/forward
-    if (prevPathname.current !== null && prevPathname.current !== pathname && !lastNavWasPop) {
-      const scrollToTop = () => {
-        window.scrollTo(0, 0)
-        document.documentElement.scrollTop = 0
-        document.body.scrollTop = 0
-      }
-      // Run after paint so we run after any router scroll logic; helps mobile avoid showing old scroll position
-      requestAnimationFrame(() => {
-        scrollToTop()
-        requestAnimationFrame(scrollToTop)
-      })
-    }
-    if (lastNavWasPop) lastNavWasPop = false
-    prevPathname.current = pathname
-  }, [pathname])
-
-  return null
-}
-
 function RootComponent() {
   return (
     <RootDocument>
-      <ScrollToTop />
       <Outlet />
     </RootDocument>
   )
