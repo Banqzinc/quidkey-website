@@ -10,7 +10,6 @@ import { HowItWorksSection } from '@/components/sections/how-it-works'
 import { WorkflowsSection } from '@/components/sections/workflows'
 import { UseCasesSection } from '@/components/sections/use-cases'
 import { DevelopersSection } from '@/components/sections/developers'
-import { BlogPreviewSection } from '@/components/sections/blog-preview'
 import { CTASection } from '@/components/sections/cta'
 import { buildSeo } from '@/lib/seo'
 
@@ -39,7 +38,6 @@ function HomePage() {
         <WorkflowsSection />
         <UseCasesSection />
         <DevelopersSection />
-        <BlogPreviewSection />
         <CTASection />
       </main>
       <Footer />
