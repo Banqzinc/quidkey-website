@@ -5,6 +5,7 @@ import { DEMO_PLAYGROUND_URL } from '@/lib/urls'
 import { cn } from '@/lib/utils'
 import { buildSeo } from '@/lib/seo'
 import { Check, ArrowRight, Zap, Globe, Shield, Clock } from 'lucide-react'
+import { useState } from 'react'
 
 export const Route = createFileRoute('/pricing')({
   component: PricingPage,
@@ -17,7 +18,19 @@ export const Route = createFileRoute('/pricing')({
     }),
 })
 
+type Currency = 'USD' | 'GBP' | 'EUR' | 'AUD'
+
+const currencyConfig: Record<Currency, { symbol: string; fixedFee: string; label: string }> = {
+  USD: { symbol: '$', fixedFee: '0.30', label: 'USD' },
+  GBP: { symbol: '£', fixedFee: '0.20', label: 'GBP' },
+  EUR: { symbol: '€', fixedFee: '0.25', label: 'EUR' },
+  AUD: { symbol: 'A$', fixedFee: '0.45', label: 'AUD' },
+}
+
 function PricingPage() {
+  const [currency, setCurrency] = useState<Currency>('USD')
+  const { symbol, fixedFee } = currencyConfig[currency]
+
   const highlights = [
     'No Setup Fees',
     'No Contracts',
@@ -28,15 +41,15 @@ function PricingPage() {
   const domesticFeatures = [
     { text: 'Instant payouts', available: true },
     { text: 'Single & recurring payments', available: true },
-    { text: 'UK, EU & US merchants', available: true },
-    { text: 'UK, EU & US customers', available: true },
+    { text: 'UK, EU & US businesses', available: true },
+    { text: 'UK, EU, US & AU consumers', available: true },
   ]
 
   const internationalFeatures = [
     { text: '1-5 business days settlement', available: true },
     { text: 'Single & recurring payments', available: true },
-    { text: 'UK, EU, US & AU merchants', available: true },
-    { text: 'UK, EU & US customers', available: true },
+    { text: 'UK, EU, US & AU businesses', available: true },
+    { text: 'UK, EU, US & AU consumers', available: true },
   ]
 
   const faqs = [
@@ -48,7 +61,7 @@ function PricingPage() {
     {
       question: 'Where is Quidkey available?',
       answer:
-        'Quidkey is available to merchants worldwide selling to UK, EU, and US customers. We handle FX and cross-border payments seamlessly.',
+        'Quidkey is available to businesses worldwide selling to UK, EU, US, and AU customers. We handle FX and cross-border payments seamlessly.',
     },
     {
       question: 'How long does it take to settle a payment?',
@@ -98,6 +111,26 @@ function PricingPage() {
       {/* Pricing Cards */}
       <section className="py-12 md:py-16">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          {/* Currency Selector */}
+          <div className="flex justify-center mb-8">
+            <div className="inline-flex items-center gap-1 p-1 bg-secondary/50 rounded-full border border-border">
+              {(Object.keys(currencyConfig) as Currency[]).map((curr) => (
+                <button
+                  key={curr}
+                  onClick={() => setCurrency(curr)}
+                  className={cn(
+                    'px-4 py-2 text-sm font-medium rounded-full transition-all duration-200',
+                    currency === curr
+                      ? 'bg-white text-foreground shadow-sm'
+                      : 'text-muted-foreground hover:text-foreground'
+                  )}
+                >
+                  {currencyConfig[curr].label}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <div className="grid md:grid-cols-2 gap-6 md:gap-8 mb-12">
             {/* Domestic */}
             <div className="bg-white rounded-2xl border border-border p-8 md:p-10">
@@ -105,7 +138,7 @@ function PricingPage() {
                 <h3 className="text-lg font-semibold text-muted-foreground mb-2">Domestic</h3>
                 <div className="flex items-baseline gap-1">
                   <span className="text-5xl md:text-6xl font-bold gradient-text">1%</span>
-                  <span className="text-2xl md:text-3xl font-semibold text-muted-foreground">+ $0.30</span>
+                  <span className="text-2xl md:text-3xl font-semibold text-muted-foreground">+ {symbol}{fixedFee}</span>
                 </div>
                 <p className="text-sm text-muted-foreground mt-2">Per transaction</p>
               </div>
@@ -126,7 +159,7 @@ function PricingPage() {
                 <h3 className="text-lg font-semibold text-muted-foreground mb-2">Cross Border</h3>
                 <div className="flex items-baseline gap-1">
                   <span className="text-5xl md:text-6xl font-bold gradient-text">3%</span>
-                  <span className="text-2xl md:text-3xl font-semibold text-muted-foreground">+ $0.30</span>
+                  <span className="text-2xl md:text-3xl font-semibold text-muted-foreground">+ {symbol}{fixedFee}</span>
                 </div>
                 <p className="text-sm text-muted-foreground mt-2">Per transaction</p>
               </div>
@@ -162,7 +195,7 @@ function PricingPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
             <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-4">
-              Why merchants choose Quidkey
+              Why businesses choose Quidkey
             </h2>
             <p className="text-lg text-muted-foreground">
               Lower costs. Better security. Faster settlement.
