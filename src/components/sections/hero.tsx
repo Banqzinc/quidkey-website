@@ -63,8 +63,7 @@ export function HeroSection() {
 
             {/* Subheadline */}
             <p className="text-lg lg:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 mb-8 text-pretty">
-              Quidkey unifies payment collection, intelligent routing, and programmable treasury into a single stack.
-              Global coverage with one integration.
+              Quidkey unifies intelligent checkout and automates what happens after payment, including tax calculation, splits, and FX, in one platform. Global coverage with a single integration.
             </p>
 
             {/* Benefits list */}
