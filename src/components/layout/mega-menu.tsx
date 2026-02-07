@@ -64,7 +64,7 @@ const menuData: MegaMenuData = {
         { label: 'Ecommerce', href: '/solutions/ecommerce', description: 'Online E-commerce businesses', icon: ShoppingCart },
         { label: 'Travel', href: '/solutions/travel', description: 'Travel tech and hospitality', icon: Plane },
         { label: 'Fintechs', href: '/solutions/fintechs', description: 'Scale faster with white-label solutions', icon: Landmark },
-        { label: 'SaaS Platforms', href: '/solutions/saas', description: 'Embedded A2A payments for SaaS', icon: Monitor },
+        { label: 'SaaS Platforms', href: '/solutions/saas', description: 'Subscription billing with easy integration', icon: Monitor },
         { label: 'Marketplaces', href: '/solutions/marketplaces', description: 'End to end programmable payouts and splits', icon: Store },
         { label: 'Professional Services', href: '/solutions/professional-services', description: 'Accept and move money without code', icon: Briefcase },
       ],
