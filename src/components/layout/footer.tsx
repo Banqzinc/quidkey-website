@@ -6,11 +6,11 @@ const COPYRIGHT_YEAR = new Date().getFullYear()
 export function Footer() {
   const footerLinks = {
     Products: [
-      { label: 'Payments', href: '/products/payments' },
+      { label: 'Shopify', href: '/products/shopify' },
       { label: 'Payment Links', href: '/products/payment-links' },
       { label: 'Hosted Checkout', href: '/products/hosted-checkout' },
-      { label: 'Treasury', href: '/products/treasury' },
-      { label: 'Money Workflows', href: '/products/workflows' },
+      { label: 'Multi Currency', href: '/products/multi-currency' },
+      { label: 'Money Workflows', href: '/workflows' },
     ],
     'Who We Serve': [
       { label: 'Ecommerce', href: '/solutions/ecommerce' },

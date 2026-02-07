@@ -6,7 +6,6 @@ import {
   Link as LinkIcon,
   Building2,
   ArrowLeftRight,
-  Workflow,
   Code,
   ShoppingCart,
   Plane,
@@ -57,13 +56,6 @@ const menuData: MegaMenuData = {
         { label: 'Refunds', href: '/products/refunds', description: 'Fast bank to bank refunds', icon: ArrowLeftRight },
       ],
     },
-    {
-      title: 'Money Workflows',
-      items: [
-        { label: 'Programmable Workflows', href: '/products/workflows', description: 'Define how money moves after payment', icon: Workflow },
-        { label: 'Rules Engine', href: '/products/rules-engine', description: 'Event driven rules for money movement', icon: Code },
-      ],
-    },
   ],
   'Who We Serve': [
     {
@@ -112,7 +104,7 @@ export function MegaMenu() {
               
               {activeMenu === 'Products' && (
                 <div className="absolute top-full left-0 pt-2">
-                  <div className="w-[600px] bg-white rounded-xl shadow-lg border border-border p-6 grid grid-cols-3 gap-6">
+                  <div className="w-[480px] bg-white rounded-xl shadow-lg border border-border p-6 grid grid-cols-2 gap-8">
                     {menuData.Products.map((section, idx) => (
                       <div key={idx}>
                         {section.title && (
@@ -159,7 +151,7 @@ export function MegaMenu() {
               
               {activeMenu === 'Who We Serve' && (
                 <div className="absolute top-full left-0 pt-2">
-                  <div className="w-[400px] bg-white rounded-xl shadow-lg border border-border p-4">
+                  <div className="w-[480px] bg-white rounded-xl shadow-lg border border-border p-5">
                     <div className="grid grid-cols-2 gap-1">
                       {menuData['Who We Serve'][0].items.map((item) => (
                         <Link

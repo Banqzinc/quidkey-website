@@ -18,9 +18,7 @@ import { Route as SolutionsProfessionalServicesRouteImport } from './routes/solu
 import { Route as SolutionsMarketplacesRouteImport } from './routes/solutions/marketplaces'
 import { Route as SolutionsFintechsRouteImport } from './routes/solutions/fintechs'
 import { Route as SolutionsEcommerceRouteImport } from './routes/solutions/ecommerce'
-import { Route as ProductsWorkflowsRouteImport } from './routes/products/workflows'
 import { Route as ProductsShopifyRouteImport } from './routes/products/shopify'
-import { Route as ProductsRulesEngineRouteImport } from './routes/products/rules-engine'
 import { Route as ProductsRefundsRouteImport } from './routes/products/refunds'
 import { Route as ProductsPaymentLinksRouteImport } from './routes/products/payment-links'
 import { Route as ProductsMultiCurrencyRouteImport } from './routes/products/multi-currency'
@@ -75,19 +73,9 @@ const SolutionsEcommerceRoute = SolutionsEcommerceRouteImport.update({
   path: '/solutions/ecommerce',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProductsWorkflowsRoute = ProductsWorkflowsRouteImport.update({
-  id: '/products/workflows',
-  path: '/products/workflows',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ProductsShopifyRoute = ProductsShopifyRouteImport.update({
   id: '/products/shopify',
   path: '/products/shopify',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProductsRulesEngineRoute = ProductsRulesEngineRouteImport.update({
-  id: '/products/rules-engine',
-  path: '/products/rules-engine',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProductsRefundsRoute = ProductsRefundsRouteImport.update({
@@ -136,9 +124,7 @@ export interface FileRoutesByFullPath {
   '/products/multi-currency': typeof ProductsMultiCurrencyRoute
   '/products/payment-links': typeof ProductsPaymentLinksRoute
   '/products/refunds': typeof ProductsRefundsRoute
-  '/products/rules-engine': typeof ProductsRulesEngineRoute
   '/products/shopify': typeof ProductsShopifyRoute
-  '/products/workflows': typeof ProductsWorkflowsRoute
   '/solutions/ecommerce': typeof SolutionsEcommerceRoute
   '/solutions/fintechs': typeof SolutionsFintechsRoute
   '/solutions/marketplaces': typeof SolutionsMarketplacesRoute
@@ -157,9 +143,7 @@ export interface FileRoutesByTo {
   '/products/multi-currency': typeof ProductsMultiCurrencyRoute
   '/products/payment-links': typeof ProductsPaymentLinksRoute
   '/products/refunds': typeof ProductsRefundsRoute
-  '/products/rules-engine': typeof ProductsRulesEngineRoute
   '/products/shopify': typeof ProductsShopifyRoute
-  '/products/workflows': typeof ProductsWorkflowsRoute
   '/solutions/ecommerce': typeof SolutionsEcommerceRoute
   '/solutions/fintechs': typeof SolutionsFintechsRoute
   '/solutions/marketplaces': typeof SolutionsMarketplacesRoute
@@ -179,9 +163,7 @@ export interface FileRoutesById {
   '/products/multi-currency': typeof ProductsMultiCurrencyRoute
   '/products/payment-links': typeof ProductsPaymentLinksRoute
   '/products/refunds': typeof ProductsRefundsRoute
-  '/products/rules-engine': typeof ProductsRulesEngineRoute
   '/products/shopify': typeof ProductsShopifyRoute
-  '/products/workflows': typeof ProductsWorkflowsRoute
   '/solutions/ecommerce': typeof SolutionsEcommerceRoute
   '/solutions/fintechs': typeof SolutionsFintechsRoute
   '/solutions/marketplaces': typeof SolutionsMarketplacesRoute
@@ -202,9 +184,7 @@ export interface FileRouteTypes {
     | '/products/multi-currency'
     | '/products/payment-links'
     | '/products/refunds'
-    | '/products/rules-engine'
     | '/products/shopify'
-    | '/products/workflows'
     | '/solutions/ecommerce'
     | '/solutions/fintechs'
     | '/solutions/marketplaces'
@@ -223,9 +203,7 @@ export interface FileRouteTypes {
     | '/products/multi-currency'
     | '/products/payment-links'
     | '/products/refunds'
-    | '/products/rules-engine'
     | '/products/shopify'
-    | '/products/workflows'
     | '/solutions/ecommerce'
     | '/solutions/fintechs'
     | '/solutions/marketplaces'
@@ -244,9 +222,7 @@ export interface FileRouteTypes {
     | '/products/multi-currency'
     | '/products/payment-links'
     | '/products/refunds'
-    | '/products/rules-engine'
     | '/products/shopify'
-    | '/products/workflows'
     | '/solutions/ecommerce'
     | '/solutions/fintechs'
     | '/solutions/marketplaces'
@@ -266,9 +242,7 @@ export interface RootRouteChildren {
   ProductsMultiCurrencyRoute: typeof ProductsMultiCurrencyRoute
   ProductsPaymentLinksRoute: typeof ProductsPaymentLinksRoute
   ProductsRefundsRoute: typeof ProductsRefundsRoute
-  ProductsRulesEngineRoute: typeof ProductsRulesEngineRoute
   ProductsShopifyRoute: typeof ProductsShopifyRoute
-  ProductsWorkflowsRoute: typeof ProductsWorkflowsRoute
   SolutionsEcommerceRoute: typeof SolutionsEcommerceRoute
   SolutionsFintechsRoute: typeof SolutionsFintechsRoute
   SolutionsMarketplacesRoute: typeof SolutionsMarketplacesRoute
@@ -343,25 +317,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SolutionsEcommerceRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/products/workflows': {
-      id: '/products/workflows'
-      path: '/products/workflows'
-      fullPath: '/products/workflows'
-      preLoaderRoute: typeof ProductsWorkflowsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/products/shopify': {
       id: '/products/shopify'
       path: '/products/shopify'
       fullPath: '/products/shopify'
       preLoaderRoute: typeof ProductsShopifyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/products/rules-engine': {
-      id: '/products/rules-engine'
-      path: '/products/rules-engine'
-      fullPath: '/products/rules-engine'
-      preLoaderRoute: typeof ProductsRulesEngineRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/products/refunds': {
@@ -426,9 +386,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProductsMultiCurrencyRoute: ProductsMultiCurrencyRoute,
   ProductsPaymentLinksRoute: ProductsPaymentLinksRoute,
   ProductsRefundsRoute: ProductsRefundsRoute,
-  ProductsRulesEngineRoute: ProductsRulesEngineRoute,
   ProductsShopifyRoute: ProductsShopifyRoute,
-  ProductsWorkflowsRoute: ProductsWorkflowsRoute,
   SolutionsEcommerceRoute: SolutionsEcommerceRoute,
   SolutionsFintechsRoute: SolutionsFintechsRoute,
   SolutionsMarketplacesRoute: SolutionsMarketplacesRoute,
