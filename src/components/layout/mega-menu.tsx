@@ -18,7 +18,7 @@ import {
   X,
 } from 'lucide-react'
 import { buttonVariants } from '@/components/ui/button'
-import { MERCHANTS_LOGIN_URL, MERCHANTS_SIGNUP_URL } from '@/lib/urls'
+import { DOCS_URL, MERCHANTS_LOGIN_URL, MERCHANTS_SIGNUP_URL } from '@/lib/urls'
 
 const LOGO_URL = 'https://storage.googleapis.com/quidkey-resources-public/quidkey-logo-black.svg'
 
@@ -82,10 +82,10 @@ export function MegaMenu() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center group">
-            <img 
-              src={LOGO_URL} 
-              alt="Quidkey" 
-              height={28} 
+            <img
+              src={LOGO_URL}
+              alt="Quidkey"
+              height={28}
               className="h-7 w-auto transition-transform duration-300 group-hover:scale-[1.02]"
             />
           </Link>
@@ -102,7 +102,7 @@ export function MegaMenu() {
                 Products
                 <ChevronDown className={cn('h-4 w-4 transition-transform', activeMenu === 'Products' && 'rotate-180')} />
               </button>
-              
+
               {activeMenu === 'Products' && (
                 <div className="absolute top-full left-0 pt-2">
                   <div className="w-[480px] bg-white rounded-xl shadow-lg border border-border p-6 grid grid-cols-2 gap-8">
@@ -149,7 +149,7 @@ export function MegaMenu() {
                 Who We Serve
                 <ChevronDown className={cn('h-4 w-4 transition-transform', activeMenu === 'Who We Serve' && 'rotate-180')} />
               </button>
-              
+
               {activeMenu === 'Who We Serve' && (
                 <div className="absolute top-full left-0 pt-2">
                   <div className="w-[480px] bg-white rounded-xl shadow-lg border border-border p-5">
@@ -181,7 +181,12 @@ export function MegaMenu() {
             <Link to="/workflows" className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
               Workflows
             </Link>
-            <a href="#developers" className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <a
+              href={DOCS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
               Developers
             </a>
             <Link to="/blog" className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
@@ -265,7 +270,13 @@ export function MegaMenu() {
             <Link to="/workflows" className="block py-2 font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>
               Workflows
             </Link>
-            <a href="#developers" className="block py-2 font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>
+            <a
+              href={DOCS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block py-2 font-medium text-foreground"
+              onClick={() => setMobileMenuOpen(false)}
+            >
               Developers
             </a>
             <Link to="/blog" className="block py-2 font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>
