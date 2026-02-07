@@ -65,15 +65,21 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-8 border-t border-background/20">
-          {/* Logo */}
-          <Link to="/" className="flex items-center">
-            <img 
-              src={LOGO_URL} 
-              alt="Quidkey" 
-              height={24} 
-              className="h-6 w-auto invert"
-            />
-          </Link>
+          {/* Logo and trust badge */}
+          <div className="flex items-center gap-6">
+            <Link to="/" className="flex items-center">
+              <img 
+                src={LOGO_URL} 
+                alt="Quidkey" 
+                height={24} 
+                className="h-6 w-auto invert"
+              />
+            </Link>
+            <div className="flex items-center gap-1.5 text-sm text-background/60">
+              <span className="text-base">🛡️</span>
+              <span>SOC 2 Type II</span>
+            </div>
+          </div>
 
           {/* Social & Contact */}
           <div className="flex items-center gap-6">
