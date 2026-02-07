@@ -92,32 +92,32 @@ function HeroSection() {
 function WorkflowExamplesSection() {
   const workflows = [
     {
-      command: '"Hold US sales tax by state, county, and city."',
+      command: 'Hold US sales tax by state, county, and city.',
       description: 'Tax is calculated and saved in separate accounts automatically.',
       icon: Calculator,
     },
     {
-      command: '"Split 70/30 with supplier, hold 10% for returns."',
+      command: 'Split 70/30 with supplier, hold 10% for returns.',
       description: 'Payments split automatically. Returns reserve held separately.',
       icon: GitBranch,
     },
     {
-      command: '"Convert to USD weekly at best rate."',
+      command: 'Convert to USD weekly at best rate.',
       description: 'Currency converts on schedule. Settles to your bank.',
       icon: ArrowRightLeft,
     },
     {
-      command: '"Pay supplier when delivery is confirmed."',
+      command: 'Pay supplier when delivery is confirmed.',
       description: 'Funds release when conditions are met.',
       icon: Users,
     },
     {
-      command: '"Refund to original bank account."',
+      command: 'Refund to original bank account.',
       description: 'Instant refunds back to customer bank accounts.',
       icon: RotateCcw,
     },
     {
-      command: '"Hold 5% reserve for 30 days on large orders."',
+      command: 'Hold 5% reserve for 30 days on large orders.',
       description: 'Risk-based holds release automatically after the period.',
       icon: Wallet,
     },
@@ -135,31 +135,42 @@ function WorkflowExamplesSection() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        {/* Translate-style workflow grid */}
+        <div className="grid md:grid-cols-2 gap-4 md:gap-6 max-w-5xl mx-auto">
           {workflows.map((workflow, index) => (
             <div
               key={index}
-              className="rounded-2xl border border-background/20 bg-background/5 p-6 md:p-8 backdrop-blur-sm"
+              className="rounded-2xl border border-background/20 bg-background/5 backdrop-blur-sm overflow-hidden"
             >
-              <div className="flex items-center gap-3 mb-4">
+              {/* Icon header */}
+              <div className="px-5 pt-5 md:px-6 md:pt-6">
                 <div className="h-10 w-10 rounded-lg bg-background/10 flex items-center justify-center">
                   <workflow.icon className="h-5 w-5 text-background/70" />
                 </div>
               </div>
 
-              <div className="font-mono text-lg text-background mb-4">
-                {workflow.command}
-              </div>
+              {/* Two-panel translate layout */}
+              <div className="grid grid-cols-1 divide-y divide-background/10">
+                {/* You write panel */}
+                <div className="p-5 md:p-6">
+                  <div className="text-xs font-medium text-background/40 uppercase tracking-wider mb-2">
+                    You write
+                  </div>
+                  <div className="font-mono text-base text-background">
+                    "{workflow.command}"
+                  </div>
+                </div>
 
-              <div className="flex items-center gap-3 mb-4">
-                <div className="h-px flex-1 bg-background/20" />
-                <span className="text-xs text-background/50">Translates to</span>
-                <div className="h-px flex-1 bg-background/20" />
+                {/* Quidkey executes panel */}
+                <div className="p-5 md:p-6 bg-background/5">
+                  <div className="text-xs font-medium text-background/40 uppercase tracking-wider mb-2">
+                    Quidkey executes
+                  </div>
+                  <p className="text-sm text-background/80">
+                    {workflow.description}
+                  </p>
+                </div>
               </div>
-
-              <p className="text-sm text-background/70">
-                {workflow.description}
-              </p>
             </div>
           ))}
         </div>

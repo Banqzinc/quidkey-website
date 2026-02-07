@@ -5,15 +5,15 @@ import { ArrowRight } from 'lucide-react'
 export function WorkflowsSection() {
   const workflows = [
     {
-      command: '"Hold US sales tax by state, county, and city and product type."',
+      command: 'Hold US sales tax by state, county, and city and product type.',
       description: 'Tax is automatically calculated and saved in separate tax accounts.',
     },
     {
-      command: '"Hold 10% for refunds. Per Jurisdiction."',
+      command: 'Hold 10% for refunds. Per Jurisdiction.',
       description: 'Manage refunds by jurisdiction. Hold 10% for refunds, and release the rest to the business account.',
     },
     {
-      command: '"Split 70/30 with seller."',
+      command: 'Split 70/30 with seller.',
       description: 'A marketplace splits payments to sellers, and holds a platform fee.',
     },
   ]
@@ -31,29 +31,34 @@ export function WorkflowsSection() {
           </p>
         </div>
 
-        {/* Workflow examples */}
-        <div className="space-y-6 md:space-y-8 max-w-3xl mx-auto">
+        {/* Translate-style workflow examples */}
+        <div className="space-y-4 md:space-y-6 max-w-4xl mx-auto">
           {workflows.map((workflow, index) => (
             <div
               key={index}
-              className="rounded-2xl border border-background/20 bg-background/5 p-6 md:p-8 backdrop-blur-sm"
+              className="rounded-2xl border border-background/20 bg-background/5 backdrop-blur-sm overflow-hidden"
             >
-              {/* Command */}
-              <div className="font-mono text-lg md:text-xl text-background mb-4">
-                {workflow.command}
-              </div>
+              <div className="grid md:grid-cols-2">
+                {/* Left panel - You write */}
+                <div className="p-5 md:p-6 border-b md:border-b-0 md:border-r border-background/10">
+                  <div className="text-xs font-medium text-background/40 uppercase tracking-wider mb-3">
+                    You write
+                  </div>
+                  <div className="font-mono text-base md:text-lg text-background leading-relaxed">
+                    "{workflow.command}"
+                  </div>
+                </div>
 
-              {/* Arrow indicator */}
-              <div className="flex items-center gap-3 mb-4">
-                <div className="h-px flex-1 bg-background/20" />
-                <span className="text-sm text-background/50">Translates to</span>
-                <div className="h-px flex-1 bg-background/20" />
+                {/* Right panel - Quidkey executes */}
+                <div className="p-5 md:p-6 bg-background/5">
+                  <div className="text-xs font-medium text-background/40 uppercase tracking-wider mb-3">
+                    Quidkey executes
+                  </div>
+                  <p className="text-background/80 leading-relaxed">
+                    {workflow.description}
+                  </p>
+                </div>
               </div>
-
-              {/* Description */}
-              <p className="text-background/70">
-                {workflow.description}
-              </p>
             </div>
           ))}
         </div>
