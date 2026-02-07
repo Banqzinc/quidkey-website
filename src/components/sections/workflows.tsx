@@ -58,13 +58,8 @@ export function WorkflowsSection() {
           ))}
         </div>
 
-        {/* Note and CTA */}
-        <div className="text-center mt-12 space-y-6">
-          <p className="text-sm text-background/50 max-w-xl mx-auto">
-            Not a GPT wrapper. LLMs parse natural language, but execution is deterministic.
-            Every workflow compiles to CEL (Common Expression Language) with zero ambiguity.
-          </p>
-
+        {/* CTA */}
+        <div className="text-center mt-12">
           <Link to="/workflows">
             <Button variant="secondary" size="lg" className="group">
               Explore all workflows
