@@ -1,10 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { PageLayout, PageCTA } from '@/components/layout/page-layout'
-import { Button, buttonVariants } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
 import { DEMO_PLAYGROUND_URL } from '@/lib/urls'
 import { cn } from '@/lib/utils'
 import { buildSeo } from '@/lib/seo'
-import { Check, X, ArrowRight, Zap, Globe, Shield, Clock } from 'lucide-react'
+import { Check, ArrowRight, Zap, Globe, Shield, Clock } from 'lucide-react'
 
 export const Route = createFileRoute('/pricing')({
   component: PricingPage,
@@ -28,17 +28,15 @@ function PricingPage() {
   const domesticFeatures = [
     { text: 'Instant payouts', available: true },
     { text: 'Single & recurring payments', available: true },
-    { text: 'UK & EU merchants', available: true },
-    { text: 'UK & EU customers', available: true },
-    { text: 'US customers', available: false, note: 'Coming soon' },
+    { text: 'UK, EU & US merchants', available: true },
+    { text: 'UK, EU & US customers', available: true },
   ]
 
   const internationalFeatures = [
     { text: '1-5 business days settlement', available: true },
     { text: 'Single & recurring payments', available: true },
-    { text: 'UK, EU, US, AU merchants', available: true },
-    { text: 'UK & EU customers', available: true },
-    { text: 'US customers', available: false, note: 'Coming soon' },
+    { text: 'UK, EU, US & AU merchants', available: true },
+    { text: 'UK, EU & US customers', available: true },
   ]
 
   const faqs = [
@@ -50,7 +48,7 @@ function PricingPage() {
     {
       question: 'Where is Quidkey available?',
       answer:
-        'Quidkey is available to merchants worldwide selling to UK and EU customers. We handle FX and cross-border payments seamlessly. US customer support is coming soon.',
+        'Quidkey is available to merchants worldwide selling to UK, EU, and US customers. We handle FX and cross-border payments seamlessly.',
     },
     {
       question: 'How long does it take to settle a payment?',
@@ -67,7 +65,7 @@ function PricingPage() {
   return (
     <PageLayout>
       {/* Hero */}
-      <section className="relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden">
+      <section className="relative pt-24 pb-8 md:pt-32 md:pb-12 overflow-hidden">
         <div className="absolute inset-0 hero-gradient" aria-hidden="true" />
         <div className="absolute inset-0 noise" aria-hidden="true" />
 
@@ -83,7 +81,7 @@ function PricingPage() {
           </p>
 
           {/* Highlights */}
-          <div className="flex flex-wrap justify-center gap-3 mb-10">
+          <div className="flex flex-wrap justify-center gap-3">
             {highlights.map((highlight) => (
               <div
                 key={highlight}
@@ -94,23 +92,13 @@ function PricingPage() {
               </div>
             ))}
           </div>
-
-          <a
-            href={DEMO_PLAYGROUND_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={cn(buttonVariants({ size: 'lg' }), 'group shadow-lg shadow-primary/25 hover:shadow-primary/40')}
-          >
-            Start accepting payments
-            <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
-          </a>
         </div>
       </section>
 
       {/* Pricing Cards */}
-      <section className="py-16 md:py-24">
+      <section className="py-12 md:py-16">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8 mb-12">
             {/* Domestic */}
             <div className="bg-white rounded-2xl border border-border p-8 md:p-10">
               <div className="mb-6">
@@ -122,35 +110,18 @@ function PricingPage() {
                 <p className="text-sm text-muted-foreground mt-2">Per transaction</p>
               </div>
 
-              <ul className="space-y-3 mb-8">
+              <ul className="space-y-3">
                 {domesticFeatures.map((feature) => (
                   <li key={feature.text} className="flex items-start gap-3">
-                    {feature.available ? (
-                      <Check className="h-5 w-5 text-success flex-shrink-0 mt-0.5" />
-                    ) : (
-                      <X className="h-5 w-5 text-muted-foreground/50 flex-shrink-0 mt-0.5" />
-                    )}
-                    <span className={cn('text-sm', !feature.available && 'text-muted-foreground')}>
-                      {feature.text}
-                      {feature.note && <span className="text-muted-foreground/70"> — {feature.note}</span>}
-                    </span>
+                    <Check className="h-5 w-5 text-success flex-shrink-0 mt-0.5" />
+                    <span className="text-sm">{feature.text}</span>
                   </li>
                 ))}
               </ul>
-
-              <Button variant="outline" size="lg" className="w-full">
-                Get started
-              </Button>
             </div>
 
             {/* International */}
-            <div className="bg-white rounded-2xl border-2 border-primary p-8 md:p-10 relative">
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                <span className="bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full">
-                  Most Popular
-                </span>
-              </div>
-
+            <div className="bg-white rounded-2xl border border-border p-8 md:p-10">
               <div className="mb-6">
                 <h3 className="text-lg font-semibold text-muted-foreground mb-2">Cross Border</h3>
                 <div className="flex items-baseline gap-1">
@@ -160,31 +131,28 @@ function PricingPage() {
                 <p className="text-sm text-muted-foreground mt-2">Per transaction</p>
               </div>
 
-              <ul className="space-y-3 mb-8">
+              <ul className="space-y-3">
                 {internationalFeatures.map((feature) => (
                   <li key={feature.text} className="flex items-start gap-3">
-                    {feature.available ? (
-                      <Check className="h-5 w-5 text-success flex-shrink-0 mt-0.5" />
-                    ) : (
-                      <X className="h-5 w-5 text-muted-foreground/50 flex-shrink-0 mt-0.5" />
-                    )}
-                    <span className={cn('text-sm', !feature.available && 'text-muted-foreground')}>
-                      {feature.text}
-                      {feature.note && <span className="text-muted-foreground/70"> — {feature.note}</span>}
-                    </span>
+                    <Check className="h-5 w-5 text-success flex-shrink-0 mt-0.5" />
+                    <span className="text-sm">{feature.text}</span>
                   </li>
                 ))}
               </ul>
-
-              <a
-                href={DEMO_PLAYGROUND_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={cn(buttonVariants({ size: 'lg' }), 'w-full')}
-              >
-                Get started
-              </a>
             </div>
+          </div>
+
+          {/* Single CTA below cards */}
+          <div className="text-center">
+            <a
+              href={DEMO_PLAYGROUND_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(buttonVariants({ size: 'lg' }), 'group shadow-lg shadow-primary/25 hover:shadow-primary/40')}
+            >
+              Start accepting payments
+              <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+            </a>
           </div>
         </div>
       </section>
@@ -223,7 +191,7 @@ function PricingPage() {
                 <Globe className="h-6 w-6 text-primary" />
               </div>
               <h3 className="text-lg font-semibold text-foreground mb-2">Global Coverage</h3>
-              <p className="text-sm text-muted-foreground">Accept from UK, EU, and more markets.</p>
+              <p className="text-sm text-muted-foreground">Accept from UK, EU, US, and Australia.</p>
             </div>
 
             <div className="bg-white rounded-2xl border border-border p-6 text-center">
