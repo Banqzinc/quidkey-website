@@ -65,7 +65,7 @@ function PaymentLinksPage() {
       stat: '$0',
       statLabel: 'monthly',
       title: 'Pay per transaction',
-      description: '1-3.5% when you get paid.',
+      description: '1-3% when you get paid.',
     },
   ]
 

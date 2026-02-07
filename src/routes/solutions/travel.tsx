@@ -9,7 +9,7 @@ export const Route = createFileRoute('/solutions/travel')({
     buildSeo({
       title: 'Travel | Quidkey',
       description:
-        'Accept high-value bookings at 1-3.5%. No transaction limits.',
+        'Accept high-value bookings at 1-3%. No transaction limits.',
       path: '/solutions/travel',
     }),
 })
@@ -24,7 +24,7 @@ function TravelPage() {
     {
       icon: TrendingDown,
       title: 'Lower fees',
-      description: '1-3.5% on large bookings.',
+      description: '1-3% on large bookings.',
     },
     {
       icon: Shield,
@@ -93,7 +93,7 @@ function TravelPage() {
         badge="Travel"
         title="Built for high-value"
         titleGradient="travel bookings."
-        description="Accept $5k+ bookings at 1-3.5%. Multi-currency. Supplier payouts."
+        description="Accept $5k+ bookings at 1-3%. Multi-currency. Supplier payouts."
         features={['No limits', 'Multi-currency', 'Supplier automation']}
       />
 

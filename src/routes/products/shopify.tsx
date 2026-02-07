@@ -9,7 +9,7 @@ export const Route = createFileRoute('/products/shopify')({
     buildSeo({
       title: 'Shopify Pay by Bank | Quidkey',
       description:
-        'Shopify-approved pay by bank app. 1-3.5% fees. Zero chargebacks. Install in minutes.',
+        'Shopify-approved pay by bank app. 1-3% fees. Zero chargebacks. Install in minutes.',
       path: '/products/shopify',
     }),
 })
@@ -33,7 +33,7 @@ function ShopifyPage() {
     },
     {
       icon: TrendingUp,
-      title: '1-3.5% fees',
+      title: '1-3% fees',
       description: 'Replace 3-6% card fees.',
     },
     {

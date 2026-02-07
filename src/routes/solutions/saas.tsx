@@ -9,7 +9,7 @@ export const Route = createFileRoute('/solutions/saas')({
     buildSeo({
       title: 'SaaS | Quidkey',
       description:
-        'Recurring payments at 1-3.5%. Stay seller-of-record. Automate tax.',
+        'Recurring payments at 1-3%. Stay seller-of-record. Automate tax.',
       path: '/solutions/saas',
     }),
 })
@@ -24,7 +24,7 @@ function SaaSPage() {
     {
       icon: TrendingDown,
       title: 'Lower than cards',
-      description: '1-3.5% per renewal.',
+      description: '1-3% per renewal.',
     },
     {
       icon: Globe,
@@ -53,7 +53,7 @@ function SaaSPage() {
       stat: '5-10%',
       statLabel: 'vs MoR fees',
       title: 'Better than Paddle',
-      description: '1-3.5% not 5-10%.',
+      description: '1-3% not 5-10%.',
     },
     {
       stat: '10-20h',
@@ -93,7 +93,7 @@ function SaaSPage() {
         badge="SaaS"
         title="Subscriptions without"
         titleGradient="the MoR tax."
-        description="1-3.5% recurring. Stay seller-of-record. Automate tax."
+        description="1-3% recurring. Stay seller-of-record. Automate tax."
         features={['Recurring', 'Seller-of-record', 'Auto tax']}
       />
 
