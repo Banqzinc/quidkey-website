@@ -110,6 +110,18 @@
     background-clip: text;
   }
 
+  /* Brighter gradient for dark backgrounds - blue to purple */
+  .gradient-text-light {
+    background: linear-gradient(
+      -90deg,
+      #3a81ff 0%,
+      #b49dff 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
   /* Hero gradient background - atmospheric */
   .hero-gradient {
     background:
