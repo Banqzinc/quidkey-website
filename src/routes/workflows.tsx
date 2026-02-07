@@ -2,16 +2,16 @@ import { createFileRoute } from '@tanstack/react-router'
 import { MegaMenu } from '@/components/layout/mega-menu'
 import { Footer } from '@/components/layout/footer'
 import { Button } from '@/components/ui/button'
-import { ArrowRight, Check, MessageSquare, Cog, Shield, GitBranch, FileCheck, Zap, Calculator, ArrowRightLeft, Wallet, Users, RotateCcw } from 'lucide-react'
+import { ArrowRight, Check, Calculator, GitBranch, ArrowRightLeft, Wallet, Users, RotateCcw } from 'lucide-react'
 import { buildSeo } from '@/lib/seo'
 
 export const Route = createFileRoute('/workflows')({
   component: WorkflowsPage,
   head: () =>
     buildSeo({
-      title: 'Treasury Workflows (Plain English) | Quidkey',
+      title: 'Money Workflows | Quidkey',
       description:
-        'Define treasury workflows in plain English. Quidkey compiles them into deterministic, auditable execution. Tax holds, splits, FX, and payouts automated.',
+        'Write simple rules for how your money moves. Tax holds, splits, FX, and payouts - all automated.',
       path: '/workflows',
     }),
 })
@@ -25,8 +25,6 @@ function WorkflowsPage() {
         <WorkflowExamplesSection />
         <HowItWorksSection />
         <WorkflowTypesSection />
-        <FeaturesSection />
-        <UseCasesSection />
         <CTASection />
       </main>
       <Footer />
@@ -36,9 +34,9 @@ function WorkflowsPage() {
 
 function HeroSection() {
   const benefits = [
-    'Plain English input',
-    'Deterministic execution',
-    'Audit-ready logs',
+    'Plain English rules',
+    'Automatic execution',
+    'Full audit trail',
   ]
 
   return (
@@ -48,17 +46,17 @@ function HeroSection() {
 
       <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
         <div className="inline-flex items-center gap-2.5 rounded-full bg-foreground/5 border border-foreground/10 px-4 py-2 text-sm font-medium text-foreground mb-6">
-          Programmable Treasury
+          Money Workflows
         </div>
 
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6 leading-[1.1]">
-          <span className="text-foreground">Plain English becomes</span>
+          <span className="text-foreground">Write simple rules.</span>
           <br />
-          <span className="gradient-text">deterministic execution.</span>
+          <span className="gradient-text">Money moves automatically.</span>
         </h1>
 
         <p className="text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 text-pretty">
-          Define how money moves after payment. Tax holds, revenue splits, FX conversion, and settlements, all automated with programmable workflows.
+          Describe how your money should move in plain English. Tax, splits, payouts - Quidkey handles it.
         </p>
 
         <ul className="flex flex-wrap justify-center gap-x-5 gap-y-3 mb-10" role="list">
@@ -88,33 +86,33 @@ function WorkflowExamplesSection() {
   const workflows = [
     {
       command: '"Hold US sales tax by state, county, and city."',
-      description: 'Automatically calculate and segregate tax at the moment of payment. Route funds into dedicated tax sub-accounts for clean remittance.',
+      description: 'Tax is calculated and saved in separate accounts automatically.',
       icon: Calculator,
     },
     {
       command: '"Split 70/30 with supplier, hold 10% for returns."',
-      description: 'Automated splits with a returns reserve and dispute holds. Reconcile once, no spreadsheets, no manual payouts.',
+      description: 'Payments split automatically. Returns reserve held separately.',
       icon: GitBranch,
     },
     {
       command: '"Convert to USD weekly at best rate."',
-      description: 'Schedule FX and settlement into your operating account. Deterministic execution with full audit trails.',
+      description: 'Currency converts on schedule. Settles to your bank.',
       icon: ArrowRightLeft,
     },
     {
-      command: '"Pay supplier when customer delivery is confirmed."',
-      description: 'Event-driven payouts tied to business milestones. Funds release automatically when conditions are met.',
+      command: '"Pay supplier when delivery is confirmed."',
+      description: 'Funds release when conditions are met.',
       icon: Users,
     },
     {
-      command: '"Refund to original bank account within 2 hours."',
-      description: 'Instant refund processing back to customer bank accounts. No card network delays, no manual transfers.',
+      command: '"Refund to original bank account."',
+      description: 'Instant refunds back to customer bank accounts.',
       icon: RotateCcw,
     },
     {
-      command: '"Hold 5% reserve for 30 days on high-risk orders."',
-      description: 'Risk-based reserve policies applied automatically. Release funds after the hold period expires.',
-      icon: Shield,
+      command: '"Hold 5% reserve for 30 days on large orders."',
+      description: 'Risk-based holds release automatically after the period.',
+      icon: Wallet,
     },
   ]
 
@@ -123,10 +121,10 @@ function WorkflowExamplesSection() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight mb-4">
-            Intent to execution.
+            Write it. It happens.
           </h2>
           <p className="text-lg text-background/70">
-            Define treasury workflows in plain English. Quidkey compiles them into deterministic, auditable execution.
+            Describe what you want. Quidkey makes it happen automatically.
           </p>
         </div>
 
@@ -148,7 +146,7 @@ function WorkflowExamplesSection() {
 
               <div className="flex items-center gap-3 mb-4">
                 <div className="h-px flex-1 bg-background/20" />
-                <span className="text-xs text-background/50">compiles to</span>
+                <span className="text-xs text-background/50">Translates to</span>
                 <div className="h-px flex-1 bg-background/20" />
               </div>
 
@@ -158,11 +156,6 @@ function WorkflowExamplesSection() {
             </div>
           ))}
         </div>
-
-        <p className="text-center text-sm text-background/50 mt-12 max-w-xl mx-auto">
-          Not a GPT wrapper. LLMs parse natural language, but execution is deterministic.
-          Every workflow compiles to CEL (Common Expression Language) with zero ambiguity.
-        </p>
       </div>
     </section>
   )
@@ -172,35 +165,30 @@ function HowItWorksSection() {
   const steps = [
     {
       step: '1',
-      title: 'Describe your intent',
-      description: 'Write what you want in plain English: "Hold 10% for refunds and split the rest 70/30 with my supplier." No code, no configuration files.',
+      title: 'Write your rule',
+      description: 'Describe what should happen in plain English.',
     },
     {
       step: '2',
-      title: 'Quidkey compiles to CEL',
-      description: 'Your natural language is parsed and compiled into Common Expression Language (CEL). Deterministic, type-safe, and auditable.',
+      title: 'Review the logic',
+      description: 'See exactly what will execute before it goes live.',
     },
     {
       step: '3',
-      title: 'Review and approve',
-      description: 'See exactly what will execute. Review the compiled logic, test with sample data, and approve when ready.',
-    },
-    {
-      step: '4',
-      title: 'Automatic execution',
-      description: 'Every qualifying payment triggers your workflow. Tax is calculated, splits are applied, and funds route automatically.',
+      title: 'It runs automatically',
+      description: 'Every payment triggers your workflow. No manual work.',
     },
   ]
 
   return (
     <section className="py-16 md:py-24">
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
           <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-4">
-            From intent to execution
+            How it works
           </h2>
           <p className="text-lg text-muted-foreground">
-            How programmable treasury actually works.
+            Three steps to automate your money.
           </p>
         </div>
 
@@ -223,15 +211,6 @@ function HowItWorksSection() {
             </div>
           ))}
         </div>
-
-        <div className="mt-12 p-6 rounded-2xl bg-secondary/50 border border-border">
-          <h4 className="font-semibold text-foreground mb-2">Why CEL?</h4>
-          <p className="text-sm text-muted-foreground">
-            Common Expression Language (CEL) is used by Google, Kubernetes, and major infrastructure platforms.
-            It's type-safe, sandboxed, and fast. Unlike arbitrary code execution, CEL is inherently safe and auditable.
-            Your workflows cannot have side effects beyond what Quidkey explicitly allows.
-          </p>
-        </div>
       </div>
     </section>
   )
@@ -241,69 +220,33 @@ function WorkflowTypesSection() {
   const types = [
     {
       icon: Calculator,
-      title: 'Tax Compliance',
-      description: 'Calculate and hold sales tax automatically by jurisdiction.',
-      examples: [
-        'US state, county, and city sales tax',
-        'EU VAT by country',
-        'Automatic tax account segregation',
-        'Scheduled remittance preparation',
-      ],
+      title: 'Tax',
+      description: 'Calculate and hold sales tax by jurisdiction.',
     },
     {
       icon: GitBranch,
-      title: 'Multi-Party Splits',
-      description: 'Distribute payments to multiple parties automatically.',
-      examples: [
-        'Supplier and vendor payments',
-        'Marketplace seller splits',
-        'Affiliate commission payouts',
-        'Revenue share with partners',
-      ],
+      title: 'Splits',
+      description: 'Distribute payments to multiple parties.',
     },
     {
       icon: ArrowRightLeft,
       title: 'FX & Settlement',
       description: 'Convert currencies and settle to your bank.',
-      examples: [
-        'Weekly batch conversion at best rate',
-        'Instant conversion on receipt',
-        'Multi-currency balance management',
-        'Scheduled sweeps to operating account',
-      ],
     },
     {
       icon: Wallet,
-      title: 'Reserves & Holds',
-      description: 'Manage risk with configurable fund holds.',
-      examples: [
-        'Return/refund reserves',
-        'Dispute hold periods',
-        'Risk-based reserve percentages',
-        'Time-based release rules',
-      ],
+      title: 'Reserves',
+      description: 'Hold funds for returns, disputes, or risk.',
     },
     {
       icon: Users,
-      title: 'Escrow & Milestones',
-      description: 'Release funds based on business events.',
-      examples: [
-        'Delivery confirmation triggers',
-        'Service completion payouts',
-        'Approval-based releases',
-        'Multi-signature requirements',
-      ],
+      title: 'Escrow',
+      description: 'Release funds when conditions are met.',
     },
     {
       icon: RotateCcw,
-      title: 'Refunds & Returns',
-      description: 'Automate refund processing and accounting.',
-      examples: [
-        'Instant bank refunds',
-        'Partial refund calculations',
-        'Return reserve drawdown',
-        'Automated reconciliation',
-      ],
+      title: 'Refunds',
+      description: 'Send money back to customer bank accounts.',
     },
   ]
 
@@ -312,10 +255,10 @@ function WorkflowTypesSection() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
           <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-4">
-            Workflow types
+            What you can automate
           </h2>
           <p className="text-lg text-muted-foreground">
-            Common patterns for automating treasury operations.
+            Common workflows businesses use.
           </p>
         </div>
 
@@ -331,143 +274,8 @@ function WorkflowTypesSection() {
               <h3 className="text-lg font-semibold text-foreground mb-2">
                 {type.title}
               </h3>
-              <p className="text-sm text-muted-foreground mb-4">
+              <p className="text-muted-foreground">
                 {type.description}
-              </p>
-              <ul className="space-y-2">
-                {type.examples.map((example, i) => (
-                  <li key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <div className="h-1.5 w-1.5 rounded-full bg-primary" />
-                    {example}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function FeaturesSection() {
-  const features = [
-    {
-      icon: MessageSquare,
-      title: 'Plain English Programming',
-      description: 'No code required. Describe your intent in natural language and Quidkey handles the rest.',
-    },
-    {
-      icon: Cog,
-      title: 'Deterministic Execution',
-      description: 'Every workflow compiles to CEL. Predictable, auditable, and correct every time.',
-    },
-    {
-      icon: Shield,
-      title: 'Audit-Ready Logs',
-      description: 'Complete logs of every execution: inputs, outputs, and decision paths. Finance-team ready.',
-    },
-    {
-      icon: GitBranch,
-      title: 'Conditional Logic',
-      description: 'Branch based on amount, currency, customer location, product type, or custom fields.',
-    },
-    {
-      icon: Zap,
-      title: 'Real-Time Execution',
-      description: 'Workflows execute as payments arrive. No batch processing, no overnight jobs.',
-    },
-    {
-      icon: FileCheck,
-      title: 'Version Control',
-      description: 'Track changes to workflows over time. Roll back if needed. Full history preserved.',
-    },
-  ]
-
-  return (
-    <section className="py-16 md:py-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
-          <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-4">
-            Built for real treasury operations
-          </h2>
-          <p className="text-lg text-muted-foreground">
-            Everything you need to automate financial workflows.
-          </p>
-        </div>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-2xl border border-border p-6 card-hover"
-            >
-              <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 mb-4">
-                <feature.icon className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="text-lg font-semibold text-foreground mb-2">
-                {feature.title}
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                {feature.description}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function UseCasesSection() {
-  const useCases = [
-    {
-      title: 'Ecommerce',
-      stat: '10-20h',
-      statLabel: 'saved monthly',
-      description: 'Automate tax holds by jurisdiction, manage return reserves, and split payments to suppliers. Replace spreadsheets with workflows.',
-    },
-    {
-      title: 'Marketplaces',
-      stat: '1 click',
-      statLabel: 'seller payouts',
-      description: 'Split payments to sellers, hold platform fees, manage escrow for disputes, and schedule payouts automatically.',
-    },
-    {
-      title: 'SaaS',
-      stat: '100%',
-      statLabel: 'tax compliance',
-      description: 'Calculate and hold sales tax across jurisdictions. Stay seller-of-record while automating compliance.',
-    },
-  ]
-
-  return (
-    <section className="py-16 md:py-24 bg-secondary/30">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
-          <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-4">
-            Workflows for every business
-          </h2>
-          <p className="text-lg text-muted-foreground">
-            Real results from real companies.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-6 md:gap-8">
-          {useCases.map((useCase, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-2xl border border-border p-6 md:p-8"
-            >
-              <div className="mb-4">
-                <div className="text-3xl font-bold gradient-text">{useCase.stat}</div>
-                <div className="text-sm text-muted-foreground">{useCase.statLabel}</div>
-              </div>
-              <h3 className="text-lg font-semibold text-foreground mb-2">
-                {useCase.title}
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                {useCase.description}
               </p>
             </div>
           ))}
@@ -482,10 +290,10 @@ function CTASection() {
     <section className="py-16 md:py-24 bg-foreground text-background">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-4">
-          Ready to automate your treasury?
+          Ready to automate?
         </h2>
         <p className="text-lg text-background/70 mb-8 max-w-2xl mx-auto">
-          Stop building spreadsheets. Start building workflows. Get a demo to see programmable treasury in action.
+          Stop moving money manually. Start writing rules.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button size="lg" variant="secondary" className="group">
