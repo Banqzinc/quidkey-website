@@ -339,23 +339,23 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
       return
     }
 
-    // Animation timing with checkout initiation (slower checkout phase)
+    // Animation timing with checkout initiation (slowed ~12% overall)
     const steps: { step: AnimationStep; delay: number }[] = [
       { step: 'show-checkout', delay: 0 },          // Show checkout UI
-      { step: 'click-pay', delay: 1800 },           // Click Pay with Chase
-      { step: 'payment-sent', delay: 2600 },        // Payment sending (quicker transition)
-      { step: 'customer-active', delay: 3200 },     // Start workflow (overlaps slightly)
-      { step: 'travel-to-collection', delay: 3700 },
-      { step: 'collection-active', delay: 4400 },
-      { step: 'travel-to-tax', delay: 5000 },
-      { step: 'tax-step-1', delay: 5700 },          // Gathering payment data
-      { step: 'tax-step-2', delay: 6500 },          // California customer
-      { step: 'tax-step-3', delay: 7300 },          // Taxable product
-      { step: 'tax-step-4', delay: 8100 },          // Calculating tax...
-      { step: 'tax-calculated', delay: 8900 },      // Shows result
-      { step: 'travel-to-outputs', delay: 10700 },  // Both cards start traveling (+1s pause for reading)
-      { step: 'arrived', delay: 11600 },            // Cards reached destinations, fade out
-      { step: 'complete', delay: 12400 },           // Show final amounts in boxes
+      { step: 'click-pay', delay: 2000 },           // Click Pay with Chase
+      { step: 'payment-sent', delay: 2900 },        // Payment sending (quicker transition)
+      { step: 'customer-active', delay: 3600 },     // Start workflow (overlaps slightly)
+      { step: 'travel-to-collection', delay: 4150 },
+      { step: 'collection-active', delay: 4950 },
+      { step: 'travel-to-tax', delay: 5600 },
+      { step: 'tax-step-1', delay: 6400 },          // Gathering payment data
+      { step: 'tax-step-2', delay: 7300 },          // California customer
+      { step: 'tax-step-3', delay: 8200 },          // Taxable product
+      { step: 'tax-step-4', delay: 9100 },          // Calculating tax...
+      { step: 'tax-calculated', delay: 10000 },     // Shows result
+      { step: 'travel-to-outputs', delay: 12000 },  // Both cards start traveling (+1s pause for reading)
+      { step: 'arrived', delay: 13000 },            // Cards reached destinations, fade out
+      { step: 'complete', delay: 13900 },           // Show final amounts in boxes
     ]
 
     const timeouts = steps.map(({ step: nextStep, delay }) =>
@@ -365,7 +365,7 @@ function PaymentFlowVisualization({ isPlaying }: { isPlaying: boolean }) {
     const loopTimeout = window.setTimeout(() => {
       setStep('idle')
       setCycle((prev) => prev + 1)
-    }, 15000)
+    }, 17000)
 
     return () => {
       timeouts.forEach((timeout) => window.clearTimeout(timeout))
@@ -808,7 +808,7 @@ export function HowItWorksSection() {
             How It Works
           </h2>
           <p className="text-lg text-muted-foreground">
-            Quidkey handles payments end to end, from checkout to intelligent routing and programmable treasury.
+            From intelligent checkout through to programmable routing and treasury.
           </p>
         </div>
 
@@ -817,7 +817,7 @@ export function HowItWorksSection() {
 
         {/* Caption */}
         <p className="text-center text-sm text-muted-foreground mt-8 max-w-lg mx-auto">
-          Payment flows from customer's bank through Quidkey. Tax is calculated by jurisdiction and automatically routed to your tax account, with the net amount paid out to the business account.
+        Smart tax calculation. Automatic fund routing. Zero manual work.
         </p>
       </div>
     </section>

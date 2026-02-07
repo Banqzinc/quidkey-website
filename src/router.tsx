@@ -10,6 +10,8 @@ export const getRouter = () => {
     context: {},
 
     scrollRestoration: true,
+    // Key scroll restoration by pathname so each page starts at top, but back/forward restores correctly
+    getScrollRestorationKey: (location) => location.pathname,
     defaultPreloadStaleTime: 0,
   })
 

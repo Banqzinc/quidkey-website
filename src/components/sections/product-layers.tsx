@@ -8,7 +8,6 @@ export function ProductLayersSection() {
       subtitle: 'Checkout',
       description:
         'AI bank prediction + risk decisions that improve with every transaction. Win checkout conversion while cutting costs versus cards.',
-      features: ['Predictive bank selection', 'Cross-business fraud intelligence', 'One integration: US + EU + UK + AU'],
       gradient: 'from-[oklch(0.7_0.18_40)] to-[oklch(0.6_0.2_30)]',
     },
     {
@@ -17,7 +16,6 @@ export function ProductLayersSection() {
       subtitle: 'Clearing',
       description:
         'A global clearing layer that orchestrates regulated partners to collect, clear, and route funds into the right accounts automatically.',
-      features: ['Automatic tax routing', 'Local + cross-border settlement', 'Fast refunds and reversals'],
       gradient: 'from-[oklch(0.6_0.22_320)] to-[oklch(0.5_0.22_290)]',
     },
     {
@@ -26,13 +24,12 @@ export function ProductLayersSection() {
       subtitle: 'Treasury',
       description:
         'Plain English intent becomes deterministic execution. Automate tax holds, FX, splits, and payouts without building a finance ops team.',
-      features: ['Plain-English workflows', 'CEL-compiled execution', 'Audit-ready ledgers'],
       gradient: 'from-[oklch(0.55_0.2_270)] to-[oklch(0.45_0.22_280)]',
     },
   ]
 
   return (
-    <section id="product" className="py-16 md:py-24 lg:py-32">
+    <section id="product" className="pt-8 pb-16 md:pt-12 md:pb-24 lg:pt-16 lg:pb-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
@@ -69,19 +66,9 @@ export function ProductLayersSection() {
               <h3 className="text-xl font-semibold text-foreground mb-3">
                 {layer.title}
               </h3>
-              <p className="text-muted-foreground mb-6">
+              <p className="text-muted-foreground">
                 {layer.description}
               </p>
-
-              {/* Features */}
-              <ul className="space-y-2">
-                {layer.features.map((feature, featureIndex) => (
-                  <li key={featureIndex} className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <div className="h-1.5 w-1.5 rounded-full bg-primary" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
             </div>
           ))}
         </div>

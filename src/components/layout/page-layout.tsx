@@ -1,6 +1,8 @@
 import { MegaMenu } from './mega-menu'
 import { Footer } from './footer'
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
+import { DEMO_PLAYGROUND_URL } from '@/lib/urls'
+import { cn } from '@/lib/utils'
 import { ArrowRight, Check } from 'lucide-react'
 
 interface PageLayoutProps {
@@ -33,7 +35,7 @@ export function PageHero({
   titleGradient,
   description,
   features,
-  ctaPrimary = { label: 'Get a demo' },
+  ctaPrimary = { label: 'Get a demo', href: DEMO_PLAYGROUND_URL },
   ctaSecondary = { label: 'Talk to sales' },
 }: PageHeroProps) {
   return (
@@ -74,10 +76,15 @@ export function PageHero({
         )}
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button size="lg" className="group shadow-lg shadow-primary/25 hover:shadow-primary/40">
+          <a
+            href={ctaPrimary.href ?? DEMO_PLAYGROUND_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(buttonVariants({ size: 'lg' }), 'group shadow-lg shadow-primary/25 hover:shadow-primary/40')}
+          >
             {ctaPrimary.label}
             <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
-          </Button>
+          </a>
           <Button variant="outline" size="lg">
             {ctaSecondary.label}
           </Button>
@@ -237,16 +244,21 @@ export function PageCTA() {
     <section className="py-16 md:py-24 bg-foreground text-background">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-4">
-          Ready to get started?
+          Start saving today.
         </h2>
         <p className="text-lg text-background/70 mb-8 max-w-2xl mx-auto">
-          Join global businesses using Quidkey to reduce payment costs and automate treasury operations.
+          1-3.5% fees. Zero chargebacks. Live in days.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button size="lg" variant="secondary" className="group">
+          <a
+            href={DEMO_PLAYGROUND_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(buttonVariants({ size: 'lg', variant: 'secondary' }), 'group')}
+          >
             Get a demo
             <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-          </Button>
+          </a>
           <Button size="lg" variant="outline" className="border-background/30 text-background hover:bg-background/10">
             Talk to sales
           </Button>

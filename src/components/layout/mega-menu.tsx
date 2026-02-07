@@ -6,7 +6,6 @@ import {
   Link as LinkIcon,
   Building2,
   ArrowLeftRight,
-  Workflow,
   Code,
   ShoppingCart,
   Plane,
@@ -18,7 +17,8 @@ import {
   Menu,
   X,
 } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
+import { DOCS_URL, MERCHANTS_LOGIN_URL, MERCHANTS_SIGNUP_URL } from '@/lib/urls'
 
 const LOGO_URL = 'https://storage.googleapis.com/quidkey-resources-public/quidkey-logo-black.svg'
 
@@ -57,13 +57,6 @@ const menuData: MegaMenuData = {
         { label: 'Refunds', href: '/products/refunds', description: 'Fast bank to bank refunds', icon: ArrowLeftRight },
       ],
     },
-    {
-      title: 'Money Workflows',
-      items: [
-        { label: 'Programmable Workflows', href: '/products/workflows', description: 'Define how money moves after payment', icon: Workflow },
-        { label: 'Rules Engine', href: '/products/rules-engine', description: 'Event driven rules for money movement', icon: Code },
-      ],
-    },
   ],
   'Who We Serve': [
     {
@@ -89,10 +82,10 @@ export function MegaMenu() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center group">
-            <img 
-              src={LOGO_URL} 
-              alt="Quidkey" 
-              height={28} 
+            <img
+              src={LOGO_URL}
+              alt="Quidkey"
+              height={28}
               className="h-7 w-auto transition-transform duration-300 group-hover:scale-[1.02]"
             />
           </Link>
@@ -109,10 +102,10 @@ export function MegaMenu() {
                 Products
                 <ChevronDown className={cn('h-4 w-4 transition-transform', activeMenu === 'Products' && 'rotate-180')} />
               </button>
-              
+
               {activeMenu === 'Products' && (
                 <div className="absolute top-full left-0 pt-2">
-                  <div className="w-[600px] bg-white rounded-xl shadow-lg border border-border p-6 grid grid-cols-3 gap-6">
+                  <div className="w-[480px] bg-white rounded-xl shadow-lg border border-border p-6 grid grid-cols-2 gap-8">
                     {menuData.Products.map((section, idx) => (
                       <div key={idx}>
                         {section.title && (
@@ -156,10 +149,10 @@ export function MegaMenu() {
                 Who We Serve
                 <ChevronDown className={cn('h-4 w-4 transition-transform', activeMenu === 'Who We Serve' && 'rotate-180')} />
               </button>
-              
+
               {activeMenu === 'Who We Serve' && (
                 <div className="absolute top-full left-0 pt-2">
-                  <div className="w-[400px] bg-white rounded-xl shadow-lg border border-border p-4">
+                  <div className="w-[480px] bg-white rounded-xl shadow-lg border border-border p-5">
                     <div className="grid grid-cols-2 gap-1">
                       {menuData['Who We Serve'][0].items.map((item) => (
                         <Link
@@ -188,7 +181,12 @@ export function MegaMenu() {
             <Link to="/workflows" className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
               Workflows
             </Link>
-            <a href="#developers" className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <a
+              href={DOCS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
               Developers
             </a>
             <Link to="/blog" className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
@@ -198,12 +196,22 @@ export function MegaMenu() {
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-3">
-            <Button variant="ghost" size="sm">
+            <a
+              href={MERCHANTS_LOGIN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }))}
+            >
               Login
-            </Button>
-            <Button size="sm">
+            </a>
+            <a
+              href={MERCHANTS_SIGNUP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(buttonVariants({ size: 'sm' }))}
+            >
               Get Started
-            </Button>
+            </a>
           </div>
 
           {/* Mobile menu button */}
@@ -262,7 +270,13 @@ export function MegaMenu() {
             <Link to="/workflows" className="block py-2 font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>
               Workflows
             </Link>
-            <a href="#developers" className="block py-2 font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>
+            <a
+              href={DOCS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block py-2 font-medium text-foreground"
+              onClick={() => setMobileMenuOpen(false)}
+            >
               Developers
             </a>
             <Link to="/blog" className="block py-2 font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>
@@ -271,12 +285,22 @@ export function MegaMenu() {
 
             {/* CTAs */}
             <div className="pt-4 border-t border-border space-y-3">
-              <Button variant="outline" className="w-full">
+              <a
+                href={MERCHANTS_LOGIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(buttonVariants({ variant: 'outline' }), 'w-full')}
+              >
                 Login
-              </Button>
-              <Button className="w-full">
+              </a>
+              <a
+                href={MERCHANTS_SIGNUP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(buttonVariants(), 'w-full')}
+              >
                 Get Started
-              </Button>
+              </a>
             </div>
           </nav>
         </div>

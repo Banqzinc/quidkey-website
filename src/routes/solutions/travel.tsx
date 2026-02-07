@@ -7,9 +7,9 @@ export const Route = createFileRoute('/solutions/travel')({
   component: TravelPage,
   head: () =>
     buildSeo({
-      title: 'Pay by Bank for Travel & Hospitality | Quidkey',
+      title: 'Travel | Quidkey',
       description:
-        'Accept high-value travel bookings at 1-3.5% fees. Handle deposits, multi-currency payments, and supplier payouts with programmable treasury.',
+        'Accept high-value bookings at 1-3.5%. No transaction limits.',
       path: '/solutions/travel',
     }),
 })
@@ -18,33 +18,33 @@ function TravelPage() {
   const features = [
     {
       icon: Banknote,
-      title: 'Higher Transaction Limits',
-      description: 'Bank payments support larger bookings than cards. Accept $10k+ bookings without limits.',
+      title: 'No limits',
+      description: 'Accept $10k+ bookings.',
     },
     {
       icon: TrendingDown,
-      title: 'Lower Fees on High Values',
-      description: 'Pay 1-3.5% on $5k bookings instead of 3-6%. The savings compound at scale.',
+      title: 'Lower fees',
+      description: '1-3.5% on large bookings.',
     },
     {
       icon: Shield,
-      title: 'Reduced Fraud Risk',
-      description: 'Bank authentication reduces fraud on high-value bookings. No chargebacks from stolen cards.',
+      title: 'Less fraud',
+      description: 'Bank auth on high-value.',
     },
     {
       icon: Globe,
-      title: 'Multi-Currency Bookings',
-      description: 'Accept GBP, EUR, USD, and AUD. Let customers pay in their currency.',
+      title: 'Multi-currency',
+      description: 'GBP, EUR, USD, AUD.',
     },
     {
       icon: Clock,
-      title: 'Instant Deposits',
-      description: 'Collect deposits instantly. Reduce no-shows with confirmed bank payments.',
+      title: 'Instant deposits',
+      description: 'Confirm bookings now.',
     },
     {
       icon: Plane,
-      title: 'Supplier Payments',
-      description: 'Automate hotel, airline, and transfer payments. Split bookings to multiple suppliers.',
+      title: 'Supplier payouts',
+      description: 'Automate splits.',
     },
   ]
 
@@ -52,66 +52,66 @@ function TravelPage() {
     {
       stat: '$45k',
       statLabel: 'saved per $1M',
-      title: 'Massive savings on volume',
-      description: 'Travel has high average order values. Every percentage point saved is significant.',
+      title: 'Big savings on volume',
+      description: 'High AOV = high savings.',
     },
     {
       stat: 'No limits',
       statLabel: 'on bookings',
-      title: 'Accept any booking size',
-      description: 'Cards decline high-value transactions. Bank payments handle any amount.',
+      title: 'Any size',
+      description: 'Banks handle any amount.',
     },
     {
       stat: '15%',
       statLabel: 'at Tryp.com',
-      title: 'Proven in travel',
-      description: 'Tryp.com sees 15% of customers choosing pay by bank. Growing every month.',
+      title: 'Proven',
+      description: 'Customers choosing bank.',
     },
   ]
 
   const steps = [
     {
       step: '1',
-      title: 'Integrate checkout',
-      description: 'Add pay by bank to your booking flow. iFrame, hosted checkout, or custom integration.',
+      title: 'Integrate',
+      description: 'Add to booking flow.',
     },
     {
       step: '2',
-      title: 'Accept bookings',
-      description: 'Customers pay from their bank. High-value transactions complete without friction.',
+      title: 'Accept',
+      description: 'High-value bookings.',
     },
     {
       step: '3',
-      title: 'Automate payouts',
-      description: 'Configure supplier splits and settlement rules. Payments flow automatically.',
+      title: 'Automate',
+      description: 'Supplier payouts.',
     },
   ]
 
   return (
     <PageLayout>
       <PageHero
-        badge="Travel & Hospitality"
+        badge="Travel"
         title="Built for high-value"
         titleGradient="travel bookings."
-        description="Accept $5k+ bookings at 1-3.5% fees. Handle multi-currency payments, deposits, and supplier payouts with programmable treasury."
-        features={['No transaction limits', 'Multi-currency', 'Supplier automation']}
+        description="Accept $5k+ bookings at 1-3.5%. Multi-currency. Supplier payouts."
+        features={['No limits', 'Multi-currency', 'Supplier automation']}
       />
 
       <FeatureGrid
-        title="Designed for travel tech"
-        subtitle="Payments infrastructure for travel businesses."
+        title="For travel tech"
+        subtitle="Payments for travel."
         features={features}
       />
 
       <BenefitsSection
-        title="Why travel companies choose Quidkey"
-        subtitle="Proven results in travel and hospitality."
+        title="Why travel chooses Quidkey"
+        subtitle="Proven in hospitality."
         benefits={benefits}
       />
 
       <HowItWorksSteps
-        title="Go live with travel payments"
-        subtitle="From integration to automated payouts."
+        title="Go live"
+        subtitle="Integration to payouts."
         steps={steps}
       />
 

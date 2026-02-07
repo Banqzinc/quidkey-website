@@ -4,28 +4,28 @@ export function WhyChooseSection() {
   const reasons = [
     {
       icon: TrendingUp,
-      title: 'Higher margin, better unit economics',
-      description: 'Replace 3-6% card fees and 6-10% MoR take rates with 1-3.5% all-in pay by bank.',
+      title: 'Lower Fees',
+      description: 'Pay less per transaction compared to cards and cross border payments.',
     },
     {
       icon: Globe,
-      title: 'Sell into the US without giving up control',
-      description: 'Stay seller-of-record while collecting and settling cross-border, built for global businesses expanding into the US.',
+      title: 'Sell Globally',
+      description: 'Sell to multiple jurisdictions, without operational complexities',
     },
     {
       icon: Zap,
-      title: 'Treasury workflows, automated',
-      description: 'Hold tax, split revenue, run FX, and schedule payouts automatically, defined in plain English and executed deterministically.',
+      title: 'Money Automation',
+      description: 'Automatically split money, handle tax, and send payouts.',
     },
     {
       icon: Shield,
-      title: 'AI risk + deterministic execution',
-      description: 'Network-trained fraud intelligence improves outcomes across the platform. Workflows compile to CEL for audit-ready correctness.',
+      title: 'Better CashFlow',
+      description: 'Get paid faster without long settlement delays.',
     },
   ]
 
   return (
-    <section className="py-16 md:py-24 lg:py-32 bg-secondary/30">
+    <section className="pt-8 pb-16 md:pt-12 md:pb-24 lg:pt-16 lg:pb-32 bg-secondary/30">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
