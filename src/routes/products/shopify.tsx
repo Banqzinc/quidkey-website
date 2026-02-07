@@ -33,7 +33,7 @@ function ShopifyPage() {
     },
     {
       icon: TrendingUp,
-      title: '1-3.5% All-in Fees',
+      title: '1-3% All-in Fees',
       description: 'Replace 3-6% card processing fees with flat, transparent pay by bank pricing.',
     },
     {

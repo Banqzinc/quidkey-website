@@ -33,7 +33,7 @@ export function HeroSection() {
   const currentBank = banks[currentBankIndex]
 
   const benefits = [
-    '1-3.5% all-in fees',
+    '1-3% all-in fees',
     'Intelligent bank prediction',
     'Programmable treasury workflows',
   ]
@@ -43,7 +43,7 @@ export function HeroSection() {
       {/* Atmospheric gradient background */}
       <div className="absolute inset-0 hero-gradient" aria-hidden="true" />
       <div className="absolute inset-0 noise" aria-hidden="true" />
-      
+
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Left column - Content */}
@@ -123,25 +123,25 @@ export function HeroSection() {
                           <span className="text-7xl">👟</span>
                         </div>
                       </div>
-                      
+
                       {/* Payment options */}
                       <div className="p-4 space-y-3 pb-5">
                         {/* Bank prediction - highlighted with switching animation */}
                         <div className="flex items-center gap-3 p-3.5 bg-primary/5 rounded-lg border-2 border-primary">
-                          <img 
+                          <img
                             src={`https://img.logo.dev/${currentBank.domain}?token=${LOGO_DEV_TOKEN}`}
                             alt={`${currentBank.name} logo`}
                             width={40}
                             height={40}
                             className={`w-10 h-10 rounded-full object-contain transition-all duration-300 ${isTransitioning ? 'opacity-0 scale-90' : 'opacity-100 scale-100'}`}
                           />
-                          <span 
+                          <span
                             className={`text-sm font-semibold text-foreground transition-all duration-300 ${isTransitioning ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}
                           >
                             Pay with {currentBank.name}
                           </span>
                         </div>
-                        
+
                         {/* Other options */}
                         <div className="flex items-center gap-3 p-3 rounded-xl border border-border/50 opacity-50">
                           <div className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center">
@@ -149,10 +149,10 @@ export function HeroSection() {
                           </div>
                           <span className="text-sm text-muted-foreground">Credit Card</span>
                         </div>
-                        
+
                         <div className="flex items-center gap-3 p-3 rounded-xl border border-border/50 opacity-50">
                           <div className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center">
-                            <img 
+                            <img
                               src={`https://img.logo.dev/apple.com?token=${LOGO_DEV_TOKEN}`}
                               alt="Apple Pay logo"
                               width={20}
