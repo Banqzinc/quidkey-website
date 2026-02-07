@@ -34,7 +34,7 @@ function ShopifyPage() {
     {
       icon: TrendingUp,
       title: 'Lower fees',
-      description: 'Save up to 60% vs cards.',
+      description: 'Save up to 70% vs cards.',
     },
     {
       icon: Clock,
@@ -50,7 +50,7 @@ function ShopifyPage() {
 
   const benefits = [
     {
-      stat: '60%',
+      stat: '70%',
       statLabel: 'lower fees',
       title: 'Cut payment costs',
       description: 'Save $25-45k annually on $1M revenue.',
@@ -93,7 +93,7 @@ function ShopifyPage() {
         badge="Shopify App"
         title="Pay by bank for Shopify."
         titleGradient="Lower fees. Zero chargebacks."
-        description="Shopify-approved app. Install in minutes. Save 60% on payment fees."
+        description="Shopify-approved app. Install in minutes. Save up to 70% on payment fees."
         features={['Shopify approved', 'One-click install', 'Zero chargebacks']}
       />
 

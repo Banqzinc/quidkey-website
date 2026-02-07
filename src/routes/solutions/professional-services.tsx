@@ -24,7 +24,7 @@ function ProfessionalServicesPage() {
     {
       icon: TrendingDown,
       title: 'Lower fees',
-      description: 'Save up to 60% vs cards.',
+      description: 'Save up to 70% vs cards.',
     },
     {
       icon: Clock,
@@ -50,7 +50,7 @@ function ProfessionalServicesPage() {
 
   const benefits = [
     {
-      stat: '60%',
+      stat: '70%',
       statLabel: 'fee savings',
       title: 'Better margins',
       description: 'On high-value invoices.',

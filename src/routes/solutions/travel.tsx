@@ -24,7 +24,7 @@ function TravelPage() {
     {
       icon: TrendingDown,
       title: 'Lower fees',
-      description: 'Save up to 60% vs cards.',
+      description: 'Save up to 70% vs cards.',
     },
     {
       icon: Shield,

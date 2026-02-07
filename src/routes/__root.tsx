@@ -1,8 +1,12 @@
 import { HeadContent, Outlet, Scripts, createRootRoute } from '@tanstack/react-router'
+import { useEffect } from 'react'
 
 import appCss from '../styles.css?url'
+import { initClarityWithCookiebot } from '@/lib/clarity'
 
 const ICON_URL = 'https://storage.googleapis.com/quidkey-resources-public/quidkey-logo-fav.png'
+const COOKIEBOT_DOMAIN_GROUP_ID = import.meta.env.VITE_COOKIEBOT_DOMAIN_GROUP_ID as string | undefined
+const CLARITY_PROJECT_ID = import.meta.env.VITE_CLARITY_PROJECT_ID as string | undefined
 
 export const Route = createRootRoute({
   head: () => ({
@@ -64,13 +68,32 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="scroll-smooth">
       <head>
+        {COOKIEBOT_DOMAIN_GROUP_ID ? (
+          <script
+            id="Cookiebot"
+            src="https://consent.cookiebot.com/uc.js"
+            data-cbid={COOKIEBOT_DOMAIN_GROUP_ID}
+            data-blockingmode="manual"
+            type="text/javascript"
+          />
+        ) : null}
         <HeadContent />
       </head>
       {/* suppressHydrationWarning: TanStack Start's <Scripts /> can cause minor SSR/client differences */}
       <body className="antialiased" suppressHydrationWarning>
         {children}
+        <ClarityCookiebotBridge />
         <Scripts />
       </body>
     </html>
   )
+}
+
+function ClarityCookiebotBridge() {
+  useEffect(() => {
+    if (!CLARITY_PROJECT_ID) return
+    return initClarityWithCookiebot(CLARITY_PROJECT_ID)
+  }, [])
+
+  return null
 }

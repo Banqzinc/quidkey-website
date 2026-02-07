@@ -50,7 +50,7 @@ function LocalAccountsPage() {
 
   const benefits = [
     {
-      stat: 'Up to 60%',
+      stat: 'Up to 70%',
       statLabel: 'FX savings',
       title: 'Cut currency costs',
       description: 'Batch conversions. Time your FX.',

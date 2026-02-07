@@ -24,7 +24,7 @@ function MarketplacesPage() {
     {
       icon: TrendingDown,
       title: 'Lower fees',
-      description: 'Save up to 60% vs cards.',
+      description: 'Save up to 70% vs cards.',
     },
     {
       icon: Banknote,
@@ -50,7 +50,7 @@ function MarketplacesPage() {
 
   const benefits = [
     {
-      stat: '60%',
+      stat: '70%',
       statLabel: 'lower cost',
       title: 'Better take rate',
       description: 'Keep more per sale.',

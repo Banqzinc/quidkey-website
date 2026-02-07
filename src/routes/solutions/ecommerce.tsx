@@ -19,7 +19,7 @@ function EcommercePage() {
     {
       icon: TrendingDown,
       title: 'Lower fees',
-      description: 'Save up to 60% vs cards.',
+      description: 'Save up to 70% vs cards.',
     },
     {
       icon: Shield,
@@ -50,7 +50,7 @@ function EcommercePage() {
 
   const benefits = [
     {
-      stat: '60%',
+      stat: '70%',
       statLabel: 'lower fees',
       title: 'Better margins',
       description: 'Savings go straight to profit.',
@@ -94,7 +94,7 @@ function EcommercePage() {
         title="Better margins for"
         titleGradient="online retail."
         description="Lower fees. Zero chargebacks. Pay by bank checkout for ecommerce."
-        features={['60% lower fees', 'Zero chargebacks', 'Shopify native']}
+        features={['70% lower fees', 'Zero chargebacks', 'Shopify native']}
       />
 
       <FeatureGrid

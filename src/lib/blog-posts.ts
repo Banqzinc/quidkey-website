@@ -643,9 +643,9 @@ export const blogPosts: BlogPost[] = [
     date: 'March 18, 2025',
     dateISO: '2025-03-18',
     title: 'A2A Payments Explained: Why Traditional Payment Fees Hurt Merchants Profit Margins and How to Fix It',
-    seoTitle: 'A2A Payments: Cut Transaction Fees by 60% | Quidkey',
+    seoTitle: 'A2A Payments: Cut Transaction Fees by 70% | Quidkey',
     description:
-      'A2A payments offer 60% lower fees than cards, instant settlement, and zero chargebacks. Learn why UK merchants are switching.',
+      'A2A payments offer 70% lower fees than cards, instant settlement, and zero chargebacks. Learn why UK merchants are switching.',
     keyword: 'A2A payments',
     author: 'Quidkey Team',
     image: '/images/blog/a2a-payments.jpg',
@@ -789,7 +789,7 @@ export const blogPosts: BlogPost[] = [
       { type: 'h3', text: 'Save on Fees' },
       {
         type: 'p',
-        text: "With Quidkey's low-cost model, you can reduce transaction fees by up to 60% compared to card payments. No hidden fees or nasty surprises.",
+        text: "With Quidkey's low-cost model, you can reduce transaction fees by up to 70% compared to card payments. No hidden fees or nasty surprises.",
       },
       { type: 'h3', text: 'Real-Time Payments, 24/7' },
       {

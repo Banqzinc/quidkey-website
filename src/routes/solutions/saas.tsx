@@ -24,7 +24,7 @@ function SaaSPage() {
     {
       icon: TrendingDown,
       title: 'Lower fees',
-      description: 'Save up to 60% vs cards.',
+      description: 'Save up to 70% vs cards.',
     },
     {
       icon: Globe,
@@ -62,7 +62,7 @@ function SaaSPage() {
       description: 'Bank payments never expire.',
     },
     {
-      stat: '60%',
+      stat: '70%',
       statLabel: 'lower fees',
       title: 'Simple pricing',
       description: 'No hidden fees.',
