@@ -7,9 +7,9 @@ export function StatsSection() {
   ]
 
   const stats = [
-    { value: '1%', label: 'Domestic Fees' },
-    { value: '3%', label: 'Cross Border' },
+    { value: '4', label: 'Regions' },
     { value: '70%', label: 'Savings on Fees' },
+    { value: '<1 day', label: 'To Go Live' },
   ]
 
   return (

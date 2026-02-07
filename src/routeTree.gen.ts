@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WorkflowsRouteImport } from './routes/workflows'
+import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as SolutionsTravelRouteImport } from './routes/solutions/travel'
@@ -30,6 +31,11 @@ import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 const WorkflowsRoute = WorkflowsRouteImport.update({
   id: '/workflows',
   path: '/workflows',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -116,6 +122,7 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/pricing': typeof PricingRoute
   '/workflows': typeof WorkflowsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/products/hosted-checkout': typeof ProductsHostedCheckoutRoute
@@ -135,6 +142,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/pricing': typeof PricingRoute
   '/workflows': typeof WorkflowsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/products/hosted-checkout': typeof ProductsHostedCheckoutRoute
@@ -155,6 +163,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/pricing': typeof PricingRoute
   '/workflows': typeof WorkflowsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/products/hosted-checkout': typeof ProductsHostedCheckoutRoute
@@ -176,6 +185,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/pricing'
     | '/workflows'
     | '/blog/$slug'
     | '/products/hosted-checkout'
@@ -195,6 +205,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/pricing'
     | '/workflows'
     | '/blog/$slug'
     | '/products/hosted-checkout'
@@ -214,6 +225,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/pricing'
     | '/workflows'
     | '/blog/$slug'
     | '/products/hosted-checkout'
@@ -234,6 +246,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PricingRoute: typeof PricingRoute
   WorkflowsRoute: typeof WorkflowsRoute
   BlogSlugRoute: typeof BlogSlugRoute
   ProductsHostedCheckoutRoute: typeof ProductsHostedCheckoutRoute
@@ -259,6 +272,13 @@ declare module '@tanstack/react-router' {
       path: '/workflows'
       fullPath: '/workflows'
       preLoaderRoute: typeof WorkflowsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -378,6 +398,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PricingRoute: PricingRoute,
   WorkflowsRoute: WorkflowsRoute,
   BlogSlugRoute: BlogSlugRoute,
   ProductsHostedCheckoutRoute: ProductsHostedCheckoutRoute,

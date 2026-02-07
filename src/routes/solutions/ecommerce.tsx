@@ -9,7 +9,7 @@ export const Route = createFileRoute('/solutions/ecommerce')({
     buildSeo({
       title: 'Ecommerce | Quidkey',
       description:
-        '1-3% fees. Zero chargebacks. Pay by bank for online retail.',
+        'Lower fees. Zero chargebacks. Pay by bank for online retail.',
       path: '/solutions/ecommerce',
     }),
 })
@@ -19,7 +19,7 @@ function EcommercePage() {
     {
       icon: TrendingDown,
       title: 'Lower fees',
-      description: '1-3% instead of 3-6%.',
+      description: 'Save up to 60% vs cards.',
     },
     {
       icon: Shield,
@@ -93,7 +93,7 @@ function EcommercePage() {
         badge="Ecommerce"
         title="Better margins for"
         titleGradient="online retail."
-        description="1-3% fees. Zero chargebacks. Pay by bank checkout for ecommerce."
+        description="Lower fees. Zero chargebacks. Pay by bank checkout for ecommerce."
         features={['60% lower fees', 'Zero chargebacks', 'Shopify native']}
       />
 

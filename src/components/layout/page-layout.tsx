@@ -247,7 +247,7 @@ export function PageCTA() {
           Start saving today.
         </h2>
         <p className="text-lg text-background/70 mb-8 max-w-2xl mx-auto">
-          1-3% fees. Zero chargebacks. Live in days.
+          Zero chargebacks. Global coverage. Live in days.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a

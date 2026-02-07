@@ -178,6 +178,9 @@ export function MegaMenu() {
             </div>
 
             {/* Simple links */}
+            <Link to="/pricing" className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Pricing
+            </Link>
             <Link to="/workflows" className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
               Workflows
             </Link>
@@ -267,6 +270,9 @@ export function MegaMenu() {
             </div>
 
             {/* Simple links */}
+            <Link to="/pricing" className="block py-2 font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>
+              Pricing
+            </Link>
             <Link to="/workflows" className="block py-2 font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>
               Workflows
             </Link>

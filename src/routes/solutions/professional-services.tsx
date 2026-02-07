@@ -9,7 +9,7 @@ export const Route = createFileRoute('/solutions/professional-services')({
     buildSeo({
       title: 'Professional Services | Quidkey',
       description:
-        'Accept invoice payments at 1-3%. No card limits.',
+        'Accept invoice payments with lower fees. No card limits.',
       path: '/solutions/professional-services',
     }),
 })
@@ -24,7 +24,7 @@ function ProfessionalServicesPage() {
     {
       icon: TrendingDown,
       title: 'Lower fees',
-      description: '1-3% on any amount.',
+      description: 'Save up to 60% vs cards.',
     },
     {
       icon: Clock,
@@ -91,8 +91,8 @@ function ProfessionalServicesPage() {
     <PageLayout>
       <PageHero
         badge="Professional Services"
-        title="Invoice payments at"
-        titleGradient="1-3%."
+        title="Invoice payments."
+        titleGradient="Lower fees. No limits."
         description="Accept high-value invoice payments. No limits. No disputes."
         features={['No limits', 'No disputes', 'Fast settlement']}
       />
