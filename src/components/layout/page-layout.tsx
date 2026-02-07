@@ -42,7 +42,7 @@ export function PageHero({
     <section className="relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden">
       <div className="absolute inset-0 hero-gradient" aria-hidden="true" />
       <div className="absolute inset-0 noise" aria-hidden="true" />
-      
+
       <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
         {badge && (
           <div className="inline-flex items-center gap-2.5 rounded-full bg-foreground/5 border border-foreground/10 px-4 py-2 text-sm font-medium text-foreground mb-6">
