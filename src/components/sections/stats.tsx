@@ -7,9 +7,9 @@ export function StatsSection() {
   ]
 
   const stats = [
-    { value: '4', label: 'Regions' },
     { value: '70%', label: 'Savings on Fees' },
-    { value: '<1 day', label: 'To Go Live' },
+    { value: '100%', label: 'Local Experience' },
+    { value: 'Minutes', label: 'To Go Live' },
   ]
 
   return (
@@ -63,7 +63,7 @@ export function StatsSection() {
           {stats.map((stat) => (
             <div key={stat.label} className="space-y-1 sm:space-y-2">
               <div 
-                className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-none tracking-tight gradient-text-light"
+                className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-none tracking-tight gradient-text-light"
               >
                 {stat.value}
               </div>
