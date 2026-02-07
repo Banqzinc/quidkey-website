@@ -32,7 +32,7 @@ export function ProductLayersSection() {
   ]
 
   return (
-    <section id="product" className="py-16 md:py-24 lg:py-32">
+    <section id="product" className="pt-8 pb-16 md:pt-12 md:pb-24 lg:pt-16 lg:pb-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
