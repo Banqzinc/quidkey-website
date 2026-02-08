@@ -1,6 +1,7 @@
+import { Link } from '@tanstack/react-router'
 import { MegaMenu } from './mega-menu'
 import { Footer } from './footer'
-import { Button, buttonVariants } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
 import { DEMO_PLAYGROUND_URL } from '@/lib/urls'
 import { cn } from '@/lib/utils'
 import { ArrowRight, Check } from 'lucide-react'
@@ -25,8 +26,8 @@ interface PageHeroProps {
   titleGradient?: string
   description: string
   features?: string[]
-  ctaPrimary?: { label: string; href?: string }
-  ctaSecondary?: { label: string; href?: string }
+  ctaPrimary?: { label: string; href?: string; external?: boolean }
+  ctaSecondary?: { label: string; href?: string; external?: boolean }
 }
 
 export function PageHero({
@@ -35,9 +36,12 @@ export function PageHero({
   titleGradient,
   description,
   features,
-  ctaPrimary = { label: 'Get a demo', href: DEMO_PLAYGROUND_URL },
-  ctaSecondary = { label: 'Talk to sales' },
+  ctaPrimary = { label: 'Get a demo', href: DEMO_PLAYGROUND_URL, external: true },
+  ctaSecondary = { label: 'Talk to sales', href: '/contact' },
 }: PageHeroProps) {
+  const isExternalPrimary = ctaPrimary.external ?? ctaPrimary.href?.startsWith('http') ?? ctaPrimary.href?.startsWith('mailto')
+  const isExternalSecondary = ctaSecondary.external ?? ctaSecondary.href?.startsWith('http') ?? ctaSecondary.href?.startsWith('mailto')
+
   return (
     <section className="relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden">
       <div className="absolute inset-0 hero-gradient" aria-hidden="true" />
@@ -76,18 +80,42 @@ export function PageHero({
         )}
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <a
-            href={ctaPrimary.href ?? DEMO_PLAYGROUND_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={cn(buttonVariants({ size: 'lg' }), 'group shadow-lg shadow-primary/25 hover:shadow-primary/40')}
-          >
-            {ctaPrimary.label}
-            <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
-          </a>
-          <Button variant="outline" size="lg">
-            {ctaSecondary.label}
-          </Button>
+          {isExternalPrimary ? (
+            <a
+              href={ctaPrimary.href ?? DEMO_PLAYGROUND_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(buttonVariants({ size: 'lg' }), 'group shadow-lg shadow-primary/25 hover:shadow-primary/40')}
+            >
+              {ctaPrimary.label}
+              <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+            </a>
+          ) : (
+            <Link
+              to={ctaPrimary.href ?? '/'}
+              className={cn(buttonVariants({ size: 'lg' }), 'group shadow-lg shadow-primary/25 hover:shadow-primary/40')}
+            >
+              {ctaPrimary.label}
+              <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+            </Link>
+          )}
+          {isExternalSecondary ? (
+            <a
+              href={ctaSecondary.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={buttonVariants({ variant: 'outline', size: 'lg' })}
+            >
+              {ctaSecondary.label}
+            </a>
+          ) : (
+            <Link
+              to={ctaSecondary.href ?? '/contact'}
+              className={buttonVariants({ variant: 'outline', size: 'lg' })}
+            >
+              {ctaSecondary.label}
+            </Link>
+          )}
         </div>
       </div>
     </section>
