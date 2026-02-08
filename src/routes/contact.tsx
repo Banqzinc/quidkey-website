@@ -8,7 +8,7 @@ import {
 } from '@/components/layout/page-layout'
 import { buildSeo } from '@/lib/seo'
 import { CONTACT_EMAIL, PRESS_EMAIL, buildMailto } from '@/lib/urls'
-import { useState, type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
 import { Loader2, CheckCircle2, AlertCircle } from 'lucide-react'
@@ -63,8 +63,8 @@ function ContactForm() {
     try {
       const response = await fetch('/', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formData as unknown as Record<string, string>).toString(),
+        // Let the browser set Content-Type (works for Netlify Forms; matches careers form pattern).
+        body: formData,
       })
 
       if (!response.ok) {
@@ -93,12 +93,13 @@ function ContactForm() {
 
   return (
     <form
+      id="talk-to-sales"
       name={formName}
       method="POST"
       data-netlify="true"
       netlify-honeypot="bot-field"
       onSubmit={handleSubmit}
-      className="bg-white rounded-2xl border border-border p-6 md:p-8"
+      className="scroll-mt-28 bg-white rounded-2xl border border-border p-6 md:p-8"
     >
       {/* Hidden field for Netlify Forms */}
       <input type="hidden" name="form-name" value={formName} />
@@ -230,6 +231,22 @@ function FormField({
  * ─────────────────────────────────────────────────────────────────────────── */
 
 function ContactPage() {
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const scrollToForm = () => {
+      if (window.location.hash !== '#talk-to-sales') return
+      document.getElementById('talk-to-sales')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+
+    // Initial mount (handles direct visits to /contact#talk-to-sales)
+    scrollToForm()
+
+    // Subsequent hash changes (handles in-app navigation updating the hash)
+    window.addEventListener('hashchange', scrollToForm)
+    return () => window.removeEventListener('hashchange', scrollToForm)
+  }, [])
+
   return (
     <PageLayout>
       <PageHero
@@ -238,6 +255,7 @@ function ContactPage() {
         titleGradient="Quidkey"
         description="Questions about pricing, coverage, or integration? Reach out—we'll get back quickly."
         features={['Sales & partnerships', 'Technical questions', 'Support']}
+        ctaSecondary={null}
       />
 
       <ContentSection>
