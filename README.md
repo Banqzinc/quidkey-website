@@ -29,6 +29,12 @@ npm run test
 
 This project uses CSS for styling.
 
+## Environment variables
+
+- **`VITE_CLARITY_PROJECT_ID`**: Microsoft Clarity project id (optional; loads after Cookiebot “Statistics” consent)
+- **`VITE_GA_MEASUREMENT_ID`**: Google Analytics measurement id (optional; loads after Cookiebot “Statistics” consent)
+- **`VITE_USERBACK_ACCESS_TOKEN`**: Userback widget access token (optional; loads after Cookiebot “Preferences” consent)
+
 
 
 
