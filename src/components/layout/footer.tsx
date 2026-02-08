@@ -50,13 +50,16 @@ export function Footer() {
                 {links.map((link, index) => (
                   <li key={index}>
                     {category === 'Legal' && link.label === 'Cookies' ? (
-                      <button
-                        type="button"
-                        onClick={() => openCookiebotPreferences({ fallbackUrl: '/cookies' })}
+                      <Link
+                        to={link.href}
+                        onClick={(event) => {
+                          event.preventDefault()
+                          openCookiebotPreferences({ fallbackUrl: link.href })
+                        }}
                         className="text-sm text-background/60 hover:text-background transition-colors"
                       >
                         {link.label}
-                      </button>
+                      </Link>
                     ) : /^https?:\/\//.test(link.href) ? (
                       <a
                         href={link.href}
