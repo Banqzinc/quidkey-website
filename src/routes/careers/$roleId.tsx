@@ -225,7 +225,8 @@ function ApplicationForm({ jobTitle }: { jobTitle: string }) {
     const formData = new FormData(e.currentTarget)
 
     try {
-      const response = await fetch('/', {
+      // Important: Post to a real HTML file so Netlify intercepts the submission.
+      const response = await fetch('/netlify-forms.html', {
         method: 'POST',
         // Important: allow the browser to set the multipart boundary (supports file uploads).
         body: formData,

@@ -59,12 +59,20 @@ function ContactForm() {
     setFormState('submitting')
 
     const formData = new FormData(e.currentTarget)
+    // Netlify Forms expects URL-encoded payloads for non-file forms.
+    const body = new URLSearchParams()
+    for (const [key, value] of formData.entries()) {
+      if (typeof value === 'string') {
+        body.append(key, value)
+      }
+    }
 
     try {
-      const response = await fetch('/', {
+      // Important: Post to a real HTML file so Netlify intercepts the submission.
+      const response = await fetch('/netlify-forms.html', {
         method: 'POST',
-        // Let the browser set Content-Type (works for Netlify Forms; matches careers form pattern).
-        body: formData,
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body.toString(),
       })
 
       if (!response.ok) {
