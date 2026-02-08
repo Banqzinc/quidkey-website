@@ -7,9 +7,11 @@
   </head>
   <body>
     <!--
-      This hidden form exists purely so Netlify can detect our form at build time.
-      Our real form is rendered via React/SSR in `src/routes/careers/$roleId.tsx`.
+      These hidden forms exist purely so Netlify can detect them at build time.
+      Our real forms are rendered via React/SSR.
     -->
+
+    <!-- Job Application Form (src/routes/careers/$roleId.tsx) -->
     <form
       name="job-application"
       method="POST"
@@ -31,6 +33,28 @@
       <!-- Which role this application is for -->
       <input type="text" name="position" />
     </form>
+
+    <!-- Contact / Talk to Sales Form (src/routes/contact.tsx) -->
+    <form
+      name="contact"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      hidden
+    >
+      <input type="hidden" name="form-name" value="contact" />
+      <input name="bot-field" />
+
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="company" />
+      <select name="inquiry_type">
+        <option value="sales">Sales & partnerships</option>
+        <option value="technical">Technical questions</option>
+        <option value="support">Support</option>
+        <option value="other">Other</option>
+      </select>
+      <textarea name="message"></textarea>
+    </form>
   </body>
 </html>
-
