@@ -203,7 +203,7 @@ export const blogPosts: BlogPost[] = [
     date: 'October 29, 2025',
     dateISO: '2025-10-29',
     title: 'Quidkey Announces Strategic Partnership with Tryp.com to Power Next-Generation "Pay by Bank" Travel Payments',
-    seoTitle: 'Quidkey Partners with Tryp.com for Pay by Bank Travel Payments',
+    seoTitle: 'Quidkey + Tryp.com: Pay by Bank Travel | Quidkey',
     description:
       'Quidkey and Tryp.com partner to deliver instant settlement and 3x lower payment costs for travel bookings using Pay by Bank.',
     keyword: 'pay by bank travel payments',
@@ -260,7 +260,7 @@ export const blogPosts: BlogPost[] = [
     date: 'October 26, 2025',
     dateISO: '2025-10-26',
     title: 'Refunds, Rewards, and Real-Time Settlement: Unlocking Merchant Payments',
-    seoTitle: 'Real-Time Settlement and Instant Refunds for Merchants | Quidkey',
+    seoTitle: 'Real-Time Settlement & Instant Refunds | Quidkey',
     description:
       'Learn how Open Banking enables real-time settlement, seamless refunds, and loyalty rewards to improve merchant cash flow by 15-30%.',
     keyword: 'real-time settlement',
@@ -510,7 +510,7 @@ export const blogPosts: BlogPost[] = [
     date: 'September 10, 2025',
     dateISO: '2025-09-10',
     title: 'Open Banking Payments in the UK',
-    seoTitle: 'Open Banking Payments UK: How to Accept Bank Payments | Quidkey',
+    seoTitle: 'Open Banking Payments UK: Merchant Guide | Quidkey',
     description:
       'Accept Open Banking payments in the UK with instant settlement, no chargebacks, and lower fees. Complete guide for UK merchants.',
     keyword: 'open banking payments UK',
