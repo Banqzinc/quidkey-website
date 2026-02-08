@@ -7,7 +7,7 @@ import { initClarityWithCookiebot } from '@/lib/clarity'
 import { trackPageView, updateGoogleConsentFromCookiebot } from '@/lib/google-analytics'
 
 const ICON_URL = 'https://storage.googleapis.com/quidkey-resources-public/quidkey-logo-fav.png'
-const COOKIEBOT_DOMAIN_GROUP_ID = import.meta.env.VITE_COOKIEBOT_DOMAIN_GROUP_ID as string | undefined
+const COOKIEBOT_DOMAIN_GROUP_ID = 'bcd5bf4b-c074-47cb-b26a-a401acac39b6'
 const CLARITY_PROJECT_ID = import.meta.env.VITE_CLARITY_PROJECT_ID as string | undefined
 const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID as string | undefined
 

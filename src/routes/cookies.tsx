@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { buildSeo } from '@/lib/seo'
 import { openCookiebotPreferences } from '@/lib/cookiebot'
 
-const COOKIEBOT_DOMAIN_GROUP_ID = import.meta.env.VITE_COOKIEBOT_DOMAIN_GROUP_ID as string | undefined
+const COOKIEBOT_DOMAIN_GROUP_ID = 'bcd5bf4b-c074-47cb-b26a-a401acac39b6'
 
 export const Route = createFileRoute('/cookies')({
   component: CookiesPage,
@@ -71,4 +71,3 @@ function CookiesPage() {
     </PageLayout>
   )
 }
-
