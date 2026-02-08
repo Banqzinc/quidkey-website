@@ -7,9 +7,9 @@ export const Route = createFileRoute('/solutions/professional-services')({
   component: ProfessionalServicesPage,
   head: () =>
     buildSeo({
-      title: 'Professional Services | Quidkey',
+      title: 'Pay by Bank for Professional Services Invoicing | Quidkey',
       description:
-        'Accept invoice payments with lower fees. No card limits.',
+        'Accept invoice payments with pay by bank: lower fees, fewer disputes, and no card limits. Send payment links and automate routing, holds, and payouts.',
       path: '/solutions/professional-services',
     }),
 })

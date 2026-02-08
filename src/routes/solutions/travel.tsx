@@ -7,9 +7,9 @@ export const Route = createFileRoute('/solutions/travel')({
   component: TravelPage,
   head: () =>
     buildSeo({
-      title: 'Travel | Quidkey',
+      title: 'Pay by Bank for Travel Bookings | Quidkey',
       description:
-        'Accept high-value bookings with lower fees. No transaction limits.',
+        'Accept high-value travel bookings with pay by bank. Lower fees, bank-authenticated payments, fewer disputes—plus splits, refund reserves, and payouts.',
       path: '/solutions/travel',
     }),
 })

@@ -35,7 +35,7 @@ export const blogPosts: BlogPost[] = [
       'Quidkey completes SOC 2 Type II audit by Sensiba LLP, validating enterprise-grade security for API-driven global payments infrastructure.',
     keyword: 'SOC 2 Type II compliance',
     author: 'Quidkey Team',
-    image: '/images/blog/soc2-compliance.jpg',
+    image: '/images/blog/soc2-compliance.webp',
     featured: true,
     blocks: [
       {
@@ -99,7 +99,7 @@ export const blogPosts: BlogPost[] = [
       'COO Bhavna Saraf explains how Quidkey uses APIs and AI to transform open banking into merchant-ready A2A payment solutions.',
     keyword: 'global clearing house',
     author: 'Bhavna Saraf',
-    image: '/images/blog/global-clearing-house.jpg',
+    image: '/images/blog/global-clearing-house.webp',
     blocks: [
       {
         type: 'p',
@@ -203,12 +203,12 @@ export const blogPosts: BlogPost[] = [
     date: 'October 29, 2025',
     dateISO: '2025-10-29',
     title: 'Quidkey Announces Strategic Partnership with Tryp.com to Power Next-Generation "Pay by Bank" Travel Payments',
-    seoTitle: 'Quidkey Partners with Tryp.com for Pay by Bank Travel Payments',
+    seoTitle: 'Quidkey + Tryp.com: Pay by Bank Travel | Quidkey',
     description:
       'Quidkey and Tryp.com partner to deliver instant settlement and 3x lower payment costs for travel bookings using Pay by Bank.',
     keyword: 'pay by bank travel payments',
     author: 'Quidkey Team',
-    image: '/images/blog/tryp-partnership.jpg',
+    image: '/images/blog/tryp-partnership.webp',
     blocks: [
       {
         type: 'p',
@@ -260,12 +260,12 @@ export const blogPosts: BlogPost[] = [
     date: 'October 26, 2025',
     dateISO: '2025-10-26',
     title: 'Refunds, Rewards, and Real-Time Settlement: Unlocking Merchant Payments',
-    seoTitle: 'Real-Time Settlement and Instant Refunds for Merchants | Quidkey',
+    seoTitle: 'Real-Time Settlement & Instant Refunds | Quidkey',
     description:
       'Learn how Open Banking enables real-time settlement, seamless refunds, and loyalty rewards to improve merchant cash flow by 15-30%.',
     keyword: 'real-time settlement',
     author: 'Quidkey Team',
-    image: '/images/blog/refunds-rewards-settlement.jpg',
+    image: '/images/blog/refunds-rewards-settlement.webp',
     blocks: [
       {
         type: 'p',
@@ -343,7 +343,7 @@ export const blogPosts: BlogPost[] = [
       'Quidkey partners with TransferMate to offer merchants a faster, cheaper alternative to card payments using global A2A infrastructure.',
     keyword: 'reduce card costs',
     author: 'Quidkey Team',
-    image: '/images/blog/transfermate-partnership.jpg',
+    image: '/images/blog/transfermate-partnership.webp',
     blocks: [
       {
         type: 'p',
@@ -407,7 +407,7 @@ export const blogPosts: BlogPost[] = [
       'Pay by Bank lets customers pay directly from their bank. Lower fees, instant settlement, no chargebacks. Learn how it works globally.',
     keyword: 'pay by bank',
     author: 'Quidkey Team',
-    image: '/images/blog/pay-by-bank.png',
+    image: '/images/blog/pay-by-bank.webp',
     blocks: [
       { type: 'h2', text: 'What is Pay by Bank?' },
       {
@@ -510,12 +510,12 @@ export const blogPosts: BlogPost[] = [
     date: 'September 10, 2025',
     dateISO: '2025-09-10',
     title: 'Open Banking Payments in the UK',
-    seoTitle: 'Open Banking Payments UK: How to Accept Bank Payments | Quidkey',
+    seoTitle: 'Open Banking Payments UK: Merchant Guide | Quidkey',
     description:
       'Accept Open Banking payments in the UK with instant settlement, no chargebacks, and lower fees. Complete guide for UK merchants.',
     keyword: 'open banking payments UK',
     author: 'Quidkey Team',
-    image: '/images/blog/open-banking-uk.png',
+    image: '/images/blog/open-banking-uk.webp',
     blocks: [
       { type: 'h2', text: 'What is Open Banking in the UK?' },
       {
@@ -648,7 +648,7 @@ export const blogPosts: BlogPost[] = [
       'A2A payments offer 70% lower fees than cards, instant settlement, and zero chargebacks. Learn why UK merchants are switching.',
     keyword: 'A2A payments',
     author: 'Quidkey Team',
-    image: '/images/blog/a2a-payments.jpg',
+    image: '/images/blog/a2a-payments.webp',
     blocks: [
       {
         type: 'p',

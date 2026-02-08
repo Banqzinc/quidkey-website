@@ -7,9 +7,9 @@ export const Route = createFileRoute('/solutions/marketplaces')({
   component: MarketplacesPage,
   head: () =>
     buildSeo({
-      title: 'Marketplaces | Quidkey',
+      title: 'Pay by Bank Splits & Payouts for Marketplaces | Quidkey',
       description:
-        'Collect with lower fees. Split to sellers. Automate payouts.',
+        'Collect with lower fees and automatically split payouts to sellers. Build escrow-style holds, dispute workflows, and reconciliation-ready marketplace payouts.',
       path: '/solutions/marketplaces',
     }),
 })

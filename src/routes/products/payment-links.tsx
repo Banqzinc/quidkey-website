@@ -7,9 +7,9 @@ export const Route = createFileRoute('/products/payment-links')({
   component: PaymentLinksPage,
   head: () =>
     buildSeo({
-      title: 'Payment Links | Quidkey',
+      title: 'Pay by Bank Payment Links | Quidkey',
       description:
-        'Create pay by bank links in seconds. Share anywhere. Get paid.',
+        'Create pay by bank payment links in seconds. Share via email, SMS, or social and get paid with lower fees, bank-authenticated payments, and faster settlement.',
       path: '/products/payment-links',
     }),
 })

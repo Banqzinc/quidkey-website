@@ -15,9 +15,9 @@ export const Route = createFileRoute('/careers/')({
   component: CareersPage,
   head: () =>
     buildSeo({
-      title: 'Careers | Quidkey',
+      title: 'Careers at Quidkey | Build Pay by Bank Infrastructure',
       description:
-        'Join our fast-growing fintech startup building the future of embedded banking and e-commerce payments. View open positions at Quidkey.',
+        'Join Quidkey to build pay by bank checkout, global clearing, and programmable treasury workflows. Explore open roles and help shape payments infrastructure.',
       path: '/careers',
     }),
 })
@@ -60,9 +60,15 @@ function RoleCard({
   return (
     <div className="bg-white rounded-2xl border border-border overflow-hidden card-hover">
       <div className="p-6 md:p-8">
-        <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-2">
-          {role.title}
-        </h2>
+        <Link
+          to="/careers/$roleId"
+          params={{ roleId: role.id }}
+          className="inline-flex"
+        >
+          <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-2 hover:underline">
+            {role.title}
+          </h2>
+        </Link>
         <p className="text-muted-foreground mb-4">{role.subtitle}</p>
 
         <div className="flex flex-wrap gap-4 mb-6">

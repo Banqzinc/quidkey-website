@@ -1,4 +1,35 @@
-const SITE_URL = 'https://quidkey.com'
+function normalizeOrigin(input: string) {
+  // Accept both full origins and full URLs.
+  // Always return an origin (no path/query/hash), without trailing slash.
+  try {
+    const url = new URL(input)
+    return url.origin
+  } catch {
+    // Try adding scheme if user passed "example.com"
+    try {
+      const url = new URL(`https://${input}`)
+      return url.origin
+    } catch {
+      return 'https://quidkey.com'
+    }
+  }
+}
+
+/**
+ * Best-effort site origin used for canonical URLs and OG tags.
+ *
+ * Priority:
+ * - `VITE_SITE_URL` (set in Netlify/Vite env)
+ * - `window.location.origin` (client-side)
+ * - default production origin
+ */
+export function getSiteUrl() {
+  const envUrl = import.meta.env.VITE_SITE_URL as string | undefined
+  if (envUrl) return normalizeOrigin(envUrl)
+  if (typeof window !== 'undefined' && window.location?.origin) return window.location.origin
+  return 'https://quidkey.com'
+}
+
 const DEFAULT_OG_IMAGE =
   'https://storage.googleapis.com/quidkey-resources-public/quidkey-logo-fav.png'
 
@@ -36,11 +67,10 @@ export function buildSeo({
   imageUrl,
   article,
 }: BuildSeoInput) {
-  const url = new URL(path, SITE_URL).toString()
+  const url = new URL(path, getSiteUrl()).toString()
   const image = imageUrl ?? DEFAULT_OG_IMAGE
 
   const meta = [
-    { title },
     { name: 'description', content: description },
     { property: 'og:title', content: title },
     { property: 'og:description', content: description },
@@ -67,6 +97,8 @@ export function buildSeo({
   }
 
   return {
+    // TanStack Router supports a dedicated `title` field; keep it separate from `meta`.
+    title,
     meta,
     links: [{ rel: 'canonical', href: url }],
   }
@@ -120,4 +152,4 @@ export function buildArticleSchema({
   }
 }
 
-export { SITE_URL, DEFAULT_OG_IMAGE }
+export { DEFAULT_OG_IMAGE }

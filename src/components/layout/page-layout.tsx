@@ -427,7 +427,10 @@ export function TeamSection({
               <img
                 src={member.imageSrc}
                 alt={member.name}
+                width={800}
+                height={600}
                 loading="lazy"
+                decoding="async"
                 className="h-full w-full object-cover object-[center_20%]"
               />
             </div>
@@ -443,6 +446,8 @@ export function TeamSection({
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-sm font-medium text-primary hover:underline"
+                    aria-label={`LinkedIn profile for ${member.name}`}
+                    title={`LinkedIn profile for ${member.name}`}
                   >
                     LinkedIn
                   </a>

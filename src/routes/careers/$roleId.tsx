@@ -166,9 +166,14 @@ export const Route = createFileRoute('/careers/$roleId')({
         path: '/careers',
       })
     }
+    const raw = loaderData.role.summary
+    const description =
+      raw.length > 160
+        ? `${raw.slice(0, 157).replace(/\s+\S*$/, '')}…`
+        : raw
     return buildSeo({
       title: `${loaderData.role.title} | Careers at Quidkey`,
-      description: loaderData.role.summary,
+      description,
       path: `/careers/${loaderData.roleId}`,
     })
   },
@@ -196,7 +201,7 @@ function JobSection({
 }) {
   return (
     <div className="mb-8">
-      <h3 className="text-lg font-semibold text-foreground mb-3">{title}</h3>
+      <h2 className="text-lg font-semibold text-foreground mb-3">{title}</h2>
       {children}
     </div>
   )
@@ -206,6 +211,14 @@ function ApplicationForm({ jobTitle }: { jobTitle: string }) {
   const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
   const [fileName, setFileName] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const fieldIds = {
+    name: 'jobapp-name',
+    email: 'jobapp-email',
+    phone: 'jobapp-phone',
+    resume: 'jobapp-resume',
+    linkedin: 'jobapp-linkedin',
+    message: 'jobapp-message',
+  } as const
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -291,9 +304,10 @@ function ApplicationForm({ jobTitle }: { jobTitle: string }) {
       )}
 
       <div className="space-y-5">
-        <FormField label="Full Name" required>
+        <FormField id={fieldIds.name} label="Full Name" required>
           <input
             type="text"
+            id={fieldIds.name}
             name="name"
             required
             placeholder="Your name"
@@ -301,9 +315,10 @@ function ApplicationForm({ jobTitle }: { jobTitle: string }) {
           />
         </FormField>
 
-        <FormField label="Email Address" required>
+        <FormField id={fieldIds.email} label="Email Address" required>
           <input
             type="email"
+            id={fieldIds.email}
             name="email"
             required
             placeholder="your.email@example.com"
@@ -311,9 +326,10 @@ function ApplicationForm({ jobTitle }: { jobTitle: string }) {
           />
         </FormField>
 
-        <FormField label="Phone Number" required>
+        <FormField id={fieldIds.phone} label="Phone Number" required>
           <input
             type="tel"
+            id={fieldIds.phone}
             name="phone"
             required
             placeholder="Your phone number"
@@ -321,19 +337,32 @@ function ApplicationForm({ jobTitle }: { jobTitle: string }) {
           />
         </FormField>
 
-        <FormField label="CV/Resume" required>
+        <FormField id={fieldIds.resume} label="CV/Resume" required>
           <div
-            onClick={() => fileInputRef.current?.click()}
             className="w-full px-4 py-3 rounded-lg border border-dashed border-border bg-secondary/30 cursor-pointer hover:bg-secondary/50 transition-colors flex items-center gap-3"
+            role="button"
+            tabIndex={0}
+            onClick={() => fileInputRef.current?.click()}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault()
+                fileInputRef.current?.click()
+              }
+            }}
+            aria-describedby={`${fieldIds.resume}-hint`}
           >
             <Upload className="h-5 w-5 text-muted-foreground" />
             <span className={cn('text-sm', fileName ? 'text-foreground' : 'text-muted-foreground')}>
               {fileName || 'Click to upload your CV/Resume'}
             </span>
           </div>
+          <p id={`${fieldIds.resume}-hint`} className="mt-2 text-xs text-muted-foreground">
+            Accepted formats: PDF, DOC, DOCX.
+          </p>
           <input
             ref={fileInputRef}
             type="file"
+            id={fieldIds.resume}
             name="resume"
             accept=".pdf,.doc,.docx"
             onChange={handleFileChange}
@@ -342,23 +371,27 @@ function ApplicationForm({ jobTitle }: { jobTitle: string }) {
           />
         </FormField>
 
-        <FormField label="LinkedIn Profile URL">
+        <FormField id={fieldIds.linkedin} label="LinkedIn Profile URL">
           <input
             type="url"
+            id={fieldIds.linkedin}
             name="linkedin"
             placeholder="https://linkedin.com/in/yourprofile"
             className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-shadow"
           />
         </FormField>
 
-        <FormField label="Why are you interested in this role?">
+        <FormField id={fieldIds.message} label="Why are you interested in this role?">
           <textarea
             name="message"
+            id={fieldIds.message}
             rows={4}
             placeholder="Tell us why you're excited about this position..."
             className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-shadow resize-none"
           />
         </FormField>
+
+        <div data-netlify-recaptcha="true" />
 
         <button
           type="submit"
@@ -384,17 +417,19 @@ function ApplicationForm({ jobTitle }: { jobTitle: string }) {
 }
 
 function FormField({
+  id,
   label,
   required,
   children,
 }: {
+  id: string
   label: string
   required?: boolean
   children: React.ReactNode
 }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-foreground mb-2">
+      <label htmlFor={id} className="block text-sm font-medium text-foreground mb-2">
         {label}
         {required && <span className="text-primary ml-1">*</span>}
       </label>

@@ -10,8 +10,9 @@ export const Route = createFileRoute('/cookies')({
   component: CookiesPage,
   head: () =>
     buildSeo({
-      title: 'Cookies | Quidkey',
-      description: 'Manage your cookie preferences and view our cookie declaration.',
+      title: 'Cookie Preferences & Declaration | Quidkey',
+      description:
+        'Manage cookie preferences for Quidkey.com and review the cookie declaration provided by our consent manager. You can update consent at any time.',
       path: '/cookies',
     }),
 })

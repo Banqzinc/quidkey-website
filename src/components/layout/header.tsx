@@ -44,8 +44,10 @@ export function Header() {
 
           {/* Mobile menu button */}
           <button
+            type="button"
             className="md:hidden p-2 -mr-2"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
           >
             {mobileMenuOpen ? (
               <X className="h-6 w-6 text-foreground" />

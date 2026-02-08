@@ -3,7 +3,7 @@ import { MegaMenu } from '@/components/layout/mega-menu'
 import { Footer } from '@/components/layout/footer'
 import { getBlogPost } from '@/lib/blog-posts'
 import { MERCHANTS_SIGNUP_URL } from '@/lib/urls'
-import { buildSeo, buildArticleSchema, SITE_URL } from '@/lib/seo'
+import { buildSeo, buildArticleSchema, getSiteUrl } from '@/lib/seo'
 
 export const Route = createFileRoute('/blog/$slug')({
   head: ({ params }) => {
@@ -18,8 +18,9 @@ export const Route = createFileRoute('/blog/$slug')({
       })
     }
 
+    const siteUrl = getSiteUrl()
     // Use absolute URL for OG image
-    const imageUrl = `${SITE_URL}${post.image}`
+    const imageUrl = `${siteUrl}${post.image}`
 
     return buildSeo({
       title: post.seoTitle,
@@ -40,6 +41,7 @@ export const Route = createFileRoute('/blog/$slug')({
 function BlogPostPage() {
   const { slug } = Route.useParams()
   const post = getBlogPost(slug)
+  const siteUrl = getSiteUrl()
 
   // Generate JSON-LD schema for the article
   const articleSchema = post
@@ -48,8 +50,8 @@ function BlogPostPage() {
         description: post.description,
         datePublished: post.dateISO,
         author: post.author,
-        url: `${SITE_URL}/blog/${post.slug}`,
-        imageUrl: `${SITE_URL}${post.image}`,
+        url: `${siteUrl}/blog/${post.slug}`,
+        imageUrl: `${siteUrl}${post.image}`,
       })
     : null
 
@@ -108,6 +110,10 @@ function BlogPostPage() {
                 <img
                   src={post.image}
                   alt={post.title}
+                  width={1200}
+                  height={675}
+                  loading="eager"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
               </div>

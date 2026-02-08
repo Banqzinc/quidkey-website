@@ -7,9 +7,9 @@ export const Route = createFileRoute('/solutions/fintechs')({
   component: FintechsPage,
   head: () =>
     buildSeo({
-      title: 'Fintechs | Quidkey',
+      title: 'White-Label Pay by Bank for Fintechs | Quidkey',
       description:
-        'White-label payments. One integration. Multi-region.',
+        'Offer pay by bank under your brand with one integration across regions. Get APIs, webhooks, audit trails, and programmable treasury workflows for your clients.',
       path: '/solutions/fintechs',
     }),
 })

@@ -7,9 +7,9 @@ export const Route = createFileRoute('/products/refunds')({
   component: RefundsPage,
   head: () =>
     buildSeo({
-      title: 'Bank Refunds | Quidkey',
+      title: 'Instant Pay by Bank Refunds | Quidkey',
       description:
-        'Instant refunds back to customer bank accounts. No card delays.',
+        'Issue refunds directly back to customer bank accounts with faster settlement than cards. Keep a clean audit trail and automate reserves and refund workflows.',
       path: '/products/refunds',
     }),
 })
