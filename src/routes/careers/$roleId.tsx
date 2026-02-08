@@ -417,30 +417,35 @@ function RolePage() {
         <div className="absolute inset-0 hero-gradient" aria-hidden="true" />
         <div className="absolute inset-0 noise" aria-hidden="true" />
 
-        <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          {/* Back link */}
-          <Link
-            to="/careers"
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to all positions
-          </Link>
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          {/* Match the 2/3 column layout from the content section */}
+          <div className="lg:max-w-[calc(66.666%-1.5rem)]">
+            {/* Navigation row - back link and team badge */}
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+              <Link
+                to="/careers"
+                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Back to all positions
+              </Link>
 
-          <div className="inline-flex items-center gap-2.5 rounded-full bg-foreground/5 border border-foreground/10 px-4 py-2 text-sm font-medium text-foreground mb-6">
-            {role.team}
-          </div>
+              <div className="inline-flex items-center gap-2 rounded-full bg-foreground/5 border border-foreground/10 px-3 py-1.5 text-sm font-medium text-foreground">
+                {role.team}
+              </div>
+            </div>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4 leading-[1.1]">
-            <span className="text-foreground">{role.title}</span>
-          </h1>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4 leading-[1.1]">
+              <span className="text-foreground">{role.title}</span>
+            </h1>
 
-          <p className="text-lg text-muted-foreground mb-6">{role.subtitle}</p>
+            <p className="text-lg text-muted-foreground mb-6">{role.subtitle}</p>
 
-          <div className="flex flex-wrap gap-4">
-            <JobMeta icon={MapPin} label={role.location} />
-            <JobMeta icon={Users} label={role.team} />
-            <JobMeta icon={Clock} label={role.type} />
+            <div className="flex flex-wrap gap-4">
+              <JobMeta icon={MapPin} label={role.location} />
+              <JobMeta icon={Users} label={role.team} />
+              <JobMeta icon={Clock} label={role.type} />
+            </div>
           </div>
         </div>
       </section>
