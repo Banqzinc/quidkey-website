@@ -338,15 +338,27 @@ function ApplicationForm({ jobTitle }: { jobTitle: string }) {
         </FormField>
 
         <FormField id={fieldIds.resume} label="CV/Resume" required>
-          <label
-            htmlFor={fieldIds.resume}
+          <div
             className="w-full px-4 py-3 rounded-lg border border-dashed border-border bg-secondary/30 cursor-pointer hover:bg-secondary/50 transition-colors flex items-center gap-3"
+            role="button"
+            tabIndex={0}
+            onClick={() => fileInputRef.current?.click()}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault()
+                fileInputRef.current?.click()
+              }
+            }}
+            aria-describedby={`${fieldIds.resume}-hint`}
           >
             <Upload className="h-5 w-5 text-muted-foreground" />
             <span className={cn('text-sm', fileName ? 'text-foreground' : 'text-muted-foreground')}>
               {fileName || 'Click to upload your CV/Resume'}
             </span>
-          </label>
+          </div>
+          <p id={`${fieldIds.resume}-hint`} className="mt-2 text-xs text-muted-foreground">
+            Accepted formats: PDF, DOC, DOCX.
+          </p>
           <input
             ref={fileInputRef}
             type="file"
