@@ -17,7 +17,7 @@ export const Route = createFileRoute('/careers/')({
     buildSeo({
       title: 'Careers at Quidkey | Build Pay by Bank Infrastructure',
       description:
-        'Join Quidkey to build pay by bank checkout, global clearing, and programmable treasury workflows. Explore open roles and shape modern payments infrastructure.',
+        'Join Quidkey to build pay by bank checkout, global clearing, and programmable treasury workflows. Explore open roles and help shape payments infrastructure.',
       path: '/careers',
     }),
 })

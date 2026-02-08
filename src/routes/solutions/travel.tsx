@@ -9,7 +9,7 @@ export const Route = createFileRoute('/solutions/travel')({
     buildSeo({
       title: 'Pay by Bank for Travel Bookings | Quidkey',
       description:
-        'Accept high-value travel bookings with pay by bank. Lower fees, bank-authenticated payments, and fewer disputes—plus tools for splits, refunds reserves, and payouts.',
+        'Accept high-value travel bookings with pay by bank. Lower fees, bank-authenticated payments, fewer disputes—plus splits, refund reserves, and payouts.',
       path: '/solutions/travel',
     }),
 })

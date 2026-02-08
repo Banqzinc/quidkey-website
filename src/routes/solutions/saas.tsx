@@ -9,7 +9,7 @@ export const Route = createFileRoute('/solutions/saas')({
     buildSeo({
       title: 'Pay by Bank for SaaS Subscriptions | Quidkey',
       description:
-        'Subscription billing with pay by bank: lower fees, fewer failures, and fast settlement. Use hosted checkout or an iFrame integration and automate treasury workflows.',
+        'Subscription billing with pay by bank: lower fees, fewer failures, and fast settlement. Use hosted checkout or an iFrame integration to automate treasury workflows.',
       path: '/solutions/saas',
     }),
 })
