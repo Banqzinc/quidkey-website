@@ -214,8 +214,9 @@ function ApplicationForm({ jobTitle }: { jobTitle: string }) {
     }
   }
 
-  // Generate form name from job title (matches Netlify form detection)
-  const formName = `job-application-${jobTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+$/, '')}`
+  // Keep a single stable form name for Netlify form detection.
+  // Include the role in a hidden field (`position`) so submissions are still attributable.
+  const formName = 'job-application'
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -223,12 +224,11 @@ function ApplicationForm({ jobTitle }: { jobTitle: string }) {
 
     const formData = new FormData(e.currentTarget)
 
-    // Netlify Forms requires URL-encoded body for AJAX submissions
     try {
       const response = await fetch('/', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formData as unknown as Record<string, string>).toString(),
+        // Important: allow the browser to set the multipart boundary (supports file uploads).
+        body: formData,
       })
 
       if (!response.ok) {
@@ -262,11 +262,21 @@ function ApplicationForm({ jobTitle }: { jobTitle: string }) {
       name={formName}
       method="POST"
       data-netlify="true"
+      netlify-honeypot="bot-field"
+      encType="multipart/form-data"
       onSubmit={handleSubmit}
       className="bg-white rounded-2xl border border-border p-6 md:p-8"
     >
       {/* Hidden field for Netlify Forms */}
       <input type="hidden" name="form-name" value={formName} />
+      {/* Honeypot field for spam bots */}
+      <p className="hidden">
+        <label>
+          Don’t fill this out if you’re human: <input name="bot-field" />
+        </label>
+      </p>
+      {/* Include the role title so we can identify which job this is for */}
+      <input type="hidden" name="position" value={jobTitle} />
 
       <h3 className="text-xl font-semibold text-foreground mb-6">Apply Now</h3>
 

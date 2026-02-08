@@ -26,6 +26,13 @@ const USERBACK_SCRIPT_SRC = 'https://static.userback.io/widget/v1.js'
 
 let started = false
 
+function isPreviewHost() {
+  // Allow the widget in local/dev + preview deploys, even if Cookiebot isn't configured
+  // for that host yet (common for Netlify preview domains).
+  const host = window.location.hostname
+  return host === 'localhost' || host.endsWith('.netlify.app')
+}
+
 function readCookiebotConsent() {
   return window.Cookiebot?.consent
 }
@@ -58,7 +65,7 @@ export function initUserbackWithCookiebot(accessToken: string) {
     const consent = readCookiebotConsent()
 
     // If Cookiebot exists, require "Preferences" consent for this widget.
-    const allowed = consent ? Boolean(consent.preferences) : true
+    const allowed = isPreviewHost() || (consent ? Boolean(consent.preferences) : true)
 
     if (!allowed) {
       if (started) {

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Netlify Forms</title>
+  </head>
+  <body>
+    <!--
+      This hidden form exists purely so Netlify can detect our form at build time.
+      Our real form is rendered via React/SSR in `src/routes/careers/$roleId.tsx`.
+    -->
+    <form
+      name="job-application"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      enctype="multipart/form-data"
+      hidden
+    >
+      <input type="hidden" name="form-name" value="job-application" />
+      <input name="bot-field" />
+
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="file" name="resume" />
+      <input type="url" name="linkedin" />
+      <textarea name="message"></textarea>
+
+      <!-- Which role this application is for -->
+      <input type="text" name="position" />
+    </form>
+  </body>
+</html>
+
