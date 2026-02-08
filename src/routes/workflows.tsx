@@ -11,9 +11,9 @@ export const Route = createFileRoute('/workflows')({
   component: WorkflowsPage,
   head: () =>
     buildSeo({
-      title: 'Money Workflows | Quidkey',
+      title: 'Money Workflows: Tax Holds, Splits & FX | Quidkey',
       description:
-        'Write simple rules for how your money moves. Tax holds, splits, FX, and payouts - all automated.',
+        'Automate what happens after payment: tax holds, splits, refunds reserves, FX, and payouts. Write plain-English rules and get deterministic execution with audit trails.',
       path: '/workflows',
     }),
 })

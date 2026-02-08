@@ -10,6 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WorkflowsRouteImport } from './routes/workflows'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -37,6 +39,16 @@ import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 const WorkflowsRoute = WorkflowsRouteImport.update({
   id: '/workflows',
   path: '/workflows',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PricingRoute = PricingRouteImport.update({
@@ -163,6 +175,8 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/cookies': typeof CookiesRoute
   '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
   '/workflows': typeof WorkflowsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/careers/$roleId': typeof CareersRoleIdRoute
@@ -189,6 +203,8 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/cookies': typeof CookiesRoute
   '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
   '/workflows': typeof WorkflowsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/careers/$roleId': typeof CareersRoleIdRoute
@@ -216,6 +232,8 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/cookies': typeof CookiesRoute
   '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
   '/workflows': typeof WorkflowsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/careers/$roleId': typeof CareersRoleIdRoute
@@ -244,6 +262,8 @@ export interface FileRouteTypes {
     | '/contact'
     | '/cookies'
     | '/pricing'
+    | '/privacy'
+    | '/terms'
     | '/workflows'
     | '/blog/$slug'
     | '/careers/$roleId'
@@ -270,6 +290,8 @@ export interface FileRouteTypes {
     | '/contact'
     | '/cookies'
     | '/pricing'
+    | '/privacy'
+    | '/terms'
     | '/workflows'
     | '/blog/$slug'
     | '/careers/$roleId'
@@ -296,6 +318,8 @@ export interface FileRouteTypes {
     | '/contact'
     | '/cookies'
     | '/pricing'
+    | '/privacy'
+    | '/terms'
     | '/workflows'
     | '/blog/$slug'
     | '/careers/$roleId'
@@ -323,6 +347,8 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   CookiesRoute: typeof CookiesRoute
   PricingRoute: typeof PricingRoute
+  PrivacyRoute: typeof PrivacyRoute
+  TermsRoute: typeof TermsRoute
   WorkflowsRoute: typeof WorkflowsRoute
   BlogSlugRoute: typeof BlogSlugRoute
   CareersRoleIdRoute: typeof CareersRoleIdRoute
@@ -350,6 +376,20 @@ declare module '@tanstack/react-router' {
       path: '/workflows'
       fullPath: '/workflows'
       preLoaderRoute: typeof WorkflowsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pricing': {
@@ -523,6 +563,8 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   CookiesRoute: CookiesRoute,
   PricingRoute: PricingRoute,
+  PrivacyRoute: PrivacyRoute,
+  TermsRoute: TermsRoute,
   WorkflowsRoute: WorkflowsRoute,
   BlogSlugRoute: BlogSlugRoute,
   CareersRoleIdRoute: CareersRoleIdRoute,

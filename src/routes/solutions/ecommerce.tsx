@@ -7,9 +7,9 @@ export const Route = createFileRoute('/solutions/ecommerce')({
   component: EcommercePage,
   head: () =>
     buildSeo({
-      title: 'Ecommerce | Quidkey',
+      title: 'Pay by Bank for Ecommerce Brands | Quidkey',
       description:
-        'Lower fees. Zero chargebacks. Pay by bank for online retail.',
+        'Accept pay by bank for ecommerce with lower fees and zero chargebacks. Improve conversion with bank prediction, sell globally, and automate post-payment workflows.',
       path: '/solutions/ecommerce',
     }),
 })

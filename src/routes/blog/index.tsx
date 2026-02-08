@@ -9,7 +9,7 @@ export const Route = createFileRoute('/blog/')({
   component: BlogPage,
   head: () =>
     buildSeo({
-      title: 'Pay by Bank Blog: A2A Payments, Open Banking & Fintech | Quidkey',
+      title: 'Pay by Bank Blog: A2A & Open Banking Insights | Quidkey',
       description:
         'Expert insights on pay by bank, A2A payments, open banking, and cross-border payment infrastructure. Learn how to reduce fees and improve conversion.',
       path: '/blog',
@@ -46,6 +46,10 @@ function BlogPage() {
                 <img
                   src={featuredPost.image}
                   alt={featuredPost.title}
+                  width={1200}
+                  height={675}
+                  loading="eager"
+                  decoding="async"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
@@ -77,6 +81,10 @@ function BlogPage() {
                   <img
                     src={post.image}
                     alt={post.title}
+                    width={1200}
+                    height={675}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>

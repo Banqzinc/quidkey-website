@@ -29,7 +29,7 @@ export function TrustBadgesSection() {
                 >
                   <img
                     src={`https://img.logo.dev/${partner.domain}?token=${LOGO_DEV_TOKEN}`}
-                    alt=""
+                    alt={`${partner.name} logo`}
                     width={28}
                     height={28}
                     loading="lazy"
@@ -52,7 +52,7 @@ export function TrustBadgesSection() {
                 >
                   <img
                     src={`https://img.logo.dev/${partner.domain}?token=${LOGO_DEV_TOKEN}`}
-                    alt=""
+                    alt={`${partner.name} logo`}
                     width={28}
                     height={28}
                     loading="lazy"

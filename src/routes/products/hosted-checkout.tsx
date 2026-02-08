@@ -7,9 +7,9 @@ export const Route = createFileRoute('/products/hosted-checkout')({
   component: HostedCheckoutPage,
   head: () =>
     buildSeo({
-      title: 'Hosted Checkout | Quidkey',
+      title: 'Hosted Pay by Bank Checkout | Quidkey',
       description:
-        'Ready-to-use pay by bank checkout. Go live in minutes. No frontend code.',
+        'Launch a ready-to-use hosted pay by bank checkout in minutes. Brand it, redirect customers to a secure payment session, and receive webhooks back—no frontend work.',
       path: '/products/hosted-checkout',
     }),
 })

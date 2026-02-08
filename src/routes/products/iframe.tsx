@@ -7,9 +7,9 @@ export const Route = createFileRoute('/products/iframe')({
   component: IframePage,
   head: () =>
     buildSeo({
-      title: 'Embedded iFrame | Quidkey',
+      title: 'Embedded Pay by Bank iFrame Checkout | Quidkey',
       description:
-        'Drop-in pay by bank iFrame for any checkout. White-label and customizable.',
+        'Add a drop-in pay by bank iFrame to any checkout. White-label the experience, match your brand, and improve conversion with bank prediction and smart defaults.',
       path: '/products/iframe',
     }),
 })

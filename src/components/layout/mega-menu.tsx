@@ -21,7 +21,7 @@ import {
 import { buttonVariants } from '@/components/ui/button'
 import { DOCS_URL, MERCHANTS_LOGIN_URL, MERCHANTS_SIGNUP_URL } from '@/lib/urls'
 
-const LOGO_URL = 'https://storage.googleapis.com/quidkey-resources-public/quidkey-logo-black.svg'
+const LOGO_URL = '/quidkey-logo.svg'
 
 interface MenuItem {
   label: string
@@ -100,7 +100,9 @@ export function MegaMenu() {
             <img
               src={LOGO_URL}
               alt="Quidkey"
+              width={112}
               height={28}
+              decoding="async"
               className="h-7 w-auto transition-transform duration-300 group-hover:scale-[1.02]"
             />
           </Link>
@@ -257,7 +259,7 @@ export function MegaMenu() {
               rel="noopener noreferrer"
               className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }))}
             >
-              Login
+              Merchant login
             </a>
             <a
               href={MERCHANTS_SIGNUP_URL}
@@ -273,6 +275,8 @@ export function MegaMenu() {
           <button
             className="lg:hidden p-2 -mr-2"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            type="button"
+            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
           >
             {mobileMenuOpen ? (
               <X className="h-6 w-6 text-foreground" />
@@ -295,7 +299,7 @@ export function MegaMenu() {
               className={cn(buttonVariants({ variant: 'outline' }), 'w-full')}
               onClick={() => setMobileMenuOpen(false)}
             >
-              Login
+              Merchant login
             </a>
             <a
               href={MERCHANTS_SIGNUP_URL}

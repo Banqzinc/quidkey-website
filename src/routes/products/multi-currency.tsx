@@ -7,9 +7,9 @@ export const Route = createFileRoute('/products/multi-currency')({
   component: MultiCurrencyPage,
   head: () =>
     buildSeo({
-      title: 'Multi-Currency | Quidkey',
+      title: 'Multi-Currency Wallets & FX Conversion | Quidkey',
       description:
-        'Hold, convert, and manage multiple currencies. Competitive rates.',
+        'Hold, convert, and manage multiple currencies with transparent FX and real-time balances. Automate conversions and settlements as part of your money workflows.',
       path: '/products/multi-currency',
     }),
 })

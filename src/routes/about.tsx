@@ -15,7 +15,7 @@ export const Route = createFileRoute('/about')({
   component: AboutPage,
   head: () =>
     buildSeo({
-      title: 'About | Quidkey',
+      title: 'About Quidkey | AI-Native Clearing House',
       description:
         'Quidkey is an AI-native clearing house for pay by bank. We unify payment collection, intelligent routing, and programmable treasury into one stack.',
       path: '/about',
@@ -28,51 +28,51 @@ const team = [
     role: 'Co‑founder, CEO',
     bio: 'Serial founder with successful exits. Operator and investor across public and private companies.',
     linkedinUrl: 'https://www.linkedin.com/in/robertazeko/',
-    imageSrc: '/images/team/rob-zeko.png',
+    imageSrc: '/images/team/rob-zeko.webp',
   },
   {
     name: 'Rabea Bader',
     role: 'Co‑founder, CTO',
     bio: 'Seasoned technologist with experience building and scaling products across bank and non‑bank institutions.',
     linkedinUrl: 'https://www.linkedin.com/in/rabea-bader/',
-    imageSrc: '/images/team/rabea-bader.png',
+    imageSrc: '/images/team/rabea-bader.webp',
   },
   {
     name: 'Matt Bartlett',
     role: 'General Counsel & VP Strategy',
     bio: 'Corporate transactional attorney advising on deals, governance, IP, and regulatory matters.',
     linkedinUrl: 'https://www.linkedin.com/in/matthew-bartlett-b6587346/',
-    imageSrc: '/images/team/matt-bartlett.png',
+    imageSrc: '/images/team/matt-bartlett.webp',
   },
   {
     name: 'Harry McNair',
     role: 'Sales Development Executive',
     linkedinUrl: 'https://www.linkedin.com/in/harry-mcnair-3a94b7181/',
-    imageSrc: '/images/team/harry-mcnair.png',
+    imageSrc: '/images/team/harry-mcnair.webp',
   },
   {
     name: 'Steven Holmes',
     role: 'Technical Lead',
     linkedinUrl: 'https://www.linkedin.com/in/steven-holmes-7281a627/',
-    imageSrc: '/images/team/steven-holmes.png',
+    imageSrc: '/images/team/steven-holmes.webp',
   },
   {
     name: 'Zakhar Bahniuk',
     role: 'Senior Full‑Stack Developer',
     linkedinUrl: 'https://www.linkedin.com/in/zakhar-bahniuk-821744206/',
-    imageSrc: '/images/team/zakhar-bahniuk.png',
+    imageSrc: '/images/team/zakhar-bahniuk.webp',
   },
   {
     name: 'Ohad Louvton',
     role: 'Senior DevOps',
     linkedinUrl: 'https://www.linkedin.com/in/ohad-louvton/',
-    imageSrc: '/images/team/ohad-louvton.png',
+    imageSrc: '/images/team/ohad-louvton.webp',
   },
   {
     name: 'Kateryna Kravchenko',
     role: 'UI/UX Designer',
     linkedinUrl: 'https://www.linkedin.com/in/kateryna-kravchenko-646107183/',
-    imageSrc: '/images/team/kateryna-kravchenko.png',
+    imageSrc: '/images/team/kateryna-kravchenko.webp',
   },
 ]
 
@@ -179,10 +179,13 @@ function AboutPage() {
           </div>
           <div className="bg-background rounded-2xl border border-white/10 p-6">
             <img
-              src="/global-map.svg"
+              src="/global-map.webp"
               alt="Quidkey live markets and closed beta regions"
+              width={960}
+              height={540}
               className="w-full h-auto"
               loading="lazy"
+              decoding="async"
             />
           </div>
         </div>

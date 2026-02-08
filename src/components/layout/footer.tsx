@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { openCookiebotPreferences } from '@/lib/cookiebot'
 
-const LOGO_URL = 'https://storage.googleapis.com/quidkey-resources-public/quidkey-logo-black.svg'
+const LOGO_URL = '/quidkey-logo.svg'
 const COPYRIGHT_YEAR = new Date().getFullYear()
 
 export function Footer() {
@@ -22,7 +22,7 @@ export function Footer() {
     ],
     Developers: [
       { label: 'Documentation', href: 'https://docs.quidkey.com/' },
-      { label: 'Status', href: '/status' },
+      { label: 'Status', href: 'https://status.quidkey.com' },
     ],
     Company: [
       { label: 'About Us', href: '/about' },
@@ -54,7 +54,6 @@ export function Footer() {
                         type="button"
                         onClick={() => openCookiebotPreferences({ fallbackUrl: '/cookies' })}
                         className="text-sm text-background/60 hover:text-background transition-colors"
-                        aria-label="Cookie preferences"
                       >
                         {link.label}
                       </button>
@@ -90,7 +89,10 @@ export function Footer() {
               <img
                 src={LOGO_URL}
                 alt="Quidkey"
+                width={96}
                 height={24}
+                loading="lazy"
+                decoding="async"
                 className="h-6 w-auto invert"
               />
             </Link>

@@ -7,9 +7,9 @@ export const Route = createFileRoute('/products/shopify')({
   component: ShopifyPage,
   head: () =>
     buildSeo({
-      title: 'Shopify Pay by Bank | Quidkey',
+      title: 'Shopify Pay by Bank App for Lower Fees | Quidkey',
       description:
-        'Shopify-approved pay by bank app. Lower fees. Zero chargebacks. Install in minutes.',
+        'Shopify-approved pay by bank app with lower fees and zero chargebacks. Improve conversion with bank prediction and install in minutes.',
       path: '/products/shopify',
     }),
 })

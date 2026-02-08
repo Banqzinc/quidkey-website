@@ -17,8 +17,9 @@ export const Route = createFileRoute('/contact')({
   component: ContactPage,
   head: () =>
     buildSeo({
-      title: 'Contact | Quidkey',
-      description: 'Talk to Quidkey about pay by bank, routing, and treasury workflows.',
+      title: 'Contact Sales & Support | Quidkey',
+      description:
+        'Talk to Quidkey about pay by bank, clearing and routing, and programmable treasury workflows. Sales, partnerships, and technical questions—we respond quickly.',
       path: '/contact',
     }),
 })
@@ -53,6 +54,13 @@ function ContactForm() {
   const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
 
   const formName = 'contact'
+  const fieldIds = {
+    name: 'contact-name',
+    email: 'contact-email',
+    company: 'contact-company',
+    inquiryType: 'contact-inquiry-type',
+    message: 'contact-message',
+  } as const
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -130,9 +138,10 @@ function ContactForm() {
       )}
 
       <div className="space-y-5">
-        <FormField label="Full Name" required>
+        <FormField id={fieldIds.name} label="Full Name" required>
           <input
             type="text"
+            id={fieldIds.name}
             name="name"
             required
             placeholder="Your name"
@@ -140,9 +149,10 @@ function ContactForm() {
           />
         </FormField>
 
-        <FormField label="Work Email" required>
+        <FormField id={fieldIds.email} label="Work Email" required>
           <input
             type="email"
+            id={fieldIds.email}
             name="email"
             required
             placeholder="you@company.com"
@@ -150,17 +160,19 @@ function ContactForm() {
           />
         </FormField>
 
-        <FormField label="Company">
+        <FormField id={fieldIds.company} label="Company">
           <input
             type="text"
+            id={fieldIds.company}
             name="company"
             placeholder="Your company name"
             className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-shadow"
           />
         </FormField>
 
-        <FormField label="What can we help with?" required>
+        <FormField id={fieldIds.inquiryType} label="What can we help with?" required>
           <select
+            id={fieldIds.inquiryType}
             name="inquiry_type"
             required
             defaultValue=""
@@ -177,8 +189,9 @@ function ContactForm() {
           </select>
         </FormField>
 
-        <FormField label="Message" required>
+        <FormField id={fieldIds.message} label="Message" required>
           <textarea
+            id={fieldIds.message}
             name="message"
             rows={4}
             required
@@ -186,6 +199,8 @@ function ContactForm() {
             className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-shadow resize-none"
           />
         </FormField>
+
+        <div data-netlify-recaptcha="true" />
 
         <button
           type="submit"
@@ -215,17 +230,19 @@ function ContactForm() {
 }
 
 function FormField({
+  id,
   label,
   required,
   children,
 }: {
+  id: string
   label: string
   required?: boolean
   children: React.ReactNode
 }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-foreground mb-2">
+      <label htmlFor={id} className="block text-sm font-medium text-foreground mb-2">
         {label}
         {required && <span className="text-primary ml-1">*</span>}
       </label>

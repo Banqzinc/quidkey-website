@@ -6,9 +6,9 @@ export const Route = createFileRoute('/complaints')({
   component: ComplaintsPage,
   head: () =>
     buildSeo({
-      title: 'Complaints Procedure | Quidkey',
+      title: 'Complaints Procedure for Payment Services | Quidkey',
       description:
-        'Learn how to submit a complaint to Quidkey and how we handle complaints about our payment services.',
+        'Learn how to submit a complaint to Quidkey and how we handle complaints related to our payment services, partners, and service providers.',
       path: '/complaints',
     }),
 })

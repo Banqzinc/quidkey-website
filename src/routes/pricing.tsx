@@ -11,9 +11,9 @@ export const Route = createFileRoute('/pricing')({
   component: PricingPage,
   head: () =>
     buildSeo({
-      title: 'Pricing | Quidkey',
+      title: 'Pricing for Pay by Bank Payments | Quidkey',
       description:
-        'Simple, transparent pricing. No setup fees. No contracts. Pay only when you get paid.',
+        'Transparent pricing for pay by bank checkout, global clearing, and money workflows. No setup fees or contracts—pay only when you get paid.',
       path: '/pricing',
     }),
 })

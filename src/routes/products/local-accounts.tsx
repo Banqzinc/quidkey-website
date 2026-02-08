@@ -7,9 +7,9 @@ export const Route = createFileRoute('/products/local-accounts')({
   component: LocalAccountsPage,
   head: () =>
     buildSeo({
-      title: 'Local Accounts | Quidkey',
+      title: 'Local Collection Accounts for Global Sales | Quidkey',
       description:
-        'Collect in GBP, EUR, USD, AUD without a local entity. Reduce FX costs.',
+        'Collect in GBP, EUR, USD, and AUD without setting up local entities. Reduce FX costs, reconcile faster, and route funds into the right accounts automatically.',
       path: '/products/local-accounts',
     }),
 })

@@ -33,9 +33,13 @@ export function StatsSection() {
             background: 'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 60%)',
           }}
         />
-        <img 
-          src="/global-map.svg" 
-          alt="" 
+        <img
+          src="/global-map.webp"
+          alt="Map highlighting Quidkey global coverage"
+          width={960}
+          height={540}
+          loading="lazy"
+          decoding="async"
           className="w-full h-auto opacity-80"
         />
       </div>

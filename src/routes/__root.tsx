@@ -73,6 +73,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="scroll-smooth">
       <head>
+        <meta charSet="utf-8" />
         <script
           id="Cookiebot"
           src="https://consent.cookiebot.com/uc.js"
