@@ -25,8 +25,8 @@ function CookiesPage() {
             Cookies
           </h1>
           <p className="text-muted-foreground mb-8">
-            You can update your cookie preferences at any time. If you’re in a region where
-            consent is required, we won’t run analytics until you opt in.
+            You can update your cookie preferences at any time. If you're in a region where
+            consent is required, we won't run analytics until you opt in.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 mb-10">
@@ -49,22 +49,13 @@ function CookiesPage() {
               by category.
             </p>
 
-            {COOKIEBOT_DOMAIN_GROUP_ID ? (
-              <>
-                <div id="CookieDeclaration" />
-                <script
-                  id="CookieDeclaration"
-                  src={`https://consent.cookiebot.com/${COOKIEBOT_DOMAIN_GROUP_ID}/cd.js`}
-                  type="text/javascript"
-                  async
-                />
-              </>
-            ) : (
-              <p className="text-sm text-muted-foreground">
-                Cookiebot isn’t configured for this environment (missing{' '}
-                <code className="font-mono">VITE_COOKIEBOT_DOMAIN_GROUP_ID</code>).
-              </p>
-            )}
+            <div id="CookieDeclaration" />
+            <script
+              id="CookieDeclaration"
+              src={`https://consent.cookiebot.com/${COOKIEBOT_DOMAIN_GROUP_ID}/cd.js`}
+              type="text/javascript"
+              async
+            />
           </div>
         </div>
       </section>

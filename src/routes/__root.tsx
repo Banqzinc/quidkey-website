@@ -71,15 +71,13 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        {COOKIEBOT_DOMAIN_GROUP_ID ? (
-          <script
-            id="Cookiebot"
-            src="https://consent.cookiebot.com/uc.js"
-            data-cbid={COOKIEBOT_DOMAIN_GROUP_ID}
-            data-blockingmode="manual"
-            type="text/javascript"
-          />
-        ) : null}
+        <script
+          id="Cookiebot"
+          src="https://consent.cookiebot.com/uc.js"
+          data-cbid={COOKIEBOT_DOMAIN_GROUP_ID}
+          data-blockingmode="manual"
+          type="text/javascript"
+        />
         {GA_MEASUREMENT_ID ? (
           <>
             {/* Google Consent Mode v2 defaults must run before any gtag config/event calls */}
