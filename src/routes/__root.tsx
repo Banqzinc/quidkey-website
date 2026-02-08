@@ -5,11 +5,13 @@ import { useRouterState } from '@tanstack/react-router'
 import appCss from '../styles.css?url'
 import { initClarityWithCookiebot } from '@/lib/clarity'
 import { trackPageView, updateGoogleConsentFromCookiebot } from '@/lib/google-analytics'
+import { initUserbackWithCookiebot } from '@/lib/userback'
 
 const ICON_URL = 'https://storage.googleapis.com/quidkey-resources-public/quidkey-logo-fav.png'
 const COOKIEBOT_DOMAIN_GROUP_ID = 'bcd5bf4b-c074-47cb-b26a-a401acac39b6'
-const CLARITY_PROJECT_ID = import.meta.env.VITE_CLARITY_PROJECT_ID as string | undefined
-const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID as string | undefined
+const CLARITY_PROJECT_ID = 'vdvvqtuvg2'
+const GA_MEASUREMENT_ID = 'G-G2CG1D2Q1C'
+const USERBACK_ACCESS_TOKEN = 'A-T4eFdwAnKc5Yq1y37td2cGRWR'
 
 export const Route = createRootRoute({
   head: () => ({
@@ -117,6 +119,7 @@ gtag('config', '${GA_MEASUREMENT_ID}', { send_page_view: false });
         {children}
         <ClarityCookiebotBridge />
         <GoogleAnalyticsCookiebotBridge />
+        <UserbackCookiebotBridge />
         <Scripts />
       </body>
     </html>
@@ -165,6 +168,15 @@ function GoogleAnalyticsCookiebotBridge() {
     if (!window.Cookiebot?.consent?.statistics) return
     trackPageView(GA_MEASUREMENT_ID)
   }, [location.pathname, location.search])
+
+  return null
+}
+
+function UserbackCookiebotBridge() {
+  useEffect(() => {
+    if (!USERBACK_ACCESS_TOKEN) return
+    return initUserbackWithCookiebot(USERBACK_ACCESS_TOKEN)
+  }, [])
 
   return null
 }
