@@ -91,4 +91,3 @@ export function initUserbackWithCookiebot(accessToken: string) {
     window.removeEventListener('CookiebotOnDecline', apply)
   }
 }
-

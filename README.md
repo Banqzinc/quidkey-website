@@ -1,6 +1,8 @@
-Welcome to your new TanStack app! 
+# Quidkey Website
 
-# Getting Started
+Welcome to your new TanStack app!
+
+## Getting Started
 
 To run this application:
 
@@ -9,7 +11,7 @@ npm install
 npm run dev
 ```
 
-# Building For Production
+## Building For Production
 
 To build this application for production:
 
@@ -29,16 +31,8 @@ npm run test
 
 This project uses CSS for styling.
 
-## Environment variables
-
-- **`VITE_CLARITY_PROJECT_ID`**: Microsoft Clarity project id (optional; loads after Cookiebot “Statistics” consent)
-- **`VITE_GA_MEASUREMENT_ID`**: Google Analytics measurement id (optional; loads after Cookiebot “Statistics” consent)
-- **`VITE_USERBACK_ACCESS_TOKEN`**: Userback widget access token (optional; loads after Cookiebot “Preferences” consent)
-
-
-
-
 ## Routing
+
 This project uses [TanStack Router](https://tanstack.com/router). The initial setup is a file based router. Which means that the routes are managed as files in `src/routes`.
 
 ### Adding A Route
@@ -98,7 +92,6 @@ export const Route = createRootRoute({
 The `<TanStackRouterDevtools />` component is not required so you can remove it if you don't want it in your layout.
 
 More information on layouts can be found in the [Layouts documentation](https://tanstack.com/router/latest/docs/framework/react/guide/routing-concepts#layouts).
-
 
 ## Data Fetching
 
@@ -287,10 +280,10 @@ Once we've created the derived store we can use it in the `App` component just l
 
 You can find out everything you need to know on how to use TanStack Store in the [TanStack Store documentation](https://tanstack.com/store/latest).
 
-# Demo files
+## Demo files
 
 Files prefixed with `demo` can be safely deleted. They are there to provide a starting point for you to play around with the features you've installed.
 
-# Learn More
+## Learn More
 
 You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
