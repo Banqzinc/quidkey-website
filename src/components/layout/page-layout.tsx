@@ -26,8 +26,8 @@ interface PageHeroProps {
   titleGradient?: string
   description: string
   features?: string[]
-  ctaPrimary?: { label: string; href?: string; external?: boolean }
-  ctaSecondary?: { label: string; href?: string; external?: boolean }
+  ctaPrimary?: { label: string; href?: string; external?: boolean; hash?: string }
+  ctaSecondary?: { label: string; href?: string; external?: boolean; hash?: string } | null
 }
 
 export function PageHero({
@@ -37,10 +37,15 @@ export function PageHero({
   description,
   features,
   ctaPrimary = { label: 'Get a demo', href: DEMO_PLAYGROUND_URL, external: true },
-  ctaSecondary = { label: 'Talk to sales', href: '/contact' },
+  ctaSecondary = { label: 'Talk to sales', href: '/contact', hash: 'talk-to-sales' },
 }: PageHeroProps) {
   const isExternalPrimary = ctaPrimary.external ?? ctaPrimary.href?.startsWith('http') ?? ctaPrimary.href?.startsWith('mailto')
-  const isExternalSecondary = ctaSecondary.external ?? ctaSecondary.href?.startsWith('http') ?? ctaSecondary.href?.startsWith('mailto')
+  const hasSecondary = ctaSecondary !== null
+  const isExternalSecondary = hasSecondary
+    ? (ctaSecondary.external ?? ctaSecondary.href?.startsWith('http') ?? ctaSecondary.href?.startsWith('mailto'))
+    : false
+  const isHashPrimary = ctaPrimary.href?.startsWith('#') ?? false
+  const isHashSecondary = hasSecondary ? (ctaSecondary.href?.startsWith('#') ?? false) : false
 
   return (
     <section className="relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden">
@@ -80,7 +85,15 @@ export function PageHero({
         )}
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          {isExternalPrimary ? (
+          {isHashPrimary ? (
+            <a
+              href={ctaPrimary.href}
+              className={cn(buttonVariants({ size: 'lg' }), 'group shadow-lg shadow-primary/25 hover:shadow-primary/40')}
+            >
+              {ctaPrimary.label}
+              <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+            </a>
+          ) : isExternalPrimary ? (
             <a
               href={ctaPrimary.href ?? DEMO_PLAYGROUND_URL}
               target="_blank"
@@ -93,29 +106,40 @@ export function PageHero({
           ) : (
             <Link
               to={ctaPrimary.href ?? '/'}
+              hash={ctaPrimary.hash}
               className={cn(buttonVariants({ size: 'lg' }), 'group shadow-lg shadow-primary/25 hover:shadow-primary/40')}
             >
               {ctaPrimary.label}
               <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
             </Link>
           )}
-          {isExternalSecondary ? (
-            <a
-              href={ctaSecondary.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={buttonVariants({ variant: 'outline', size: 'lg' })}
-            >
-              {ctaSecondary.label}
-            </a>
-          ) : (
-            <Link
-              to={ctaSecondary.href ?? '/contact'}
-              className={buttonVariants({ variant: 'outline', size: 'lg' })}
-            >
-              {ctaSecondary.label}
-            </Link>
-          )}
+          {hasSecondary ? (
+            isHashSecondary ? (
+              <a
+                href={ctaSecondary.href}
+                className={buttonVariants({ variant: 'outline', size: 'lg' })}
+              >
+                {ctaSecondary.label}
+              </a>
+            ) : isExternalSecondary ? (
+              <a
+                href={ctaSecondary.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={buttonVariants({ variant: 'outline', size: 'lg' })}
+              >
+                {ctaSecondary.label}
+              </a>
+            ) : (
+              <Link
+                to={ctaSecondary.href ?? '/contact'}
+                hash={ctaSecondary.hash}
+                className={buttonVariants({ variant: 'outline', size: 'lg' })}
+              >
+                {ctaSecondary.label}
+              </Link>
+            )
+          ) : null}
         </div>
       </div>
     </section>
@@ -289,6 +313,7 @@ export function PageCTA() {
           </a>
           <Link
             to="/contact"
+            hash="talk-to-sales"
             className={cn(
               buttonVariants({ size: 'lg', variant: 'outline' }),
               'border-background/30 text-background hover:bg-background/10'

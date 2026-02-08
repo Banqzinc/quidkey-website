@@ -1,7 +1,8 @@
-import { Button, buttonVariants } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
 import { DEMO_PLAYGROUND_URL } from '@/lib/urls'
 import { cn } from '@/lib/utils'
 import { ArrowRight } from 'lucide-react'
+import { Link } from '@tanstack/react-router'
 
 export function CTASection() {
   return (
@@ -32,9 +33,16 @@ export function CTASection() {
                 Get a demo
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </a>
-              <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10">
+              <Link
+                to="/contact"
+                hash="talk-to-sales"
+                className={cn(
+                  buttonVariants({ size: 'lg', variant: 'outline' }),
+                  'border-white/30 text-white hover:bg-white/10'
+                )}
+              >
                 Talk to sales
-              </Button>
+              </Link>
             </div>
           </div>
         </div>

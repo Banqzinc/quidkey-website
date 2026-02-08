@@ -1,7 +1,7 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { MegaMenu } from '@/components/layout/mega-menu'
 import { Footer } from '@/components/layout/footer'
-import { Button, buttonVariants } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
 import { DEMO_PLAYGROUND_URL } from '@/lib/urls'
 import { cn } from '@/lib/utils'
 import { ArrowRight, Check, Calculator, GitBranch, ArrowRightLeft, Wallet, Users, RotateCcw } from 'lucide-react'
@@ -80,9 +80,13 @@ function HeroSection() {
             Get a demo
             <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
           </a>
-          <Button variant="outline" size="lg">
+          <Link
+            to="/contact"
+            hash="talk-to-sales"
+            className={buttonVariants({ variant: 'outline', size: 'lg' })}
+          >
             Talk to sales
-          </Button>
+          </Link>
         </div>
       </div>
     </section>
@@ -323,9 +327,16 @@ function CTASection() {
             Get a demo
             <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
           </a>
-          <Button size="lg" variant="outline" className="border-background/30 text-background hover:bg-background/10">
+          <Link
+            to="/contact"
+            hash="talk-to-sales"
+            className={cn(
+              buttonVariants({ size: 'lg', variant: 'outline' }),
+              'border-background/30 text-background hover:bg-background/10'
+            )}
+          >
             Talk to sales
-          </Button>
+          </Link>
         </div>
       </div>
     </section>

@@ -195,6 +195,11 @@
   50% { box-shadow: 0 0 20px 4px oklch(0.45 0.25 270 / 0.2); }
 }
 
+@keyframes trust-badges-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
 .animate-fade-in {
   animation: fade-in 0.6s ease-out forwards;
 }
@@ -695,4 +700,32 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+
+  .trust-badges-marquee__track {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* Trust badges marquee (mobile) */
+.trust-badges-marquee {
+  position: relative;
+  overflow: hidden;
+  padding: 4px 0;
+  /* soften the cut at the edges */
+  mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+}
+
+.trust-badges-marquee__track {
+  display: flex;
+  width: max-content;
+  animation: trust-badges-marquee 18s linear infinite;
+}
+
+.trust-badges-marquee__row {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding-right: 32px;
+  flex-shrink: 0;
 }

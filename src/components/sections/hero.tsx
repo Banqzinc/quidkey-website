@@ -1,8 +1,9 @@
-import { Button, buttonVariants } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
 import { DEMO_PLAYGROUND_URL } from '@/lib/urls'
 import { cn } from '@/lib/utils'
 import { ArrowRight, Check, CreditCard } from 'lucide-react'
 import { useState, useEffect } from 'react'
+import { Link } from '@tanstack/react-router'
 
 const LOGO_DEV_TOKEN = 'pk_DsNHFndhT3yo-85c5vdKKg'
 
@@ -89,9 +90,13 @@ export function HeroSection() {
                 Get a demo
                 <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
               </a>
-              <Button variant="outline" size="lg">
+              <Link
+                to="/contact"
+                hash="talk-to-sales"
+                className={buttonVariants({ variant: 'outline', size: 'lg' })}
+              >
                 Talk to sales
-              </Button>
+              </Link>
             </div>
           </div>
 
