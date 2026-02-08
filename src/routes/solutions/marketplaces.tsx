@@ -9,7 +9,7 @@ export const Route = createFileRoute('/solutions/marketplaces')({
     buildSeo({
       title: 'Marketplaces | Quidkey',
       description:
-        'Collect at 1-3%. Split to sellers. Automate payouts.',
+        'Collect with lower fees. Split to sellers. Automate payouts.',
       path: '/solutions/marketplaces',
     }),
 })
@@ -24,7 +24,7 @@ function MarketplacesPage() {
     {
       icon: TrendingDown,
       title: 'Lower fees',
-      description: '1-3% not 3-6%.',
+      description: 'Save up to 70% vs cards.',
     },
     {
       icon: Banknote,
@@ -50,7 +50,7 @@ function MarketplacesPage() {
 
   const benefits = [
     {
-      stat: '60%',
+      stat: '70%',
       statLabel: 'lower cost',
       title: 'Better take rate',
       description: 'Keep more per sale.',
@@ -93,7 +93,7 @@ function MarketplacesPage() {
         badge="Marketplaces"
         title="Collect, split,"
         titleGradient="payout automatically."
-        description="1-3% collection. Auto splits. Instant seller payouts."
+        description="Lower collection fees. Auto splits. Instant seller payouts."
         features={['Auto splits', 'Instant payouts', 'Tax handled']}
       />
 

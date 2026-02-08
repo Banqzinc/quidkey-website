@@ -1,15 +1,15 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA } from '@/components/layout/page-layout'
-import { Monitor, RefreshCw, TrendingDown, Globe, FileCheck, Shield } from 'lucide-react'
+import { Monitor, RefreshCw, TrendingDown, Globe, Code, Zap } from 'lucide-react'
 import { buildSeo } from '@/lib/seo'
 
 export const Route = createFileRoute('/solutions/saas')({
   component: SaaSPage,
   head: () =>
     buildSeo({
-      title: 'SaaS | Quidkey',
+      title: 'SaaS Subscriptions | Quidkey',
       description:
-        'Recurring payments at 1-3%. Stay seller-of-record. Automate tax.',
+        'Subscription billing made simple. Hosted checkout or iframe integration. Lower fees, no failed payments.',
       path: '/solutions/saas',
     }),
 })
@@ -18,72 +18,72 @@ function SaaSPage() {
   const features = [
     {
       icon: RefreshCw,
-      title: 'Recurring payments',
-      description: 'Automatic collection.',
+      title: 'Flexible billing cycles',
+      description: 'Weekly, monthly, annual.',
     },
     {
       icon: TrendingDown,
-      title: 'Lower than cards',
-      description: '1-3% per renewal.',
+      title: 'Lower fees',
+      description: 'Save up to 70% vs cards.',
     },
     {
       icon: Globe,
-      title: 'Global',
+      title: 'Multi-currency',
       description: 'GBP, EUR, USD, AUD.',
     },
     {
-      icon: FileCheck,
-      title: 'Auto tax',
-      description: 'Calculate by jurisdiction.',
+      icon: Zap,
+      title: 'Never fails',
+      description: 'No expired cards.',
     },
     {
       icon: Monitor,
-      title: 'Stay seller-of-record',
-      description: 'Keep your customers.',
+      title: 'Hosted checkout',
+      description: 'Ready in minutes.',
     },
     {
-      icon: Shield,
-      title: 'No chargebacks',
-      description: 'Zero is better.',
+      icon: Code,
+      title: 'Iframe embed',
+      description: 'Seamless integration.',
     },
   ]
 
   const benefits = [
     {
-      stat: '5-10%',
-      statLabel: 'vs MoR fees',
-      title: 'Better than Paddle',
-      description: '1-3% not 5-10%.',
+      stat: '< 1 day',
+      statLabel: 'to launch',
+      title: 'Fast integration',
+      description: 'Hosted checkout or iframe.',
     },
     {
-      stat: '10-20h',
-      statLabel: 'saved monthly',
-      title: 'Automate treasury',
-      description: 'Tax and FX handled.',
+      stat: '0%',
+      statLabel: 'failed renewals',
+      title: 'No card failures',
+      description: 'Bank payments never expire.',
     },
     {
-      stat: 'B2B ready',
-      statLabel: 'no disputes',
-      title: 'For business buyers',
-      description: 'No personal card needed.',
+      stat: '70%',
+      statLabel: 'lower fees',
+      title: 'Simple pricing',
+      description: 'No hidden fees.',
     },
   ]
 
   const steps = [
     {
       step: '1',
-      title: 'Connect billing',
-      description: 'Works with any stack.',
+      title: 'Choose integration',
+      description: 'Hosted checkout or iframe.',
     },
     {
       step: '2',
-      title: 'Enable recurring',
-      description: 'Customers authorize.',
+      title: 'Set up plans',
+      description: 'Define billing cycles.',
     },
     {
       step: '3',
-      title: 'Automate',
-      description: 'Tax, FX, settlement.',
+      title: 'Start collecting',
+      description: 'Automatic renewals.',
     },
   ]
 
@@ -91,27 +91,27 @@ function SaaSPage() {
     <PageLayout>
       <PageHero
         badge="SaaS"
-        title="Subscriptions without"
-        titleGradient="the MoR tax."
-        description="1-3% recurring. Stay seller-of-record. Automate tax."
-        features={['Recurring', 'Seller-of-record', 'Auto tax']}
+        title="Subscription billing"
+        titleGradient="made simple."
+        description="Launch subscriptions fast. Hosted checkout or iframe integration. Lower fees, no failed payments."
+        features={['Hosted checkout', 'Iframe embed', 'Auto renewals']}
       />
 
       <FeatureGrid
-        title="Built for SaaS"
-        subtitle="Maximize margin."
+        title="Built for subscriptions"
+        subtitle="Everything you need."
         features={features}
       />
 
       <BenefitsSection
-        title="Why SaaS chooses Quidkey"
-        subtitle="Better unit economics."
+        title="Why SaaS teams choose Quidkey"
+        subtitle="Ship faster, collect more."
         benefits={benefits}
       />
 
       <HowItWorksSteps
-        title="Launch recurring"
-        subtitle="Integration to collections."
+        title="Go live quickly"
+        subtitle="Simple setup options."
         steps={steps}
       />
 

@@ -56,6 +56,7 @@
     color-scheme: light;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+    overflow-x: hidden;
   }
 
   body {
@@ -63,6 +64,7 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
   }
 
   /* Headings use display font */

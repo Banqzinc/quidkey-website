@@ -9,10 +9,14 @@ export const getRouter = () => {
     routeTree,
     context: {},
 
-    scrollRestoration: true,
-    // Key scroll restoration by pathname so each page starts at top, but back/forward restores correctly
-    getScrollRestorationKey: (location) => location.pathname,
+    // Disable automatic scroll restoration - we'll handle it manually
+    scrollRestoration: false,
     defaultPreloadStaleTime: 0,
+  })
+
+  // Scroll to top on every navigation (new pages, back/forward all start at top)
+  router.subscribe('onResolved', () => {
+    window.scrollTo({ top: 0, left: 0 })
   })
 
   return router

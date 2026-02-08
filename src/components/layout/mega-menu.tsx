@@ -13,6 +13,7 @@ import {
   Monitor,
   Store,
   Briefcase,
+  Mail,
   ChevronDown,
   Menu,
   X,
@@ -64,9 +65,18 @@ const menuData: MegaMenuData = {
         { label: 'Ecommerce', href: '/solutions/ecommerce', description: 'Online E-commerce businesses', icon: ShoppingCart },
         { label: 'Travel', href: '/solutions/travel', description: 'Travel tech and hospitality', icon: Plane },
         { label: 'Fintechs', href: '/solutions/fintechs', description: 'Scale faster with white-label solutions', icon: Landmark },
-        { label: 'SaaS Platforms', href: '/solutions/saas', description: 'Embedded A2A payments for SaaS', icon: Monitor },
+        { label: 'SaaS Platforms', href: '/solutions/saas', description: 'Subscription billing with easy integration', icon: Monitor },
         { label: 'Marketplaces', href: '/solutions/marketplaces', description: 'End to end programmable payouts and splits', icon: Store },
         { label: 'Professional Services', href: '/solutions/professional-services', description: 'Accept and move money without code', icon: Briefcase },
+      ],
+    },
+  ],
+  Company: [
+    {
+      items: [
+        { label: 'About', href: '/about', description: 'Our vision and team', icon: Building2 },
+        { label: 'Careers', href: '/careers', description: 'Join the team', icon: Briefcase },
+        { label: 'Contact', href: '/contact', description: 'Talk to us', icon: Mail },
       ],
     },
   ],
@@ -75,6 +85,11 @@ const menuData: MegaMenuData = {
 export function MegaMenu() {
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [expandedMobileSection, setExpandedMobileSection] = useState<string | null>(null)
+
+  const toggleMobileSection = (section: string) => {
+    setExpandedMobileSection((prev) => (prev === section ? null : section))
+  }
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-border">
@@ -178,6 +193,9 @@ export function MegaMenu() {
             </div>
 
             {/* Simple links */}
+            <Link to="/pricing" className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Pricing
+            </Link>
             <Link to="/workflows" className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
               Workflows
             </Link>
@@ -189,6 +207,43 @@ export function MegaMenu() {
             >
               Developers
             </a>
+            {/* Company dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setActiveMenu('Company')}
+              onMouseLeave={() => setActiveMenu(null)}
+            >
+              <button className="flex items-center gap-1 px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Company
+                <ChevronDown className={cn('h-4 w-4 transition-transform', activeMenu === 'Company' && 'rotate-180')} />
+              </button>
+
+              {activeMenu === 'Company' && (
+                <div className="absolute top-full left-0 pt-2">
+                  <div className="w-[380px] bg-white rounded-xl shadow-lg border border-border p-4">
+                    <div className="space-y-1">
+                      {menuData.Company[0].items.map((item) => (
+                        <Link
+                          key={item.label}
+                          to={item.href}
+                          className="block p-3 rounded-lg hover:bg-secondary transition-colors group"
+                        >
+                          <div className="flex items-center gap-3">
+                            {item.icon && <item.icon className="h-5 w-5 text-muted-foreground group-hover:text-primary" />}
+                            <div>
+                              <div className="text-sm font-medium text-foreground">{item.label}</div>
+                              {item.description && (
+                                <div className="text-xs text-muted-foreground">{item.description}</div>
+                              )}
+                            </div>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
             <Link to="/blog" className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
               Blog
             </Link>
@@ -231,78 +286,121 @@ export function MegaMenu() {
       {/* Mobile menu */}
       {mobileMenuOpen && (
         <div className="lg:hidden border-t border-border bg-white max-h-[80vh] overflow-y-auto">
-          <nav className="px-4 py-4 space-y-4">
-            {/* Products */}
+          <nav className="px-4 py-2 space-y-1">
+            {/* Products - collapsible */}
             <div>
-              <h3 className="font-medium text-foreground mb-2">Products</h3>
-              <div className="space-y-1 pl-4">
-                {menuData.Products.flatMap((section) => section.items).map((item) => (
-                  <Link
-                    key={item.label}
-                    to={item.href}
-                    className="block py-2 text-sm text-muted-foreground"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
+              <button
+                onClick={() => toggleMobileSection('Products')}
+                className="flex items-center justify-between w-full py-3 font-medium text-foreground"
+              >
+                Products
+                <ChevronDown
+                  className={cn('h-5 w-5 text-muted-foreground transition-transform', expandedMobileSection === 'Products' && 'rotate-180')}
+                />
+              </button>
+              {expandedMobileSection === 'Products' && (
+                <div className="space-y-1 pl-4 pb-2">
+                  {menuData.Products.flatMap((section) => section.items).map((item) => (
+                    <Link
+                      key={item.label}
+                      to={item.href}
+                      className="block py-2 text-sm text-muted-foreground"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
 
-            {/* Who We Serve */}
+            {/* Who We Serve - collapsible */}
             <div>
-              <h3 className="font-medium text-foreground mb-2">Who We Serve</h3>
-              <div className="space-y-1 pl-4">
-                {menuData['Who We Serve'][0].items.map((item) => (
-                  <Link
-                    key={item.label}
-                    to={item.href}
-                    className="block py-2 text-sm text-muted-foreground"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
+              <button
+                onClick={() => toggleMobileSection('Who We Serve')}
+                className="flex items-center justify-between w-full py-3 font-medium text-foreground"
+              >
+                Who We Serve
+                <ChevronDown
+                  className={cn('h-5 w-5 text-muted-foreground transition-transform', expandedMobileSection === 'Who We Serve' && 'rotate-180')}
+                />
+              </button>
+              {expandedMobileSection === 'Who We Serve' && (
+                <div className="space-y-1 pl-4 pb-2">
+                  {menuData['Who We Serve'][0].items.map((item) => (
+                    <Link
+                      key={item.label}
+                      to={item.href}
+                      className="block py-2 text-sm text-muted-foreground"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Simple links */}
-            <Link to="/workflows" className="block py-2 font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>
+            <Link to="/pricing" className="block py-3 font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>
+              Pricing
+            </Link>
+            <Link to="/workflows" className="block py-3 font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>
               Workflows
             </Link>
             <a
               href={DOCS_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="block py-2 font-medium text-foreground"
+              className="block py-3 font-medium text-foreground"
               onClick={() => setMobileMenuOpen(false)}
             >
               Developers
             </a>
-            <Link to="/blog" className="block py-2 font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>
+
+            {/* Company - collapsible */}
+            <div>
+              <button
+                onClick={() => toggleMobileSection('Company')}
+                className="flex items-center justify-between w-full py-3 font-medium text-foreground"
+              >
+                Company
+                <ChevronDown
+                  className={cn('h-5 w-5 text-muted-foreground transition-transform', expandedMobileSection === 'Company' && 'rotate-180')}
+                />
+              </button>
+              {expandedMobileSection === 'Company' && (
+                <div className="space-y-1 pl-4 pb-2">
+                  {menuData.Company[0].items.map((item) => (
+                    <Link
+                      key={item.label}
+                      to={item.href}
+                      className="block py-2 text-sm text-muted-foreground"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <Link to="/blog" className="block py-3 font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>
               Blog
             </Link>
-
-            {/* CTAs */}
-            <div className="pt-4 border-t border-border space-y-3">
-              <a
-                href={MERCHANTS_LOGIN_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={cn(buttonVariants({ variant: 'outline' }), 'w-full')}
-              >
-                Login
-              </a>
-              <a
-                href={MERCHANTS_SIGNUP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={cn(buttonVariants(), 'w-full')}
-              >
-                Get Started
-              </a>
-            </div>
           </nav>
+
+          {/* CTAs - fixed at bottom */}
+          <div className="sticky bottom-0 bg-white border-t border-border px-4 py-4 space-y-3">
+            <a
+              href={MERCHANTS_SIGNUP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(buttonVariants(), 'w-full')}
+            >
+              Talk to sales
+            </a>
+          </div>
         </div>
       )}
     </header>

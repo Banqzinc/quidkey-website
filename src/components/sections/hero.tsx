@@ -35,7 +35,7 @@ export function HeroSection() {
   const currentBank = banks[currentBankIndex]
 
   const benefits = [
-    '1-3% all-in fees',
+    'Zero chargebacks',
     'Intelligent bank prediction',
     'Programmable treasury workflows',
   ]

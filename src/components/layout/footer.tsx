@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { openCookiebotPreferences } from '@/lib/cookiebot'
 
 const LOGO_URL = 'https://storage.googleapis.com/quidkey-resources-public/quidkey-logo-black.svg'
 const COPYRIGHT_YEAR = new Date().getFullYear()
@@ -50,12 +51,23 @@ export function Footer() {
               <ul className="space-y-3">
                 {links.map((link, index) => (
                   <li key={index}>
-                    <Link
-                      to={link.href}
-                      className="text-sm text-background/60 hover:text-background transition-colors"
-                    >
-                      {link.label}
-                    </Link>
+                    {category === 'Legal' && link.label === 'Cookies' ? (
+                      <button
+                        type="button"
+                        onClick={() => openCookiebotPreferences({ fallbackUrl: '/cookies' })}
+                        className="text-sm text-background/60 hover:text-background transition-colors"
+                        aria-label="Cookie preferences"
+                      >
+                        {link.label}
+                      </button>
+                    ) : (
+                      <Link
+                        to={link.href}
+                        className="text-sm text-background/60 hover:text-background transition-colors"
+                      >
+                        {link.label}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>

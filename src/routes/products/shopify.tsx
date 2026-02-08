@@ -9,7 +9,7 @@ export const Route = createFileRoute('/products/shopify')({
     buildSeo({
       title: 'Shopify Pay by Bank | Quidkey',
       description:
-        'Shopify-approved pay by bank app. 1-3% fees. Zero chargebacks. Install in minutes.',
+        'Shopify-approved pay by bank app. Lower fees. Zero chargebacks. Install in minutes.',
       path: '/products/shopify',
     }),
 })
@@ -33,8 +33,8 @@ function ShopifyPage() {
     },
     {
       icon: TrendingUp,
-      title: '1-3% fees',
-      description: 'Replace 3-6% card fees.',
+      title: 'Lower fees',
+      description: 'Save up to 70% vs cards.',
     },
     {
       icon: Clock,
@@ -50,7 +50,7 @@ function ShopifyPage() {
 
   const benefits = [
     {
-      stat: '60%',
+      stat: '70%',
       statLabel: 'lower fees',
       title: 'Cut payment costs',
       description: 'Save $25-45k annually on $1M revenue.',
@@ -93,7 +93,7 @@ function ShopifyPage() {
         badge="Shopify App"
         title="Pay by bank for Shopify."
         titleGradient="Lower fees. Zero chargebacks."
-        description="Shopify-approved app. Install in minutes. Save 60% on payment fees."
+        description="Shopify-approved app. Install in minutes. Save up to 70% on payment fees."
         features={['Shopify approved', 'One-click install', 'Zero chargebacks']}
       />
 
