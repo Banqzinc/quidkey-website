@@ -14,9 +14,9 @@ import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ComplaintsRouteImport } from './routes/complaints'
-import { Route as CareersRouteImport } from './routes/careers'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CareersIndexRouteImport } from './routes/careers/index'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as SolutionsTravelRouteImport } from './routes/solutions/travel'
 import { Route as SolutionsSaasRouteImport } from './routes/solutions/saas'
@@ -31,6 +31,7 @@ import { Route as ProductsMultiCurrencyRouteImport } from './routes/products/mul
 import { Route as ProductsLocalAccountsRouteImport } from './routes/products/local-accounts'
 import { Route as ProductsIframeRouteImport } from './routes/products/iframe'
 import { Route as ProductsHostedCheckoutRouteImport } from './routes/products/hosted-checkout'
+import { Route as CareersRoleIdRouteImport } from './routes/careers/$roleId'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 
 const WorkflowsRoute = WorkflowsRouteImport.update({
@@ -58,11 +59,6 @@ const ComplaintsRoute = ComplaintsRouteImport.update({
   path: '/complaints',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CareersRoute = CareersRouteImport.update({
-  id: '/careers',
-  path: '/careers',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -71,6 +67,11 @@ const AboutRoute = AboutRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareersIndexRoute = CareersIndexRouteImport.update({
+  id: '/careers/',
+  path: '/careers/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
@@ -144,6 +145,11 @@ const ProductsHostedCheckoutRoute = ProductsHostedCheckoutRouteImport.update({
   path: '/products/hosted-checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CareersRoleIdRoute = CareersRoleIdRouteImport.update({
+  id: '/careers/$roleId',
+  path: '/careers/$roleId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlogSlugRoute = BlogSlugRouteImport.update({
   id: '/blog/$slug',
   path: '/blog/$slug',
@@ -153,13 +159,13 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/careers': typeof CareersRoute
   '/complaints': typeof ComplaintsRoute
   '/contact': typeof ContactRoute
   '/cookies': typeof CookiesRoute
   '/pricing': typeof PricingRoute
   '/workflows': typeof WorkflowsRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/careers/$roleId': typeof CareersRoleIdRoute
   '/products/hosted-checkout': typeof ProductsHostedCheckoutRoute
   '/products/iframe': typeof ProductsIframeRoute
   '/products/local-accounts': typeof ProductsLocalAccountsRoute
@@ -174,17 +180,18 @@ export interface FileRoutesByFullPath {
   '/solutions/saas': typeof SolutionsSaasRoute
   '/solutions/travel': typeof SolutionsTravelRoute
   '/blog/': typeof BlogIndexRoute
+  '/careers/': typeof CareersIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/careers': typeof CareersRoute
   '/complaints': typeof ComplaintsRoute
   '/contact': typeof ContactRoute
   '/cookies': typeof CookiesRoute
   '/pricing': typeof PricingRoute
   '/workflows': typeof WorkflowsRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/careers/$roleId': typeof CareersRoleIdRoute
   '/products/hosted-checkout': typeof ProductsHostedCheckoutRoute
   '/products/iframe': typeof ProductsIframeRoute
   '/products/local-accounts': typeof ProductsLocalAccountsRoute
@@ -199,18 +206,19 @@ export interface FileRoutesByTo {
   '/solutions/saas': typeof SolutionsSaasRoute
   '/solutions/travel': typeof SolutionsTravelRoute
   '/blog': typeof BlogIndexRoute
+  '/careers': typeof CareersIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/careers': typeof CareersRoute
   '/complaints': typeof ComplaintsRoute
   '/contact': typeof ContactRoute
   '/cookies': typeof CookiesRoute
   '/pricing': typeof PricingRoute
   '/workflows': typeof WorkflowsRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/careers/$roleId': typeof CareersRoleIdRoute
   '/products/hosted-checkout': typeof ProductsHostedCheckoutRoute
   '/products/iframe': typeof ProductsIframeRoute
   '/products/local-accounts': typeof ProductsLocalAccountsRoute
@@ -225,19 +233,20 @@ export interface FileRoutesById {
   '/solutions/saas': typeof SolutionsSaasRoute
   '/solutions/travel': typeof SolutionsTravelRoute
   '/blog/': typeof BlogIndexRoute
+  '/careers/': typeof CareersIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/about'
-    | '/careers'
     | '/complaints'
     | '/contact'
     | '/cookies'
     | '/pricing'
     | '/workflows'
     | '/blog/$slug'
+    | '/careers/$roleId'
     | '/products/hosted-checkout'
     | '/products/iframe'
     | '/products/local-accounts'
@@ -252,17 +261,18 @@ export interface FileRouteTypes {
     | '/solutions/saas'
     | '/solutions/travel'
     | '/blog/'
+    | '/careers/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
-    | '/careers'
     | '/complaints'
     | '/contact'
     | '/cookies'
     | '/pricing'
     | '/workflows'
     | '/blog/$slug'
+    | '/careers/$roleId'
     | '/products/hosted-checkout'
     | '/products/iframe'
     | '/products/local-accounts'
@@ -277,17 +287,18 @@ export interface FileRouteTypes {
     | '/solutions/saas'
     | '/solutions/travel'
     | '/blog'
+    | '/careers'
   id:
     | '__root__'
     | '/'
     | '/about'
-    | '/careers'
     | '/complaints'
     | '/contact'
     | '/cookies'
     | '/pricing'
     | '/workflows'
     | '/blog/$slug'
+    | '/careers/$roleId'
     | '/products/hosted-checkout'
     | '/products/iframe'
     | '/products/local-accounts'
@@ -302,18 +313,19 @@ export interface FileRouteTypes {
     | '/solutions/saas'
     | '/solutions/travel'
     | '/blog/'
+    | '/careers/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  CareersRoute: typeof CareersRoute
   ComplaintsRoute: typeof ComplaintsRoute
   ContactRoute: typeof ContactRoute
   CookiesRoute: typeof CookiesRoute
   PricingRoute: typeof PricingRoute
   WorkflowsRoute: typeof WorkflowsRoute
   BlogSlugRoute: typeof BlogSlugRoute
+  CareersRoleIdRoute: typeof CareersRoleIdRoute
   ProductsHostedCheckoutRoute: typeof ProductsHostedCheckoutRoute
   ProductsIframeRoute: typeof ProductsIframeRoute
   ProductsLocalAccountsRoute: typeof ProductsLocalAccountsRoute
@@ -328,6 +340,7 @@ export interface RootRouteChildren {
   SolutionsSaasRoute: typeof SolutionsSaasRoute
   SolutionsTravelRoute: typeof SolutionsTravelRoute
   BlogIndexRoute: typeof BlogIndexRoute
+  CareersIndexRoute: typeof CareersIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -367,13 +380,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ComplaintsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/careers': {
-      id: '/careers'
-      path: '/careers'
-      fullPath: '/careers'
-      preLoaderRoute: typeof CareersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -386,6 +392,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/careers/': {
+      id: '/careers/'
+      path: '/careers'
+      fullPath: '/careers/'
+      preLoaderRoute: typeof CareersIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog/': {
@@ -486,6 +499,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductsHostedCheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/careers/$roleId': {
+      id: '/careers/$roleId'
+      path: '/careers/$roleId'
+      fullPath: '/careers/$roleId'
+      preLoaderRoute: typeof CareersRoleIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blog/$slug': {
       id: '/blog/$slug'
       path: '/blog/$slug'
@@ -499,13 +519,13 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  CareersRoute: CareersRoute,
   ComplaintsRoute: ComplaintsRoute,
   ContactRoute: ContactRoute,
   CookiesRoute: CookiesRoute,
   PricingRoute: PricingRoute,
   WorkflowsRoute: WorkflowsRoute,
   BlogSlugRoute: BlogSlugRoute,
+  CareersRoleIdRoute: CareersRoleIdRoute,
   ProductsHostedCheckoutRoute: ProductsHostedCheckoutRoute,
   ProductsIframeRoute: ProductsIframeRoute,
   ProductsLocalAccountsRoute: ProductsLocalAccountsRoute,
@@ -520,6 +540,7 @@ const rootRouteChildren: RootRouteChildren = {
   SolutionsSaasRoute: SolutionsSaasRoute,
   SolutionsTravelRoute: SolutionsTravelRoute,
   BlogIndexRoute: BlogIndexRoute,
+  CareersIndexRoute: CareersIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
