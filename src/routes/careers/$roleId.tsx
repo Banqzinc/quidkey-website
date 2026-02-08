@@ -1,7 +1,6 @@
 import { createFileRoute, Link, notFound } from '@tanstack/react-router'
 import { PageLayout } from '@/components/layout/page-layout'
 import { buildSeo } from '@/lib/seo'
-import { CAREERS_EMAIL, CAREERS_FORM_ENDPOINT, buildMailto } from '@/lib/urls'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
 import {
@@ -215,49 +214,21 @@ function ApplicationForm({ jobTitle }: { jobTitle: string }) {
     }
   }
 
+  // Generate form name from job title (matches Netlify form detection)
+  const formName = `job-application-${jobTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+$/, '')}`
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setFormState('submitting')
 
     const formData = new FormData(e.currentTarget)
-    formData.append('_subject', `Job Application: ${jobTitle}`)
 
-    // If no form endpoint is configured, fall back to mailto
-    if (!CAREERS_FORM_ENDPOINT) {
-      const name = formData.get('name') as string
-      const email = formData.get('email') as string
-      const phone = formData.get('phone') as string
-      const linkedin = formData.get('linkedin') as string
-      const message = formData.get('message') as string
-
-      const body = [
-        `Position: ${jobTitle}`,
-        `Name: ${name}`,
-        `Email: ${email}`,
-        `Phone: ${phone || 'Not provided'}`,
-        `LinkedIn: ${linkedin}`,
-        '',
-        'Message:',
-        message || 'No additional message',
-        '',
-        '---',
-        'Note: Please reply to request CV/Resume attachment.',
-      ].join('\n')
-
-      const mailtoUrl = `${buildMailto(`Application: ${jobTitle}`, CAREERS_EMAIL)}&body=${encodeURIComponent(body)}`
-      window.location.href = mailtoUrl
-      setFormState('idle') // Reset since we're redirecting
-      return
-    }
-
-    // Submit to configured endpoint (e.g., Formspree, custom API)
+    // Netlify Forms requires URL-encoded body for AJAX submissions
     try {
-      const response = await fetch(CAREERS_FORM_ENDPOINT, {
+      const response = await fetch('/', {
         method: 'POST',
-        body: formData,
-        headers: {
-          Accept: 'application/json',
-        },
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData as unknown as Record<string, string>).toString(),
       })
 
       if (!response.ok) {
@@ -287,7 +258,16 @@ function ApplicationForm({ jobTitle }: { jobTitle: string }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-border p-6 md:p-8">
+    <form
+      name={formName}
+      method="POST"
+      data-netlify="true"
+      onSubmit={handleSubmit}
+      className="bg-white rounded-2xl border border-border p-6 md:p-8"
+    >
+      {/* Hidden field for Netlify Forms */}
+      <input type="hidden" name="form-name" value={formName} />
+
       <h3 className="text-xl font-semibold text-foreground mb-6">Apply Now</h3>
 
       {formState === 'error' && (
@@ -351,11 +331,10 @@ function ApplicationForm({ jobTitle }: { jobTitle: string }) {
           />
         </FormField>
 
-        <FormField label="LinkedIn Profile URL" required>
+        <FormField label="LinkedIn Profile URL">
           <input
             type="url"
             name="linkedin"
-            required
             placeholder="https://linkedin.com/in/yourprofile"
             className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-shadow"
           />
@@ -423,7 +402,7 @@ function RolePage() {
   return (
     <PageLayout>
       {/* Hero Section */}
-      <section className="relative pt-24 pb-12 md:pt-32 md:pb-16 overflow-hidden">
+      <section className="relative pt-20 pb-8 md:pt-24 md:pb-10 overflow-hidden">
         <div className="absolute inset-0 hero-gradient" aria-hidden="true" />
         <div className="absolute inset-0 noise" aria-hidden="true" />
 
@@ -456,20 +435,20 @@ function RolePage() {
       </section>
 
       {/* Content */}
-      <section className="py-16 md:py-24">
+      <section className="py-10 md:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-3 gap-8 lg:gap-12">
           {/* Main Content */}
           <div className="lg:col-span-2">
             <p className="text-muted-foreground mb-8 text-pretty text-lg">{role.summary}</p>
 
-            {role.sections.map((section) => (
+            {role.sections.map((section: RoleSection) => (
               <JobSection key={section.title} title={section.title}>
                 {'content' in section && section.content ? (
                   <p className="text-muted-foreground text-pretty">{section.content}</p>
                 ) : (
                   <ul className="space-y-2 text-muted-foreground">
-                    {section.items?.map((item, i) => (
+                    {section.items?.map((item: string, i: number) => (
                       <li key={i} className="flex items-start gap-3">
                         <span className="text-primary mt-1.5">•</span>
                         <span>{item}</span>
@@ -488,7 +467,7 @@ function RolePage() {
 
             <JobSection title="30 / 90 Day Outcomes">
               <div className="space-y-4">
-                {role.outcomes.map((outcome) => (
+                {role.outcomes.map((outcome: { period: string; description: string }) => (
                   <div
                     key={outcome.period}
                     className="bg-secondary/30 rounded-lg p-4 border-l-4 border-primary"
@@ -502,7 +481,7 @@ function RolePage() {
 
             <JobSection title="Why Join">
               <ul className="space-y-2 text-muted-foreground">
-                {role.whyJoin.map((reason, i) => (
+                {role.whyJoin.map((reason: string, i: number) => (
                   <li key={i} className="flex items-start gap-3">
                     <span className="text-primary mt-1.5">•</span>
                     <span>{reason}</span>
@@ -513,7 +492,7 @@ function RolePage() {
 
             <JobSection title="Interview Process">
               <div className="space-y-4">
-                {role.interviewProcess.map((step, i) => (
+                {role.interviewProcess.map((step: { stage: string; description: string }, i: number) => (
                   <div key={i} className="flex gap-4">
                     <div className="flex-shrink-0 h-8 w-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold">
                       {i + 1}
