@@ -16,6 +16,8 @@ const USERBACK_ACCESS_TOKEN = 'A-T4eFdwAnKc5Yq1y37td2cGRWR'
 export const Route = createRootRoute({
   head: () => ({
     meta: [
+      // Some audit tools only recognize lowercase `charset` (not React's `charSet`).
+      { charset: 'utf-8' } as unknown as Record<string, string>,
       {
         name: 'viewport',
         content: 'width=device-width, initial-scale=1',
@@ -70,8 +72,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        {/* Some audit tools only recognize lowercase `charset` (not React's `charSet`). */}
-        <meta {...({ charset: 'utf-8' } as unknown as Record<string, string>)} />
         <script
           id="Cookiebot"
           src="https://consent.cookiebot.com/uc.js"
