@@ -71,6 +71,7 @@ export function buildSeo({
   const image = imageUrl ?? DEFAULT_OG_IMAGE
 
   const meta = [
+    { title },
     { name: 'description', content: description },
     { property: 'og:title', content: title },
     { property: 'og:description', content: description },
