@@ -287,11 +287,151 @@ export function PageCTA() {
             Get a demo
             <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
           </a>
-          <Button size="lg" variant="outline" className="border-background/30 text-background hover:bg-background/10">
+          <Link
+            to="/contact"
+            className={cn(
+              buttonVariants({ size: 'lg', variant: 'outline' }),
+              'border-background/30 text-background hover:bg-background/10'
+            )}
+          >
             Talk to sales
-          </Button>
+          </Link>
         </div>
       </div>
     </section>
+  )
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+ * Section Components
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+interface SectionHeaderProps {
+  title: string
+  subtitle?: string
+  className?: string
+}
+
+export function SectionHeader({ title, subtitle, className }: SectionHeaderProps) {
+  return (
+    <div className={cn('text-center max-w-3xl mx-auto mb-12 md:mb-16', className)}>
+      <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-4">
+        {title}
+      </h2>
+      {subtitle && (
+        <p className="text-lg text-muted-foreground">{subtitle}</p>
+      )}
+    </div>
+  )
+}
+
+interface ContentCardProps {
+  title: string
+  description?: string
+  children?: React.ReactNode
+  className?: string
+}
+
+export function ContentCard({ title, description, children, className }: ContentCardProps) {
+  return (
+    <div className={cn('bg-white rounded-2xl border border-border p-6 md:p-8', className)}>
+      <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-3">
+        {title}
+      </h2>
+      {description && (
+        <p className="text-muted-foreground">{description}</p>
+      )}
+      {children}
+    </div>
+  )
+}
+
+interface ContentSectionProps {
+  children: React.ReactNode
+  background?: 'default' | 'muted' | 'dark'
+  className?: string
+}
+
+export function ContentSection({ children, background = 'default', className }: ContentSectionProps) {
+  return (
+    <section
+      className={cn(
+        'py-16 md:py-24',
+        background === 'muted' && 'bg-secondary/30',
+        background === 'dark' && 'bg-foreground text-background',
+        className
+      )}
+    >
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        {children}
+      </div>
+    </section>
+  )
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+ * Team Section
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+interface TeamMember {
+  name: string
+  role: string
+  bio?: string
+  linkedinUrl?: string
+  imageSrc: string
+}
+
+interface TeamSectionProps {
+  title?: string
+  subtitle?: string
+  members: TeamMember[]
+}
+
+export function TeamSection({
+  title = 'Team',
+  subtitle = 'Building reliable infrastructure for global commerce.',
+  members,
+}: TeamSectionProps) {
+  return (
+    <ContentSection>
+      <SectionHeader title={title} subtitle={subtitle} />
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
+        {members.map((member) => (
+          <div key={member.name} className="bg-white rounded-2xl border border-border overflow-hidden">
+            <div className="aspect-[4/3] bg-secondary/30">
+              <img
+                src={member.imageSrc}
+                alt={member.name}
+                loading="lazy"
+                className="h-full w-full object-cover"
+              />
+            </div>
+            <div className="p-6">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <div className="text-lg font-semibold text-foreground">{member.name}</div>
+                  <div className="text-sm text-muted-foreground">{member.role}</div>
+                </div>
+                {member.linkedinUrl && (
+                  <a
+                    href={member.linkedinUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-medium text-primary hover:underline"
+                  >
+                    LinkedIn
+                  </a>
+                )}
+              </div>
+              {member.bio && (
+                <p className="mt-4 text-sm text-muted-foreground text-pretty">
+                  {member.bio}
+                </p>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </ContentSection>
   )
 }
