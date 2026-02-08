@@ -6,7 +6,8 @@ export const DOCS_URL = 'https://docs.quidkey.com/'
 
 /** Contact */
 export const CONTACT_EMAIL = 'support@quidkey.com'
+export const PRESS_EMAIL = 'jenny@quidkey.com'
 
 /** Email mailto helpers */
-export const buildMailto = (subject: string) =>
-  `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}`
+export const buildMailto = (subject: string, email = CONTACT_EMAIL) =>
+  `mailto:${email}?subject=${encodeURIComponent(subject)}`

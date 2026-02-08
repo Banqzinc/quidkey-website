@@ -7,7 +7,7 @@ import {
   ContentCard,
 } from '@/components/layout/page-layout'
 import { buildSeo } from '@/lib/seo'
-import { CONTACT_EMAIL, buildMailto } from '@/lib/urls'
+import { CONTACT_EMAIL, PRESS_EMAIL, buildMailto } from '@/lib/urls'
 
 export const Route = createFileRoute('/contact')({
   component: ContactPage,
@@ -24,11 +24,13 @@ const contactOptions = [
     title: 'General inquiries',
     description: 'For now, the fastest way is email.',
     subject: 'Website inquiry',
+    email: CONTACT_EMAIL,
   },
   {
     title: 'Press',
     description: "If you're writing about pay by bank or clearing infrastructure, we'd love to help.",
     subject: 'Press inquiry',
+    email: PRESS_EMAIL,
   },
 ]
 
@@ -59,10 +61,10 @@ function ContactPage() {
             >
               <div className="mt-6">
                 <a
-                  href={buildMailto(option.subject)}
+                  href={buildMailto(option.subject, option.email)}
                   className="text-primary font-medium hover:underline"
                 >
-                  {CONTACT_EMAIL}
+                  {option.email}
                 </a>
               </div>
             </ContentCard>
