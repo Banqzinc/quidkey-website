@@ -286,6 +286,28 @@ export function MegaMenu() {
       {/* Mobile menu */}
       {mobileMenuOpen && (
         <div className="lg:hidden border-t border-border bg-white max-h-[80vh] overflow-y-auto">
+          {/* Mobile CTAs - at top */}
+          <div className="px-4 py-4 space-y-3 border-b border-border">
+            <a
+              href={MERCHANTS_LOGIN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(buttonVariants({ variant: 'outline' }), 'w-full')}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Login
+            </a>
+            <a
+              href={MERCHANTS_SIGNUP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(buttonVariants(), 'w-full')}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Get Started
+            </a>
+          </div>
+
           <nav className="px-4 py-2 space-y-1">
             {/* Products - collapsible */}
             <div>
@@ -389,18 +411,6 @@ export function MegaMenu() {
               Blog
             </Link>
           </nav>
-
-          {/* CTAs - fixed at bottom */}
-          <div className="sticky bottom-0 bg-white border-t border-border px-4 py-4 space-y-3">
-            <a
-              href={MERCHANTS_SIGNUP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cn(buttonVariants(), 'w-full')}
-            >
-              Talk to sales
-            </a>
-          </div>
         </div>
       )}
     </header>
