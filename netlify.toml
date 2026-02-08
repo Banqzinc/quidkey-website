@@ -4,3 +4,47 @@
 
 [build.environment]
   NODE_VERSION = "22"
+
+# Keep legacy blog URLs working (external links, old sitemaps, etc.)
+[[redirects]]
+  from = "/blog/ai-native-clearing-house"
+  to = "/blog/quidkey-a-global-clearing-house-for-modern-payments"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/ai-native-clearing-house/"
+  to = "/blog/quidkey-a-global-clearing-house-for-modern-payments"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/pay-by-bank-us"
+  to = "/blog/pay-by-bank-the-future-of-payments"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/pay-by-bank-us/"
+  to = "/blog/pay-by-bank-the-future-of-payments"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/seller-of-record-vs-mor"
+  to = "/blog"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/seller-of-record-vs-mor/"
+  to = "/blog"
+  status = 301
+  force = true
+
+# Normalize trailing slashes for blog posts
+[[redirects]]
+  from = "/blog/:slug/"
+  to = "/blog/:slug"
+  status = 301
+  force = true
