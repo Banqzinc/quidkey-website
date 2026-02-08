@@ -17,9 +17,6 @@ export const Route = createRootRoute({
   head: () => ({
     meta: [
       {
-        charSet: 'utf-8',
-      },
-      {
         name: 'viewport',
         content: 'width=device-width, initial-scale=1',
       },
@@ -73,8 +70,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        <meta charSet="utf-8" />
-        <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
+        {/* Some audit tools only recognize lowercase `charset` (not React's `charSet`). */}
+        <meta {...({ charset: 'utf-8' } as unknown as Record<string, string>)} />
         <script
           id="Cookiebot"
           src="https://consent.cookiebot.com/uc.js"
