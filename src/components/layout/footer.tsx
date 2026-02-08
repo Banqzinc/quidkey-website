@@ -21,9 +21,7 @@ export function Footer() {
       { label: 'Fintechs', href: '/solutions/fintechs' },
     ],
     Developers: [
-      { label: 'Documentation', href: '/docs' },
-      { label: 'API Reference', href: '/docs/api' },
-      { label: 'SDKs', href: '/docs/sdks' },
+      { label: 'Documentation', href: 'https://docs.quidkey.com/' },
       { label: 'Status', href: '/status' },
     ],
     Company: [
@@ -60,6 +58,15 @@ export function Footer() {
                       >
                         {link.label}
                       </button>
+                    ) : /^https?:\/\//.test(link.href) ? (
+                      <a
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-background/60 hover:text-background transition-colors"
+                      >
+                        {link.label}
+                      </a>
                     ) : (
                       <Link
                         to={link.href}
