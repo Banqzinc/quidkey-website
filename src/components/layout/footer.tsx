@@ -1,26 +1,10 @@
 import { Link } from '@tanstack/react-router'
+import { openCookiebotPreferences } from '@/lib/cookiebot'
 
 const LOGO_URL = 'https://storage.googleapis.com/quidkey-resources-public/quidkey-logo-black.svg'
 const COPYRIGHT_YEAR = new Date().getFullYear()
 
 export function Footer() {
-  const openCookiePreferences = () => {
-    if (typeof window === 'undefined') return
-
-    const cb = (window as any).Cookiebot as
-      | {
-          renew?: () => void
-          show?: () => void
-        }
-      | undefined
-
-    if (cb?.renew) return cb.renew()
-    if (cb?.show) return cb.show()
-
-    // Fallback if Cookiebot isn't loaded for some reason.
-    window.location.href = '/cookies'
-  }
-
   const footerLinks = {
     Products: [
       { label: 'Shopify', href: '/products/shopify' },
@@ -70,7 +54,7 @@ export function Footer() {
                     {category === 'Legal' && link.label === 'Cookies' ? (
                       <button
                         type="button"
-                        onClick={openCookiePreferences}
+                        onClick={() => openCookiebotPreferences({ fallbackUrl: '/cookies' })}
                         className="text-sm text-background/60 hover:text-background transition-colors"
                         aria-label="Cookie preferences"
                       >

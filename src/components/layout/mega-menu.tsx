@@ -13,6 +13,7 @@ import {
   Monitor,
   Store,
   Briefcase,
+  Mail,
   ChevronDown,
   Menu,
   X,
@@ -67,6 +68,15 @@ const menuData: MegaMenuData = {
         { label: 'SaaS Platforms', href: '/solutions/saas', description: 'Subscription billing with easy integration', icon: Monitor },
         { label: 'Marketplaces', href: '/solutions/marketplaces', description: 'End to end programmable payouts and splits', icon: Store },
         { label: 'Professional Services', href: '/solutions/professional-services', description: 'Accept and move money without code', icon: Briefcase },
+      ],
+    },
+  ],
+  Company: [
+    {
+      items: [
+        { label: 'About', href: '/about', description: 'Our vision and team', icon: Building2 },
+        { label: 'Careers', href: '/careers', description: 'Join the team', icon: Briefcase },
+        { label: 'Contact', href: '/contact', description: 'Talk to us', icon: Mail },
       ],
     },
   ],
@@ -192,6 +202,43 @@ export function MegaMenu() {
             >
               Developers
             </a>
+            {/* Company dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setActiveMenu('Company')}
+              onMouseLeave={() => setActiveMenu(null)}
+            >
+              <button className="flex items-center gap-1 px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Company
+                <ChevronDown className={cn('h-4 w-4 transition-transform', activeMenu === 'Company' && 'rotate-180')} />
+              </button>
+
+              {activeMenu === 'Company' && (
+                <div className="absolute top-full left-0 pt-2">
+                  <div className="w-[380px] bg-white rounded-xl shadow-lg border border-border p-4">
+                    <div className="space-y-1">
+                      {menuData.Company[0].items.map((item) => (
+                        <Link
+                          key={item.label}
+                          to={item.href}
+                          className="block p-3 rounded-lg hover:bg-secondary transition-colors group"
+                        >
+                          <div className="flex items-center gap-3">
+                            {item.icon && <item.icon className="h-5 w-5 text-muted-foreground group-hover:text-primary" />}
+                            <div>
+                              <div className="text-sm font-medium text-foreground">{item.label}</div>
+                              {item.description && (
+                                <div className="text-xs text-muted-foreground">{item.description}</div>
+                              )}
+                            </div>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
             <Link to="/blog" className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
               Blog
             </Link>
@@ -285,6 +332,22 @@ export function MegaMenu() {
             >
               Developers
             </a>
+            {/* Company */}
+            <div>
+              <h3 className="font-medium text-foreground mb-2">Company</h3>
+              <div className="space-y-1 pl-4">
+                {menuData.Company[0].items.map((item) => (
+                  <Link
+                    key={item.label}
+                    to={item.href}
+                    className="block py-2 text-sm text-muted-foreground"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
             <Link to="/blog" className="block py-2 font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>
               Blog
             </Link>
