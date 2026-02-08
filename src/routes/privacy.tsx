@@ -6,9 +6,9 @@ export const Route = createFileRoute('/privacy')({
   component: PrivacyPage,
   head: () =>
     buildSeo({
-      title: 'Privacy Notice | Quidkey',
+      title: 'Website Privacy Notice & Data Use | Quidkey',
       description:
-        'Learn how Quidkey collects, uses, and protects personal data when you visit our website or contact our team.',
+        'Learn how Quidkey collects, uses, and protects personal data when you browse our website, contact our team, or submit a job application.',
       path: '/privacy',
     }),
 })

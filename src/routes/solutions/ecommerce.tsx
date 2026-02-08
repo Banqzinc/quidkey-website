@@ -9,7 +9,7 @@ export const Route = createFileRoute('/solutions/ecommerce')({
     buildSeo({
       title: 'Pay by Bank for Ecommerce Brands | Quidkey',
       description:
-        'Accept pay by bank for ecommerce with lower fees and zero chargebacks. Improve conversion with bank prediction, sell globally, and automate post-payment workflows.',
+        'Accept pay by bank for ecommerce with lower fees and zero chargebacks. Improve conversion with bank prediction and automate post-payment workflows.',
       path: '/solutions/ecommerce',
     }),
 })

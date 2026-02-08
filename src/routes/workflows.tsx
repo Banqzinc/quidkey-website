@@ -13,7 +13,7 @@ export const Route = createFileRoute('/workflows')({
     buildSeo({
       title: 'Money Workflows: Tax Holds, Splits & FX | Quidkey',
       description:
-        'Automate what happens after payment: tax holds, splits, refunds reserves, FX, and payouts. Write plain-English rules and get deterministic execution with audit trails.',
+        'Automate what happens after payment: tax holds, splits, refund reserves, FX, and payouts. Write plain-English rules and get deterministic execution with audit trails.',
       path: '/workflows',
     }),
 })

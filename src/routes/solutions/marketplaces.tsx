@@ -9,7 +9,7 @@ export const Route = createFileRoute('/solutions/marketplaces')({
     buildSeo({
       title: 'Pay by Bank Splits & Payouts for Marketplaces | Quidkey',
       description:
-        'Collect with lower fees and automatically split payouts to sellers. Build programmable escrow, dispute holds, and reconciliation-ready marketplace money workflows.',
+        'Collect with lower fees and automatically split payouts to sellers. Build escrow-style holds, dispute workflows, and reconciliation-ready marketplace payouts.',
       path: '/solutions/marketplaces',
     }),
 })

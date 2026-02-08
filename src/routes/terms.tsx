@@ -6,9 +6,9 @@ export const Route = createFileRoute('/terms')({
   component: TermsPage,
   head: () =>
     buildSeo({
-      title: 'Terms of Use | Quidkey',
+      title: 'Website Terms of Use & Acceptable Use | Quidkey',
       description:
-        "Read Quidkey's website terms of use, including acceptable use, disclaimers, and how to contact us with questions.",
+        "Read Quidkey's website terms of use, including acceptable use, third‑party links, disclaimers, and how to contact us with questions.",
       path: '/terms',
     }),
 })

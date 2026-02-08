@@ -19,7 +19,7 @@ export const Route = createFileRoute('/')({
     buildSeo({
       title: 'Quidkey | AI-native clearing house for pay by bank',
       description:
-        'AI-native global clearing house for pay by bank. Unify checkout, routing, and programmable treasury workflows (tax, splits, FX, payouts) with a single integration and global coverage.',
+        'AI-native clearing house for pay by bank. Unify checkout, routing, and programmable treasury workflows—tax, splits, FX, payouts—with one integration and global coverage.',
       path: '/',
     }),
 })
