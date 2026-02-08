@@ -403,7 +403,7 @@ export function TeamSection({
                 src={member.imageSrc}
                 alt={member.name}
                 loading="lazy"
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover object-[center_20%]"
               />
             </div>
             <div className="p-6">

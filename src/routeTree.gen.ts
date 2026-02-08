@@ -13,6 +13,7 @@ import { Route as WorkflowsRouteImport } from './routes/workflows'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as ComplaintsRouteImport } from './routes/complaints'
 import { Route as CareersRouteImport } from './routes/careers'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -50,6 +51,11 @@ const CookiesRoute = CookiesRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComplaintsRoute = ComplaintsRouteImport.update({
+  id: '/complaints',
+  path: '/complaints',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CareersRoute = CareersRouteImport.update({
@@ -148,6 +154,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/careers': typeof CareersRoute
+  '/complaints': typeof ComplaintsRoute
   '/contact': typeof ContactRoute
   '/cookies': typeof CookiesRoute
   '/pricing': typeof PricingRoute
@@ -172,6 +179,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/careers': typeof CareersRoute
+  '/complaints': typeof ComplaintsRoute
   '/contact': typeof ContactRoute
   '/cookies': typeof CookiesRoute
   '/pricing': typeof PricingRoute
@@ -197,6 +205,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/careers': typeof CareersRoute
+  '/complaints': typeof ComplaintsRoute
   '/contact': typeof ContactRoute
   '/cookies': typeof CookiesRoute
   '/pricing': typeof PricingRoute
@@ -223,6 +232,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/careers'
+    | '/complaints'
     | '/contact'
     | '/cookies'
     | '/pricing'
@@ -247,6 +257,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/careers'
+    | '/complaints'
     | '/contact'
     | '/cookies'
     | '/pricing'
@@ -271,6 +282,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/careers'
+    | '/complaints'
     | '/contact'
     | '/cookies'
     | '/pricing'
@@ -296,6 +308,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   CareersRoute: typeof CareersRoute
+  ComplaintsRoute: typeof ComplaintsRoute
   ContactRoute: typeof ContactRoute
   CookiesRoute: typeof CookiesRoute
   PricingRoute: typeof PricingRoute
@@ -345,6 +358,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/complaints': {
+      id: '/complaints'
+      path: '/complaints'
+      fullPath: '/complaints'
+      preLoaderRoute: typeof ComplaintsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/careers': {
@@ -480,6 +500,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   CareersRoute: CareersRoute,
+  ComplaintsRoute: ComplaintsRoute,
   ContactRoute: ContactRoute,
   CookiesRoute: CookiesRoute,
   PricingRoute: PricingRoute,
