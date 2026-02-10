@@ -103,7 +103,7 @@ export const blogPosts: BlogPost[] = [
     blocks: [
       {
         type: 'p',
-        text: "Founded in early 2023, Quidkey has quickly established itself as a trusted provider of next-generation Account-to-account (A2A) payments. Also known as 'Pay by bank'. Leveraging AI-powered bank prediction, instant settlement, and a streamlined user experience, Quidkey is redefining how global businesses collect payments.",
+        text: "Founded in early 2023, Quidkey has quickly established itself as a trusted provider of next-generation Account-to-account (A2A) payments. Also known as 'Pay by Bank'. Leveraging AI-powered bank prediction, instant settlement, and a streamlined user experience, Quidkey is redefining how global businesses collect payments.",
       },
       {
         type: 'p',

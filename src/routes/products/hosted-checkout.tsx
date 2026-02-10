@@ -91,7 +91,7 @@ function HostedCheckoutPage() {
     <PageLayout>
       <PageHero
         badge="Hosted Checkout"
-        title="Pay by bank checkout."
+        title="Pay by Bank checkout."
         titleGradient="Ready in minutes."
         description="One API call to create a session. One redirect to collect payment. No frontend code."
         features={['No frontend code', 'High conversion', 'Fully managed']}

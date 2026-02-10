@@ -93,7 +93,7 @@ function EcommercePage() {
         badge="Ecommerce"
         title="Better margins for"
         titleGradient="online retail."
-        description="Lower fees. Zero chargebacks. Pay by bank checkout for ecommerce."
+        description="Lower fees. Zero chargebacks. Pay by Bank checkout for ecommerce."
         features={['70% lower fees', 'Zero chargebacks', 'Shopify native']}
       />
 

@@ -59,7 +59,7 @@ export function HeroSection() {
 
             {/* Main headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight mb-6 leading-[1.1]">
-              <span className="text-foreground">Pay by bank.</span>
+              <span className="text-foreground">Pay by Bank.</span>
               <br />
               <span className="gradient-text">Built for global commerce.</span>
             </h1>

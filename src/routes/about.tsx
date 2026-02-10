@@ -92,7 +92,7 @@ function AboutPage() {
         titleGradient="Quidkey"
         description="We're building an AI-native clearing house for pay by bank—so global businesses can collect funds, route payments intelligently, and automate treasury workflows without losing control."
         features={[
-          'Pay by bank checkout',
+          'Pay by Bank checkout',
           'Intelligent routing',
           'Programmable treasury',
         ]}

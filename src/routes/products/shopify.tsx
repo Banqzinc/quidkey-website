@@ -83,7 +83,7 @@ function ShopifyPage() {
     {
       step: '3',
       title: 'Go live',
-      description: 'Pay by bank appears at checkout.',
+      description: 'Pay by Bank appears at checkout.',
     },
   ]
 
@@ -91,7 +91,7 @@ function ShopifyPage() {
     <PageLayout>
       <PageHero
         badge="Shopify App"
-        title="Pay by bank for Shopify."
+        title="Pay by Bank for Shopify."
         titleGradient="Lower fees. Zero chargebacks."
         description="Shopify-approved app. Install in minutes. Save up to 70% on payment fees."
         features={['Shopify approved', 'One-click install', 'Zero chargebacks']}
