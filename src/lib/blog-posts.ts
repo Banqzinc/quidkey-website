@@ -1,6 +1,7 @@
 export type BlogPostBlock =
   | { type: 'h2' | 'h3' | 'p'; text: string }
   | { type: 'ul'; items: string[] }
+  | { type: 'youtube'; videoId: string; title: string }
 
 export type BlogPost = {
   slug: string
@@ -25,6 +26,54 @@ export type BlogPost = {
 }
 
 export const blogPosts: BlogPost[] = [
+  {
+    slug: 'pay-by-bank-refunds-shopify-merchants',
+    date: 'February 24, 2026',
+    dateISO: '2026-02-24',
+    title: 'Pay by Bank Refunds at Quidkey: Everything You Need to Know',
+    seoTitle: 'Pay by Bank Refunds for Shopify Merchants | Quidkey',
+    description:
+      'Quidkey launches Pay by Bank refunds for Shopify merchants. Issue instant refunds from a dedicated balance without manual bank transfers or extra steps.',
+    keyword: 'pay by bank refunds',
+    author: 'Quidkey Team',
+    image: '/images/blog/pay-by-bank-refunds.webp',
+    featured: true,
+    blocks: [
+      {
+        type: 'p',
+        text: "We've launched Pay by Bank Refunds at Quidkey. Here's everything you need to know.",
+      },
+      {
+        type: 'p',
+        text: "Refunds have always been a friction point for online merchants accepting bank payments. Unlike card networks, Pay by Bank payments don't have a built in reversal mechanism, leaving merchants to handle repayments manually.",
+      },
+      {
+        type: 'p',
+        text: "Quidkey's refund functionality lets you issue refunds quickly and reliably directly from your Quidkey merchant account without depending on your bank to initiate outbound payments. And now, Shopify merchants can process Pay by Bank refunds directly from the Shopify merchant portal, in exactly the same way as card refunds, no separate system, no extra steps.",
+      },
+      {
+        type: 'p',
+        text: "This is done via a dedicated Refund Account, a separate balance you fund and use exclusively for processing refunds. You'll also be able to set rules to automatically allocate a portion of your revenue into your Refund Account, keeping it topped up automatically.",
+      },
+      {
+        type: 'p',
+        text: "When you issue a refund, Quidkey checks your refund balance and, if sufficient, executes the refund so the customer receives it instantly. If the balance is insufficient, the refund moves into a pending state and automatically executes once the balance is topped up. What's more, every refund is logged against the original transaction so your records stay clean.",
+      },
+      {
+        type: 'p',
+        text: 'Quidkey helps merchants cut payment fees, get paid faster, and increase checkout conversion. Quidkey is an approved payment partner of Shopify.',
+      },
+      {
+        type: 'p',
+        text: 'Watch it in action below, or get in touch to see how it works for your business.',
+      },
+      {
+        type: 'youtube',
+        videoId: 'C9VWeFozBUM',
+        title: 'Pay by Bank Refunds at Quidkey — Product Demo',
+      },
+    ],
+  },
   {
     slug: 'quidkey-achieves-soc-2-type-ii-compliance-strengthening-security-for-global-payments',
     date: 'December 12, 2025',

@@ -165,6 +165,22 @@ function BlogPostPage() {
                       </ul>
                     )
                   }
+                  if (block.type === 'youtube') {
+                    return (
+                      <div key={idx} className="my-8 aspect-video rounded-2xl overflow-hidden">
+                        <iframe
+                          width="100%"
+                          height="100%"
+                          src={`https://www.youtube.com/embed/${block.videoId}?si=QmDNmc4uWlKMOvQK`}
+                          title={block.title}
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          referrerPolicy="strict-origin-when-cross-origin"
+                          allowFullScreen
+                        />
+                      </div>
+                    )
+                  }
                   return null
                 })}
               </div>
