@@ -197,7 +197,7 @@ function BlogPostPage() {
                               {block.headers.map((header, hIdx) => (
                                 <th
                                   key={hIdx}
-                                  className="px-4 py-3 text-left font-semibold text-foreground whitespace-nowrap"
+                                  className="px-4 py-3 text-left font-semibold text-foreground"
                                 >
                                   {header}
                                 </th>
@@ -213,7 +213,7 @@ function BlogPostPage() {
                                 {row.map((cell, cIdx) => (
                                   <td
                                     key={cIdx}
-                                    className={`px-4 py-3 align-top leading-6 ${cIdx === 0 ? 'font-medium text-foreground whitespace-nowrap' : 'text-muted-foreground'}`}
+                                    className={`px-4 py-3 align-top leading-6 ${cIdx === 0 ? 'font-medium text-foreground w-[28%] text-sm' : 'text-muted-foreground'}`}
                                   >
                                     {cell}
                                   </td>
