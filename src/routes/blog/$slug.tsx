@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { MegaMenu } from '@/components/layout/mega-menu'
 import { Footer } from '@/components/layout/footer'
+import { LinkedInIcon } from '@/components/icons'
 import { getBlogPost } from '@/lib/blog-posts'
 import { MERCHANTS_SIGNUP_URL } from '@/lib/urls'
 import { buildSeo, buildArticleSchema, getSiteUrl } from '@/lib/seo'
@@ -101,6 +102,18 @@ function BlogPostPage() {
                   <time dateTime={post.dateISO}>{post.date}</time>
                   <span>•</span>
                   <span>By {post.author}</span>
+                  {post.authorLinkedIn && (
+                    <a
+                      href={post.authorLinkedIn}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-muted-foreground hover:text-primary transition-colors"
+                      aria-label={`${post.author} on LinkedIn`}
+                    >
+                      <LinkedInIcon className="h-4 w-4" />
+                      <span className="sr-only">LinkedIn</span>
+                    </a>
+                  )}
                 </div>
                 <p className="text-lg text-muted-foreground mt-4">
                   {post.description}

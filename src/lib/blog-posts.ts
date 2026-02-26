@@ -21,6 +21,8 @@ export type BlogPost = {
   keyword: string
   /** Author name */
   author: string
+  /** Optional LinkedIn URL for the author */
+  authorLinkedIn?: string
   /** Featured image path (relative to /images/blog/) */
   image: string
   blocks: BlogPostBlock[]
@@ -38,7 +40,8 @@ export const blogPosts: BlogPost[] = [
     description:
       'Learn how open finance in the US works, how it differs from EU/UK open banking, and how Quidkey solves fragmentation for global A2A payments.',
     keyword: 'open finance US',
-    author: 'Quidkey Team',
+    author: 'Matthew Bartlett',
+    authorLinkedIn: 'https://www.linkedin.com/in/matthew-bartlett-b6587346/',
     image: '/images/blog/open-finance-us-part-1.png',
     featured: true,
     blocks: [
