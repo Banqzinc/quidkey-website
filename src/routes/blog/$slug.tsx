@@ -165,6 +165,66 @@ function BlogPostPage() {
                       </ul>
                     )
                   }
+                  if (block.type === 'ol') {
+                    return (
+                      <ol key={idx} className="space-y-2 pl-6 my-4 list-decimal">
+                        {block.items.map((item, itemIdx) => (
+                          <li
+                            key={itemIdx}
+                            className="text-base leading-7 text-muted-foreground"
+                          >
+                            {item}
+                          </li>
+                        ))}
+                      </ol>
+                    )
+                  }
+                  if (block.type === 'html') {
+                    return (
+                      <div
+                        key={idx}
+                        className="text-base leading-7 text-muted-foreground [&_strong]:text-foreground [&_strong]:font-semibold [&_em]:italic [&_a]:text-primary [&_a]:hover:underline [&_a]:font-medium [&_ul]:space-y-2 [&_ul]:pl-6 [&_ul]:my-2 [&_li]:relative [&_li]:before:content-['•'] [&_li]:before:absolute [&_li]:before:-left-4 [&_li]:before:text-primary [&_li]:before:font-bold"
+                        dangerouslySetInnerHTML={{ __html: block.html }}
+                      />
+                    )
+                  }
+                  if (block.type === 'table') {
+                    return (
+                      <div key={idx} className="my-6 overflow-x-auto rounded-xl border border-border">
+                        <table className="w-full text-sm">
+                          <thead>
+                            <tr className="border-b border-border bg-secondary/50">
+                              {block.headers.map((header, hIdx) => (
+                                <th
+                                  key={hIdx}
+                                  className="px-4 py-3 text-left font-semibold text-foreground whitespace-nowrap"
+                                >
+                                  {header}
+                                </th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {block.rows.map((row, rIdx) => (
+                              <tr
+                                key={rIdx}
+                                className="border-b border-border last:border-b-0 even:bg-secondary/10"
+                              >
+                                {row.map((cell, cIdx) => (
+                                  <td
+                                    key={cIdx}
+                                    className={`px-4 py-3 align-top leading-6 ${cIdx === 0 ? 'font-medium text-foreground whitespace-nowrap' : 'text-muted-foreground'}`}
+                                  >
+                                    {cell}
+                                  </td>
+                                ))}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    )
+                  }
                   if (block.type === 'youtube') {
                     return (
                       <div key={idx} className="my-8 aspect-video rounded-2xl overflow-hidden">
