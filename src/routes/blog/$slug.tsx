@@ -25,6 +25,7 @@ export const Route = createFileRoute('/blog/$slug')({
     return buildSeo({
       title: post.seoTitle,
       description: post.description,
+      keywords: post.keyword,
       path: `/blog/${params.slug}` as const,
       ogType: 'article',
       imageUrl,
@@ -52,6 +53,7 @@ function BlogPostPage() {
         author: post.author,
         url: `${siteUrl}/blog/${post.slug}`,
         imageUrl: `${siteUrl}${post.image}`,
+        keywords: post.keyword,
       })
     : null
 

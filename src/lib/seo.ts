@@ -37,6 +37,12 @@ type BuildSeoInput = {
   title: string
   description: string
   /**
+   * Optional keyword(s) for this page.
+   * Note: modern search engines don't rely heavily on meta keywords, but we use
+   * it for completeness and to power Article tags + schema keywords.
+   */
+  keywords?: string | string[]
+  /**
    * Absolute path for this page, e.g. "/", "/products/workflows".
    */
   path: `/${string}` | '/'
@@ -62,6 +68,7 @@ type BuildSeoInput = {
 export function buildSeo({
   title,
   description,
+  keywords,
   path,
   ogType = 'website',
   imageUrl,
@@ -69,10 +76,13 @@ export function buildSeo({
 }: BuildSeoInput) {
   const url = new URL(path, getSiteUrl()).toString()
   const image = imageUrl ?? DEFAULT_OG_IMAGE
+  const keywordsContent =
+    typeof keywords === 'string' ? keywords : keywords?.filter(Boolean).join(', ')
 
   const meta = [
     { title },
     { name: 'description', content: description },
+    ...(keywordsContent ? [{ name: 'keywords', content: keywordsContent }] : []),
     { property: 'og:title', content: title },
     { property: 'og:description', content: description },
     { property: 'og:type', content: ogType },
@@ -92,6 +102,9 @@ export function buildSeo({
       { property: 'article:published_time', content: article.datePublished },
       { property: 'article:author', content: article.author }
     )
+    if (keywordsContent) {
+      meta.push({ property: 'article:tag', content: keywordsContent })
+    }
     if (article.dateModified) {
       meta.push({ property: 'article:modified_time', content: article.dateModified })
     }
@@ -117,6 +130,7 @@ export function buildArticleSchema({
   author,
   url,
   imageUrl,
+  keywords,
 }: {
   title: string
   description: string
@@ -125,7 +139,10 @@ export function buildArticleSchema({
   author: string
   url: string
   imageUrl?: string
+  keywords?: string | string[]
 }) {
+  const keywordsValue = typeof keywords === 'string' ? keywords : keywords?.filter(Boolean)
+
   return {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -134,6 +151,7 @@ export function buildArticleSchema({
     image: imageUrl ?? DEFAULT_OG_IMAGE,
     datePublished: datePublished,
     dateModified: dateModified ?? datePublished,
+    ...(keywordsValue ? { keywords: keywordsValue } : {}),
     author: {
       '@type': 'Person',
       name: author,
