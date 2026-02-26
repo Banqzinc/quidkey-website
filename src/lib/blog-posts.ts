@@ -1,7 +1,9 @@
 export type BlogPostBlock =
   | { type: 'h2' | 'h3' | 'p'; text: string }
-  | { type: 'ul'; items: string[] }
+  | { type: 'ul' | 'ol'; items: string[] }
+  | { type: 'html'; html: string }
   | { type: 'youtube'; videoId: string; title: string }
+  | { type: 'table'; headers: string[]; rows: string[][] }
 
 export type BlogPost = {
   slug: string
@@ -26,6 +28,234 @@ export type BlogPost = {
 }
 
 export const blogPosts: BlogPost[] = [
+  {
+    slug: 'open-finance-in-the-us-part-1',
+    date: 'February 26, 2026',
+    dateISO: '2026-02-26',
+    title:
+      'Open Finance in the US: How User Control Over Financial Data Benefits Both Businesses and Consumers',
+    seoTitle: 'Open Finance in the US: A2A Payments Guide | Quidkey',
+    description:
+      'Learn how open finance in the US works, how it differs from EU/UK open banking, and how Quidkey solves fragmentation for global A2A payments.',
+    keyword: 'open finance US',
+    author: 'Quidkey Team',
+    image: '/images/blog/open-finance-us-part-1.png',
+    featured: true,
+    blocks: [
+      { type: 'h3', text: 'Executive Summary' },
+      {
+        type: 'ul',
+        items: [
+          'Open finance lets both business and consumers control and share their financial data with third-party apps, which allows, among other things, businesses to accept direct account-to-account (A2A) bank payments from their customers.',
+          'In the EU and UK, open banking is mandated by regulation and implemented via standardized schemes.',
+          'A regulatory vacuum in the US resulted in a fragmented and convoluted open finance ecosystem developed via private contracts instead of regulation.',
+          'Despite regulatory delays, consumer demand for integrated financial services continues to drive increasing adoption of US open finance solutions, benefitting both business and their customers.',
+        ],
+      },
+      { type: 'h3', text: 'What is Open Finance in the US?' },
+      {
+        type: 'html',
+        html: 'Open finance is the idea that <em><strong>people – not financial institutions – should control the flow of their financial data</strong></em>. In practice this means you can permission an app or service (payments, identity, budgeting, lending, investing, accounting, payroll) via Application Programming Interfaces (APIs) to securely access your accounts and transaction history, and you can revoke that access when you want. In the US, this includes permissioned access to things like:',
+      },
+      {
+        type: 'ul',
+        items: [
+          'A2A payment initiation',
+          'checking and savings accounts',
+          'credit cards',
+          'payment apps and wallets',
+          'lending and cash-flow data',
+          'investments, insurance, tuition, etc.',
+        ],
+      },
+      {
+        type: 'p',
+        text: 'While the terms "open-banking" and "open-finance" are often thrown around interchangeably, open finance refers to a framework that reaches beyond checking accounts into a broader ecosystem of financial activity driven by the needs of consumers and businesses.',
+      },
+      {
+        type: 'h3',
+        text: 'How Does Open-Finance in the US differ from EU/UK style Open-Banking?',
+      },
+      {
+        type: 'html',
+        html: 'Unlike the laissez-faire approach developing inconsistently in the US thus far, the EU and the UK have taken the lead in developing a consistent regulatory framework (PSD2) that requires banks to build data-sharing infrastructure that provides secure data access to consumers and authorized third parties via standardized, free and seamless APIs. This regulatorily mandated approach has led to increased innovation, competition, personalization and consumer choice, loosening the stranglehold of entrenched financial institutions on consumer data and providing the people with more flexibility and control over their finances. You can find more information on EU/UK open-banking <a href="/blog/open-banking-payments-in-the-uk"><strong>here</strong></a>.',
+      },
+      {
+        type: 'p',
+        text: 'While other major markets embrace the revolution of consumer control over their own financial data, users in the US have been chronically stuck under an antiquated regime imposed by powerful financial institutions with limited incentive to give up their monopoly on our data.',
+      },
+      {
+        type: 'p',
+        text: 'Without analogous regulatory requirements to mandate standardized access, US open finance has become a bespoke web of bilateral relationships between established financial industry institutions, such as:',
+      },
+      {
+        type: 'ol',
+        items: [
+          'Traditional banks (e.g., JPMorgan Chase, Bank of America, Citibank, etc.); and',
+          'Data aggregators and scrapers (e.g. Plaid, MX, Finicity/Mastercard, Akoya, etc.)',
+        ],
+      },
+      {
+        type: 'p',
+        text: 'This regulatory vacuum in the US has led to a fragmented, inconsistent and expensive – what industry insiders euphemistically label the "market-led" – approach to open-finance, which has developed as a permissioned pay-to-play scheme where financial institutions make consumer data available to a limited number of aggregators for a hefty fee. This had previously left US consumers years behind the advancements of global peers, without access and control over their data, choices, and financial lives.',
+      },
+      { type: 'h3', text: 'Section 1033: CFPB Regulatory Catch-Up' },
+      {
+        type: 'p',
+        text: 'Now, with US business and consumers waking up to the possibilities of choice and control when it comes to their financial data, they have begun to demand more from their financial service providers. This user driven push, combined with the deficiencies inherent in a purely market lead approach, has prompted the Consumer Financial Protection Bureau (CFPB) to finally promulgate the Personal Financial Data Rights rule in October 2024, initiating a phased implementation of Section 1033 of the Dodd-Frank Act.',
+      },
+      {
+        type: 'p',
+        text: 'The new rule issued by the CFPB under Section 1033 requires covered "data providers" to make "covered data" available electronically to consumers and to "authorized third parties," using secure and reliable mechanisms. However, various elements of the new rule are currently subject to litigation by US financial institutions causing the CFPB to pause enforcement and revise the proposed framework. You can find more information on the status of Rule 1033 in our next article on Rule 1033.',
+      },
+      { type: 'h3', text: 'How Open Finance Works in the US Today' },
+      {
+        type: 'p',
+        text: "Even with regulatory action under Section 1033 paused for now, open finance is still fully operational with the right technology partners and it's being increasingly adopted by merchants and consumers every day.",
+      },
+      { type: 'p', text: 'Most flows currently look like this:' },
+      {
+        type: 'html',
+        html: '<strong>User → Fintech app → Aggregator → Bank List → Data provider (bank/issuer) → back</strong>',
+      },
+      {
+        type: 'ul',
+        items: [
+          'The fintech app outsources connectivity to an aggregator.',
+          'The aggregator maintains hundreds/thousands of bank integrations (APIs where available; credential-based screen scraping where not).',
+          'Consent UX varies: some banks support OAuth-style permissioning; others still rely on older and less secure methods like data scraping.',
+        ],
+      },
+      {
+        type: 'html',
+        html: "<strong>What's improved in the last few years (even before 1033)</strong>",
+      },
+      {
+        type: 'ul',
+        items: [
+          'More banks have moved toward tokenized/OAuth connections.',
+          'U.S. industry groups have pushed standardization—though not universally mandated.',
+          'Banks have increased scrutiny on "credential sharing" and moved to contract + API programs.',
+        ],
+      },
+      { type: 'html', html: '<strong>What still needs work</strong>' },
+      {
+        type: 'ul',
+        items: [
+          'Coverage gaps: long-tail institutions lag.',
+          'Inconsistent data metrics and inputs',
+          'Issues with reliability: outages, throttling, broken integrations.',
+          'Limited to domestic only solutions.',
+          'Liability and redress: no clear framework for handling fraud, disputes or even refunds.',
+        ],
+      },
+      {
+        type: 'h3',
+        text: 'How Quidkey Solves and Simplifies Open Finance, Providing a Global Solution to Help Your Business Grow',
+      },
+      {
+        type: 'p',
+        text: 'At Quidkey, we solve the issues inherent in the US open finance ecosystem and handle the complexity so you can be free to focus on your business.',
+      },
+      {
+        type: 'ul',
+        items: [
+          'Our comprehensive platform coordinates payment orchestration across different geographical markets and automatically selects the best solution for each payment to eliminate coverage gaps, outages and throttling, thus ensuring the highest success rate.',
+          'We manage all bank integrations and authentication flows, exclusively utilizing direct tokenized/OAuth connections, instead of data scraping, to protect user data and eliminate the risk of broken integrations.',
+          "We've engineered consistent data workflows providing easily managed data parameters.",
+          "We've built customizable A2A payment workflows allowing you to manage the flow of funds, refunds and treasury to suit your business needs.",
+          'We provide a global solution, supporting currency exchange and cross border payments, and serving you a single interface for your business to start accepting cross-border open finance payments instantly.',
+          "Our predictive algorithm automatically identifies and displays the customer's bank at checkout, making the experience faster, more intuitive, and built upon the recognition customers already have with their bank, leading to higher conversion rates and lower cost payments.",
+        ],
+      },
+      {
+        type: 'p',
+        text: 'Quidkey simplifies payments so you can focus on growing your business. Customize your payment flows, accept payments across borders, support multiple currencies, and go live in minutes.',
+      },
+      {
+        type: 'html',
+        html: '<strong>Quidkey vs. Existing Fragmented Open Finance Providers in the US</strong>',
+      },
+      {
+        type: 'table',
+        headers: ['', 'Quidkey', 'Existing Fragmented Options in US'],
+        rows: [
+          [
+            'Integration',
+            'One-click integration, no technical expertise required',
+            'Requires extensive technical expertise and development resources',
+          ],
+          ['Coverage', 'US, UK, EU, AUS, CAN', 'Limited to domestic solutions only'],
+          ['Cross-border & FX', 'Supported with built-in FX management', 'Not supported'],
+          [
+            'Bank Prediction at Checkout',
+            "Proprietary technology surfaces customer's bank automatically at checkout",
+            'Customer must choose bank manually from long list, increasing drop off rates',
+          ],
+          [
+            'Customizable Payment Flows',
+            'Customize and automate your funds flows to support your business needs',
+            'Not supported',
+          ],
+          [
+            'Rewards',
+            'Merchants can offer loyalty programs and rewards to encourage bank payments',
+            'Not supported',
+          ],
+          [
+            'All major e-commerce platforms (yes, including Shopify)',
+            'Open finance solutions available and active on Shopify exclusively with Quidkey',
+            'Not supported',
+          ],
+          ['Refunds', 'One-click refunds supported', 'Requires manual credit via merchant bank account'],
+          [
+            'Payment Links',
+            'Send white-labeled payment links to customers or suppliers',
+            'Not supported',
+          ],
+          [
+            'Fraud and reputation checks on consumers',
+            'Real-time fraud and consumer reputation checks to reduce "friendly fraud", reversals and chargebacks',
+            'Not supported',
+          ],
+          [
+            'Flexible pricing with no commitments',
+            'Always - usage based with no rigid contractual commitments',
+            'No – must commit to long term contractual obligations and fees',
+          ],
+        ],
+      },
+      {
+        type: 'p',
+        text: 'Existing players in the US market offer fragmented infrastructure built upon screen scraping, uneven security standards and clunky user experiences, falling short of delivering a seamless and secure checkout experience. Quidkey fills that gap by combining real time orchestration, predictive bank selection, secure user authorization, customizable payments workflows, platform integrations, and built in cross-border support for an innovative and globalized open finance solution.',
+      },
+      { type: 'h3', text: 'Open Finance Benefits for Business and Consumers' },
+      { type: 'html', html: '<strong>For Merchants</strong>' },
+      {
+        type: 'html',
+        html: "<ul><li><strong>Customizable flows and Increased liquidity:</strong> Customize your funds flow and direct receivables to enhance operating efficiency. Payments clear with same-day ACH or instant payments (RTP /FedNow), helping improve float and cash flow.</li><li><strong>Greater protections against chargebacks and fraud:</strong> Real time data analytics evaluating consumer profile and reputation. Payments are authenticated by the customer's bank, reducing fraud risk and related disputes. No card network mandated chargebacks.</li><li><strong>Lower fees:</strong> By bypassing card networks and intermediaries, businesses can significantly reduce processing costs.</li></ul>",
+      },
+      { type: 'html', html: '<strong>For Customers</strong>' },
+      {
+        type: 'html',
+        html: "<ul><li><strong>Stronger protection against fraud:</strong> Every payment requires secure bank authentication, often with biometrics or two factor login. And no card numbers mean there is nothing to steal.</li><li><strong>Faster checkout:</strong> Customers approve payments directly in their banking app.</li><li><strong>Real time control and visibility:</strong> Payments are authorized through the customer's own bank, with instant confirmation and a clear transaction record.</li></ul>",
+      },
+      { type: 'h2', text: 'Get Started with Quidkey' },
+      {
+        type: 'html',
+        html: "<em><strong>Quidkey is not just another payment provider. It's open finance actually done right.</strong></em>",
+      },
+      { type: 'p', text: 'Instant payouts. Reduced fraud. Lower fees. Seamless integration.' },
+      {
+        type: 'p',
+        text: 'Go live in minutes and take control of how your business gets paid.',
+      },
+      {
+        type: 'html',
+        html: '<strong>Add Quidkey to your checkout today – </strong><a href="https://merchants.quidkey.com/signup">Start Accepting Payments</a>',
+      },
+    ],
+  },
   {
     slug: 'pay-by-bank-refunds-shopify-merchants',
     date: 'February 24, 2026',
