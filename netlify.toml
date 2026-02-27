@@ -68,10 +68,3 @@
   to = "/blog"
   status = 301
   force = true
-
-# Normalize trailing slashes for blog posts
-[[redirects]]
-  from = "/blog/:slug/"
-  to = "/blog/:slug"
-  status = 301
-  force = true
