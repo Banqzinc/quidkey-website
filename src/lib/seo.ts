@@ -34,6 +34,11 @@ const DEFAULT_OG_IMAGE =
 
 type BuildSeoInput = {
   title: string
+  /**
+   * Override for og:title and twitter:title when the sharing title should
+   * differ from the <title> tag (e.g. full article headline vs short SEO title).
+   */
+  ogTitle?: string
   description: string
   /**
    * Optional keyword(s) for this page.
@@ -66,6 +71,7 @@ type BuildSeoInput = {
 
 export function buildSeo({
   title,
+  ogTitle,
   description,
   keywords,
   path,
@@ -77,19 +83,20 @@ export function buildSeo({
   const image = imageUrl ?? DEFAULT_OG_IMAGE
   const keywordsContent =
     typeof keywords === 'string' ? keywords : keywords?.filter(Boolean).join(', ')
+  const sharingTitle = ogTitle ?? title
 
   const meta = [
     { title },
     { name: 'description', content: description },
     ...(keywordsContent ? [{ name: 'keywords', content: keywordsContent }] : []),
-    { property: 'og:title', content: title },
+    { property: 'og:title', content: sharingTitle },
     { property: 'og:description', content: description },
     { property: 'og:type', content: ogType },
     { property: 'og:url', content: url },
     { property: 'og:image', content: image },
     { property: 'og:site_name', content: 'Quidkey' },
     { name: 'twitter:card', content: 'summary_large_image' },
-    { name: 'twitter:title', content: title },
+    { name: 'twitter:title', content: sharingTitle },
     { name: 'twitter:description', content: description },
     { name: 'twitter:image', content: image },
     { name: 'twitter:site', content: '@quidkey' },
