@@ -15,6 +15,10 @@ const GA_MEASUREMENT_ID = 'G-G2CG1D2Q1C'
 const USERBACK_ACCESS_TOKEN = 'A-T4eFdwAnKc5Yq1y37td2cGRWR'
 const SNITCHER_PROFILE_ID = '8436518'
 
+const ENABLE_TRACKERS =
+  (import.meta.env.VITE_ENABLE_TRACKERS as string | undefined) === 'true' ||
+  import.meta.env.PROD
+
 export const Route = createRootRoute({
   head: () => ({
     meta: [
@@ -74,19 +78,21 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        <script
-          id="Cookiebot"
-          src="https://consent.cookiebot.com/uc.js"
-          data-cbid={COOKIEBOT_DOMAIN_GROUP_ID}
-          data-blockingmode="manual"
-          type="text/javascript"
-        />
-        {GA_MEASUREMENT_ID ? (
+        {ENABLE_TRACKERS ? (
           <>
-            {/* Google Consent Mode v2 defaults must run before any gtag config/event calls */}
             <script
-              dangerouslySetInnerHTML={{
-                __html: `
+              id="Cookiebot"
+              src="https://consent.cookiebot.com/uc.js"
+              data-cbid={COOKIEBOT_DOMAIN_GROUP_ID}
+              data-blockingmode="manual"
+              type="text/javascript"
+            />
+            {GA_MEASUREMENT_ID ? (
+              <>
+                {/* Google Consent Mode v2 defaults must run before any gtag config/event calls */}
+                <script
+                  dangerouslySetInnerHTML={{
+                    __html: `
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('consent', 'default', {
@@ -97,20 +103,22 @@ gtag('consent', 'default', {
   wait_for_update: 500
 });
 `,
-              }}
-            />
-            {/* Google tag (gtag.js) */}
-            <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} />
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `
+                  }}
+                />
+                {/* Google tag (gtag.js) */}
+                <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} />
+                <script
+                  dangerouslySetInnerHTML={{
+                    __html: `
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', '${GA_MEASUREMENT_ID}', { send_page_view: false });
 `,
-              }}
-            />
+                  }}
+                />
+              </>
+            ) : null}
           </>
         ) : null}
         <HeadContent />
@@ -118,10 +126,14 @@ gtag('config', '${GA_MEASUREMENT_ID}', { send_page_view: false });
       {/* suppressHydrationWarning: TanStack Start's <Scripts /> can cause minor SSR/client differences */}
       <body className="antialiased" suppressHydrationWarning>
         {children}
-        <ClarityCookiebotBridge />
-        <GoogleAnalyticsCookiebotBridge />
-        <UserbackCookiebotBridge />
-        <SnitcherCookiebotBridge />
+        {ENABLE_TRACKERS ? (
+          <>
+            <ClarityCookiebotBridge />
+            <GoogleAnalyticsCookiebotBridge />
+            <UserbackCookiebotBridge />
+            <SnitcherCookiebotBridge />
+          </>
+        ) : null}
         <Scripts />
       </body>
     </html>

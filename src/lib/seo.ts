@@ -26,7 +26,6 @@ function normalizeOrigin(input: string) {
 export function getSiteUrl() {
   const envUrl = import.meta.env.VITE_SITE_URL as string | undefined
   if (envUrl) return normalizeOrigin(envUrl)
-  if (typeof window !== 'undefined' && window.location?.origin) return window.location.origin
   return 'https://quidkey.com'
 }
 
