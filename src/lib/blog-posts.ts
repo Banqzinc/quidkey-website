@@ -31,6 +31,63 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'we-launched-a-new-website-in-a-day',
+    date: 'March 4, 2026',
+    dateISO: '2026-03-04',
+    title:
+      "We launched a new website in a day. Here's everything you need to know.",
+    seoTitle:
+      "We launched a new website in a day. Here's everything you need to know.",
+    description:
+      'How we built and shipped the new Quidkey website in a single day using Claude Code and Cursor — and how our team now maintains it directly from Slack.',
+    keyword: 'AI website launch',
+    author: 'Quidkey Team',
+    image: '/images/blog/website-launch-ai.png',
+    featured: true,
+    blocks: [
+      {
+        type: 'p',
+        text: 'Last week, we launched the new Quidkey website. We built it in a single day, using two AI-powered tools: Claude Code and Cursor. We started with a proposal in the morning. By evening, it was live.',
+      },
+      {
+        type: 'p',
+        text: 'Claude Code handled the core build — writing and structuring the code, translating our direction into a working site. Cursor let us iterate quickly on the frontend side with its built-in browser, catching issues in real time and keeping momentum through the day. There was no agency, no review cycle, no waiting. Just a clear proposal, the right tools, and a focused day of work.',
+      },
+      {
+        type: 'p',
+        text: 'The stack itself is modern and lightweight: TanStack Start with React, Tailwind for styling, Vite for builds, deployed to Netlify. There\'s no CMS, no database, and no moving parts to break, which makes it fast, really fast, SEO friendly, and easy to maintain.',
+      },
+      {
+        type: 'p',
+        text: 'The tech and build time alone was worth noting. But it\'s not the most interesting part.',
+      },
+      {
+        type: 'h3',
+        text: 'The bigger shift',
+      },
+      {
+        type: 'p',
+        text: 'The bigger shift is in how the site gets maintained now it\'s live. Our UX and UI team can update the website directly from Slack. No code editor, no developer dependency. They send a message to Claude Code describing what needs to change. The update happens. That\'s it.',
+      },
+      {
+        type: 'p',
+        text: 'It means the people closest to our messaging and customer experience — the ones who notice when something\'s off or needs updating — can now fix it themselves. Changes that used to involve a developer ticket and a wait now take minutes.',
+      },
+      {
+        type: 'p',
+        text: 'We built it this way because fast teams need tools that match their pace.',
+      },
+      {
+        type: 'html',
+        html: '<strong>AI didn\'t replace the thinking. It just removed the friction between thinking and shipping.</strong>',
+      },
+      {
+        type: 'html',
+        html: 'Watch it in action below and check out the finished version at <a href="https://quidkey.com">quidkey.com</a>.',
+      },
+    ],
+  },
+  {
     slug: 'open-finance-in-the-us-part-1',
     date: 'February 26, 2026',
     dateISO: '2026-02-26',
