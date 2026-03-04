@@ -85,6 +85,11 @@ export const blogPosts: BlogPost[] = [
         type: 'html',
         html: 'Watch it in action below and check out the finished version at <a href="https://quidkey.com">quidkey.com</a>.',
       },
+      {
+        type: 'youtube',
+        videoId: '6dTTvOK-W9I',
+        title: 'Quidkey Website Launch — Built in a Day with AI',
+      },
     ],
   },
   {
