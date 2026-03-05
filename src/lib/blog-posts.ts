@@ -31,6 +31,251 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'open-finance-in-the-us-part-2-rule-1033',
+    date: 'March 5, 2026',
+    dateISO: '2026-03-05',
+    title: 'Open Finance in the US: The Status of CFPB Rule 1033',
+    seoTitle: 'Open Finance in the US: CFPB Rule 1033 Status | Quidkey',
+    description:
+      'The CFPB issued Rule 1033 to make consumer financial data access a legal right. Learn the current status, what it means for merchants, and how Quidkey simplifies open finance regardless of regulation.',
+    keyword: 'CFPB Rule 1033',
+    author: 'Matthew Bartlett',
+    authorLinkedIn: 'https://www.linkedin.com/in/matthew-bartlett-b6587346/',
+    image: '/images/blog/open-finance-us-rule-1033.png',
+    featured: true,
+    blocks: [
+      {
+        type: 'ul',
+        items: [
+          'Open finance lets both business and consumers control and share their financial data with third-party apps, which allows, among other things, businesses to accept direct account-to-account (A2A) bank payments from their customers.',
+          'The CFPB has finally promulgated a rule under Section 1033 of the Dodd-Frank Act, which is designed to bolster US open finance and turn consumer data access into a legal right, not a negotiated privilege — but the new rule is currently paused by litigation.',
+          'Incumbent banks in the US continue to oppose open finance under Section 1033, arguing instead for paid access and contractual control.',
+          'Despite regulatory delays, consumer demand for integrated financial services continues to drive increasing adoption of US open finance solutions, benefitting both business and their customers.',
+        ],
+      },
+      { type: 'h3', text: 'What is Open Finance in the US?' },
+      {
+        type: 'html',
+        html: 'Open finance is the idea that <em><strong>people – not financial institutions – should control the flow of their financial data</strong></em>. In practice this means you can permission an app or service (payments, identity, budgeting, lending, investing, accounting, payroll) via Application Programming Interfaces (APIs) to securely access your accounts and transaction history, and you can revoke that access when you want. You can find more information on US open finance <a href="/blog/open-finance-in-the-us-part-1"><strong>here</strong></a>.',
+      },
+      {
+        type: 'html',
+        html: 'In the EU and the UK this paradigm is implemented via a consistent regulatory framework (PSD2) requiring banks to build data-sharing infrastructure to provide secure data access to consumers and authorized third parties via standardized, free and seamless APIs. You can find more information on EU/UK open-banking <a href="/blog/open-banking-payments-in-the-uk"><strong>here</strong></a>.',
+      },
+      {
+        type: 'p',
+        text: 'Until recently, however, US authorities have eschewed a comprehensive regulatory framework. This regulatory vacuum in the US has led to a fragmented, inconsistent and expensive – what industry insiders euphemistically label the "market-led" – approach to open-finance, which has developed as a permissioned pay-to-play scheme where financial institutions make consumer data available to a limited number of aggregators for a hefty fee.',
+      },
+      {
+        type: 'p',
+        text: 'Now, with US business and consumers waking up to the possibilities of choice and control when it comes to their financial data, they have begun to demand more from their financial service providers. This user driven push, combined with the deficiencies inherent in a purely market lead approach, has prompted the Consumer Financial Protection Bureau (CFPB) to finally make good in its legal mandate and formalize rules relating to the data access requirements in Section 1033 of the Dodd-Frank Act.',
+      },
+      { type: 'h3', text: 'Section 1033: US Consumer Demand and CFPB Regulatory Catch-Up' },
+      {
+        type: 'p',
+        text: 'Section 1033 was drafted as part of the broader Dodd-Frank Wall Street Reform and Consumer Protection Act of 2010. It mandates that financial institutions provide consumers with access to their personal financial transaction data, enabling them to share it with authorized third parties, fostering "open banking" for better financial products and services. Obviously, the major financial institutions have been opposed to the notion that consumers should own, and control access to, their own data from the start, engineering a miasma of political interference and regulatory inertia that has delayed action on this mandate for over a decade while other jurisdictions (UK, EU, APAC, etc.) race ahead. However, despite ongoing litigation as entrenched financial intuitions attempt to delay or prevent enforcement, the CFPB finally promulgated its Personal Financial Data Rights rule in October 2024, initiating a phased implementation of Section 1033.',
+      },
+      {
+        type: 'p',
+        text: 'The new rule issued by the CFPB under Section 1033 requires covered "data providers" to make "covered data" available electronically to consumers and to "authorized third parties," using secure and reliable mechanisms. Two points became especially contentious with financial institutions:',
+      },
+      {
+        type: 'ol',
+        items: [
+          'No-fee access / charging restrictions – banks generally want to monetize access; consumers and innovators want data portability at marginal cost.',
+          'You can\'t satisfy the obligation by allowing screen scraping – the rule is designed to push the market toward safer, permissioned access methods via APIs and direct integration.',
+        ],
+      },
+      {
+        type: 'html',
+        html: 'It should come as no surprise that the new rule under Section 1033 has not been embraced by US banks, who have instead sued to stop implementation, arguing that the new rule (i) imposes large implementation costs, (ii) forces infrastructure investment on an aggressive timeline, (iii) creates data security vulnerabilities, and (iv) exceeds CFPB authority. On their face, these self-serving bank arguments present as disingenuous pretense and are difficult to reconcile with the fact that (a) most of these same US financial institutions opposing the rule have already made the implementation investments to comply with EU/UK PSD2 requirements overseas and (b) security requirements in connection with Secure Customer Authorization (SCA) under the PSD2 framework have vastly improved data security in connection with open-banking standards as compared to traditional banking models. However, the CFPB has nonetheless paused enforcement and is currently revisiting the proposed framework, which given its DOGE induced near-death experience and significantly reduced capacity, could take some time. <em><strong>Despite this, consumer demand for integrated financial services continues to drive significantly increased adoption of open finance solutions every day.</strong></em>',
+      },
+      { type: 'html', html: '<strong>Key Takeaways of Section 1033:</strong>' },
+      {
+        type: 'html',
+        html: '<ul><li><strong>Consumer Right to Data:</strong> Consumers can request their transaction history, account details (balances, fees, usage), and other related information from their financial providers.</li><li><strong>Data Sharing and Data Portability:</strong> Allows consumers to direct their data to other apps or services (like budgeting tools or fintech apps) to compare options and get better financial management. Provides for easy transfer of consumer financial data between different providers, promoting competition and innovation by making financial data portable.</li><li><strong>Recent Regulatory Activity:</strong><ul><li><strong>Final Rule (Nov 2024):</strong> The Consumer Financial Protection Bureau (CFPB) issued the Personal Financial Data Rights (PFDR) Rule, mandating data providers (banks, lenders) share transaction/usage data and establishing protocols for third-party access, aiming to give consumers control over their financial information.</li><li><strong>Implementation Focus:</strong> The rule introduces phased compliance, with larger institutions starting April 2026 and smaller ones by April 2030, emphasizing secure data sharing and consumer authorization.</li><li><strong>Legal Challenges:</strong> Banks have filed lawsuits challenging the rule and seeking to protect their entrenched tollbooth status, leading the CFPB to pause enforcement and compliance deadlines.</li><li><strong>Interim Rule Consideration:</strong> The CFPB is actively working on an interim rule for Section 1033, signaling adjustments to the original final rule to smooth out technical and implementation hurdles.</li></ul></li></ul>',
+      },
+      { type: 'h3', text: 'Where Do We Go From Here?' },
+      {
+        type: 'p',
+        text: 'Well – that\'s really anyone\'s guess, but here are a couple plausible paths for consideration:',
+      },
+      {
+        type: 'html',
+        html: '<strong><u>Future A</u>: Regulatory baseline promoting innovation and competition (1033 revived, revised or reissued by CFPB)</strong>',
+      },
+      {
+        type: 'p',
+        text: 'If a revised 1033 rule becomes operative after the current stay, expect these structural shifts:',
+      },
+      {
+        type: 'ol',
+        items: [
+          'Data access becomes a right, not a negotiated privilege: Data providers must support access to covered data for consumers and authorized third parties on standardized terms.',
+          'Screen scraping gets squeezed out: The rule is designed to make secure, permissioned access the norm.',
+          'More uniform security + authorization expectations: The rule\'s "authorized third party" concept is meant to formalize responsibilities on the receiving side (privacy, security, authorization procedures).',
+          'Standards emerge for APIs and other technical requirements. Increased technical standardization boosts access and adoption.',
+        ],
+      },
+      { type: 'html', html: '<strong>Who benefits:</strong>' },
+      {
+        type: 'ul',
+        items: [
+          'Consumers (clearer rights and revocation)',
+          'Innovators (predictable access)',
+          'Competition and switching',
+        ],
+      },
+      { type: 'html', html: '<strong>Who loses leverage:</strong>' },
+      {
+        type: 'ul',
+        items: [
+          'Large incumbent banks that rely on monopolized data control',
+          'Institutions that monetize access scarcity',
+        ],
+      },
+      {
+        type: 'html',
+        html: '<strong><u>Future B</u>: Industry Lead, monopolized control of your data (contracts and toll-trolls)</strong>',
+      },
+      {
+        type: 'p',
+        text: 'If the CFPB framework stays weakened or stalled long-term, we\'ll see open finance continue to betray its moniker as it further consolidates around power centers.',
+      },
+      {
+        type: 'ol',
+        items: [
+          'Paid access becomes the default: The reported JPMorgan approach — charging aggregators for access — becomes standard among large banks.',
+          'Bilateral terms shape competition: Access, rate limits, feature completeness (ex., balances, pending transactions, enriched metadata), and uptime SLOs become commercial levers.',
+          'Security remains uneven: Big banks can enforce strong security requirements via contracts, but smaller institutions may lag or outsource, producing a two-tier ecosystem.',
+          'Higher barriers for startups and reduced innovation: If every major bank has fees + bespoke onboarding + legal review, early-stage fintechs face "integration tax," which tends to favor incumbents and well-funded platforms at the expense of consumers.',
+        ],
+      },
+      { type: 'html', html: '<strong>Who Benefits:</strong>' },
+      {
+        type: 'ul',
+        items: [
+          'Big banks: retain pricing and platform control',
+          'Large aggregators: may become "regulated-like utilities" through private deals',
+        ],
+      },
+      { type: 'html', html: '<strong>Who gets railroaded:</strong>' },
+      {
+        type: 'ul',
+        items: [
+          'Consumers: experience depends heavily on which institutions they use and which apps can afford access; higher expenses with less innovation and limited choice and control',
+          'Innovators: face higher barriers to entry and slower time-to-market',
+        ],
+      },
+      {
+        type: 'p',
+        text: 'While in reality we\'ll likely end up somewhere in between, the debate around Rule 1033 really boils down to whether financial data belongs to the institution that holds it or the user it pertains to. And despite the lack of clarity on the regulatory front, two corresponding themes are becoming increasingly apparent:',
+      },
+      {
+        type: 'ol',
+        items: [
+          'Users are demanding open access and control over their financial data in standardized, innovative and usable ways; and',
+          'Businesses across the board benefit by incorporating open-finance solutions into their business operations and payment flows by increasing conversion and reducing processing costs.',
+        ],
+      },
+      {
+        type: 'h3',
+        text: 'How Quidkey Solves and Simplifies Open Finance in Any Regulatory Environment to Help Your Business Grow',
+      },
+      {
+        type: 'html',
+        html: 'Regardless of the regulatory forces at work – or the lack thereof – <em>Quidkey solves the issues inherent in the US open finance ecosystem and handles the complexity so you can be free to focus on your business</em>.',
+      },
+      {
+        type: 'ul',
+        items: [
+          'Our comprehensive platform coordinates payment orchestration across different geographical markets and automatically selects the best solution for each payment to eliminate coverage gaps, outages and throttling, thus ensuring the highest success rate.',
+          'We manage all bank integrations and authentication flows, exclusively utilizing direct tokenized/OAuth connections, instead of data scraping, to protect user data and eliminate the risk of broken integrations.',
+          'We\'ve engineered consistent data workflows providing easily managed data parameters.',
+          'We\'ve built customizable A2A payment workflows allowing you to manage the flow of funds, refunds and treasury to suit your business needs.',
+          'We provide a global solution, supporting currency exchange and cross border payments, and serving you a single interface for your business to start accepting cross-border open finance payments instantly.',
+          'Our predictive algorithm automatically identifies and displays the customer\'s bank at checkout, making the experience faster, more intuitive, and built upon the recognition customers already have with their bank, leading to higher conversion rates and lower cost payments.',
+        ],
+      },
+      {
+        type: 'p',
+        text: 'Quidkey simplifies payments so you can focus on growing your business. Customize your payment flows, accept payments across borders, support multiple currencies, and go live in minutes.',
+      },
+      {
+        type: 'html',
+        html: '<strong>Quidkey vs. Existing Fragmented Open Finance Providers in the US</strong>',
+      },
+      {
+        type: 'table',
+        headers: ['', 'Quidkey', 'Existing Fragmented Options in US'],
+        rows: [
+          [
+            'Integration',
+            'One-click integration, no technical expertise required',
+            'Requires extensive technical expertise and development resources',
+          ],
+          ['Coverage', 'US, UK, EU, AUS, CAN', 'Limited to domestic solutions only'],
+          ['Cross-border & FX', 'Supported with built-in FX management', 'Not supported'],
+          [
+            'Bank Prediction at Checkout',
+            "Proprietary technology surfaces customer's bank automatically at checkout",
+            'Customer must choose bank manually from long list, increasing drop off rates',
+          ],
+          [
+            'Customizable Payment Flows',
+            'Customize and automate your funds flows to support your business needs',
+            'Not supported',
+          ],
+          [
+            'Rewards',
+            'Merchants can offer loyalty programs and rewards to encourage bank payments',
+            'Not supported',
+          ],
+          [
+            'All major e-commerce platforms (yes, including Shopify)',
+            'Open finance solutions available and active on Shopify exclusively with Quidkey',
+            'Not supported',
+          ],
+          ['Refunds', 'One-click refunds supported', 'Requires manual credit via merchant bank account'],
+          [
+            'Payment Links',
+            'Send white-labeled payment links to customers or suppliers',
+            'Not supported',
+          ],
+          [
+            'Fraud and reputation checks on consumers',
+            'Real-time fraud and consumer reputation checks to reduce "friendly fraud", reversals and chargebacks',
+            'Not supported',
+          ],
+          [
+            'Flexible pricing with no commitments',
+            'Always - usage based with no rigid contractual commitments',
+            'No – must commit to long term contractual obligations and fees',
+          ],
+        ],
+      },
+      {
+        type: 'p',
+        text: 'Existing players in the US market offer fragmented infrastructure built upon screen scraping, uneven security standards and clunky user experiences, falling short of delivering a seamless and secure checkout experience. Quidkey fills that gap by combining real time orchestration, predictive bank selection, customizable payments workflows, platform integrations, and built in cross-border support for an innovative and globalized open finance solution.',
+      },
+      { type: 'h3', text: 'Open Finance Benefits for Business and Consumers' },
+      { type: 'html', html: '<strong>For Merchants</strong>' },
+      {
+        type: 'html',
+        html: "<ul><li><strong>Customizable flows and Increased liquidity:</strong> Customize your funds flow and direct receivables to enhance operating efficiency. Payments clear with same-day ACH or instant payments (RTP /FedNow), helping improve float and cash flow.</li><li><strong>Greater protections against chargebacks and fraud:</strong> Real time data analytics evaluating consumer profile and reputation. Payments are authenticated by the customer's bank, reducing fraud risk and related disputes. No card network mandated chargebacks.</li><li><strong>Lower fees:</strong> By bypassing card networks and intermediaries, businesses can significantly reduce processing costs.</li></ul>",
+      },
+      { type: 'html', html: '<strong>For Customers</strong>' },
+      {
+        type: 'html',
+        html: "<ul><li><strong>Stronger protection against fraud:</strong> Every payment requires secure bank authentication, often with biometrics or two factor login. And no card numbers mean there is nothing to steal.</li><li><strong>Faster checkout:</strong> Customers approve payments directly in their banking app.</li><li><strong>Real time control and visibility:</strong> Payments are authorized through the customer's own bank, with instant confirmation and a clear transaction record.</li></ul>",
+      },
+      {
+        type: 'html',
+        html: '<strong>Add Quidkey to your checkout today – </strong><a href="https://merchants.quidkey.com/signup">Start Accepting Payments</a>',
+      },
+    ],
+  },
+  {
     slug: 'we-launched-a-new-website-in-a-day',
     date: 'March 4, 2026',
     dateISO: '2026-03-04',
