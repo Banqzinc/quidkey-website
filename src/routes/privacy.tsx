@@ -18,9 +18,12 @@ function PrivacyPage() {
     <PageLayout>
       <section className="pt-24 pb-16 md:pt-32 md:pb-24">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-12">
-            Quidkey - Website Privacy Notice (June.2025)
+          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
+            Quidkey - Website Privacy Notice
           </h1>
+          <div className="flex items-center gap-3 text-sm text-muted-foreground mb-12">
+            <span>Last updated June 2025</span>
+          </div>
 
           <div className="space-y-10">
             {/* Introduction */}
