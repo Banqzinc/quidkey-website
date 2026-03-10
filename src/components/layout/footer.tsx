@@ -32,6 +32,7 @@ export function Footer() {
     ],
     Legal: [
       { label: 'Privacy Notice', href: '/privacy' },
+      { label: 'End-User Privacy Notice', href: '/end-user-privacy' },
       { label: 'Terms of Use', href: '/terms' },
       { label: 'Cookies', href: '/cookies' },
       { label: 'Complaints Procedure', href: '/complaints' },

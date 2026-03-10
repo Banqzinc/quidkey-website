@@ -2,27 +2,27 @@ import { createFileRoute } from '@tanstack/react-router'
 import { PageLayout } from '@/components/layout/page-layout'
 import { buildSeo } from '@/lib/seo'
 
-export const Route = createFileRoute('/privacy')({
-  component: PrivacyPage,
+export const Route = createFileRoute('/end-user-privacy')({
+  component: EndUserPrivacyPage,
   head: () =>
     buildSeo({
-      title: 'Website Privacy Notice: Data Use & Rights | Quidkey',
+      title: 'End-User Privacy Notice | Quidkey',
       description:
-        'How Quidkey collects, uses, and protects personal data when you browse this website, contact our team, or apply for a role.',
-      path: '/privacy',
+        'How Quidkey collects, uses, and protects personal data when you use our payment services, including data retention, your rights, and international transfers.',
+      path: '/end-user-privacy',
     }),
 })
 
-function PrivacyPage() {
+function EndUserPrivacyPage() {
   return (
     <PageLayout>
       <section className="pt-24 pb-16 md:pt-32 md:pb-24">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
-            Quidkey - Website Privacy Notice
+            Quidkey - End-User Privacy Notice
           </h1>
           <div className="flex items-center gap-3 text-sm text-muted-foreground mb-12">
-            <span>Last updated June 2025</span>
+            <span>Last updated June 5, 2025</span>
           </div>
 
           <div className="space-y-10">
@@ -42,25 +42,74 @@ function PrivacyPage() {
                 <p>
                   This Privacy Policy (&ldquo;<strong>Policy</strong>&rdquo;) explains how information
                   about you is collected, stored, processed, and used by us in connection with your
-                  use of our Website provided directly from your accessing, using and filling out of
-                  the Beta registration (collectively, the &ldquo;<strong>Website</strong>&rdquo;).
-                  The Website is not directed to users under the age of 18. We do not knowingly
+                  use of our services, such as our payment gateway that enables you to access card
+                  network and cardless payment solutions, and other consumer finance products
+                  (including but not limited to, account-to-account payments, FX and remittance
+                  solutions, direct debit transactions, consumer loans, closed-end installment loans
+                  and payment deferral options) provided directly from your own preferred financial
+                  institution at the point of purchase in-store or on a given merchant&apos;s
+                  e-commerce checkout page (collectively, the &ldquo;
+                  <strong>Service(s)</strong>&rdquo;).
+                </p>
+                <p>
+                  The Service leverages financial institution and payment services provider
+                  infrastructure and utilizes application programming interfaces (&ldquo;
+                  <strong>API</strong>&rdquo;) between the financial institution and/or payment
+                  services provider, as applicable, and e-commerce merchant servers to identify the
+                  consumer&apos;s retail banking relationships and present available payment solutions,
+                  including certain payment/installment plans offered by such consumer&apos;s bank. The
+                  Service also provides cardless payment gateway services, including collecting and
+                  transmitting consumer information to the consumer&apos;s bank and instructing banks
+                  and other payment service providers to initiate fund transfers to merchant accounts,
+                  as well as merchant onboarding and verification.
+                </p>
+                <p>
+                  The Service is not directed to users under the age of 18. We do not knowingly
                   collect information or data from children under the age of 18 or knowingly allow
                   minors under the age of 18 to use the Service.
                   <strong>
                     {' '}
-                    By using any aspect of the Website, you warrant that you are 18 years of age or
+                    By using any aspect of the Service, you warrant that you are 18 years of age or
                     older, have read and have the legal capacity to understand this Policy.
+                  </strong>
+                </p>
+                <p>
+                  <strong>
+                    Please note that this Policy covers the Services privacy practices in general
+                    matters. For the avoidance of doubt, for the purposes of this Policy, the merchant
+                    partners, payment service providers and financial institutions are companies which
+                    may have executed agreements with the Company to receive, utilize and/or participate
+                    in the Service. If your Personal Data is provided to us as a result of our
+                    relationships with them, please note that they are the responsible party for
+                    providing privacy notices, obtaining the consents from you (where required), and
+                    complying with any applicable laws and regulations with respect to the collection,
+                    processing, transfer and use of your Personal Data. Where the Company collects
+                    Personal Data from one of our merchant partners, payment service providers, or from
+                    a financial institution, we will act as a processor, not a controller of such data,
+                    and will process that data according to the instructions of the controller, as
+                    permitted by law and/or in accordance with your consent.
+                  </strong>
+                </p>
+                <p>
+                  <strong>
+                    Such merchant partners, payment service providers, or financial institutions may
+                    also have additional privacy notices explaining their own specific privacy practices
+                    related to your Personal Data. We are not responsible for the privacy practices or
+                    the content of the merchant partners, payment service providers or financial
+                    institutions. Please be aware that they may collect Personal Data from you.
+                    Accordingly, we encourage you to read their terms and conditions and privacy
+                    policies.
                   </strong>
                 </p>
                 <p>
                   This Policy may be amended from time to time. If the revised version requires notice
                   in accordance with applicable law, we will provide you with a 30-day prior notice by
                   posting notice of the change or revised Policy on the Privacy Policy page of our
-                  Website. If you are a new Website user or are receiving this Policy for the first
-                  time and there is an upcoming change described on the Privacy Policy page at the time
-                  you receive this Policy, such upcoming change will apply to you on the indicated
-                  effective date.
+                  Website. Where such amendments are substantial, we will directly and actively notify
+                  you of such change (e.g. by email or a pop-up page). If you are a new user or are
+                  receiving this Policy for the first time and there is an upcoming change described on
+                  the Privacy Policy page at the time you receive this Policy, such upcoming change
+                  will apply to you on the indicated effective date.
                 </p>
                 <p>
                   <strong>Contact us</strong>
@@ -99,44 +148,51 @@ function PrivacyPage() {
                       <td className="border border-border p-3"><strong>Contacting us with an inquiry through our Email or our online contact form</strong></td>
                       <td className="border border-border p-3">Responding to individual inquiries</td>
                       <td className="border border-border p-3">Our legitimate interest in responding to individual queries</td>
-                      <td className="border border-border p-3">Website User</td>
+                      <td className="border border-border p-3">Consumer</td>
                       <td className="border border-border p-3">Your full name, email address, mobile phone number, the subject of your inquiry and the text of your message.</td>
                       <td className="border border-border p-3">Quidkey</td>
                       <td className="border border-border p-3">
                         Data Processor:<br />
                         &bull; Cloud providers (such as Google Cloud, subject to the following additional policy:{' '}
                         <a className="text-primary hover:underline" href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">https://policies.google.com/privacy</a>);<br />
-                        &bull; Technology providers or potential partners provide software or services to help us provide the Website
+                        &bull; Technology providers or potential partners provide software or services to help us provide the Services
                       </td>
                       <td className="border border-border p-3">Personal Data we collect is stored on infrastructure provided by Google Cloud Platform (GCP), which may be located within the United States, the UK, the EU or Australia (&ldquo;Storage Locations&rdquo;)</td>
                     </tr>
                     <tr>
                       <td className="border border-border p-3"><strong>When you provide us with your feedback and reviews</strong></td>
                       <td className="border border-border p-3">Responding to your feedback or reviews</td>
-                      <td className="border border-border p-3">Our legitimate interest to address your feedback and improve our Website.</td>
-                      <td className="border border-border p-3">Website User</td>
+                      <td className="border border-border p-3">Our legitimate interest to address your feedback and improve our services.</td>
+                      <td className="border border-border p-3">Consumer</td>
                       <td className="border border-border p-3">Full name, email address, mobile phone number and the feedback or review.</td>
                       <td className="border border-border p-3">Quidkey</td>
                       <td className="border border-border p-3">
                         Data Processor:<br />
                         &bull; Cloud providers (such as Google Cloud, subject to the following additional policy:{' '}
                         <a className="text-primary hover:underline" href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">https://policies.google.com/privacy</a>);<br />
-                        &bull; Technology providers or potential partners provide software or services to help us provide the Website
+                        &bull; Technology providers or potential partners provide software or services to help us provide the Services
                       </td>
                       <td className="border border-border p-3">Personal Data we collect is stored on infrastructure provided by Google Cloud Platform (GCP), which may be located within the United States, the UK, the EU or Australia (&ldquo;Storage Locations&rdquo;)</td>
                     </tr>
                     <tr>
-                      <td className="border border-border p-3"><strong>When you fill out the Beta Registration Form on our Website</strong></td>
-                      <td className="border border-border p-3">To be able to be considered as one of our Merchants</td>
-                      <td className="border border-border p-3">Our legitimate interest to consider you to become one of our Merchants</td>
-                      <td className="border border-border p-3">Website User</td>
-                      <td className="border border-border p-3">Full name, email, mobile phone number and URL.</td>
+                      <td className="border border-border p-3"><strong>If you abuse of your rights to use the Service or violated any applicable law while doing business with us</strong></td>
+                      <td className="border border-border p-3">Responding, handling and mitigating the suspected violations of law in connection with our business</td>
+                      <td className="border border-border p-3">Our legitimate interest in defending ourselves against the suspected violation of law that is harmful to our business</td>
+                      <td className="border border-border p-3">Consumer</td>
+                      <td className="border border-border p-3">
+                        Financial Information, such as banking details, bank account information payment information and payment card numbers.<br /><br />
+                        Transaction data, including previous transaction data, such as date of transaction, transaction amounts, refund/discount amounts (if any), product/service purchased, type of payment solution used, financial information such as bank account and payment card numbers, currency, payee, financial institution used, other transaction details.<br />
+                        Phone number, email address, address, any other information required by law.
+                      </td>
                       <td className="border border-border p-3">Quidkey</td>
                       <td className="border border-border p-3">
+                        Independent Data Controller:<br />
+                        &bull; Competent authorities;<br />
+                        &bull; Legal counsels; and<br />
+                        &bull; Advisors.<br />
                         Data Processor:<br />
                         &bull; Cloud providers (such as Google Cloud, subject to the following additional policy:{' '}
-                        <a className="text-primary hover:underline" href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">https://policies.google.com/privacy</a>);<br />
-                        &bull; Technology providers or potential partners provide software or services to help us provide the Website
+                        <a className="text-primary hover:underline" href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">https://policies.google.com/privacy</a>);
                       </td>
                       <td className="border border-border p-3">Personal Data we collect is stored on infrastructure provided by Google Cloud Platform (GCP), which may be located within the United States, the UK, the EU or Australia (&ldquo;Storage Locations&rdquo;)</td>
                     </tr>
@@ -144,7 +200,7 @@ function PrivacyPage() {
                       <td className="border border-border p-3"><strong>If a judicial, governmental or regulatory authority requires us to disclose your information</strong></td>
                       <td className="border border-border p-3">Complying with a binding request from a competent authority</td>
                       <td className="border border-border p-3">Necessity for compliance with a legal obligation to which Quidkey is subject</td>
-                      <td className="border border-border p-3">Website User</td>
+                      <td className="border border-border p-3">Consumer</td>
                       <td className="border border-border p-3">Hole or part of the above-mentioned information as necessary for complying with a binding request from a competent authority</td>
                       <td className="border border-border p-3">Quidkey</td>
                       <td className="border border-border p-3">
@@ -160,7 +216,7 @@ function PrivacyPage() {
                       <td className="border border-border p-3"><strong>If the operation of the Service or our business is organized within a different framework, or through another legal structure or entity</strong></td>
                       <td className="border border-border p-3">Enabling a structural change in the operation of the Service and our business</td>
                       <td className="border border-border p-3">Legitimate interest in our business continuity. In that regard, the personal data will be shared in accordance with the data minimization principle, only disclosing what is necessary for the relevant step of the structural change) and without prejudice to any additional information notice to be provided to you.</td>
-                      <td className="border border-border p-3">Website User</td>
+                      <td className="border border-border p-3">Consumer</td>
                       <td className="border border-border p-3">Hole or apart of the above-mentioned information controlled by the former entity</td>
                       <td className="border border-border p-3">Quidkey</td>
                       <td className="border border-border p-3">
@@ -171,7 +227,7 @@ function PrivacyPage() {
                         Data Processor:<br />
                         &bull; Cloud providers (such as Google Cloud, subject to the following additional policy:{' '}
                         <a className="text-primary hover:underline" href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">https://policies.google.com/privacy</a>);<br />
-                        &bull; Technology providers or potential partners provide software or services to help us provide the Website
+                        &bull; Technology providers or potential partners provide software or services to help us provide the Services
                       </td>
                       <td className="border border-border p-3">Personal Data we collect is stored on infrastructure provided by Google Cloud Platform (GCP), which may be located within the United States, the UK, the EU or Australia (&ldquo;Storage Locations&rdquo;)</td>
                     </tr>
@@ -179,8 +235,8 @@ function PrivacyPage() {
                       <td className="border border-border p-3"><strong>Further uses of non-personal data</strong></td>
                       <td className="border border-border p-3">Anonymization and aggregation of personal data resulting for such processing would no longer be personal data under GDPR</td>
                       <td className="border border-border p-3">Legitimate interest to preserve privacy of the Data Subjects and abide by data minimization of GDPR</td>
-                      <td className="border border-border p-3">Website User</td>
-                      <td className="border border-border p-3">All or part of the above-mentioned information</td>
+                      <td className="border border-border p-3">Consumer</td>
+                      <td className="border border-border p-3">Transaction data, including previous transaction data, such as date of transaction, transaction amounts, refund/discount amounts (if any), product/service purchased, type of payment solution used, financial information such as bank account and payment card numbers, currency, payee, financial institution used, other transaction details</td>
                       <td className="border border-border p-3">Quidkey</td>
                       <td className="border border-border p-3">
                         Independent Data Controller:<br />
@@ -189,7 +245,7 @@ function PrivacyPage() {
                         Data Processor:<br />
                         &bull; Cloud providers (such as Google Cloud, subject to the following additional policy:{' '}
                         <a className="text-primary hover:underline" href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">https://policies.google.com/privacy</a>);<br />
-                        &bull; Technology providers or potential partners provide software or services to help us provide the Website
+                        &bull; Technology providers or potential partners provide software or services to help us provide the Services
                       </td>
                       <td className="border border-border p-3">Personal Data we collect is stored on infrastructure provided by Google Cloud Platform (GCP), which may be located within the United States, the UK, the EU or Australia (&ldquo;Storage Locations&rdquo;)</td>
                     </tr>
@@ -199,7 +255,8 @@ function PrivacyPage() {
               <p className="text-base text-muted-foreground mt-4">
                 You do not have a legal obligation to provide the information that we request. However,
                 if you choose not to provide this information to us, we may not be able to process your
-                feedback and respond to your inquiry or otherwise provide the Website.
+                purchase, process your feedback and respond to your inquiry, or otherwise provide the
+                Service.
               </p>
             </section>
 
@@ -209,14 +266,17 @@ function PrivacyPage() {
               <div className="space-y-4 text-base text-muted-foreground">
                 <p>We collect the personal information from several sources:</p>
                 <ul className="list-disc pl-6 space-y-2">
-                  <li>Through your interactions with and use of the Website, including both information you provide to us and information we derive from such usage;</li>
+                  <li>Through your interactions with and use of the Service, including both information you provide to us and information we derive from such usage;</li>
                   <li>When provided to us through our email, online contact form or registration forms;</li>
-                  <li>Through the device you use to access our Website, including through third party cookies and analytics tools, such as Google Analytics.</li>
+                  <li>From the operators of the e-commerce websites, our merchant partners, financial institutions or payment service providers helping us to operate the Service;</li>
+                  <li>From providers of consumer reporting solutions to identify your preferred banking providers and financial institution affiliations so that we may determine Service eligibility and otherwise customize the Service for you;</li>
+                  <li>From additional third parties as required to verify your identity and eligibility for certain Services;</li>
+                  <li>Through the device you use to access our Service, including through third party cookies and analytics tools, such as Google Analytics.</li>
                 </ul>
                 <p>
                   You are not legally obligated to provide us with your personal information, but if you
                   do not, we will not be able to handle or respond to your inquiry, or to provide our
-                  Website functionalities.
+                  Service functionalities.
                 </p>
               </div>
             </section>
@@ -228,14 +288,14 @@ function PrivacyPage() {
                 <p>
                   <strong>
                     We will retain your information for as long as needed to provide you with our
-                    Website and/or as necessary to comply with our contractual and legal obligations,
+                    Services and/or as necessary to comply with our contractual and legal obligations,
                     resolve disputes, and enforce our agreements
                   </strong>
                   .
                 </p>
                 <p>
                   We will retain your information for as long as needed for the purposes identified in
-                  this Policy, including to operate the Website, to comply with our legal obligations,
+                  this Policy, including to operate the Service, to comply with our legal obligations,
                   resolve disputes, establish and defend legal claims, enforce our agreements and
                   protect against fraudulent activity. The specific retention periods depend on the
                   nature of the information and why it is collected and processed and the nature of the
@@ -244,8 +304,9 @@ function PrivacyPage() {
                 <p>We will retain your personal data for the longest of the following periods:</p>
                 <ul className="list-disc pl-6 space-y-2">
                   <li>Seven years from the collection of the personal data;</li>
+                  <li>The full duration of the commercial relationship with Quidkey;</li>
                   <li>Any statute of limitations applicable thereto;</li>
-                  <li>Any applicable legal retention periods; and</li>
+                  <li>Any applicable legal retention periods, including for tax and KYC purposes; and</li>
                   <li>Any ongoing or otherwise not yet final judicial or administrative proceedings.</li>
                 </ul>
                 <p>
@@ -285,17 +346,16 @@ function PrivacyPage() {
                 </p>
                 <p>
                   We will not discriminate against you if you exercise these privacy rights, or deny,
-                  charge different prices for, or provide a different quality of our Website if you
-                  choose to exercise these rights.
+                  charge different prices for, or provide a different quality of goods or services if
+                  you choose to exercise these rights.
                 </p>
-                <p>
-                  <strong>Do Not Track (DNT)</strong>
-                </p>
+
+                <h3 className="text-lg font-semibold text-foreground">Do Not Track (DNT)</h3>
                 <p>
                   This is a privacy preference that users can set in some web browsers, allowing users
                   to opt out of tracking by websites and online services. At the present time, the
                   World Wide Web Consortium, or W3C, has not yet established universal standards for
-                  recognizable DNT signals, and therefore Quidkey and the Website do not recognize DNT.
+                  recognizable DNT signals, and therefore Quidkey and the Service do not recognize DNT.
                 </p>
               </div>
             </section>
@@ -305,7 +365,7 @@ function PrivacyPage() {
               <h2 className="text-2xl font-semibold mb-4">Information regarding children</h2>
               <div className="space-y-4 text-base text-muted-foreground">
                 <p>
-                  The Website is not directed to children under 18 (or other age as required by local
+                  The Services are not directed to children under 18 (or other age as required by local
                   law), and, except for limited circumstances set forth below, we do not knowingly
                   collect personal information from children. If you learn that your child has provided
                   us with personal information without your consent, you may contact us as set forth
@@ -326,16 +386,14 @@ function PrivacyPage() {
                   Switzerland (FADP).
                 </p>
 
-                <p className="underline">
-                  <strong>Controller</strong>
-                </p>
+                <h3 className="text-lg font-semibold text-foreground">Controller</h3>
                 <p>
                   <strong>
                     If you are a merchant, partner, website visitor or other individual that Quidkey
                     has a direct relationship with and you are located in the EU or UK, Bnqz, Inc. is
-                    the controller of your personal data. If you provide your information to a merchant
-                    that utilizes the Website, the merchant is your data controller and we are acting
-                    as a processor on their behalf.
+                    the controller of your personal data. If you buy something from or otherwise
+                    provide your information to a merchant that utilizes the Service, the merchant is
+                    your data controller and we are acting as a processor on their behalf.
                   </strong>
                 </p>
 
@@ -353,17 +411,20 @@ function PrivacyPage() {
                     </tbody>
                   </table>
                 </div>
+              </div>
+            </section>
 
-                <p className="underline">
-                  <strong>International data transfers</strong>
-                </p>
+            {/* International data transfers */}
+            <section>
+              <h2 className="text-2xl font-semibold mb-4">International data transfers</h2>
+              <div className="space-y-4 text-base text-muted-foreground">
                 <p>
                   Personal Data we collect is stored on infrastructure provided by Google Cloud Platform
                   (GCP), which may be located within the United States, the United Kingdom (UK), the
                   European Union (EU) or Australia (&ldquo;<strong>Storage Locations</strong>&rdquo;).
                 </p>
                 <p>
-                  To facilitate processing your information through the Website and by our service
+                  To facilitate processing your information through the Service and by our service
                   providers, it may be necessary to collect, process and transfer your information
                   across borders to Storage Locations in countries as applicable by each jurisdiction.
                   Some of these jurisdictions do not offer a level of data protection deemed
@@ -380,74 +441,75 @@ function PrivacyPage() {
                   </a>
                   .
                 </p>
+              </div>
+            </section>
 
-                <p className="underline">
-                  <strong>Data subject rights</strong>
-                </p>
+            {/* Data subject rights */}
+            <section>
+              <h2 className="text-2xl font-semibold mb-4">Data subject rights</h2>
+              <div className="space-y-4 text-base text-muted-foreground">
                 <p>You have the following rights under such framework:</p>
-                <ol className="list-decimal pl-6 space-y-2">
-                  <li>
-                    <strong>Right to Access </strong>and receive a copy of your personal information
-                    that we process.
-                  </li>
-                  <li>
-                    <strong>Right to Rectify</strong> inaccurate personal information we have
-                    concerning you and to have incomplete personal information completed.
-                  </li>
-                  <li>
-                    <strong>Right to easily, freely and at any time withdraw your consent</strong>{' '}
-                    when such consent is the legal basis for the processing of your personal data. The
-                    withdrawal of consent will not affect the lawfulness of processing based on consent
-                    before its withdrawal.
-                  </li>
-                  <li>
-                    <strong>Right to opt-out</strong> of the sharing of your personal information for
-                    marketing purposes.
-                  </li>
-                  <li>
-                    <strong>Right to Data Portability</strong>, that is, to receive the personal
-                    information that you provided to us, in a structured, commonly used, and
-                    machine-readable format, which has been processed (i) under the consent or
-                    necessity for the performance of a contract legal basis and (ii) by electronic
-                    means. You have the right to transmit this data to another person or entity. Where
-                    technically feasible, you have the right to have your personal information
-                    transmitted directly from us to the person or entity you designate.
-                  </li>
-                  <li>
-                    <strong>Right to Object</strong> to our processing of your personal information
-                    based on our legitimate interest. However, we may override the objection if we
-                    demonstrate compelling legitimate grounds, or if we need to process such personal
-                    information for the establishment, exercise, or defense of legal claims.
-                  </li>
-                  <li>
-                    <strong>
-                      Right to Obtain Human Intervention, to express your point of view and contest
-                    </strong>{' '}
-                    to a decision which was made as a result of the profiling of your information.
-                  </li>
-                  <li>
-                    <strong>Right to Restrict </strong>us from processing your personal information
-                    (except for storing it): (a) if you contest the accuracy of the personal
-                    information (in which case the restriction applies only for a period enabling us to
-                    determine the accuracy of the personal information); (b) if the processing is
-                    unlawful and you prefer to restrict the processing of the personal information
-                    rather than requiring the deletion of such data by us; (c) if we no longer need
-                    the personal information for the purposes outlined in this Policy, but you require
-                    the personal information to establish, exercise or defend legal claims; or (d) if
-                    you object to our processing based on our legitimate interest (in which case the
-                    restriction applies only for the period enabling us to determine whether our
-                    legitimate grounds for processing override yours).
-                  </li>
-                  <li>
-                    <strong>Right to be Forgotten</strong>. Under certain circumstances, such as when
-                    you object to our processing of your personal information based on our legitimate
-                    interest and there are no overriding legitimate grounds for the processing, you
-                    have the right to ask us to erase your personal information. However,
-                    notwithstanding such request, we may still process your personal information if it
-                    is necessary to comply with our legal obligations, or for the establishment,
-                    exercise, or defense of legal claims.
-                  </li>
-                </ol>
+                <p>
+                  <strong>Right to Access </strong>and receive a copy of your personal information
+                  that we process.
+                </p>
+                <p>
+                  <strong>Right to Rectify</strong> inaccurate personal information we have
+                  concerning you and to have incomplete personal information completed.
+                </p>
+                <p>
+                  <strong>Right to easily, freely and at any time withdraw your consent</strong>{' '}
+                  when such consent is the legal basis for the processing of your personal data. The
+                  withdrawal of consent will not affect the lawfulness of processing based on consent
+                  before its withdrawal.
+                </p>
+                <p>
+                  <strong>Right to opt-out</strong> of the sharing of your personal information for
+                  marketing purposes.
+                </p>
+                <p>
+                  <strong>Right to Data Portability</strong>, that is, to receive the personal
+                  information that you provided to us, in a structured, commonly used, and
+                  machine-readable format, which has been processed (i) under the consent or
+                  necessity for the performance of a contract legal basis and (ii) by electronic
+                  means. You have the right to transmit this data to another person or entity. Where
+                  technically feasible, you have the right to have your personal information
+                  transmitted directly from us to the person or entity you designate.
+                </p>
+                <p>
+                  <strong>Right to Object</strong> to our processing of your personal information
+                  based on our legitimate interest. However, we may override the objection if we
+                  demonstrate compelling legitimate grounds, or if we need to process such personal
+                  information for the establishment, exercise, or defense of legal claims.
+                </p>
+                <p>
+                  <strong>
+                    Right to Obtain Human Intervention, to express your point of view and contest
+                  </strong>{' '}
+                  to a decision which was made as a result of the profiling of your information.
+                </p>
+                <p>
+                  <strong>Right to Restrict </strong>us from processing your personal information
+                  (except for storing it): (a) if you contest the accuracy of the personal
+                  information (in which case the restriction applies only for a period enabling us to
+                  determine the accuracy of the personal information); (b) if the processing is
+                  unlawful and you prefer to restrict the processing of the personal information
+                  rather than requiring the deletion of such data by us; (c) if we no longer need
+                  the personal information for the purposes outlined in this Policy, but you require
+                  the personal information to establish, exercise or defend legal claims; or (d) if
+                  you object to our processing based on our legitimate interest (in which case the
+                  restriction applies only for the period enabling us to determine whether our
+                  legitimate grounds for processing override yours).
+                </p>
+                <p>
+                  <strong>Right to be Forgotten</strong>. Under certain circumstances, such as when
+                  you object to our processing of your personal information based on our legitimate
+                  interest and there are no overriding legitimate grounds for the processing, you
+                  have the right to ask us to erase your personal information. However,
+                  notwithstanding such request, we may still process your personal information if it
+                  is necessary to comply with our legal obligations, or for the establishment,
+                  exercise, or defense of legal claims.
+                </p>
                 <p>
                   You also have the right to not be subject to a decision exclusively based on
                   automated decision making.
@@ -502,8 +564,9 @@ function PrivacyPage() {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      here.
+                      here
                     </a>
+                    .
                   </li>
                   <li>
                     If you are in the UK, you can lodge a complaint to the Information

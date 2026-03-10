@@ -13,6 +13,7 @@ import { Route as WorkflowsRouteImport } from './routes/workflows'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as EndUserPrivacyRouteImport } from './routes/end-user-privacy'
 import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ComplaintsRouteImport } from './routes/complaints'
@@ -54,6 +55,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
 const PricingRoute = PricingRouteImport.update({
   id: '/pricing',
   path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EndUserPrivacyRoute = EndUserPrivacyRouteImport.update({
+  id: '/end-user-privacy',
+  path: '/end-user-privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CookiesRoute = CookiesRouteImport.update({
@@ -174,6 +180,7 @@ export interface FileRoutesByFullPath {
   '/complaints': typeof ComplaintsRoute
   '/contact': typeof ContactRoute
   '/cookies': typeof CookiesRoute
+  '/end-user-privacy': typeof EndUserPrivacyRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
@@ -202,6 +209,7 @@ export interface FileRoutesByTo {
   '/complaints': typeof ComplaintsRoute
   '/contact': typeof ContactRoute
   '/cookies': typeof CookiesRoute
+  '/end-user-privacy': typeof EndUserPrivacyRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
@@ -231,6 +239,7 @@ export interface FileRoutesById {
   '/complaints': typeof ComplaintsRoute
   '/contact': typeof ContactRoute
   '/cookies': typeof CookiesRoute
+  '/end-user-privacy': typeof EndUserPrivacyRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
@@ -261,6 +270,7 @@ export interface FileRouteTypes {
     | '/complaints'
     | '/contact'
     | '/cookies'
+    | '/end-user-privacy'
     | '/pricing'
     | '/privacy'
     | '/terms'
@@ -289,6 +299,7 @@ export interface FileRouteTypes {
     | '/complaints'
     | '/contact'
     | '/cookies'
+    | '/end-user-privacy'
     | '/pricing'
     | '/privacy'
     | '/terms'
@@ -317,6 +328,7 @@ export interface FileRouteTypes {
     | '/complaints'
     | '/contact'
     | '/cookies'
+    | '/end-user-privacy'
     | '/pricing'
     | '/privacy'
     | '/terms'
@@ -346,6 +358,7 @@ export interface RootRouteChildren {
   ComplaintsRoute: typeof ComplaintsRoute
   ContactRoute: typeof ContactRoute
   CookiesRoute: typeof CookiesRoute
+  EndUserPrivacyRoute: typeof EndUserPrivacyRoute
   PricingRoute: typeof PricingRoute
   PrivacyRoute: typeof PrivacyRoute
   TermsRoute: typeof TermsRoute
@@ -397,6 +410,13 @@ declare module '@tanstack/react-router' {
       path: '/pricing'
       fullPath: '/pricing'
       preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/end-user-privacy': {
+      id: '/end-user-privacy'
+      path: '/end-user-privacy'
+      fullPath: '/end-user-privacy'
+      preLoaderRoute: typeof EndUserPrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cookies': {
@@ -562,6 +582,7 @@ const rootRouteChildren: RootRouteChildren = {
   ComplaintsRoute: ComplaintsRoute,
   ContactRoute: ContactRoute,
   CookiesRoute: CookiesRoute,
+  EndUserPrivacyRoute: EndUserPrivacyRoute,
   PricingRoute: PricingRoute,
   PrivacyRoute: PrivacyRoute,
   TermsRoute: TermsRoute,
