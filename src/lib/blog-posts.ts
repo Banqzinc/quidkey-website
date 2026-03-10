@@ -31,6 +31,74 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'quidkey-is-live-on-shopify',
+    date: 'March 10, 2026',
+    dateISO: '2026-03-10',
+    title: 'Quidkey is Live on the Shopify App Store',
+    seoTitle: 'Quidkey is Live on the Shopify App Store',
+    description:
+      'Quidkey is now an approved Shopify payment partner. Add Pay by Bank to your checkout in a few clicks — lower fees, faster settlement, and one-click refunds.',
+    keyword: 'Shopify Pay by Bank',
+    author: 'Quidkey Team',
+    image: '/images/blog/quidkey-shopify-pay-by-bank.png',
+    featured: true,
+    blocks: [
+      {
+        type: 'html',
+        html: '<strong>Quidkey has been quietly live in the Shopify App Store.</strong>',
+      },
+      {
+        type: 'p',
+        text: 'Over the past few months we\'ve been working with merchants, improving the product, and refining the checkout experience.',
+      },
+      {
+        type: 'html',
+        html: '<strong>Now we\'re officially sharing it.</strong>',
+      },
+      {
+        type: 'p',
+        text: 'As an approved Shopify payment partner, merchants can now integrate Quidkey in just a few clicks and add Pay by Bank as a payment option at checkout.',
+      },
+      {
+        type: 'p',
+        text: 'Pay by Bank means customers pay directly from their bank account. No card numbers, no redirects. They authorise in their banking app and the payment goes through.',
+      },
+      {
+        type: 'p',
+        text: 'For merchants, this changes three things.',
+      },
+      {
+        type: 'html',
+        html: '<strong>Fees drop.</strong> Card networks take a cut of every transaction. Pay by Bank removes that cost, so every order is more profitable.',
+      },
+      {
+        type: 'html',
+        html: '<strong>Settlement is faster.</strong> Bank payments clear quickly. Funds reach your account sooner, without the processing lag that comes with cards.',
+      },
+      {
+        type: 'html',
+        html: '<strong>Checkout converts better.</strong> A simpler payment flow means fewer customers abandon at the last step. Less friction, more completed orders.',
+      },
+      {
+        type: 'html',
+        html: 'Traditionally, Pay by Bank has presented merchants with added complexity when processing refunds, with extra steps and extra costs. Quidkey changes that, with <a href="/blog/pay-by-bank-refunds-shopify-merchants">one-click refunds</a> managed within the Shopify merchant portal.',
+      },
+      {
+        type: 'p',
+        text: 'The Shopify partnership means it is simple to get started. Merchants don\'t need a custom integration or a development team. Simply install the app, connect your store, and Pay by Bank appears as a payment option at checkout. Payments and refunds are managed in one place.',
+      },
+      {
+        type: 'html',
+        html: 'Watch it in action below, or install the Shopify app <a href="https://apps.shopify.com/quidkey-checkout">here</a>.',
+      },
+      {
+        type: 'youtube',
+        videoId: '_DdLIu7tR7c',
+        title: 'Quidkey on Shopify — Pay by Bank Demo',
+      },
+    ],
+  },
+  {
     slug: 'open-finance-in-the-us-part-2-rule-1033',
     date: 'March 5, 2026',
     dateISO: '2026-03-05',
