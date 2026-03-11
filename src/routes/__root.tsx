@@ -7,6 +7,7 @@ import { initClarityWithCookiebot } from '@/lib/clarity'
 import { trackPageView, updateGoogleConsentFromCookiebot } from '@/lib/google-analytics'
 import { initUserbackWithCookiebot } from '@/lib/userback'
 import { initSnitcherWithCookiebot } from '@/lib/snitcher'
+import { initLinkedInWithCookiebot } from '@/lib/linkedin'
 
 const ICON_URL = 'https://storage.googleapis.com/quidkey-resources-public/quidkey-logo-fav.png'
 const COOKIEBOT_DOMAIN_GROUP_ID = 'bcd5bf4b-c074-47cb-b26a-a401acac39b6'
@@ -14,6 +15,7 @@ const CLARITY_PROJECT_ID = 'vdvvqtuvg2'
 const GA_MEASUREMENT_ID = 'G-G2CG1D2Q1C'
 const USERBACK_ACCESS_TOKEN = 'A-T4eFdwAnKc5Yq1y37td2cGRWR'
 const SNITCHER_PROFILE_ID = '8436518'
+const LINKEDIN_PARTNER_ID = '9711353'
 
 const ENABLE_TRACKERS =
   (import.meta.env.VITE_ENABLE_TRACKERS as string | undefined) === 'true' ||
@@ -132,6 +134,7 @@ gtag('config', '${GA_MEASUREMENT_ID}', { send_page_view: false });
             <GoogleAnalyticsCookiebotBridge />
             <UserbackCookiebotBridge />
             <SnitcherCookiebotBridge />
+            <LinkedInCookiebotBridge />
           </>
         ) : null}
         <Scripts />
@@ -202,4 +205,23 @@ function SnitcherCookiebotBridge() {
   }, [])
 
   return null
+}
+
+function LinkedInCookiebotBridge() {
+  useEffect(() => {
+    if (!LINKEDIN_PARTNER_ID) return
+    return initLinkedInWithCookiebot(LINKEDIN_PARTNER_ID)
+  }, [])
+
+  return (
+    <noscript>
+      <img
+        height="1"
+        width="1"
+        style={{ display: 'none' }}
+        alt=""
+        src={`https://px.ads.linkedin.com/collect/?pid=${LINKEDIN_PARTNER_ID}&fmt=gif`}
+      />
+    </noscript>
+  )
 }
