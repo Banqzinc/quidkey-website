@@ -4,7 +4,7 @@ import { Footer } from '@/components/layout/footer'
 import { LinkedInIcon } from '@/components/icons'
 import { getBlogPost } from '@/lib/blog-posts'
 import { MERCHANTS_SIGNUP_URL } from '@/lib/urls'
-import { buildSeo, buildArticleSchema, getSiteUrl } from '@/lib/seo'
+import { buildSeo, buildArticleSchema, buildVideoSchema, getSiteUrl } from '@/lib/seo'
 
 export const Route = createFileRoute('/blog/$slug')({
   head: ({ params }) => {
@@ -61,6 +61,22 @@ function BlogPostPage() {
       })
     : null
 
+  // Generate VideoObject JSON-LD for any YouTube embeds
+  const videoSchemas = post
+    ? post.blocks
+        .filter((block): block is Extract<typeof block, { type: 'youtube' }> => block.type === 'youtube')
+        .map((block) =>
+          buildVideoSchema({
+            name: block.title,
+            description: `${block.title} — ${post.description}`,
+            thumbnailUrl: `https://img.youtube.com/vi/${block.videoId}/maxresdefault.jpg`,
+            uploadDate: post.dateISO,
+            contentUrl: `https://www.youtube.com/watch?v=${block.videoId}`,
+            embedUrl: `https://www.youtube.com/embed/${block.videoId}`,
+          }),
+        )
+    : []
+
   return (
     <div className="min-h-screen">
       <MegaMenu />
@@ -72,6 +88,13 @@ function BlogPostPage() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
         />
       )}
+      {videoSchemas.map((schema, idx) => (
+        <script
+          key={`video-schema-${idx}`}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
 
       <main className="pt-24 pb-16 md:pt-32 md:pb-24">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">

@@ -186,4 +186,35 @@ export function buildArticleSchema({
   }
 }
 
+/**
+ * Generates VideoObject schema JSON-LD for blog posts with embedded videos.
+ * Inject this into the page as a <script type="application/ld+json"> tag.
+ */
+export function buildVideoSchema({
+  name,
+  description,
+  thumbnailUrl,
+  uploadDate,
+  contentUrl,
+  embedUrl,
+}: {
+  name: string
+  description: string
+  thumbnailUrl: string
+  uploadDate: string
+  contentUrl: string
+  embedUrl: string
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name,
+    description,
+    thumbnailUrl,
+    uploadDate,
+    contentUrl,
+    embedUrl,
+  }
+}
+
 export { DEFAULT_OG_IMAGE }
