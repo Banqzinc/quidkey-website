@@ -48,8 +48,8 @@ export const blogPosts: BlogPost[] = [
     featured: true,
     blocks: [
       {
-        type: 'p',
-        text: 'In our previous articles (Open Finance in the US Part 1, Open Finance in the US Part 2 -Rule 1033) we covered how open finance works in the US today and the regulatory landscape around Section 1033. In this piece we get into the technical weeds, what it actually takes to build a Pay By Bank solution in the US compared to the EU and UK, why the infrastructure differences matter more than most people think, and how Quidkey has engineered its way through every one of these challenges to deliver a global solution that actually works.',
+        type: 'html',
+        html: 'In our previous articles (<a href="/blog/open-finance-in-the-us-part-1"><strong>Open Finance in the US Part 1</strong></a>, <a href="/blog/open-finance-in-the-us-part-2-rule-1033"><strong>Open Finance in the US Part 2 -Rule 1033</strong></a>) we covered how open finance works in the US today and the regulatory landscape around Section 1033. In this piece we get into the technical weeds, what it actually takes to build a Pay By Bank solution in the US compared to the EU and UK, why the infrastructure differences matter more than most people think, and how Quidkey has engineered its way through every one of these challenges to deliver a global solution that actually works.',
       },
       {
         type: 'h3',
