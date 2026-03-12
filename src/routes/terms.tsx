@@ -37,7 +37,7 @@ function TermsPage() {
                   home page of which is located at{' '}
                   <a
                     className="text-primary hover:underline"
-                    href="http://www.quidkey.com/"
+                    href="https://www.quidkey.com/"
                     target="_blank"
                     rel="noopener noreferrer"
                   >

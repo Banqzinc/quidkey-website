@@ -50,6 +50,11 @@ export const Route = createRootRoute({
         href: ICON_URL,
       },
       {
+        rel: 'preload',
+        href: '/quidkey-logo.svg',
+        as: 'image',
+      },
+      {
         rel: 'preconnect',
         href: 'https://fonts.googleapis.com',
       },

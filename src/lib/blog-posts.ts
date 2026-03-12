@@ -46,7 +46,7 @@ export const blogPosts: BlogPost[] = [
     keyword: 'Pay By Bank in the US',
     author: 'Rabea Bader',
     authorLinkedIn: 'https://www.linkedin.com/in/rabea-bader/',
-    image: '/images/blog/open-finance-us-part-3.png',
+    image: '/images/blog/open-finance-us-part-3.webp',
     imageWidth: 1024,
     imageHeight: 774,
     imageFit: 'contain',
@@ -57,7 +57,7 @@ export const blogPosts: BlogPost[] = [
         html: 'In our previous articles (<a href="/blog/open-finance-in-the-us-part-1"><strong>Open Finance in the US Part 1</strong></a>, <a href="/blog/open-finance-in-the-us-part-2-rule-1033"><strong>Open Finance in the US Part 2 -Rule 1033</strong></a>) we covered how open finance works in the US today and the regulatory landscape around Section 1033. In this piece we get into the technical weeds, what it actually takes to build a Pay By Bank solution in the US compared to the EU and UK, why the infrastructure differences matter more than most people think, and how Quidkey has engineered its way through every one of these challenges to deliver a global solution that actually works.',
       },
       {
-        type: 'h3',
+        type: 'h2',
         text: 'The EU and UK: One Integration, Direct Push Payment Bank APIs, and Irrevocable Payments',
       },
       {
@@ -77,7 +77,7 @@ export const blogPosts: BlogPost[] = [
         text: "Still, the core mechanics work in your favor. You can connect once, access data, push payments, and once a payment is confirmed there's no way to cancel it. The funds are captured and sent. For a payment company building in that ecosystem, the challenges are real but they're mostly about dealing with bad API implementations, not about fundamentally rethinking how money moves.",
       },
       {
-        type: 'h3',
+        type: 'h2',
         text: 'The US (Currently): No Regulatory Rails, No Push Payments, and a Whole Lot of Complexity',
       },
       {
@@ -109,7 +109,7 @@ export const blogPosts: BlogPost[] = [
         text: "Now, is that fraud? Sometimes. In some cases regulators and banks will flag it as a fraudulent transaction. But in many cases it's just normal human behavior. As a customer, you make a payment, you see a confirmation, and as far as you're concerned that payment is done. So you look at your remaining balance and spend accordingly. You're not trying to commit fraud. You just don't understand the mechanics of how ACH settlement works, and frankly, why should you? That's not the customer's problem to solve.",
       },
       {
-        type: 'h3',
+        type: 'h2',
         text: 'How Quidkey Solved the ACH Problem',
       },
       {
@@ -129,7 +129,7 @@ export const blogPosts: BlogPost[] = [
         text: "With every subsequent payment, the risk profile improves. More data, better predictions, higher completion rates. This is why Quidkey delivers the best payment completion rates in the market, because we're not relying on a snapshot balance check. We're building a living, evolving understanding of each customer's financial behavior.",
       },
       {
-        type: 'h3',
+        type: 'h2',
         text: 'The Reversal Problem: 60 Days of Uncertainty',
       },
       {
@@ -145,7 +145,7 @@ export const blogPosts: BlogPost[] = [
         text: 'So part of our risk profiling at Quidkey isn\'t just about predicting whether the payment will complete. It\'s also about predicting whether the customer is likely to reverse the funds after the fact. We check refund and reversal rates across multiple payment companies and banking partners, building a picture of each customer\'s history with reversals. Are they someone who has reversed payments before? How often? With which merchants? This allows us to predict the likelihood of a reversal and factor that into our risk assessment, protecting merchants from what the industry calls "friendly fraud", where the customer isn\'t technically stealing, but they\'re using the reversal mechanism in ways that leave merchants holding the bag.',
       },
       {
-        type: 'h3',
+        type: 'h2',
         text: 'The Cross-Border Problem Nobody Else Has Solved',
       },
       {
@@ -177,7 +177,7 @@ export const blogPosts: BlogPost[] = [
         text: "This solution can remove the need for a Merchant of Record (yes, an MOR does more than just this, and I'll write another blog that explains the full picture of why and how) and allows companies to sell directly from their home country without the financial and operational headache of setting up and maintaining legal entities in the US.",
       },
       {
-        type: 'h3',
+        type: 'h2',
         text: 'Trust at Checkout: Why the Bank Brand Matters',
       },
       {
@@ -193,7 +193,7 @@ export const blogPosts: BlogPost[] = [
         text: "We've also been able to enable merchants to offer points, rewards, and discounts through our solution, which further drives adoption. But that's a whole topic on its own, and I'll get into it in the next blog.",
       },
       {
-        type: 'h3',
+        type: 'h2',
         text: 'The Bottom Line',
       },
       {
@@ -220,7 +220,7 @@ export const blogPosts: BlogPost[] = [
       'Quidkey is now an approved Shopify payment partner. Add Pay by Bank to your checkout in a few clicks — lower fees, faster settlement, and one-click refunds.',
     keyword: 'Shopify Pay by Bank',
     author: 'Quidkey Team',
-    image: '/images/blog/quidkey-shopify-pay-by-bank.png',
+    image: '/images/blog/quidkey-shopify-pay-by-bank.webp',
     featured: true,
     blocks: [
       {
@@ -243,6 +243,7 @@ export const blogPosts: BlogPost[] = [
         type: 'p',
         text: 'Pay by Bank means customers pay directly from their bank account. No card numbers, no redirects. They authorise in their banking app and the payment goes through.',
       },
+      { type: 'h2', text: 'What Changes for Merchants' },
       {
         type: 'p',
         text: 'For merchants, this changes three things.',
@@ -263,6 +264,7 @@ export const blogPosts: BlogPost[] = [
         type: 'html',
         html: 'Traditionally, Pay by Bank has presented merchants with added complexity when processing refunds, with extra steps and extra costs. Quidkey changes that, with <a href="/blog/pay-by-bank-refunds-shopify-merchants">one-click refunds</a> managed within the Shopify merchant portal.',
       },
+      { type: 'h2', text: 'Getting Started' },
       {
         type: 'p',
         text: 'The Shopify partnership means it is simple to get started. Merchants don\'t need a custom integration or a development team. Simply install the app, connect your store, and Pay by Bank appears as a payment option at checkout. Payments and refunds are managed in one place.',
@@ -285,11 +287,11 @@ export const blogPosts: BlogPost[] = [
     title: 'Open Finance in the US: The Status of CFPB Rule 1033',
     seoTitle: 'Open Finance in the US: CFPB Rule 1033 Status | Quidkey',
     description:
-      'The CFPB issued Rule 1033 to make consumer financial data access a legal right. Learn the current status, what it means for merchants, and how Quidkey simplifies open finance regardless of regulation.',
+      'The CFPB issued Rule 1033 to make consumer financial data access a legal right. Learn its current status and how Quidkey simplifies open finance.',
     keyword: 'CFPB Rule 1033',
     author: 'Matthew Bartlett',
     authorLinkedIn: 'https://www.linkedin.com/in/matthew-bartlett-b6587346/',
-    image: '/images/blog/open-finance-us-rule-1033.png',
+    image: '/images/blog/open-finance-us-rule-1033.webp',
     featured: true,
     blocks: [
       {
@@ -301,7 +303,7 @@ export const blogPosts: BlogPost[] = [
           'Despite regulatory delays, consumer demand for integrated financial services continues to drive increasing adoption of US open finance solutions, benefitting both business and their customers.',
         ],
       },
-      { type: 'h3', text: 'What is Open Finance in the US?' },
+      { type: 'h2', text: 'What is Open Finance in the US?' },
       {
         type: 'html',
         html: 'Open finance is the idea that <em><strong>people – not financial institutions – should control the flow of their financial data</strong></em>. In practice this means you can permission an app or service (payments, identity, budgeting, lending, investing, accounting, payroll) via Application Programming Interfaces (APIs) to securely access your accounts and transaction history, and you can revoke that access when you want. You can find more information on US open finance <a href="/blog/open-finance-in-the-us-part-1"><strong>here</strong></a>.',
@@ -318,7 +320,7 @@ export const blogPosts: BlogPost[] = [
         type: 'p',
         text: 'Now, with US business and consumers waking up to the possibilities of choice and control when it comes to their financial data, they have begun to demand more from their financial service providers. This user driven push, combined with the deficiencies inherent in a purely market lead approach, has prompted the Consumer Financial Protection Bureau (CFPB) to finally make good in its legal mandate and formalize rules relating to the data access requirements in Section 1033 of the Dodd-Frank Act.',
       },
-      { type: 'h3', text: 'Section 1033: US Consumer Demand and CFPB Regulatory Catch-Up' },
+      { type: 'h2', text: 'Section 1033: US Consumer Demand and CFPB Regulatory Catch-Up' },
       {
         type: 'p',
         text: 'Section 1033 was drafted as part of the broader Dodd-Frank Wall Street Reform and Consumer Protection Act of 2010. It mandates that financial institutions provide consumers with access to their personal financial transaction data, enabling them to share it with authorized third parties, fostering "open banking" for better financial products and services. Obviously, the major financial institutions have been opposed to the notion that consumers should own, and control access to, their own data from the start, engineering a miasma of political interference and regulatory inertia that has delayed action on this mandate for over a decade while other jurisdictions (UK, EU, APAC, etc.) race ahead. However, despite ongoing litigation as entrenched financial intuitions attempt to delay or prevent enforcement, the CFPB finally promulgated its Personal Financial Data Rights rule in October 2024, initiating a phased implementation of Section 1033.',
@@ -343,7 +345,7 @@ export const blogPosts: BlogPost[] = [
         type: 'html',
         html: '<ul><li><strong>Consumer Right to Data:</strong> Consumers can request their transaction history, account details (balances, fees, usage), and other related information from their financial providers.</li><li><strong>Data Sharing and Data Portability:</strong> Allows consumers to direct their data to other apps or services (like budgeting tools or fintech apps) to compare options and get better financial management. Provides for easy transfer of consumer financial data between different providers, promoting competition and innovation by making financial data portable.</li><li><strong>Recent Regulatory Activity:</strong><ul><li><strong>Final Rule (Nov 2024):</strong> The Consumer Financial Protection Bureau (CFPB) issued the Personal Financial Data Rights (PFDR) Rule, mandating data providers (banks, lenders) share transaction/usage data and establishing protocols for third-party access, aiming to give consumers control over their financial information.</li><li><strong>Implementation Focus:</strong> The rule introduces phased compliance, with larger institutions starting April 2026 and smaller ones by April 2030, emphasizing secure data sharing and consumer authorization.</li><li><strong>Legal Challenges:</strong> Banks have filed lawsuits challenging the rule and seeking to protect their entrenched tollbooth status, leading the CFPB to pause enforcement and compliance deadlines.</li><li><strong>Interim Rule Consideration:</strong> The CFPB is actively working on an interim rule for Section 1033, signaling adjustments to the original final rule to smooth out technical and implementation hurdles.</li></ul></li></ul>',
       },
-      { type: 'h3', text: 'Where Do We Go From Here?' },
+      { type: 'h2', text: 'Where Do We Go From Here?' },
       {
         type: 'p',
         text: 'Well – that\'s really anyone\'s guess, but here are a couple plausible paths for consideration:',
@@ -427,7 +429,7 @@ export const blogPosts: BlogPost[] = [
         ],
       },
       {
-        type: 'h3',
+        type: 'h2',
         text: 'How Quidkey Solves and Simplifies Open Finance in Any Regulatory Environment to Help Your Business Grow',
       },
       {
@@ -506,7 +508,7 @@ export const blogPosts: BlogPost[] = [
         type: 'p',
         text: 'Existing players in the US market offer fragmented infrastructure built upon screen scraping, uneven security standards and clunky user experiences, falling short of delivering a seamless and secure checkout experience. Quidkey fills that gap by combining real time orchestration, predictive bank selection, customizable payments workflows, platform integrations, and built in cross-border support for an innovative and globalized open finance solution.',
       },
-      { type: 'h3', text: 'Open Finance Benefits for Business and Consumers' },
+      { type: 'h2', text: 'Open Finance Benefits for Business and Consumers' },
       { type: 'html', html: '<strong>For Merchants</strong>' },
       {
         type: 'html',
@@ -535,7 +537,7 @@ export const blogPosts: BlogPost[] = [
       'How we built and shipped the new Quidkey website in a single day using Claude Code and Cursor — and how our team now maintains it directly from Slack.',
     keyword: 'AI website launch',
     author: 'Quidkey Team',
-    image: '/images/blog/website-launch-ai.png',
+    image: '/images/blog/website-launch-ai.webp',
     featured: true,
     blocks: [
       {
@@ -555,7 +557,7 @@ export const blogPosts: BlogPost[] = [
         text: 'The tech and build time alone was worth noting. But it\'s not the most interesting part.',
       },
       {
-        type: 'h3',
+        type: 'h2',
         text: 'The bigger shift',
       },
       {
@@ -597,10 +599,10 @@ export const blogPosts: BlogPost[] = [
     keyword: 'open finance US',
     author: 'Matthew Bartlett',
     authorLinkedIn: 'https://www.linkedin.com/in/matthew-bartlett-b6587346/',
-    image: '/images/blog/open-finance-us-part-1.png',
+    image: '/images/blog/open-finance-us-part-1.webp',
     featured: true,
     blocks: [
-      { type: 'h3', text: 'Executive Summary' },
+      { type: 'h2', text: 'Executive Summary' },
       {
         type: 'ul',
         items: [
@@ -610,7 +612,7 @@ export const blogPosts: BlogPost[] = [
           'Despite regulatory delays, consumer demand for integrated financial services continues to drive increasing adoption of US open finance solutions, benefitting both business and their customers.',
         ],
       },
-      { type: 'h3', text: 'What is Open Finance in the US?' },
+      { type: 'h2', text: 'What is Open Finance in the US?' },
       {
         type: 'html',
         html: 'Open finance is the idea that <em><strong>people – not financial institutions – should control the flow of their financial data</strong></em>. In practice this means you can permission an app or service (payments, identity, budgeting, lending, investing, accounting, payroll) via Application Programming Interfaces (APIs) to securely access your accounts and transaction history, and you can revoke that access when you want. In the US, this includes permissioned access to things like:',
@@ -631,7 +633,7 @@ export const blogPosts: BlogPost[] = [
         text: 'While the terms "open-banking" and "open-finance" are often thrown around interchangeably, open finance refers to a framework that reaches beyond checking accounts into a broader ecosystem of financial activity driven by the needs of consumers and businesses.',
       },
       {
-        type: 'h3',
+        type: 'h2',
         text: 'How Does Open-Finance in the US differ from EU/UK style Open-Banking?',
       },
       {
@@ -657,7 +659,7 @@ export const blogPosts: BlogPost[] = [
         type: 'p',
         text: 'This regulatory vacuum in the US has led to a fragmented, inconsistent and expensive – what industry insiders euphemistically label the "market-led" – approach to open-finance, which has developed as a permissioned pay-to-play scheme where financial institutions make consumer data available to a limited number of aggregators for a hefty fee. This had previously left US consumers years behind the advancements of global peers, without access and control over their data, choices, and financial lives.',
       },
-      { type: 'h3', text: 'Section 1033: CFPB Regulatory Catch-Up' },
+      { type: 'h2', text: 'Section 1033: CFPB Regulatory Catch-Up' },
       {
         type: 'p',
         text: 'Now, with US business and consumers waking up to the possibilities of choice and control when it comes to their financial data, they have begun to demand more from their financial service providers. This user driven push, combined with the deficiencies inherent in a purely market lead approach, has prompted the Consumer Financial Protection Bureau (CFPB) to finally promulgate the Personal Financial Data Rights rule in October 2024, initiating a phased implementation of Section 1033 of the Dodd-Frank Act.',
@@ -666,7 +668,7 @@ export const blogPosts: BlogPost[] = [
         type: 'p',
         text: 'The new rule issued by the CFPB under Section 1033 requires covered "data providers" to make "covered data" available electronically to consumers and to "authorized third parties," using secure and reliable mechanisms. However, various elements of the new rule are currently subject to litigation by US financial institutions causing the CFPB to pause enforcement and revise the proposed framework. You can find more information on the status of Rule 1033 in our next article on Rule 1033.',
       },
-      { type: 'h3', text: 'How Open Finance Works in the US Today' },
+      { type: 'h2', text: 'How Open Finance Works in the US Today' },
       {
         type: 'p',
         text: "Even with regulatory action under Section 1033 paused for now, open finance is still fully operational with the right technology partners and it's being increasingly adopted by merchants and consumers every day.",
@@ -708,7 +710,7 @@ export const blogPosts: BlogPost[] = [
         ],
       },
       {
-        type: 'h3',
+        type: 'h2',
         text: 'How Quidkey Solves and Simplifies Open Finance, Providing a Global Solution to Help Your Business Grow',
       },
       {
@@ -787,7 +789,7 @@ export const blogPosts: BlogPost[] = [
         type: 'p',
         text: 'Existing players in the US market offer fragmented infrastructure built upon screen scraping, uneven security standards and clunky user experiences, falling short of delivering a seamless and secure checkout experience. Quidkey fills that gap by combining real time orchestration, predictive bank selection, secure user authorization, customizable payments workflows, platform integrations, and built in cross-border support for an innovative and globalized open finance solution.',
       },
-      { type: 'h3', text: 'Open Finance Benefits for Business and Consumers' },
+      { type: 'h2', text: 'Open Finance Benefits for Business and Consumers' },
       { type: 'html', html: '<strong>For Merchants</strong>' },
       {
         type: 'html',
@@ -831,10 +833,12 @@ export const blogPosts: BlogPost[] = [
         type: 'p',
         text: "We've launched Pay by Bank Refunds at Quidkey. Here's everything you need to know.",
       },
+      { type: 'h2', text: 'The Problem with Pay by Bank Refunds' },
       {
         type: 'p',
         text: "Refunds have always been a friction point for online merchants accepting bank payments. Unlike card networks, Pay by Bank payments don't have a built in reversal mechanism, leaving merchants to handle repayments manually.",
       },
+      { type: 'h2', text: 'How Quidkey Refunds Work' },
       {
         type: 'p',
         text: "Quidkey's refund functionality lets you issue refunds quickly and reliably directly from your Quidkey merchant account without depending on your bank to initiate outbound payments. And now, Shopify merchants can process Pay by Bank refunds directly from the Shopify merchant portal, in exactly the same way as card refunds, no separate system, no extra steps.",
