@@ -2,7 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { MegaMenu } from '@/components/layout/mega-menu'
 import { Footer } from '@/components/layout/footer'
 import { LinkedInIcon } from '@/components/icons'
-import { getBlogPost } from '@/lib/blog-posts'
+import { getBlogPost, getRelatedPosts } from '@/lib/blog-posts'
 import { MERCHANTS_SIGNUP_URL } from '@/lib/urls'
 import { buildSeo, buildArticleSchema, buildVideoSchema, getSiteUrl } from '@/lib/seo'
 
@@ -306,6 +306,47 @@ function BlogPostPage() {
                   </a>
                 </div>
               </div>
+              {/* Related Posts */}
+              {post.relatedSlugs && post.relatedSlugs.length > 0 && (() => {
+                const relatedPosts = getRelatedPosts(post.relatedSlugs)
+                if (relatedPosts.length === 0) return null
+                return (
+                  <div className="mt-16 pt-8 border-t border-border">
+                    <h2 className="text-2xl font-semibold tracking-tight mb-6">Related Posts</h2>
+                    <div className="grid sm:grid-cols-2 gap-6">
+                      {relatedPosts.map((related) => (
+                        <Link
+                          key={related.slug}
+                          to="/blog/$slug"
+                          params={{ slug: related.slug }}
+                          className="group bg-white rounded-2xl border border-border overflow-hidden card-hover"
+                        >
+                          <div className="aspect-[16/9] overflow-hidden">
+                            <img
+                              src={related.image}
+                              alt={related.title}
+                              width={1200}
+                              height={675}
+                              loading="lazy"
+                              decoding="async"
+                              className={`w-full h-full transition-transform duration-300 ${related.imageFit === 'contain' ? 'object-contain bg-secondary/20 p-4' : 'object-cover group-hover:scale-105'}`}
+                            />
+                          </div>
+                          <div className="p-6">
+                            <div className="text-sm text-muted-foreground mb-2">{related.date}</div>
+                            <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                              {related.title}
+                            </h3>
+                            <p className="text-sm text-muted-foreground line-clamp-2">
+                              {related.description}
+                            </p>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )
+              })()}
             </article>
           )}
         </div>

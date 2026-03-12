@@ -99,7 +99,7 @@ function ContactForm() {
         <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-success/10 mb-4">
           <CheckCircle2 className="h-8 w-8 text-success" />
         </div>
-        <h3 className="text-xl font-semibold text-foreground mb-2">Message Sent!</h3>
+        <h2 className="text-xl font-semibold text-foreground mb-2">Message Sent!</h2>
         <p className="text-muted-foreground">
           Thanks for reaching out. We'll get back to you within 1-2 business days.
         </p>
@@ -126,7 +126,7 @@ function ContactForm() {
         </label>
       </p>
 
-      <h3 className="text-xl font-semibold text-foreground mb-6">Talk to Sales</h3>
+      <h2 className="text-xl font-semibold text-foreground mb-6">Talk to Sales</h2>
 
       {formState === 'error' && (
         <div className="mb-6 p-4 rounded-lg bg-red-50 border border-red-200 flex items-start gap-3">

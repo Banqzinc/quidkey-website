@@ -135,7 +135,7 @@ function PricingPage() {
             {/* Domestic */}
             <div className="bg-white rounded-2xl border border-border p-8 md:p-10">
               <div className="mb-6">
-                <h3 className="text-lg font-semibold text-muted-foreground mb-2">Domestic</h3>
+                <h2 className="text-lg font-semibold text-muted-foreground mb-2">Domestic</h2>
                 <div className="flex items-baseline gap-1">
                   <span className="text-5xl md:text-6xl font-bold gradient-text">1%</span>
                   <span className="text-2xl md:text-3xl font-semibold text-muted-foreground">+ {symbol}{fixedFee}</span>
@@ -156,7 +156,7 @@ function PricingPage() {
             {/* International */}
             <div className="bg-white rounded-2xl border border-border p-8 md:p-10">
               <div className="mb-6">
-                <h3 className="text-lg font-semibold text-muted-foreground mb-2">Cross Border</h3>
+                <h2 className="text-lg font-semibold text-muted-foreground mb-2">Cross Border</h2>
                 <div className="flex items-baseline gap-1">
                   <span className="text-5xl md:text-6xl font-bold gradient-text">3%</span>
                   <span className="text-2xl md:text-3xl font-semibold text-muted-foreground">+ {symbol}{fixedFee}</span>
