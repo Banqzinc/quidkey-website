@@ -31,6 +31,8 @@ export const Route = createFileRoute('/blog/$slug')({
       path: `/blog/${params.slug}` as const,
       ogType: 'article',
       imageUrl,
+      imageWidth: post.imageWidth,
+      imageHeight: post.imageHeight,
       article: {
         datePublished: post.dateISO,
         author: post.author,

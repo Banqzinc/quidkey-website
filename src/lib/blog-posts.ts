@@ -25,6 +25,9 @@ export type BlogPost = {
   authorLinkedIn?: string
   /** Featured image path (relative to /images/blog/) */
   image: string
+  /** Optional image dimensions for Open Graph metadata */
+  imageWidth?: number
+  imageHeight?: number
   /** Image rendering mode in blog cards and article header */
   imageFit?: 'cover' | 'contain'
   blocks: BlogPostBlock[]
@@ -44,6 +47,8 @@ export const blogPosts: BlogPost[] = [
     author: 'Rabea Bader',
     authorLinkedIn: 'https://www.linkedin.com/in/rabea-bader/',
     image: '/images/blog/open-finance-us-part-3.png',
+    imageWidth: 1024,
+    imageHeight: 774,
     imageFit: 'contain',
     featured: true,
     blocks: [

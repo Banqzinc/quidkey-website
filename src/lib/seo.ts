@@ -59,6 +59,11 @@ type BuildSeoInput = {
    */
   imageUrl?: string
   /**
+   * Optional image dimensions for richer Open Graph previews.
+   */
+  imageWidth?: number
+  imageHeight?: number
+  /**
    * Article-specific metadata for blog posts (enables Article schema).
    */
   article?: {
@@ -77,6 +82,8 @@ export function buildSeo({
   path,
   ogType = 'website',
   imageUrl,
+  imageWidth,
+  imageHeight,
   article,
 }: BuildSeoInput) {
   const url = new URL(path, getSiteUrl()).toString()
@@ -94,6 +101,8 @@ export function buildSeo({
     { property: 'og:type', content: ogType },
     { property: 'og:url', content: url },
     { property: 'og:image', content: image },
+    ...(imageWidth ? [{ property: 'og:image:width', content: String(imageWidth) }] : []),
+    ...(imageHeight ? [{ property: 'og:image:height', content: String(imageHeight) }] : []),
     { property: 'og:site_name', content: 'Quidkey' },
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:title', content: sharingTitle },
