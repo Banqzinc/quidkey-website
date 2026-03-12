@@ -130,7 +130,7 @@ function BlogPostPage() {
                   height={675}
                   loading="eager"
                   decoding="async"
-                  className="w-full h-full object-cover"
+                  className={`w-full h-full ${post.imageFit === 'contain' ? 'object-contain bg-secondary/20 p-6' : 'object-cover'}`}
                 />
               </div>
 

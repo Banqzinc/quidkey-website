@@ -25,11 +25,186 @@ export type BlogPost = {
   authorLinkedIn?: string
   /** Featured image path (relative to /images/blog/) */
   image: string
+  /** Image rendering mode in blog cards and article header */
+  imageFit?: 'cover' | 'contain'
   blocks: BlogPostBlock[]
   featured?: boolean
 }
 
 export const blogPosts: BlogPost[] = [
+  {
+    slug: 'open-finance-in-the-us-part-3-building-a-pay-by-bank-in-the-us',
+    date: 'March 12, 2026',
+    dateISO: '2026-03-12',
+    title: 'Open Finance in the US Part 3: Building a Pay By Bank in the US',
+    seoTitle: 'Building a Pay By Bank in the US | Open Finance Part 3',
+    description:
+      'Part 3 of our US open finance series explains what it actually takes to build Pay By Bank in the US, from ACH risk and reversals to cross-border acceptance.',
+    keyword: 'Pay By Bank in the US',
+    author: 'Rabea Bader',
+    authorLinkedIn: 'https://www.linkedin.com/in/rabea-bader/',
+    image: '/images/blog/open-finance-us-part-3.png',
+    imageFit: 'contain',
+    featured: true,
+    blocks: [
+      {
+        type: 'p',
+        text: 'In our previous articles (Open Finance in the US Part 1, Open Finance in the US Part 2 -Rule 1033) we covered how open finance works in the US today and the regulatory landscape around Section 1033. In this piece we get into the technical weeds, what it actually takes to build a Pay By Bank solution in the US compared to the EU and UK, why the infrastructure differences matter more than most people think, and how Quidkey has engineered its way through every one of these challenges to deliver a global solution that actually works.',
+      },
+      {
+        type: 'h3',
+        text: 'The EU and UK: One Integration, Direct Push Payment Bank APIs, and Irrevocable Payments',
+      },
+      {
+        type: 'p',
+        text: "If you're building a Pay By Bank solution in the EU or the UK, the architecture is, at least conceptually, straightforward. The regulatory framework (PSD2) mandates that banks provide APIs for data access and payment initiation. So you connect to a single aggregation layer or scheme, and through that connection you can push payments directly from the payer's bank account to the merchant. One integration, standardized APIs, and you're live across thousands of banks.",
+      },
+      {
+        type: 'p',
+        text: "That sounds great on paper, and in many ways it is. The payment model is a push payment, meaning the customer authorizes the payment from their bank and the funds move. Once a payment is confirmed the funds move immediately and are final, unlike card payments which allow disputes and chargebacks. For merchants this is a massive advantage because it means the moment a payment clears, you have certainty that the funds are yours.",
+      },
+      {
+        type: 'p',
+        text: "But here's the thing nobody talks about enough: the bank APIs themselves are, to put it politely, unreliable and poorly implemented (mostly). Banks in the EU and UK build these APIs because regulation forces them to, not because they see it as a revenue opportunity or a competitive differentiator. And when you're forced to do something because the regulator told you to, and not because you want to, the quality tends to reflect that. You get inconsistent data formats, unreliable uptime, and an overall experience that makes integration painful even when the theoretical framework is clean. Banks do it for the sake of complying with applicable regulation, and nothing else.",
+      },
+      {
+        type: 'p',
+        text: "Still, the core mechanics work in your favor. You can connect once, access data, push payments, and once a payment is confirmed there's no way to cancel it. The funds are captured and sent. For a payment company building in that ecosystem, the challenges are real but they're mostly about dealing with bad API implementations, not about fundamentally rethinking how money moves.",
+      },
+      {
+        type: 'h3',
+        text: 'The US (Currently): No Regulatory Rails, No Push Payments, and a Whole Lot of Complexity',
+      },
+      {
+        type: 'p',
+        text: 'Now take everything I just described and throw it out the window, because building Pay By Bank in the US is an entirely different engineering challenge.',
+      },
+      {
+        type: 'p',
+        text: "As we covered in our previous articles, there is no comprehensive regulatory framework mandating standardized bank APIs in the US. Section 1033 is coming eventually but it's currently paused, contested, and even when it does arrive it won't look like PSD2. Some banks have built APIs. Many haven't. The ones that have built them did so on their own terms, with their own specs, their own authentication flows, their own ideas about what data they want to share and how and, crucially, what they're going to charge for access. This fragmentation means you can't just connect to one integration layer and call it done. You need to work with multiple providers, multiple connection methods, and account for the fact that coverage is never going to be 100% through any single channel.",
+      },
+      {
+        type: 'p',
+        text: "But the bigger technical challenge isn't the APIs. It's the payment rails.",
+      },
+      {
+        type: 'p',
+        text: 'In the EU and UK, push payments are the standard. The customer initiates, the bank sends the money, done. In the US, push payments through FedNow and RTP are emerging but they\'re not yet universally supported across banks. So what do we have? We have ACH.',
+      },
+      {
+        type: 'p',
+        text: "ACH is the backbone of US bank-to-bank payments. It's been around for decades. And here's the funny thing about it: it's actually incredibly reliable, almost never breaks, and it's connected to essentially every bank in the United States. You will not find a US bank that doesn't support ACH. In terms of coverage, it's as close to universal as you can get.",
+      },
+      {
+        type: 'p',
+        text: "The problem is how ACH works mechanically. ACH doesn't move money instantly. When you initiate a Same Day ACH payment, the funds are pulled on the next available processing window. And between the time the payment is initiated and the time the funds are actually debited, other transactions can take priority. Loan payments to the bank, ATM withdrawals, other ACH debits, they can all hit first. So if a customer has $1,000 in their account, commits to an $800 ACH payment and then goes to an ATM and withdraws $500 before that ACH settles, the ACH payment fails. The money simply isn't there anymore.",
+      },
+      {
+        type: 'p',
+        text: "Now, is that fraud? Sometimes. In some cases regulators and banks will flag it as a fraudulent transaction. But in many cases it's just normal human behavior. As a customer, you make a payment, you see a confirmation, and as far as you're concerned that payment is done. So you look at your remaining balance and spend accordingly. You're not trying to commit fraud. You just don't understand the mechanics of how ACH settlement works, and frankly, why should you? That's not the customer's problem to solve.",
+      },
+      {
+        type: 'h3',
+        text: 'How Quidkey Solved the ACH Problem',
+      },
+      {
+        type: 'p',
+        text: "This is where we had to get creative, because simply doing a balance check at the moment of payment, which is what most of our competitors do, won't cut it. A balance check tells you the customer has the funds right now. It tells you nothing about whether those funds will still be there when the ACH actually settles. And that's why so many ACH-based payment providers see high failure rates. They check the balance, initiate the payment, and then a meaningful percentage of those payments bounce because the funds were spent or moved before settlement.",
+      },
+      {
+        type: 'p',
+        text: "At Quidkey we took a fundamentally different approach. We study the payment patterns of customers in partnership with our banking and payment partners and we build a risk profile for each customer in real time. When a customer initiates a payment, we don't just check their balance. Instead, we analyze their transaction history, their spending patterns, their incoming deposits, their existing commitments, and we make an instant decision on whether that payment is going to complete successfully.",
+      },
+      {
+        type: 'p',
+        text: "When we confirm the payment, we inform the merchant that the money is on its way, and we stand behind that. We want to make sure that the merchant receives the money. This is not a \"we'll try and let you know if it fails\" situation. We're making a commitment based on data and real time risk assessment.",
+      },
+      {
+        type: 'p',
+        text: "With every subsequent payment, the risk profile improves. More data, better predictions, higher completion rates. This is why Quidkey delivers the best payment completion rates in the market, because we're not relying on a snapshot balance check. We're building a living, evolving understanding of each customer's financial behavior.",
+      },
+      {
+        type: 'h3',
+        text: 'The Reversal Problem: 60 Days of Uncertainty',
+      },
+      {
+        type: 'p',
+        text: "Here's another fundamental difference between the US and the EU/UK that shapes everything about how you build a payment product: In the EU and UK, once a payment is confirmed, it's done. There is no reversal mechanism. The money has moved, the transaction is final. Full stop.",
+      },
+      {
+        type: 'p',
+        text: 'In the US, ACH payments are reversible within 60 days. Sixty days. That means a customer can make a payment, receive the goods or services, and then reverse the payment up to two months later. This creates an entirely different risk landscape for merchants and for payment providers.',
+      },
+      {
+        type: 'p',
+        text: 'So part of our risk profiling at Quidkey isn\'t just about predicting whether the payment will complete. It\'s also about predicting whether the customer is likely to reverse the funds after the fact. We check refund and reversal rates across multiple payment companies and banking partners, building a picture of each customer\'s history with reversals. Are they someone who has reversed payments before? How often? With which merchants? This allows us to predict the likelihood of a reversal and factor that into our risk assessment, protecting merchants from what the industry calls "friendly fraud", where the customer isn\'t technically stealing, but they\'re using the reversal mechanism in ways that leave merchants holding the bag.',
+      },
+      {
+        type: 'h3',
+        text: 'The Cross-Border Problem Nobody Else Has Solved',
+      },
+      {
+        type: 'p',
+        text: "Now here's where it gets really interesting, and where Quidkey has done something that, as far as we know, nobody else in the market has been able to do.",
+      },
+      {
+        type: 'p',
+        text: "ALL other US Pay By Bank providers can only service local US entities. That's it. If you're a company incorporated in the US, great, they can help you. If you're a UK company, an EU company, an Australian company, a Brazilian company selling into the US market, you're out of luck.",
+      },
+      {
+        type: 'p',
+        text: "Why? Because, among other things, US banks are risk averse when it comes to reversible payments leaving the country. If an ACH payment can be reversed within 60 days and the funds have already been sent to a foreign entity, the bank's ability to recoup those funds is severely limited. There are many other reasons US banks don't like cross-border ACH exposure, but the reversal risk is a big one. Banks simply don't want to be on the hook for money that's left the US and may not come back, nor do they have the infrastructure in place to solve for this.",
+      },
+      {
+        type: 'p',
+        text: "And by the way, this same dynamic is exactly what we see with card acceptance rates. If you're a UK or EU or Australian company selling into the US and you're running your payments through a Stripe account without a local US entity, your card acceptance rates are going to be around 85%. If you're a Brazilian company, your acceptance rates drop below 50%. US banks and card networks just don't trust cross-border transactions, and they express that distrust through declined transactions.",
+      },
+      {
+        type: 'p',
+        text: "This was a material challenge for us to solve, and we attacked it head on. We worked extensively with our payment partners and local US financial institutions to provide them with the trust needed through our technology and compliance processes. They've seen how our risk profiling works. They've seen our fraud prevention capabilities. They've seen our compliance framework. And based on that trust, they have allowed us to onboard and service non-US entities.",
+      },
+      {
+        type: 'p',
+        text: "What this means in practice is that any company outside of the US, from over 90 jurisdictions, can implement Quidkey and start selling into the US market. As long as their end customers, whether individuals or businesses, have a US bank account, the payment works. Our acceptance rates are effectively 100% because we're not running through card networks that decline based on the merchant's country of incorporation. We're going direct to the customer's bank.",
+      },
+      {
+        type: 'p',
+        text: "This solution can remove the need for a Merchant of Record (yes, an MOR does more than just this, and I'll write another blog that explains the full picture of why and how) and allows companies to sell directly from their home country without the financial and operational headache of setting up and maintaining legal entities in the US.",
+      },
+      {
+        type: 'h3',
+        text: 'Trust at Checkout: Why the Bank Brand Matters',
+      },
+      {
+        type: 'p',
+        text: "There's one more challenge that exists across the market and it's not a technical one, it's a behavioral one. In the US, credit cards are deeply embedded in consumer behavior. People are used to pulling out a card. They trust the process. Getting them to pay differently requires building trust instantly at the point of checkout.",
+      },
+      {
+        type: 'p',
+        text: "This is something we've thought about deeply at Quidkey. When a customer reaches the checkout they don't see a Quidkey Pay By Bank option and we don't show them a generic bank selection screen like other companies. Our predictive technology identifies the customer's primary bank and surfaces that bank's brand and logo first. That's instant recognition. That's trust. You're not asking them to try something unfamiliar. You're showing them their own bank and saying \"Pay with Chase\"",
+      },
+      {
+        type: 'p',
+        text: "We've also been able to enable merchants to offer points, rewards, and discounts through our solution, which further drives adoption. But that's a whole topic on its own, and I'll get into it in the next blog.",
+      },
+      {
+        type: 'h3',
+        text: 'The Bottom Line',
+      },
+      {
+        type: 'p',
+        text: 'Building Pay By Bank in the US is a fundamentally different engineering challenge than building it in the EU or UK. The lack of standardized APIs, the absence of push payment rails, the reversibility of ACH, the cross-border restrictions, and the behavioral barriers around credit card dominance all combine to make this one of the most complex payment problems in fintech.',
+      },
+      {
+        type: 'p',
+        text: "At Quidkey, we didn't just work around these challenges. We built technology specifically designed to solve each one of them. Real time risk profiling that goes far beyond balance checks. Reversal prediction that protects merchants. Cross-border capabilities that nobody else has been able to unlock. And a streamlined checkout experience that builds trust by showing customers their own bank.",
+      },
+      {
+        type: 'p',
+        text: "If you've read our previous articles on how open finance works in the US and the regulatory status of Rule 1033, this piece should give you a sense of the technical reality behind everything we're building. The regulatory framework will catch up eventually. In the meantime, the technology has to be smarter than the infrastructure it runs on. And that's exactly what we've built.",
+      },
+    ],
+  },
   {
     slug: 'quidkey-is-live-on-shopify',
     date: 'March 10, 2026',

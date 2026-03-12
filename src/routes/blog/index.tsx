@@ -50,7 +50,7 @@ function BlogPage() {
                   height={675}
                   loading="eager"
                   decoding="async"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  className={`w-full h-full transition-transform duration-300 ${featuredPost.imageFit === 'contain' ? 'object-contain bg-secondary/20 p-4' : 'object-cover group-hover:scale-105'}`}
                 />
               </div>
               <div>
@@ -85,7 +85,7 @@ function BlogPage() {
                     height={675}
                     loading="lazy"
                     decoding="async"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className={`w-full h-full transition-transform duration-300 ${post.imageFit === 'contain' ? 'object-contain bg-secondary/20 p-4' : 'object-cover group-hover:scale-105'}`}
                   />
                 </div>
                 <div className="p-6">
