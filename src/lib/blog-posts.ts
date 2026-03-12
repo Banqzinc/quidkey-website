@@ -32,6 +32,7 @@ export type BlogPost = {
   imageFit?: 'cover' | 'contain'
   blocks: BlogPostBlock[]
   featured?: boolean
+  relatedSlugs?: string[]
 }
 
 export const blogPosts: BlogPost[] = [
@@ -51,6 +52,7 @@ export const blogPosts: BlogPost[] = [
     imageHeight: 900,
     imageFit: 'contain',
     featured: true,
+    relatedSlugs: ['open-finance-in-the-us-part-2-rule-1033', 'open-finance-in-the-us-part-1'],
     blocks: [
       {
         type: 'html',
@@ -222,6 +224,7 @@ export const blogPosts: BlogPost[] = [
     author: 'Quidkey Team',
     image: '/images/blog/quidkey-shopify-pay-by-bank.webp',
     featured: true,
+    relatedSlugs: ['pay-by-bank-refunds-shopify-merchants', 'pay-by-bank-the-future-of-payments'],
     blocks: [
       {
         type: 'html',
@@ -293,6 +296,7 @@ export const blogPosts: BlogPost[] = [
     authorLinkedIn: 'https://www.linkedin.com/in/matthew-bartlett-b6587346/',
     image: '/images/blog/open-finance-us-rule-1033.webp',
     featured: true,
+    relatedSlugs: ['open-finance-in-the-us-part-3-building-a-pay-by-bank-in-the-us', 'open-finance-in-the-us-part-1'],
     blocks: [
       {
         type: 'ul',
@@ -539,6 +543,7 @@ export const blogPosts: BlogPost[] = [
     author: 'Quidkey Team',
     image: '/images/blog/website-launch-ai.webp',
     featured: true,
+    relatedSlugs: ['quidkey-is-live-on-shopify', 'quidkey-a-global-clearing-house-for-modern-payments'],
     blocks: [
       {
         type: 'p',
@@ -601,6 +606,7 @@ export const blogPosts: BlogPost[] = [
     authorLinkedIn: 'https://www.linkedin.com/in/matthew-bartlett-b6587346/',
     image: '/images/blog/open-finance-us-part-1.webp',
     featured: true,
+    relatedSlugs: ['open-finance-in-the-us-part-2-rule-1033', 'open-finance-in-the-us-part-3-building-a-pay-by-bank-in-the-us'],
     blocks: [
       { type: 'h2', text: 'Executive Summary' },
       {
@@ -828,6 +834,7 @@ export const blogPosts: BlogPost[] = [
     author: 'Quidkey Team',
     image: '/images/blog/pay-by-bank-refunds.webp',
     featured: true,
+    relatedSlugs: ['quidkey-is-live-on-shopify', 'refunds-rewards-and-real-time-settlement-unlocking-merchant-payments'],
     blocks: [
       {
         type: 'p',
@@ -878,6 +885,7 @@ export const blogPosts: BlogPost[] = [
     author: 'Quidkey Team',
     image: '/images/blog/soc2-compliance.webp',
     featured: true,
+    relatedSlugs: ['quidkey-a-global-clearing-house-for-modern-payments', 'pay-by-bank-the-future-of-payments'],
     blocks: [
       {
         type: 'p',
@@ -941,6 +949,7 @@ export const blogPosts: BlogPost[] = [
     keyword: 'global clearing house',
     author: 'Bhavna Saraf',
     image: '/images/blog/global-clearing-house.webp',
+    relatedSlugs: ['open-finance-in-the-us-part-1', 'a2a-payments-explained-why-traditional-payment-fees-hurt-merchants-profit-margins-and-how-to-fix-it'],
     blocks: [
       {
         type: 'p',
@@ -978,7 +987,7 @@ export const blogPosts: BlogPost[] = [
         type: 'p',
         text: "Together, Rob and Rabea laid the foundation. Bhavna's arrival added the operational layer needed to take Quidkey global.",
       },
-      { type: 'h3', text: 'Tell us about your approach to leadership at Quidkey…' },
+      { type: 'h2', text: 'Tell us about your approach to leadership at Quidkey…' },
       {
         type: 'p',
         text: "Learning has always meant leaning into the unknown. It's not just about a strategy, but a mindset. Taking on new business lines, exploring unfamiliar customer segments, getting closer to technology, or entering new geographies have all been opportunities to stretch.",
@@ -987,12 +996,12 @@ export const blogPosts: BlogPost[] = [
         type: 'p',
         text: "It's the same mindset that underpins my approach to leadership. That it's not just about hierarchy but influence. Creating an environment where people feel trusted, empowered, and part of something larger than themselves.",
       },
-      { type: 'h3', text: 'What drives and inspires you?' },
+      { type: 'h2', text: 'What drives and inspires you?' },
       {
         type: 'p',
         text: 'At the core of my journey is a relentless drive to deliver progress. Time is money. And… Impossible is nothing. Those words capture my pragmatism and optimism. Qualities that have guided me from scaling large enterprises to now building a nimble fintech.',
       },
-      { type: 'h3', text: 'Tell us about the genesis of Quidkey and its mission…' },
+      { type: 'h2', text: 'Tell us about the genesis of Quidkey and its mission…' },
       {
         type: 'p',
         text: 'Quidkey was born from a simple idea, that merchants should be able to grow with confidence, scale sustainably, and offer customers a seamless payment experience, at home or abroad.',
@@ -1005,7 +1014,7 @@ export const blogPosts: BlogPost[] = [
         type: 'p',
         text: 'By cutting out unnecessary intermediaries and using Open Banking rails, Quidkey delivers faster, more transparent and cost-efficient payments, empowering merchants to grow and helping banks realise greater value from their infrastructure investments.',
       },
-      { type: 'h3', text: 'What industry challenges can Quidkey solve?' },
+      { type: 'h2', text: 'What industry challenges can Quidkey solve?' },
       {
         type: 'p',
         text: 'Payments today are still more complicated than they need to be. Merchants face high fees, chargebacks, and slow settlements, while banks and PSPs struggle to turn their Open Banking investments into meaningful revenue.',
@@ -1014,7 +1023,7 @@ export const blogPosts: BlogPost[] = [
         type: 'p',
         text: 'Quidkey bridges that gap. By simplifying how money moves between banks, fintechs, and merchants, we make payments faster, cheaper and transparent. The outcome is better liquidity and smoother experiences for everyone.',
       },
-      { type: 'h3', text: "What benefits are your clients experiencing from Quidkey's approach to open banking?" },
+      { type: 'h2', text: "What benefits are your clients experiencing from Quidkey's approach to open banking?" },
       {
         type: 'p',
         text: 'Open banking adoption is accelerating fast. There are already more than 15 million UK consumers and small businesses taking advantage of open banking-powered services, generating two billion transactions just last year.',
@@ -1023,7 +1032,7 @@ export const blogPosts: BlogPost[] = [
         type: 'p',
         text: 'Quidkey is at the centre of this evolution, turning Open Banking into measurable value through intelligent settlements, stronger customer loyalty, and real returns on investment.',
       },
-      { type: 'h3', text: 'How easy is it for merchants to deploy Quidkey?' },
+      { type: 'h2', text: 'How easy is it for merchants to deploy Quidkey?' },
       {
         type: 'p',
         text: 'Quidkey offers easy integrations via Shopify plug-in, WooCommerce, or iFrame with set up in minutes… No code and zero impact to existing payment options – just faster payments that generate capital to grow your business.',
@@ -1050,6 +1059,7 @@ export const blogPosts: BlogPost[] = [
     keyword: 'pay by bank travel payments',
     author: 'Quidkey Team',
     image: '/images/blog/tryp-partnership.webp',
+    relatedSlugs: ['pay-by-bank-the-future-of-payments', 'quidkey-and-transfermate-drive-down-card-costs-for-merchants'],
     blocks: [
       {
         type: 'p',
@@ -1107,6 +1117,7 @@ export const blogPosts: BlogPost[] = [
     keyword: 'real-time settlement',
     author: 'Quidkey Team',
     image: '/images/blog/refunds-rewards-settlement.webp',
+    relatedSlugs: ['pay-by-bank-refunds-shopify-merchants', 'quidkey-is-live-on-shopify'],
     blocks: [
       {
         type: 'p',
@@ -1185,6 +1196,7 @@ export const blogPosts: BlogPost[] = [
     keyword: 'reduce card costs',
     author: 'Quidkey Team',
     image: '/images/blog/transfermate-partnership.webp',
+    relatedSlugs: ['quidkey-announces-strategic-partnership-with-tryp-com-to-power-next-generation-pay-by-bank-travel-payments', 'a2a-payments-explained-why-traditional-payment-fees-hurt-merchants-profit-margins-and-how-to-fix-it'],
     blocks: [
       {
         type: 'p',
@@ -1249,6 +1261,7 @@ export const blogPosts: BlogPost[] = [
     keyword: 'pay by bank',
     author: 'Quidkey Team',
     image: '/images/blog/pay-by-bank.webp',
+    relatedSlugs: ['open-banking-payments-in-the-uk', 'a2a-payments-explained-why-traditional-payment-fees-hurt-merchants-profit-margins-and-how-to-fix-it'],
     blocks: [
       { type: 'h2', text: 'What is Pay by Bank?' },
       {
@@ -1357,6 +1370,7 @@ export const blogPosts: BlogPost[] = [
     keyword: 'open banking payments UK',
     author: 'Quidkey Team',
     image: '/images/blog/open-banking-uk.webp',
+    relatedSlugs: ['pay-by-bank-the-future-of-payments', 'open-finance-in-the-us-part-1'],
     blocks: [
       { type: 'h2', text: 'What is Open Banking in the UK?' },
       {
@@ -1490,6 +1504,7 @@ export const blogPosts: BlogPost[] = [
     keyword: 'A2A payments',
     author: 'Quidkey Team',
     image: '/images/blog/a2a-payments.webp',
+    relatedSlugs: ['pay-by-bank-the-future-of-payments', 'open-banking-payments-in-the-uk'],
     blocks: [
       {
         type: 'p',
@@ -1657,4 +1672,10 @@ export const blogPosts: BlogPost[] = [
 
 export function getBlogPost(slug: string) {
   return blogPosts.find((post) => post.slug === slug)
+}
+
+export function getRelatedPosts(slugs: string[]): BlogPost[] {
+  return slugs
+    .map((slug) => blogPosts.find((post) => post.slug === slug))
+    .filter((post): post is BlogPost => post !== undefined)
 }
