@@ -47,8 +47,8 @@ export const blogPosts: BlogPost[] = [
     author: 'Rabea Bader',
     authorLinkedIn: 'https://www.linkedin.com/in/rabea-bader/',
     image: '/images/blog/open-finance-us-part-3.webp',
-    imageWidth: 1024,
-    imageHeight: 774,
+    imageWidth: 1600,
+    imageHeight: 900,
     imageFit: 'contain',
     featured: true,
     blocks: [
