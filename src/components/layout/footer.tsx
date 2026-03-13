@@ -8,9 +8,12 @@ export function Footer() {
   const footerLinks = {
     Products: [
       { label: 'Shopify', href: '/products/shopify' },
+      { label: 'iFrame', href: '/products/iframe' },
       { label: 'Payment Links', href: '/products/payment-links' },
       { label: 'Hosted Checkout', href: '/products/hosted-checkout' },
+      { label: 'Local Accounts', href: '/products/local-accounts' },
       { label: 'Multi Currency', href: '/products/multi-currency' },
+      { label: 'Refunds', href: '/products/refunds' },
       { label: 'Money Workflows', href: '/workflows' },
     ],
     'Who We Serve': [
@@ -95,7 +98,6 @@ export function Footer() {
                 alt="Quidkey"
                 width={96}
                 height={24}
-                loading="lazy"
                 decoding="async"
                 className="h-6 w-auto invert"
               />

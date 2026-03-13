@@ -68,3 +68,39 @@
   to = "/blog"
   status = 301
   force = true
+
+[[redirects]]
+  from = "/blog/quidkey-achieves-soc-2-type-ii-compliance-strengthening-security-for-global-payments"
+  to = "/blog/soc-2-type-ii-compliance-global-payments"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/quidkey-achieves-soc-2-type-ii-compliance-strengthening-security-for-global-payments/"
+  to = "/blog/soc-2-type-ii-compliance-global-payments"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/quidkey-announces-strategic-partnership-with-tryp-com-to-power-next-generation-pay-by-bank-travel-payments"
+  to = "/blog/quidkey-tryp-pay-by-bank-travel-payments"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/quidkey-announces-strategic-partnership-with-tryp-com-to-power-next-generation-pay-by-bank-travel-payments/"
+  to = "/blog/quidkey-tryp-pay-by-bank-travel-payments"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/a2a-payments-explained-why-traditional-payment-fees-hurt-merchants-profit-margins-and-how-to-fix-it"
+  to = "/blog/a2a-payments-cut-merchant-fees"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/a2a-payments-explained-why-traditional-payment-fees-hurt-merchants-profit-margins-and-how-to-fix-it/"
+  to = "/blog/a2a-payments-cut-merchant-fees"
+  status = 301
+  force = true

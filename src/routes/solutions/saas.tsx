@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA } from '@/components/layout/page-layout'
+import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA, RelatedLinksSection } from '@/components/layout/page-layout'
 import { Monitor, RefreshCw, TrendingDown, Globe, Code, Zap } from 'lucide-react'
 import { buildSeo } from '@/lib/seo'
 
@@ -11,6 +11,7 @@ export const Route = createFileRoute('/solutions/saas')({
       description:
         'Subscription billing with pay by bank: lower fees, fewer failures, fast settlement. Use hosted checkout or an iframe integration to automate treasury workflows.',
       path: '/solutions/saas',
+      keywords: ['pay by bank subscriptions', 'SaaS bank payments'],
     }),
 })
 
@@ -113,6 +114,14 @@ function SaaSPage() {
         title="Go live quickly"
         subtitle="Simple setup options."
         steps={steps}
+      />
+
+      <RelatedLinksSection
+        links={[
+          { href: '/products/iframe', label: 'iFrame' },
+          { href: '/products/hosted-checkout', label: 'Hosted Checkout' },
+          { href: '/pricing', label: 'Pricing' },
+        ]}
       />
 
       <PageCTA />

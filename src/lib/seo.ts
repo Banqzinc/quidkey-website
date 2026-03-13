@@ -32,6 +32,10 @@ export function getSiteUrl() {
 const DEFAULT_OG_IMAGE =
   'https://storage.googleapis.com/quidkey-resources-public/quidkey-logo-fav.png'
 
+type JsonLdPrimitive = string | number | boolean | null
+type JsonLdValue = JsonLdPrimitive | JsonLdValue[] | { [key: string]: JsonLdValue | undefined }
+export type JsonLdObject = { [key: string]: JsonLdValue | undefined }
+
 type BuildSeoInput = {
   title: string
   /**
@@ -72,6 +76,7 @@ type BuildSeoInput = {
     author: string
     headline: string
   }
+  structuredData?: JsonLdObject[]
 }
 
 export function buildSeo({
@@ -85,6 +90,7 @@ export function buildSeo({
   imageWidth,
   imageHeight,
   article,
+  structuredData,
 }: BuildSeoInput) {
   const url = new URL(path, getSiteUrl()).toString()
   const image = imageUrl ?? DEFAULT_OG_IMAGE
@@ -122,6 +128,12 @@ export function buildSeo({
     }
     if (article.dateModified) {
       meta.push({ property: 'article:modified_time', content: article.dateModified })
+    }
+  }
+
+  if (structuredData?.length) {
+    for (const schema of structuredData) {
+      meta.push({ 'script:ld+json': schema })
     }
   }
 
@@ -214,6 +226,26 @@ export function buildVideoSchema({
     uploadDate,
     contentUrl,
     embedUrl,
+  }
+}
+
+export function buildFaqSchema(
+  faqs: Array<{
+    question: string
+    answer: string
+  }>
+): JsonLdObject {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
   }
 }
 

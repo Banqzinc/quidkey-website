@@ -6,6 +6,7 @@ import { DEMO_PLAYGROUND_URL } from '@/lib/urls'
 import { cn } from '@/lib/utils'
 import { ArrowRight, Check, Calculator, GitBranch, ArrowRightLeft, Wallet, Users, RotateCcw } from 'lucide-react'
 import { buildSeo } from '@/lib/seo'
+import { RelatedLinksSection } from '@/components/layout/page-layout'
 
 export const Route = createFileRoute('/workflows')({
   component: WorkflowsPage,
@@ -15,6 +16,7 @@ export const Route = createFileRoute('/workflows')({
       description:
         'Automate what happens after payment: tax holds, splits, refund reserves, FX, and payouts. Write plain-English rules with deterministic execution.',
       path: '/workflows',
+      keywords: ['money workflows', 'payment automation'],
     }),
 })
 
@@ -27,6 +29,13 @@ function WorkflowsPage() {
         <WorkflowExamplesSection />
         <HowItWorksSection />
         <WorkflowTypesSection />
+        <RelatedLinksSection
+          links={[
+            { href: '/products/refunds', label: 'Refunds' },
+            { href: '/products/local-accounts', label: 'Local Accounts' },
+            { href: '/pricing', label: 'Pricing' },
+          ]}
+        />
         <CTASection />
       </main>
       <Footer />
