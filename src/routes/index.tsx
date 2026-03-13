@@ -21,6 +21,7 @@ export const Route = createFileRoute('/')({
       description:
         'AI-native clearing house for pay by bank. Unify checkout, routing, and treasury workflows—tax, splits, FX, payouts—with one integration.',
       path: '/',
+      keywords: ['pay by bank', 'AI clearing house', 'open banking payments'],
     }),
 })
 

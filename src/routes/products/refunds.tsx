@@ -11,6 +11,7 @@ export const Route = createFileRoute('/products/refunds')({
       description:
         'Issue refunds directly back to customer bank accounts with faster settlement than cards. Keep a clean audit trail and automate reserves and refund workflows.',
       path: '/products/refunds',
+      keywords: ['instant bank refunds', 'pay by bank refund processing'],
     }),
 })
 

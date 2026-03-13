@@ -11,6 +11,7 @@ export const Route = createFileRoute('/products/iframe')({
       description:
         'Add a drop-in pay by bank iFrame to any checkout. White-label the experience, match your brand, and improve conversion with bank prediction and smart defaults.',
       path: '/products/iframe',
+      keywords: ['pay by bank iframe', 'embedded payment widget'],
     }),
 })
 

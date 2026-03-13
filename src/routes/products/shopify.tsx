@@ -11,6 +11,7 @@ export const Route = createFileRoute('/products/shopify')({
       description:
         'Shopify-approved pay by bank app with lower fees and zero chargebacks. Improve conversion with bank prediction and install in minutes.',
       path: '/products/shopify',
+      keywords: ['shopify pay by bank', 'shopify open banking', 'shopify payment app'],
     }),
 })
 

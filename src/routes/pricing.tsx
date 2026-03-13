@@ -38,6 +38,7 @@ export const Route = createFileRoute('/pricing')({
       description:
         'Transparent pricing for pay by bank checkout, global clearing, and money workflows. No setup fees or contracts—pay only when you get paid.',
       path: '/pricing',
+      keywords: ['pay by bank pricing', 'payment processing fees'],
       structuredData: [buildFaqSchema(faqs)],
     }),
 })

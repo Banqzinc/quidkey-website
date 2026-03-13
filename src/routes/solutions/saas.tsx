@@ -11,6 +11,7 @@ export const Route = createFileRoute('/solutions/saas')({
       description:
         'Subscription billing with pay by bank: lower fees, fewer failures, fast settlement. Use hosted checkout or an iframe integration to automate treasury workflows.',
       path: '/solutions/saas',
+      keywords: ['pay by bank subscriptions', 'SaaS bank payments'],
     }),
 })
 

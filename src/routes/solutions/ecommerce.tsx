@@ -11,6 +11,7 @@ export const Route = createFileRoute('/solutions/ecommerce')({
       description:
         'Accept pay by bank for ecommerce with lower fees and zero chargebacks. Improve conversion with bank prediction and automate post-payment workflows.',
       path: '/solutions/ecommerce',
+      keywords: ['pay by bank ecommerce', 'open banking ecommerce'],
     }),
 })
 

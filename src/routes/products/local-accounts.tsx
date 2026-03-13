@@ -11,6 +11,7 @@ export const Route = createFileRoute('/products/local-accounts')({
       description:
         'Collect in GBP, EUR, USD, and AUD without setting up local entities. Reduce FX costs, reconcile faster, and route funds into the right accounts automatically.',
       path: '/products/local-accounts',
+      keywords: ['local collection accounts', 'multi-currency collection'],
     }),
 })
 

@@ -16,6 +16,7 @@ export const Route = createFileRoute('/workflows')({
       description:
         'Automate what happens after payment: tax holds, splits, refund reserves, FX, and payouts. Write plain-English rules with deterministic execution.',
       path: '/workflows',
+      keywords: ['money workflows', 'payment automation'],
     }),
 })
 

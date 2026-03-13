@@ -11,6 +11,7 @@ export const Route = createFileRoute('/solutions/marketplaces')({
       description:
         'Collect with lower fees and automatically split payouts to sellers. Build escrow-style holds, dispute workflows, and reconciliation-ready marketplace payouts.',
       path: '/solutions/marketplaces',
+      keywords: ['marketplace payouts', 'pay by bank marketplace'],
     }),
 })
 
