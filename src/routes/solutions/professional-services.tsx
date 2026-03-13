@@ -11,6 +11,7 @@ export const Route = createFileRoute('/solutions/professional-services')({
       description:
         'Accept invoice payments with pay by bank: lower fees, fewer disputes, and no card limits. Send payment links and automate routing, holds, and payouts.',
       path: '/solutions/professional-services',
+      keywords: ['pay by bank invoicing', 'professional services payments'],
     }),
 })
 

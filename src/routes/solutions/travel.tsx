@@ -11,6 +11,7 @@ export const Route = createFileRoute('/solutions/travel')({
       description:
         'Accept high-value travel bookings with pay by bank. Lower fees, bank-authenticated payments, fewer disputes—plus splits, refund reserves, and payouts.',
       path: '/solutions/travel',
+      keywords: ['pay by bank travel', 'travel payment processing'],
     }),
 })
 

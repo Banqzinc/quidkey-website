@@ -38,7 +38,7 @@ export function StatsSection() {
           alt="Map highlighting Quidkey global coverage"
           width={960}
           height={540}
-          loading="lazy"
+          loading="eager"
           decoding="async"
           className="w-full h-auto opacity-80"
         />

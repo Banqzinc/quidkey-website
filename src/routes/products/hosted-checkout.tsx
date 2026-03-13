@@ -11,6 +11,7 @@ export const Route = createFileRoute('/products/hosted-checkout')({
       description:
         'Launch a hosted pay by bank checkout in minutes. Brand it, redirect customers to a payment session, and receive webhooks back—no frontend work.',
       path: '/products/hosted-checkout',
+      keywords: ['hosted pay by bank checkout', 'pay by bank checkout page'],
     }),
 })
 

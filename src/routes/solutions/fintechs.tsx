@@ -11,6 +11,7 @@ export const Route = createFileRoute('/solutions/fintechs')({
       description:
         'Offer pay by bank under your brand with one integration across regions. Get APIs, webhooks, audit trails, and programmable treasury workflows for your clients.',
       path: '/solutions/fintechs',
+      keywords: ['white-label pay by bank', 'fintech payment API'],
     }),
 })
 

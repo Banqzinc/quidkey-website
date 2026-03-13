@@ -11,6 +11,7 @@ export const Route = createFileRoute('/products/multi-currency')({
       description:
         'Hold, convert, and manage multiple currencies with transparent FX and real-time balances. Automate conversions and settlements as part of your money workflows.',
       path: '/products/multi-currency',
+      keywords: ['multi-currency wallets', 'FX conversion payments'],
     }),
 })
 

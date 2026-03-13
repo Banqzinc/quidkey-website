@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA } from '@/components/layout/page-layout'
+import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA, RelatedLinksSection } from '@/components/layout/page-layout'
 import { Code, Palette, Zap, Shield, Globe, Smartphone } from 'lucide-react'
 import { buildSeo } from '@/lib/seo'
 
@@ -11,6 +11,7 @@ export const Route = createFileRoute('/products/iframe')({
       description:
         'Add a drop-in pay by bank iFrame to any checkout. White-label the experience, match your brand, and improve conversion with bank prediction and smart defaults.',
       path: '/products/iframe',
+      keywords: ['pay by bank iframe', 'embedded payment widget'],
     }),
 })
 
@@ -113,6 +114,14 @@ function IframePage() {
         title="3 step integration"
         subtitle="Go live in your checkout."
         steps={steps}
+      />
+
+      <RelatedLinksSection
+        links={[
+          { href: '/products/hosted-checkout', label: 'Hosted Checkout' },
+          { href: '/products/payment-links', label: 'Payment Links' },
+          { href: '/pricing', label: 'Pricing' },
+        ]}
       />
 
       <PageCTA />

@@ -22,13 +22,34 @@ export const Route = createFileRoute('/blog/$slug')({
     const siteUrl = getSiteUrl()
     // Use absolute URL for OG image
     const imageUrl = `${siteUrl}${post.image}`
+    const articleSchema = buildArticleSchema({
+      title: post.title,
+      description: post.description,
+      datePublished: post.dateISO,
+      author: post.author,
+      url: `${siteUrl}/blog/${post.slug}`,
+      imageUrl,
+      keywords: post.keyword,
+    })
+    const videoSchemas = post.blocks
+      .filter((block): block is Extract<typeof block, { type: 'youtube' }> => block.type === 'youtube')
+      .map((block) =>
+        buildVideoSchema({
+          name: block.title,
+          description: `${block.title} — ${post.description}`,
+          thumbnailUrl: `https://img.youtube.com/vi/${block.videoId}/maxresdefault.jpg`,
+          uploadDate: post.dateISO,
+          contentUrl: `https://www.youtube.com/watch?v=${block.videoId}`,
+          embedUrl: `https://www.youtube.com/embed/${block.videoId}`,
+        }),
+      )
 
     return buildSeo({
       title: post.seoTitle,
       ogTitle: post.title,
       description: post.description,
       keywords: post.keyword,
-      path: `/blog/${params.slug}` as const,
+      path: `/blog/${post.slug}` as `/${string}`,
       ogType: 'article',
       imageUrl,
       imageWidth: post.imageWidth,
@@ -38,6 +59,7 @@ export const Route = createFileRoute('/blog/$slug')({
         author: post.author,
         headline: post.title,
       },
+      structuredData: [articleSchema, ...videoSchemas],
     })
   },
   component: BlogPostPage,
@@ -46,55 +68,10 @@ export const Route = createFileRoute('/blog/$slug')({
 function BlogPostPage() {
   const { slug } = Route.useParams()
   const post = getBlogPost(slug)
-  const siteUrl = getSiteUrl()
-
-  // Generate JSON-LD schema for the article
-  const articleSchema = post
-    ? buildArticleSchema({
-        title: post.title,
-        description: post.description,
-        datePublished: post.dateISO,
-        author: post.author,
-        url: `${siteUrl}/blog/${post.slug}`,
-        imageUrl: `${siteUrl}${post.image}`,
-        keywords: post.keyword,
-      })
-    : null
-
-  // Generate VideoObject JSON-LD for any YouTube embeds
-  const videoSchemas = post
-    ? post.blocks
-        .filter((block): block is Extract<typeof block, { type: 'youtube' }> => block.type === 'youtube')
-        .map((block) =>
-          buildVideoSchema({
-            name: block.title,
-            description: `${block.title} — ${post.description}`,
-            thumbnailUrl: `https://img.youtube.com/vi/${block.videoId}/maxresdefault.jpg`,
-            uploadDate: post.dateISO,
-            contentUrl: `https://www.youtube.com/watch?v=${block.videoId}`,
-            embedUrl: `https://www.youtube.com/embed/${block.videoId}`,
-          }),
-        )
-    : []
 
   return (
     <div className="min-h-screen">
       <MegaMenu />
-
-      {/* JSON-LD Structured Data */}
-      {articleSchema && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
-        />
-      )}
-      {videoSchemas.map((schema, idx) => (
-        <script
-          key={`video-schema-${idx}`}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-        />
-      ))}
 
       <main className="pt-24 pb-16 md:pt-32 md:pb-24">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
@@ -327,7 +304,7 @@ function BlogPostPage() {
                               alt={related.title}
                               width={1200}
                               height={675}
-                              loading="lazy"
+                              loading="eager"
                               decoding="async"
                               className={`w-full h-full transition-transform duration-300 ${related.imageFit === 'contain' ? 'object-contain bg-secondary/20 p-4' : 'object-cover group-hover:scale-105'}`}
                             />
