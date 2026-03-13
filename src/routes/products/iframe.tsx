@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA } from '@/components/layout/page-layout'
+import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA, RelatedLinksSection } from '@/components/layout/page-layout'
 import { Code, Palette, Zap, Shield, Globe, Smartphone } from 'lucide-react'
 import { buildSeo } from '@/lib/seo'
 
@@ -113,6 +113,14 @@ function IframePage() {
         title="3 step integration"
         subtitle="Go live in your checkout."
         steps={steps}
+      />
+
+      <RelatedLinksSection
+        links={[
+          { href: '/products/hosted-checkout', label: 'Hosted Checkout' },
+          { href: '/products/payment-links', label: 'Payment Links' },
+          { href: '/pricing', label: 'Pricing' },
+        ]}
       />
 
       <PageCTA />

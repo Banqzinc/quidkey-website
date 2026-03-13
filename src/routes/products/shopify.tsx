@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA } from '@/components/layout/page-layout'
+import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA, RelatedLinksSection } from '@/components/layout/page-layout'
 import { ShoppingCart, Zap, Shield, TrendingUp, Clock, CreditCard } from 'lucide-react'
 import { buildSeo } from '@/lib/seo'
 
@@ -113,6 +113,14 @@ function ShopifyPage() {
         title="Live in 3 steps"
         subtitle="Go live today."
         steps={steps}
+      />
+
+      <RelatedLinksSection
+        links={[
+          { href: '/products/refunds', label: 'Refunds' },
+          { href: '/pricing', label: 'Pricing' },
+          { href: '/solutions/ecommerce', label: 'Ecommerce' },
+        ]}
       />
 
       <PageCTA />

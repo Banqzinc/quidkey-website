@@ -291,6 +291,50 @@ export function HowItWorksSteps({ title, subtitle, steps }: HowItWorksSectionPro
   )
 }
 
+interface RelatedLinkItem {
+  href: string
+  label: string
+}
+
+interface RelatedLinksSectionProps {
+  links: RelatedLinkItem[]
+  title?: string
+}
+
+export function RelatedLinksSection({
+  links,
+  title = 'Related pages',
+}: RelatedLinksSectionProps) {
+  if (!links.length) return null
+
+  return (
+    <section className="py-16 md:py-20 border-t border-border/70">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between gap-4 mb-8">
+          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">
+            {title}
+          </h2>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              to={link.href}
+              className="group flex items-center justify-between gap-4 rounded-2xl border border-border bg-white px-5 py-4 transition-colors hover:border-primary/40 hover:bg-secondary/20"
+            >
+              <span className="font-medium text-foreground">{link.label}</span>
+              <ArrowRight
+                className="h-4 w-4 text-muted-foreground transition-transform duration-200 group-hover:translate-x-1 group-hover:text-foreground"
+                aria-hidden="true"
+              />
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export function PageCTA() {
   return (
     <section className="py-16 md:py-24 bg-foreground text-background">
@@ -421,7 +465,7 @@ export function TeamSection({
     <ContentSection>
       <SectionHeader title={title} subtitle={subtitle} />
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
-        {members.map((member) => (
+        {members.map((member, index) => (
           <div key={member.name} className="bg-white rounded-2xl border border-border overflow-hidden">
             <div className="aspect-[4/3] bg-secondary/30">
               <img
@@ -429,7 +473,7 @@ export function TeamSection({
                 alt={member.name}
                 width={800}
                 height={600}
-                loading="lazy"
+                loading={index < 2 ? 'eager' : 'lazy'}
                 decoding="async"
                 className="h-full w-full object-cover object-[center_20%]"
               />

@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA } from '@/components/layout/page-layout'
+import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA, RelatedLinksSection } from '@/components/layout/page-layout'
 import { Building2, Globe, Shield, Banknote, ArrowRightLeft, FileCheck } from 'lucide-react'
 import { buildSeo } from '@/lib/seo'
 
@@ -113,6 +113,14 @@ function LocalAccountsPage() {
         title="Get started"
         subtitle="Fast activation."
         steps={steps}
+      />
+
+      <RelatedLinksSection
+        links={[
+          { href: '/workflows', label: 'Money Workflows' },
+          { href: '/products/multi-currency', label: 'Multi Currency' },
+          { href: '/pricing', label: 'Pricing' },
+        ]}
       />
 
       <PageCTA />

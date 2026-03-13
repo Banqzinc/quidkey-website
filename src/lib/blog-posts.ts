@@ -7,6 +7,7 @@ export type BlogPostBlock =
 
 export type BlogPost = {
   slug: string
+  legacySlugs?: string[]
   /** Display date (e.g., "December 12, 2025") */
   date: string
   /** ISO 8601 date for structured data (e.g., "2025-12-12") */
@@ -224,7 +225,7 @@ export const blogPosts: BlogPost[] = [
     author: 'Quidkey Team',
     image: '/images/blog/quidkey-shopify-pay-by-bank.webp',
     featured: true,
-    relatedSlugs: ['pay-by-bank-refunds-shopify-merchants', 'pay-by-bank-the-future-of-payments'],
+    relatedSlugs: ['pay-by-bank-refunds-shopify-merchants', 'we-launched-a-new-website-in-a-day'],
     blocks: [
       {
         type: 'html',
@@ -874,7 +875,8 @@ export const blogPosts: BlogPost[] = [
     ],
   },
   {
-    slug: 'quidkey-achieves-soc-2-type-ii-compliance-strengthening-security-for-global-payments',
+    slug: 'soc-2-type-ii-compliance-global-payments',
+    legacySlugs: ['quidkey-achieves-soc-2-type-ii-compliance-strengthening-security-for-global-payments'],
     date: 'December 12, 2025',
     dateISO: '2025-12-12',
     title: 'Quidkey Achieves SOC 2 Type II Compliance, Strengthening Security for Global Payments',
@@ -949,7 +951,7 @@ export const blogPosts: BlogPost[] = [
     keyword: 'global clearing house',
     author: 'Bhavna Saraf',
     image: '/images/blog/global-clearing-house.webp',
-    relatedSlugs: ['open-finance-in-the-us-part-1', 'a2a-payments-explained-why-traditional-payment-fees-hurt-merchants-profit-margins-and-how-to-fix-it'],
+    relatedSlugs: ['soc-2-type-ii-compliance-global-payments', 'we-launched-a-new-website-in-a-day'],
     blocks: [
       {
         type: 'p',
@@ -1049,7 +1051,8 @@ export const blogPosts: BlogPost[] = [
     ],
   },
   {
-    slug: 'quidkey-announces-strategic-partnership-with-tryp-com-to-power-next-generation-pay-by-bank-travel-payments',
+    slug: 'quidkey-tryp-pay-by-bank-travel-payments',
+    legacySlugs: ['quidkey-announces-strategic-partnership-with-tryp-com-to-power-next-generation-pay-by-bank-travel-payments'],
     date: 'October 29, 2025',
     dateISO: '2025-10-29',
     title: 'Quidkey Announces Strategic Partnership with Tryp.com to Power Next-Generation "Pay by Bank" Travel Payments',
@@ -1196,7 +1199,7 @@ export const blogPosts: BlogPost[] = [
     keyword: 'reduce card costs',
     author: 'Quidkey Team',
     image: '/images/blog/transfermate-partnership.webp',
-    relatedSlugs: ['quidkey-announces-strategic-partnership-with-tryp-com-to-power-next-generation-pay-by-bank-travel-payments', 'a2a-payments-explained-why-traditional-payment-fees-hurt-merchants-profit-margins-and-how-to-fix-it'],
+    relatedSlugs: ['quidkey-tryp-pay-by-bank-travel-payments', 'a2a-payments-cut-merchant-fees'],
     blocks: [
       {
         type: 'p',
@@ -1261,7 +1264,7 @@ export const blogPosts: BlogPost[] = [
     keyword: 'pay by bank',
     author: 'Quidkey Team',
     image: '/images/blog/pay-by-bank.webp',
-    relatedSlugs: ['open-banking-payments-in-the-uk', 'a2a-payments-explained-why-traditional-payment-fees-hurt-merchants-profit-margins-and-how-to-fix-it'],
+    relatedSlugs: ['open-banking-payments-in-the-uk', 'a2a-payments-cut-merchant-fees'],
     blocks: [
       { type: 'h2', text: 'What is Pay by Bank?' },
       {
@@ -1494,7 +1497,8 @@ export const blogPosts: BlogPost[] = [
     ],
   },
   {
-    slug: 'a2a-payments-explained-why-traditional-payment-fees-hurt-merchants-profit-margins-and-how-to-fix-it',
+    slug: 'a2a-payments-cut-merchant-fees',
+    legacySlugs: ['a2a-payments-explained-why-traditional-payment-fees-hurt-merchants-profit-margins-and-how-to-fix-it'],
     date: 'March 18, 2025',
     dateISO: '2025-03-18',
     title: 'A2A Payments Explained: Why Traditional Payment Fees Hurt Merchants Profit Margins and How to Fix It',
@@ -1671,11 +1675,11 @@ export const blogPosts: BlogPost[] = [
 ]
 
 export function getBlogPost(slug: string) {
-  return blogPosts.find((post) => post.slug === slug)
+  return blogPosts.find((post) => post.slug === slug || post.legacySlugs?.includes(slug))
 }
 
 export function getRelatedPosts(slugs: string[]): BlogPost[] {
   return slugs
-    .map((slug) => blogPosts.find((post) => post.slug === slug))
+    .map((slug) => getBlogPost(slug))
     .filter((post): post is BlogPost => post !== undefined)
 }

@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA } from '@/components/layout/page-layout'
+import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA, RelatedLinksSection } from '@/components/layout/page-layout'
 import { RotateCcw, Zap, Shield, Globe, Clock, CheckCircle } from 'lucide-react'
 import { buildSeo } from '@/lib/seo'
 
@@ -113,6 +113,14 @@ function RefundsPage() {
         title="3 step refunds"
         subtitle="Initiation to receipt."
         steps={steps}
+      />
+
+      <RelatedLinksSection
+        links={[
+          { href: '/workflows', label: 'Money Workflows' },
+          { href: '/products/shopify', label: 'Shopify' },
+          { href: '/pricing', label: 'Pricing' },
+        ]}
       />
 
       <PageCTA />

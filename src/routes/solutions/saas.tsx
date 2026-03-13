@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA } from '@/components/layout/page-layout'
+import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA, RelatedLinksSection } from '@/components/layout/page-layout'
 import { Monitor, RefreshCw, TrendingDown, Globe, Code, Zap } from 'lucide-react'
 import { buildSeo } from '@/lib/seo'
 
@@ -113,6 +113,14 @@ function SaaSPage() {
         title="Go live quickly"
         subtitle="Simple setup options."
         steps={steps}
+      />
+
+      <RelatedLinksSection
+        links={[
+          { href: '/products/iframe', label: 'iFrame' },
+          { href: '/products/hosted-checkout', label: 'Hosted Checkout' },
+          { href: '/pricing', label: 'Pricing' },
+        ]}
       />
 
       <PageCTA />

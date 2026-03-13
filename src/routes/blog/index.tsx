@@ -83,7 +83,7 @@ function BlogPage() {
                     alt={post.title}
                     width={1200}
                     height={675}
-                    loading="lazy"
+                    loading={index < 4 ? 'eager' : 'lazy'}
                     decoding="async"
                     className={`w-full h-full transition-transform duration-300 ${post.imageFit === 'contain' ? 'object-contain bg-secondary/20 p-4' : 'object-cover group-hover:scale-105'}`}
                   />

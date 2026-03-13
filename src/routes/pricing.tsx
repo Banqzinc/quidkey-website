@@ -1,11 +1,34 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { PageLayout, PageCTA } from '@/components/layout/page-layout'
+import { PageLayout, PageCTA, RelatedLinksSection } from '@/components/layout/page-layout'
 import { buttonVariants } from '@/components/ui/button'
 import { MERCHANTS_SIGNUP_URL } from '@/lib/urls'
 import { cn } from '@/lib/utils'
-import { buildSeo } from '@/lib/seo'
+import { buildFaqSchema, buildSeo } from '@/lib/seo'
 import { Check, ArrowRight, Zap, Globe, Shield, Clock } from 'lucide-react'
 import { useState } from 'react'
+
+const faqs = [
+  {
+    question: 'What is Quidkey and how does it work?',
+    answer:
+      "Quidkey is a bank-branded payment solution that predicts and auto-selects the customer's bank at checkout, simplifying the payment process while enhancing security and customer trust.",
+  },
+  {
+    question: 'Where is Quidkey available?',
+    answer:
+      'Quidkey is available to businesses worldwide selling to UK, EU, US, and AU customers. We handle FX and cross-border payments seamlessly.',
+  },
+  {
+    question: 'How long does it take to settle a payment?',
+    answer:
+      'Domestic transactions settle instantly in the UK and within one business day across the EU. Cross-border payments typically complete in 1-5 business days.',
+  },
+  {
+    question: 'Is Quidkey secure?',
+    answer:
+      "Yes, Quidkey uses bank-level security with SCA (Strong Customer Authentication). Customers' banks handle identification and verification directly.",
+  },
+]
 
 export const Route = createFileRoute('/pricing')({
   component: PricingPage,
@@ -15,6 +38,7 @@ export const Route = createFileRoute('/pricing')({
       description:
         'Transparent pricing for pay by bank checkout, global clearing, and money workflows. No setup fees or contracts—pay only when you get paid.',
       path: '/pricing',
+      structuredData: [buildFaqSchema(faqs)],
     }),
 })
 
@@ -50,29 +74,6 @@ function PricingPage() {
     { text: 'Single & recurring payments', available: true },
     { text: 'UK, EU, US & AU businesses', available: true },
     { text: 'UK, EU, US & AU consumers', available: true },
-  ]
-
-  const faqs = [
-    {
-      question: 'What is Quidkey and how does it work?',
-      answer:
-        "Quidkey is a bank-branded payment solution that predicts and auto-selects the customer's bank at checkout, simplifying the payment process while enhancing security and customer trust.",
-    },
-    {
-      question: 'Where is Quidkey available?',
-      answer:
-        'Quidkey is available to businesses worldwide selling to UK, EU, US, and AU customers. We handle FX and cross-border payments seamlessly.',
-    },
-    {
-      question: 'How long does it take to settle a payment?',
-      answer:
-        'Domestic transactions settle instantly in the UK and within one business day across the EU. Cross-border payments typically complete in 1-5 business days.',
-    },
-    {
-      question: 'Is Quidkey secure?',
-      answer:
-        "Yes, Quidkey uses bank-level security with SCA (Strong Customer Authentication). Customers' banks handle identification and verification directly.",
-    },
   ]
 
   return (
@@ -257,6 +258,14 @@ function PricingPage() {
           </div>
         </div>
       </section>
+
+      <RelatedLinksSection
+        links={[
+          { href: '/products/iframe', label: 'iFrame' },
+          { href: '/products/local-accounts', label: 'Local Accounts' },
+          { href: '/products/refunds', label: 'Refunds' },
+        ]}
+      />
 
       <PageCTA />
     </PageLayout>

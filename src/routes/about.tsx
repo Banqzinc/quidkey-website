@@ -7,6 +7,7 @@ import {
   ContentSection,
   SectionHeader,
   TeamSection,
+  RelatedLinksSection,
 } from '@/components/layout/page-layout'
 import { buildSeo } from '@/lib/seo'
 import { ArrowLeftRight, Layers, Sparkles } from 'lucide-react'
@@ -184,12 +185,20 @@ function AboutPage() {
               width={960}
               height={540}
               className="w-full h-auto"
-              loading="lazy"
+              loading="eager"
               decoding="async"
             />
           </div>
         </div>
       </ContentSection>
+
+      <RelatedLinksSection
+        links={[
+          { href: '/workflows', label: 'Money Workflows' },
+          { href: '/products/local-accounts', label: 'Local Accounts' },
+          { href: '/products/refunds', label: 'Refunds' },
+        ]}
+      />
 
       <PageCTA />
     </PageLayout>
