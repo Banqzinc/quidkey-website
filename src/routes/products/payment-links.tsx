@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA } from '@/components/layout/page-layout'
+import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA, RelatedLinksSection } from '@/components/layout/page-layout'
 import { Link as LinkIcon, Mail, Clock, Shield, Globe, BarChart3 } from 'lucide-react'
 import { buildSeo } from '@/lib/seo'
 
@@ -114,6 +114,14 @@ function PaymentLinksPage() {
         title="Get paid in 3 steps"
         subtitle="Create your first link in under a minute."
         steps={steps}
+      />
+
+      <RelatedLinksSection
+        links={[
+          { href: '/products/hosted-checkout', label: 'Hosted Checkout' },
+          { href: '/solutions/professional-services', label: 'Professional Services' },
+          { href: '/pricing', label: 'Pricing' },
+        ]}
       />
 
       <PageCTA />

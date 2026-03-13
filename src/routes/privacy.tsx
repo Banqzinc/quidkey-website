@@ -495,39 +495,39 @@ function PrivacyPage() {
                     If you are in the EU, then according to Article 77 of the GDPR, you can lodge a
                     complaint to the supervisory authority, in the Member State of your residence,
                     place of work or place of alleged infringement of the GDPR. For a list of
-                    supervisory authorities in the EU, click{' '}
+                    supervisory authorities in the EU, see the{' '}
                     <a
                       className="text-primary hover:underline"
                       href="https://www.edpb.europa.eu/about-edpb/about-edpb/members_en"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      here.
+                      EDPB list of supervisory authorities.
                     </a>
                   </li>
                   <li>
                     If you are in the UK, you can lodge a complaint to the Information
-                    Commissioner&apos;s Office (ICO) pursuant to the instructions provided{' '}
+                    Commissioner&apos;s Office (ICO) pursuant to the{' '}
                     <a
                       className="text-primary hover:underline"
                       href="https://ico.org.uk/make-a-complaint/"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      here
+                      ICO complaint instructions
                     </a>
                     .
                   </li>
                   <li>
                     If you are in Switzerland, you can lodge a complaint to the Federal Data Protection
-                    and Information Commissioner (FDPIC) pursuant to the instructions provided{' '}
+                    and Information Commissioner (FDPIC) pursuant to the{' '}
                     <a
                       className="text-primary hover:underline"
                       href="https://www.edoeb.admin.ch/en/contact-2"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      here
+                      FDPIC complaint instructions
                     </a>
                     .
                   </li>
