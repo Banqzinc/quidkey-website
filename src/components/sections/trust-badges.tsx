@@ -1,5 +1,9 @@
 const LOGO_DEV_TOKEN = 'pk_DsNHFndhT3yo-85c5vdKKg'
 
+function logoUrl(domain: string, size: number) {
+  return `https://img.logo.dev/${domain}?token=${LOGO_DEV_TOKEN}&size=${size}`
+}
+
 const partners = [
   { name: 'Shopify', domain: 'shopify.com' },
   { name: 'WooCommerce', domain: 'woocommerce.com' },
@@ -28,7 +32,8 @@ export function TrustBadgesSection() {
                   title={partner.name}
                 >
                   <img
-                    src={`https://img.logo.dev/${partner.domain}?token=${LOGO_DEV_TOKEN}`}
+                    src={logoUrl(partner.domain, 28)}
+                    srcSet={`${logoUrl(partner.domain, 28)} 1x, ${logoUrl(partner.domain, 56)} 2x`}
                     alt={`${partner.name} logo`}
                     width={28}
                     height={28}
@@ -51,7 +56,8 @@ export function TrustBadgesSection() {
                   className="flex items-center gap-2 opacity-50 whitespace-nowrap"
                 >
                   <img
-                    src={`https://img.logo.dev/${partner.domain}?token=${LOGO_DEV_TOKEN}`}
+                    src={logoUrl(partner.domain, 28)}
+                    srcSet={`${logoUrl(partner.domain, 28)} 1x, ${logoUrl(partner.domain, 56)} 2x`}
                     alt={`${partner.name} logo`}
                     width={28}
                     height={28}
@@ -76,7 +82,8 @@ export function TrustBadgesSection() {
               className="flex items-center gap-2 opacity-50 hover:opacity-80 transition-opacity duration-200"
             >
               <img
-                src={`https://img.logo.dev/${partner.domain}?token=${LOGO_DEV_TOKEN}`}
+                src={logoUrl(partner.domain, 24)}
+                srcSet={`${logoUrl(partner.domain, 24)} 1x, ${logoUrl(partner.domain, 48)} 2x`}
                 alt={`${partner.name} logo`}
                 width={24}
                 height={24}

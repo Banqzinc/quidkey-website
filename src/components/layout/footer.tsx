@@ -98,6 +98,7 @@ export function Footer() {
                 alt="Quidkey"
                 width={96}
                 height={24}
+                loading="lazy"
                 decoding="async"
                 className="h-6 w-auto invert"
               />
