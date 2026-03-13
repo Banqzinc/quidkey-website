@@ -120,7 +120,7 @@ function SaaSPage() {
         links={[
           { href: '/products/iframe', label: 'iFrame' },
           { href: '/products/hosted-checkout', label: 'Hosted Checkout' },
-          { href: '/pricing', label: 'Pricing' },
+          { href: '/solutions/professional-services', label: 'Professional Services' },
         ]}
       />
 

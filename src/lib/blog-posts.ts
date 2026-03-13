@@ -275,7 +275,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         type: 'html',
-        html: 'Watch it in action below, or install the Shopify app <a href="https://apps.shopify.com/quidkey-checkout">here</a>.',
+        html: 'Watch it in action below, or <a href="https://apps.shopify.com/quidkey-checkout">install the Shopify app</a>.',
       },
       {
         type: 'youtube',
@@ -311,11 +311,11 @@ export const blogPosts: BlogPost[] = [
       { type: 'h2', text: 'What is Open Finance in the US?' },
       {
         type: 'html',
-        html: 'Open finance is the idea that <em><strong>people – not financial institutions – should control the flow of their financial data</strong></em>. In practice this means you can permission an app or service (payments, identity, budgeting, lending, investing, accounting, payroll) via Application Programming Interfaces (APIs) to securely access your accounts and transaction history, and you can revoke that access when you want. You can find more information on US open finance <a href="/blog/open-finance-in-the-us-part-1"><strong>here</strong></a>.',
+        html: 'Open finance is the idea that <em><strong>people – not financial institutions – should control the flow of their financial data</strong></em>. In practice this means you can permission an app or service (payments, identity, budgeting, lending, investing, accounting, payroll) via Application Programming Interfaces (APIs) to securely access your accounts and transaction history, and you can revoke that access when you want. Read more in our <a href="/blog/open-finance-in-the-us-part-1"><strong>introduction to US open finance</strong></a>.',
       },
       {
         type: 'html',
-        html: 'In the EU and the UK this paradigm is implemented via a consistent regulatory framework (PSD2) requiring banks to build data-sharing infrastructure to provide secure data access to consumers and authorized third parties via standardized, free and seamless APIs. You can find more information on EU/UK open-banking <a href="/blog/open-banking-payments-in-the-uk"><strong>here</strong></a>.',
+        html: 'In the EU and the UK this paradigm is implemented via a consistent regulatory framework (PSD2) requiring banks to build data-sharing infrastructure to provide secure data access to consumers and authorized third parties via standardized, free and seamless APIs. Read more in our <a href="/blog/open-banking-payments-in-the-uk"><strong>guide to EU/UK open banking</strong></a>.',
       },
       {
         type: 'p',
@@ -645,7 +645,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         type: 'html',
-        html: 'Unlike the laissez-faire approach developing inconsistently in the US thus far, the EU and the UK have taken the lead in developing a consistent regulatory framework (PSD2) that requires banks to build data-sharing infrastructure that provides secure data access to consumers and authorized third parties via standardized, free and seamless APIs. This regulatorily mandated approach has led to increased innovation, competition, personalization and consumer choice, loosening the stranglehold of entrenched financial institutions on consumer data and providing the people with more flexibility and control over their finances. You can find more information on EU/UK open-banking <a href="/blog/open-banking-payments-in-the-uk"><strong>here</strong></a>.',
+        html: 'Unlike the laissez-faire approach developing inconsistently in the US thus far, the EU and the UK have taken the lead in developing a consistent regulatory framework (PSD2) that requires banks to build data-sharing infrastructure that provides secure data access to consumers and authorized third parties via standardized, free and seamless APIs. This regulatorily mandated approach has led to increased innovation, competition, personalization and consumer choice, loosening the stranglehold of entrenched financial institutions on consumer data and providing the people with more flexibility and control over their finances. Read more in our <a href="/blog/open-banking-payments-in-the-uk"><strong>guide to EU/UK open banking</strong></a>.',
       },
       {
         type: 'p',
