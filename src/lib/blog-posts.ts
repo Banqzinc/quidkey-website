@@ -38,6 +38,85 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'payment-links-are-live-get-paid-instantly-with-just-a-link',
+    date: 'March 18, 2026',
+    dateISO: '2026-03-18',
+    title: 'Payment Links are live. Get paid instantly from anyone, with just a link.',
+    seoTitle: 'Pay by Bank Payment Links Are Live | Quidkey',
+    description:
+      'Quidkey Payment Links let businesses request instant Pay by Bank payments with a shareable link, real-time tracking, and no integration required.',
+    keyword: 'Pay by Bank payment links',
+    author: 'Quidkey Team',
+    image: '/images/blog/payment-links-launch.webp',
+    imageWidth: 1024,
+    imageHeight: 576,
+    featured: true,
+    relatedSlugs: ['pay-by-bank-the-future-of-payments', 'quidkey-is-live-on-shopify'],
+    blocks: [
+      {
+        type: 'html',
+        html: '<strong>Payment Links are live. The first Pay by Bank payment link.</strong>',
+      },
+      {
+        type: 'p',
+        text: "Today we're launching Quidkey Payment Links.",
+      },
+      {
+        type: 'p',
+        text: "Pay by Bank has already transformed online checkout, giving merchants faster settlement, lower fees, and no chargebacks. But for businesses collecting payments outside of a checkout, the process hasn't changed in decades.",
+      },
+      {
+        type: 'p',
+        text: 'You either send account details over email and wait for a manual transfer. Or your client enters their card details and gets charged up to 3.2% for the privilege. Until now, there has been no way to request a bank payment as simply as sending a link.',
+      },
+      {
+        type: 'html',
+        html: '<strong>That changes today.</strong>',
+      },
+      {
+        type: 'h2',
+        text: 'How it works',
+      },
+      {
+        type: 'p',
+        text: 'Quidkey Payment Links replaces the entire process with a single URL. You can create a payment link in seconds from the Quidkey Console. Set an amount, a currency, and a reference like an invoice number, and you instantly get a link to share however works best: email, SMS, or attached to an invoice.',
+      },
+      {
+        type: 'p',
+        text: 'The customer clicks the link, fills in their details, selects their bank, and pays through normal online banking.',
+      },
+      {
+        type: 'html',
+        html: '<strong>No card. No account. No app.</strong> Once payment goes through, they receive a receipt and the link closes automatically.',
+      },
+      {
+        type: 'p',
+        text: 'Every link is trackable from the Quidkey Console. You can see when it has been opened and navigate straight to the transaction once it is paid.',
+      },
+      {
+        type: 'h2',
+        text: 'Built for payments outside checkout',
+      },
+      {
+        type: 'p',
+        text: "Payment Links is built for B2B invoices, service payments, and ad-hoc requests. Lawyers, accountants, agencies, and anyone collecting payments can now get paid instantly, directly from their client's bank. No manual transfers. No card fees. No chasing.",
+      },
+      {
+        type: 'p',
+        text: 'No integration required. Just a link. This is what getting paid should look like.',
+      },
+      {
+        type: 'html',
+        html: 'Watch it in action below, or <a href="/contact">get in touch</a> to see how it works for your business.',
+      },
+      {
+        type: 'youtube',
+        videoId: 'K3zlkPTe8AQ',
+        title: 'Quidkey Payment Links in action',
+      },
+    ],
+  },
+  {
     slug: 'open-finance-in-the-us-part-3-building-a-pay-by-bank-in-the-us',
     date: 'March 12, 2026',
     dateISO: '2026-03-12',
