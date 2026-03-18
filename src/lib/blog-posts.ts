@@ -1674,6 +1674,10 @@ export const blogPosts: BlogPost[] = [
   },
 ]
 
+export function getYouTubeEmbedUrl(videoId: string) {
+  return `https://www.youtube-nocookie.com/embed/${videoId}`
+}
+
 export function getBlogPost(slug: string) {
   return blogPosts.find((post) => post.slug === slug || post.legacySlugs?.includes(slug))
 }

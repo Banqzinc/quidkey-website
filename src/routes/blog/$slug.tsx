@@ -2,7 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { MegaMenu } from '@/components/layout/mega-menu'
 import { Footer } from '@/components/layout/footer'
 import { LinkedInIcon } from '@/components/icons'
-import { getBlogPost, getRelatedPosts } from '@/lib/blog-posts'
+import { getBlogPost, getRelatedPosts, getYouTubeEmbedUrl } from '@/lib/blog-posts'
 import { MERCHANTS_SIGNUP_URL } from '@/lib/urls'
 import { buildSeo, buildArticleSchema, buildVideoSchema, getSiteUrl } from '@/lib/seo'
 
@@ -40,7 +40,7 @@ export const Route = createFileRoute('/blog/$slug')({
           thumbnailUrl: `https://img.youtube.com/vi/${block.videoId}/maxresdefault.jpg`,
           uploadDate: post.dateISO,
           contentUrl: `https://www.youtube.com/watch?v=${block.videoId}`,
-          embedUrl: `https://www.youtube.com/embed/${block.videoId}`,
+          embedUrl: getYouTubeEmbedUrl(block.videoId),
         }),
       )
 
@@ -249,7 +249,7 @@ function BlogPostPage() {
                         <iframe
                           width="100%"
                           height="100%"
-                          src={`https://www.youtube.com/embed/${block.videoId}?si=QmDNmc4uWlKMOvQK`}
+                          src={getYouTubeEmbedUrl(block.videoId)}
                           title={block.title}
                           frameBorder="0"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
