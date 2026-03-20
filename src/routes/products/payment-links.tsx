@@ -29,7 +29,7 @@ const paymentLinksSchema: JsonLdObject = {
     description: 'No monthly fees. Pay per transaction.',
   },
   description:
-    'Send payment links for invoices and one-off payments. Your customer pays by bank right away. No cards. No chasing. Lower fees.',
+    'Send payment links for invoices and one-off payments. Your customer pays by bank right away. No cards. No integration. Lower fees.',
   featureList:
     'Create a link, Send anywhere, Pay by bank, Lower fees, Multi currency, Track payments',
   provider: {
@@ -45,7 +45,7 @@ export const Route = createFileRoute('/products/payment-links')({
     buildSeo({
       title: 'Payment Links for Invoices. Send a Link. Get Paid | Quidkey',
       description:
-        'Send a payment link instead of bank details. Your customer pays by bank right away. No cards. No chasing. Lower fees.',
+        'Send a payment link instead of bank details. Your customer pays by bank right away. No cards. No integration. Lower fees.',
       path: '/products/payment-links',
       keywords: [
         'pay by bank payment links',
@@ -155,7 +155,7 @@ function PaymentLinksPage() {
             className="flex flex-wrap justify-center gap-x-5 gap-y-3 mb-10"
             role="list"
           >
-            {['No manual transfers', 'No chasing', 'No cards'].map(
+            {['No manual transfers', 'No integration', 'No cards'].map(
               (feature) => (
                 <li key={feature} className="flex items-center gap-2">
                   <Check
@@ -519,7 +519,7 @@ function PaymentLinksPage() {
             Stop sending bank details.
           </h2>
           <p className="text-lg text-background/70 mb-8 max-w-2xl mx-auto">
-            Send a payment link instead. No chasing. No cards. Just a simpler
+            Send a payment link instead. No integration. No cards. Just a simpler
             way to get paid.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
