@@ -19,15 +19,17 @@ export const Route = createFileRoute('/products/shopify')({
   component: ShopifyPage,
   head: () =>
     buildSeo({
-      title: 'Shopify Pay by Bank App for Lower Fees | Quidkey',
+      title: 'Cut Shopify Payment Fees by 70% with Pay by Bank | Quidkey',
       description:
-        'Official Shopify Payment Partner. Pay by bank app with up to 70% lower fees and zero chargebacks. Install in minutes.',
+        'Official Shopify Payment Partner. Cut payment fees by up to 70%, eliminate chargebacks, and get instant settlement. Install the Quidkey Pay by Bank app in minutes.',
       path: '/products/shopify',
       keywords: [
         'shopify pay by bank',
+        'shopify payment partner',
         'shopify open banking',
         'shopify payment app',
-        'shopify payment partner',
+        'shopify lower payment fees',
+        'shopify zero chargebacks',
       ],
     }),
 })
@@ -62,7 +64,7 @@ const numberedFeatures = [
     icon: Shield,
     title: 'Zero Chargebacks',
     description:
-      'Every payment is bank-authenticated — no card data, no disputes, no chargeback fees. Ever.',
+      'Every payment is bank-authenticated. No card data, no disputes, no chargeback fees. Ever.',
   },
   {
     num: '03',
@@ -123,7 +125,7 @@ function ShopifyPage() {
             <span className="text-sm font-medium tracking-tight">
               <span className="text-[#5E8E3E]">shopify</span>{' '}
               <span className="text-foreground/70 font-normal">payments</span>
-              <span className="text-muted-foreground font-normal"> — official partner</span>
+              <span className="text-muted-foreground font-normal"> · official partner</span>
             </span>
           </div>
 
@@ -288,7 +290,7 @@ function ShopifyPage() {
                   <div className="text-sm text-muted-foreground">
                     less payment costs with
                     <br />
-                    pay by bank fees
+                    Pay by Bank fees
                   </div>
                 </div>
                 <div>
@@ -305,7 +307,7 @@ function ShopifyPage() {
               <div className="pt-6 border-t border-border">
                 <div className="text-4xl font-bold gradient-text mb-1">0%</div>
                 <div className="text-sm text-muted-foreground">
-                  chargebacks — bank authentication stops fraud and disputes
+                  chargebacks. Bank authentication stops fraud and disputes
                   before they happen
                 </div>
               </div>
@@ -323,13 +325,13 @@ function ShopifyPage() {
                 <span className="gradient-text">
                   No need to change your checkout
                 </span>{' '}
-                — just add Pay by Bank like PayPal or Shop&nbsp;Pay.
+. Just add Pay by Bank like PayPal or Shop&nbsp;Pay.
               </h2>
             </div>
             <div>
               <p className="text-lg text-muted-foreground mb-6 text-pretty">
                 Quidkey adds Pay by Bank as an additional payment method at your
-                Shopify checkout. Your customers get one more way to pay — with
+                Shopify checkout. Your customers get one more way to pay, with
                 lower fees and faster settlement for you.{' '}
                 <Link
                   to="/solutions/ecommerce"
