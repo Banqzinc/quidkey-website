@@ -91,7 +91,7 @@ const numberedFeatures = [
     icon: CreditCard,
     title: 'Works with Cards',
     description:
-      'Pay-by-Bank sits alongside your existing payment methods. Customers choose. No disruption to your checkout.',
+      'Pay by Bank sits alongside your existing payment methods. Customers choose. No disruption to your checkout.',
   },
 ]
 
@@ -106,7 +106,7 @@ const testimonials = [
   },
   {
     quote:
-      "Zero chargebacks since we added Pay-by-Bank. That alone has saved us thousands in dispute fees and admin time.",
+      "Zero chargebacks since we added Pay by Bank. That alone has saved us thousands in dispute fees and admin time.",
     name: 'Coming soon',
     role: 'Shopify Plus Store',
     company: '',
@@ -250,7 +250,7 @@ function ShopifyPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
             <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-4">
-              How Pay-by-Bank{' '}
+              How Pay by Bank{' '}
               <span className="gradient-text">Improves</span> Your Store
             </h2>
           </div>
@@ -276,7 +276,7 @@ function ShopifyPage() {
                   {
                     icon: CreditCard,
                     title: 'Their choice',
-                    desc: 'Pay-by-Bank sits alongside cards and PayPal. Customers pick what works.',
+                    desc: 'Pay by Bank sits alongside cards and PayPal. Customers pick what works.',
                   },
                 ].map((item) => (
                   <div key={item.title} className="flex gap-4">
@@ -311,7 +311,7 @@ function ShopifyPage() {
                   <div className="text-sm text-muted-foreground">
                     less payment costs with
                     <br />
-                    pay-by-bank fees
+                    pay by bank fees
                   </div>
                 </div>
                 <div>
@@ -346,12 +346,12 @@ function ShopifyPage() {
                 <span className="gradient-text">
                   No need to change your checkout
                 </span>{' '}
-                — just add Pay-by-Bank like PayPal or Shop&nbsp;Pay.
+                — just add Pay by Bank like PayPal or Shop&nbsp;Pay.
               </h2>
             </div>
             <div>
               <p className="text-lg text-muted-foreground mb-6 text-pretty">
-                Quidkey adds Pay-by-Bank as an additional payment method at your
+                Quidkey adds Pay by Bank as an additional payment method at your
                 Shopify checkout. Your customers get one more way to pay — with
                 lower fees and faster settlement for you.
               </p>
@@ -383,7 +383,7 @@ function ShopifyPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
             <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-4">
-              All-in-One Pay-by-Bank for Shopify
+              All-in-One Pay by Bank for Shopify
             </h2>
             <p className="text-lg text-muted-foreground">
               Everything you need to accept bank payments, reduce costs, and
@@ -444,41 +444,53 @@ function ShopifyPage() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 md:gap-8">
-            {[
-              {
-                step: '1',
-                title: 'Install the app',
-                description:
-                  'One click from the Shopify App Store. No developer needed.',
-              },
-              {
-                step: '2',
-                title: 'Connect your bank',
-                description:
-                  'Link your business bank account to receive settlements.',
-              },
-              {
-                step: '3',
-                title: 'Go live',
-                description:
-                  'Pay-by-Bank appears at your checkout. Start saving immediately.',
-              },
-            ].map((item) => (
-              <div
-                key={item.step}
-                className="bg-white rounded-2xl border border-border p-6 md:p-8 text-center"
-              >
-                <div className="h-12 w-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-lg mx-auto mb-5">
-                  {item.step}
-                </div>
-                <h3 className="text-lg font-semibold text-foreground mb-2">
-                  {item.title}
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  {item.description}
-                </p>
+            {/* Step 1 — with install link */}
+            <div className="bg-white rounded-2xl border border-border p-6 md:p-8 text-center">
+              <div className="h-12 w-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-lg mx-auto mb-5">
+                1
               </div>
-            ))}
+              <h3 className="text-lg font-semibold text-foreground mb-2">
+                Install the app
+              </h3>
+              <p className="text-sm text-muted-foreground mb-4">
+                One click from the Shopify App Store. No developer needed.
+              </p>
+              <a
+                href={SHOPIFY_APP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
+              >
+                Install now
+                <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+              </a>
+            </div>
+
+            {/* Step 2 */}
+            <div className="bg-white rounded-2xl border border-border p-6 md:p-8 text-center">
+              <div className="h-12 w-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-lg mx-auto mb-5">
+                2
+              </div>
+              <h3 className="text-lg font-semibold text-foreground mb-2">
+                Connect your bank
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                Link your business bank account to receive settlements.
+              </p>
+            </div>
+
+            {/* Step 3 */}
+            <div className="bg-white rounded-2xl border border-border p-6 md:p-8 text-center">
+              <div className="h-12 w-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-lg mx-auto mb-5">
+                3
+              </div>
+              <h3 className="text-lg font-semibold text-foreground mb-2">
+                Go live
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                Pay by Bank appears at your checkout. Start saving immediately.
+              </p>
+            </div>
           </div>
         </div>
       </section>

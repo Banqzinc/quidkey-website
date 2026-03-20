@@ -7,6 +7,7 @@ function logoUrl(domain: string, size: number) {
 const partners = [
   { name: 'Shopify', domain: 'shopify.com' },
   { name: 'WooCommerce', domain: 'woocommerce.com' },
+  { name: 'Grace & Co', domain: 'graceandcojewellery.co.uk' },
   { name: 'Tryp.com', domain: 'tryp.com' },
   { name: 'TransferMate', domain: 'transfermate.com' },
   { name: 'SKUTopia', domain: 'skutopia.com' },
