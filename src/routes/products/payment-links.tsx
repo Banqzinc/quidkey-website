@@ -79,7 +79,7 @@ const numberedFeatures = [
     icon: LinkIcon,
     title: 'Create in seconds',
     description:
-      'Make a payment link in the dashboard. Add the amount, a reference, and what it is for.',
+      'Make a payment link in the Quidkey dashboard. Add the amount, currency and a reference.',
   },
   {
     num: '02',
@@ -147,7 +147,14 @@ function PaymentLinksPage() {
 
           <p className="text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 text-pretty">
             Need to get paid for an invoice? Send a Quidkey payment link. Your
-            customer pays by bank right away.
+            customer pays by bank right away.{' '}
+            <Link
+              to="/blog"
+              className="text-primary hover:underline font-medium"
+            >
+              Learn more on our blog
+            </Link>
+            .
           </p>
 
           {/* Feature checklist */}
@@ -468,7 +475,7 @@ function PaymentLinksPage() {
                 Create a link
               </h3>
               <p className="text-sm text-muted-foreground mb-4">
-                Add the amount, reference, and what it is for. It takes about
+                Add the amount, currency and a reference. It takes about
                 30 seconds.
               </p>
               <a
