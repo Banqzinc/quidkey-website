@@ -96,17 +96,14 @@ function PricingPage() {
           </p>
 
           {/* Highlights */}
-          <div className="flex flex-wrap justify-center gap-3">
+          <ul className="flex flex-wrap justify-center gap-x-5 gap-y-3" role="list">
             {highlights.map((highlight) => (
-              <div
-                key={highlight}
-                className="inline-flex items-center gap-2 rounded-full bg-foreground/5 border border-foreground/10 px-4 py-2 text-sm font-medium text-foreground"
-              >
-                <Check className="h-4 w-4 text-success" />
-                {highlight}
-              </div>
+              <li key={highlight} className="flex items-center gap-2">
+                <Check className="h-4 w-4 text-success flex-shrink-0" aria-hidden="true" />
+                <span className="text-sm font-medium text-foreground/80">{highlight}</span>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
