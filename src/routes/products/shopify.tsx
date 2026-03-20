@@ -323,9 +323,9 @@ function ShopifyPage() {
             <div>
               <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-6 leading-[1.15]">
                 <span className="gradient-text">
-                  No need to change your checkout
+                  No need to change your checkout.
                 </span>{' '}
-. Just add Pay by Bank like PayPal or Shop&nbsp;Pay.
+                Just add Pay by Bank like PayPal or Shop&nbsp;Pay.
               </h2>
             </div>
             <div>
@@ -376,19 +376,6 @@ function ShopifyPage() {
             </p>
           </div>
 
-          {/* Horizontal numbered nav */}
-          <div className="flex flex-wrap justify-center gap-4 md:gap-6 mb-12">
-            {numberedFeatures.map((f) => (
-              <div
-                key={f.num}
-                className="flex items-center gap-2 text-sm text-muted-foreground"
-              >
-                <span className="font-bold text-primary">{f.num}</span>
-                <span className="font-medium">{f.title}</span>
-              </div>
-            ))}
-          </div>
-
           {/* Feature cards */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 stagger-children">
             {numberedFeatures.map((f) => (
@@ -422,6 +409,31 @@ function ShopifyPage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ── Global coverage ── */}
+      <section className="py-16 md:py-20 bg-foreground text-background">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-6">
+            Global Coverage. One Integration.
+          </h2>
+          <div className="flex flex-wrap justify-center gap-3 mb-6">
+            {['United States', 'United Kingdom', 'Europe', 'Australia'].map(
+              (region) => (
+                <span
+                  key={region}
+                  className="rounded-full border border-background/20 px-4 py-1.5 text-sm font-medium text-background/80"
+                >
+                  {region}
+                </span>
+              ),
+            )}
+          </div>
+          <p className="text-background/60 max-w-xl mx-auto">
+            Accept payments in local currencies with built-in cross-border
+            support and FX. One integration, global reach.
+          </p>
         </div>
       </section>
 
