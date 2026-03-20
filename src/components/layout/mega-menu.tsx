@@ -56,6 +56,7 @@ const menuData: MegaMenuData = {
         { label: 'Local Accounts', href: '/products/local-accounts', description: 'Local collection accounts', icon: Building2 },
         { label: 'Multi Currency', href: '/products/multi-currency', description: 'Multi currency wallets and balances', icon: ArrowLeftRight },
         { label: 'Refunds', href: '/products/refunds', description: 'Fast bank to bank refunds', icon: ArrowLeftRight },
+        { label: 'Money Workflows', href: '/workflows', description: 'Automate how your money moves', icon: Monitor },
       ],
     },
   ],
@@ -198,9 +199,6 @@ export function MegaMenu() {
             <Link to="/pricing" className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
               Pricing
             </Link>
-            <Link to="/workflows" className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Workflows
-            </Link>
             <a
               href={DOCS_URL}
               target="_blank"
@@ -253,13 +251,20 @@ export function MegaMenu() {
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-3">
+            <Link
+              to="/products/shopify"
+              className="inline-flex items-center gap-1.5 rounded-full border border-border bg-white px-3.5 py-1.5 text-xs font-medium text-foreground/80 hover:border-primary/30 hover:text-foreground transition-colors"
+            >
+              <ShoppingCart className="h-3.5 w-3.5 text-[#5E8E3E]" />
+              Shopify
+            </Link>
             <a
               href={MERCHANTS_LOGIN_URL}
               target="_blank"
               rel="noopener noreferrer"
               className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }))}
             >
-              Merchant login
+              Login
             </a>
             <a
               href={MERCHANTS_SIGNUP_URL}
@@ -292,6 +297,14 @@ export function MegaMenu() {
         <div className="lg:hidden border-t border-border bg-white max-h-[80vh] overflow-y-auto">
           {/* Mobile CTAs - at top */}
           <div className="px-4 py-4 space-y-3 border-b border-border">
+            <Link
+              to="/products/shopify"
+              className="flex items-center justify-center gap-2 w-full rounded-full border border-border bg-white px-4 py-2.5 text-sm font-medium text-foreground hover:border-primary/30 transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <ShoppingCart className="h-4 w-4 text-[#5E8E3E]" />
+              Shopify App
+            </Link>
             <a
               href={MERCHANTS_LOGIN_URL}
               target="_blank"
@@ -299,7 +312,7 @@ export function MegaMenu() {
               className={cn(buttonVariants({ variant: 'outline' }), 'w-full')}
               onClick={() => setMobileMenuOpen(false)}
             >
-              Merchant login
+              Login
             </a>
             <a
               href={MERCHANTS_SIGNUP_URL}
@@ -370,9 +383,6 @@ export function MegaMenu() {
             {/* Simple links */}
             <Link to="/pricing" className="block py-3 font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>
               Pricing
-            </Link>
-            <Link to="/workflows" className="block py-3 font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>
-              Workflows
             </Link>
             <a
               href={DOCS_URL}
