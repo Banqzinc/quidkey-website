@@ -13,7 +13,33 @@ import {
   CreditCard,
   RotateCcw,
 } from 'lucide-react'
-import { buildSeo } from '@/lib/seo'
+import { buildSeo, getSiteUrl } from '@/lib/seo'
+import type { JsonLdObject } from '@/lib/seo'
+
+const shopifyAppSchema: JsonLdObject = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Quidkey Pay by Bank for Shopify',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+    description: 'Free to install. Transaction fees apply.',
+  },
+  description:
+    'Official Shopify Payment Partner. Accept Pay by Bank payments at your Shopify checkout with up to 70% lower fees and zero chargebacks.',
+  featureList:
+    'Bank Prediction, Zero Chargebacks, Lower Fees, Fast Settlement, Instant Refunds, Works with Cards',
+  installUrl: 'https://apps.shopify.com/quidkey-checkout',
+  screenshot: `${getSiteUrl()}/og-shopify.png`,
+  provider: {
+    '@type': 'Organization',
+    name: 'Quidkey',
+    url: 'https://quidkey.com',
+  },
+}
 
 export const Route = createFileRoute('/products/shopify')({
   component: ShopifyPage,
@@ -31,6 +57,10 @@ export const Route = createFileRoute('/products/shopify')({
         'shopify lower payment fees',
         'shopify zero chargebacks',
       ],
+      imageUrl: `${getSiteUrl()}/og-shopify.png`,
+      imageWidth: 1200,
+      imageHeight: 630,
+      structuredData: [shopifyAppSchema],
     }),
 })
 
