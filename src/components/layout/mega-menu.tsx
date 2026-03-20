@@ -22,6 +22,7 @@ import { buttonVariants } from '@/components/ui/button'
 import { DOCS_URL, MERCHANTS_LOGIN_URL, MERCHANTS_SIGNUP_URL } from '@/lib/urls'
 
 const LOGO_URL = '/quidkey-logo.svg'
+const LOGO_DEV_TOKEN = 'pk_DsNHFndhT3yo-85c5vdKKg'
 
 interface MenuItem {
   label: string
@@ -255,7 +256,13 @@ export function MegaMenu() {
               to="/products/shopify"
               className="inline-flex items-center gap-1.5 rounded-full border border-border bg-white px-3.5 py-1.5 text-xs font-medium text-foreground/80 hover:border-primary/30 hover:text-foreground transition-colors"
             >
-              <ShoppingCart className="h-3.5 w-3.5 text-[#5E8E3E]" />
+              <img
+                src={`https://img.logo.dev/shopify.com?token=${LOGO_DEV_TOKEN}&size=20`}
+                alt=""
+                width={16}
+                height={16}
+                className="h-4 w-4 object-contain"
+              />
               Shopify
             </Link>
             <a
@@ -302,8 +309,14 @@ export function MegaMenu() {
               className="flex items-center justify-center gap-2 w-full rounded-full border border-border bg-white px-4 py-2.5 text-sm font-medium text-foreground hover:border-primary/30 transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
-              <ShoppingCart className="h-4 w-4 text-[#5E8E3E]" />
-              Shopify App
+              <img
+                src={`https://img.logo.dev/shopify.com?token=${LOGO_DEV_TOKEN}&size=20`}
+                alt=""
+                width={16}
+                height={16}
+                className="h-4 w-4 object-contain"
+              />
+              Shopify
             </Link>
             <a
               href={MERCHANTS_LOGIN_URL}
