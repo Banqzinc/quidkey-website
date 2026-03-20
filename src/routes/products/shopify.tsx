@@ -12,7 +12,6 @@ import {
   Clock,
   CreditCard,
   RotateCcw,
-  Quote,
 } from 'lucide-react'
 import { buildSeo } from '@/lib/seo'
 
@@ -95,30 +94,6 @@ const numberedFeatures = [
   },
 ]
 
-/* ─── Placeholder testimonials ─── */
-const testimonials = [
-  {
-    quote:
-      'We switched to Quidkey and saw our payment fees drop by over 60%. The integration took less than an hour.',
-    name: 'Coming soon',
-    role: 'Shopify Merchant',
-    company: '',
-  },
-  {
-    quote:
-      "Zero chargebacks since we added Pay by Bank. That alone has saved us thousands in dispute fees and admin time.",
-    name: 'Coming soon',
-    role: 'Shopify Plus Store',
-    company: '',
-  },
-  {
-    quote:
-      'Our customers love it — the checkout is faster than cards, and we get settled the same day. Win-win.',
-    name: 'Coming soon',
-    role: 'Ecommerce Brand',
-    company: '',
-  },
-]
 
 /* ═══════════════════════════════════════════════════════════════════════════
  * Page
@@ -495,72 +470,6 @@ function ShopifyPage() {
         </div>
       </section>
 
-      {/* ── Testimonials ── */}
-      <section className="py-16 md:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
-            <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-4">
-              What Merchants Say
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6 md:gap-8">
-            {testimonials.map((t, i) => (
-              <div
-                key={i}
-                className="bg-white rounded-2xl border border-border p-6 md:p-8 flex flex-col"
-              >
-                <Quote
-                  className="h-8 w-8 text-primary/20 mb-4 flex-shrink-0"
-                  aria-hidden="true"
-                />
-                <p className="text-foreground/80 text-pretty mb-6 flex-1 italic">
-                  "{t.quote}"
-                </p>
-                <div className="pt-4 border-t border-border">
-                  <div className="font-semibold text-foreground text-sm">
-                    {t.name}
-                  </div>
-                  <div className="text-xs text-muted-foreground">{t.role}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Related pages ── */}
-      <section className="py-16 md:py-20 border-t border-border/70">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between gap-4 mb-8">
-            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">
-              Related pages
-            </h2>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              { href: '/products/refunds', label: 'Refunds' },
-              { href: '/pricing', label: 'Pricing' },
-              { href: '/solutions/ecommerce', label: 'Ecommerce' },
-            ].map((link) => (
-              <Link
-                key={link.href}
-                to={link.href}
-                className="group flex items-center justify-between gap-4 rounded-2xl border border-border bg-white px-5 py-4 transition-colors hover:border-primary/40 hover:bg-secondary/20"
-              >
-                <span className="font-medium text-foreground">
-                  {link.label}
-                </span>
-                <ArrowRight
-                  className="h-4 w-4 text-muted-foreground transition-transform duration-200 group-hover:translate-x-1 group-hover:text-foreground"
-                  aria-hidden="true"
-                />
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ── CTA ── */}
       <section className="py-16 md:py-24 bg-foreground text-background">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
@@ -595,6 +504,38 @@ function ShopifyPage() {
             >
               Get a demo
             </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Related pages ── */}
+      <section className="py-16 md:py-20 border-t border-border/70">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between gap-4 mb-8">
+            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">
+              Related pages
+            </h2>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              { href: '/products/refunds', label: 'Refunds' },
+              { href: '/pricing', label: 'Pricing' },
+              { href: '/solutions/ecommerce', label: 'Ecommerce' },
+            ].map((link) => (
+              <Link
+                key={link.href}
+                to={link.href}
+                className="group flex items-center justify-between gap-4 rounded-2xl border border-border bg-white px-5 py-4 transition-colors hover:border-primary/40 hover:bg-secondary/20"
+              >
+                <span className="font-medium text-foreground">
+                  {link.label}
+                </span>
+                <ArrowRight
+                  className="h-4 w-4 text-muted-foreground transition-transform duration-200 group-hover:translate-x-1 group-hover:text-foreground"
+                  aria-hidden="true"
+                />
+              </Link>
+            ))}
           </div>
         </div>
       </section>
