@@ -70,6 +70,7 @@ const numberedFeatures = [
     title: 'Lower Fees',
     description:
       'Save up to 70% compared to card processing. On $1M revenue, that\'s $25-45k back in your pocket annually.',
+    link: { href: '/pricing', label: 'See pricing' },
   },
   {
     num: '04',
@@ -84,6 +85,7 @@ const numberedFeatures = [
     title: 'Instant Refunds',
     description:
       'Process refunds back to your customer\'s bank account instantly. Better experience, fewer support tickets.',
+    link: { href: '/products/refunds', label: 'Learn about refunds' },
   },
   {
     num: '06',
@@ -328,7 +330,13 @@ function ShopifyPage() {
               <p className="text-lg text-muted-foreground mb-6 text-pretty">
                 Quidkey adds Pay by Bank as an additional payment method at your
                 Shopify checkout. Your customers get one more way to pay — with
-                lower fees and faster settlement for you.
+                lower fees and faster settlement for you.{' '}
+                <Link
+                  to="/solutions/ecommerce"
+                  className="text-primary hover:underline font-medium"
+                >
+                  See how it works for ecommerce
+                </Link>.
               </p>
               <ul className="space-y-3">
                 {[
@@ -400,6 +408,15 @@ function ShopifyPage() {
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   {f.description}
                 </p>
+                {'link' in f && f.link && (
+                  <Link
+                    to={f.link.href}
+                    className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline mt-3"
+                  >
+                    {f.link.label}
+                    <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                  </Link>
+                )}
               </div>
             ))}
           </div>
@@ -508,37 +525,6 @@ function ShopifyPage() {
         </div>
       </section>
 
-      {/* ── Related pages ── */}
-      <section className="py-16 md:py-20 border-t border-border/70">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between gap-4 mb-8">
-            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">
-              Related pages
-            </h2>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              { href: '/products/refunds', label: 'Refunds' },
-              { href: '/pricing', label: 'Pricing' },
-              { href: '/solutions/ecommerce', label: 'Ecommerce' },
-            ].map((link) => (
-              <Link
-                key={link.href}
-                to={link.href}
-                className="group flex items-center justify-between gap-4 rounded-2xl border border-border bg-white px-5 py-4 transition-colors hover:border-primary/40 hover:bg-secondary/20"
-              >
-                <span className="font-medium text-foreground">
-                  {link.label}
-                </span>
-                <ArrowRight
-                  className="h-4 w-4 text-muted-foreground transition-transform duration-200 group-hover:translate-x-1 group-hover:text-foreground"
-                  aria-hidden="true"
-                />
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
     </PageLayout>
   )
 }
