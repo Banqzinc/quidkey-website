@@ -1,6 +1,19 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { PageLayout, PageHero, FeatureGrid, BenefitsSection, HowItWorksSteps, PageCTA, RelatedLinksSection } from '@/components/layout/page-layout'
-import { ShoppingCart, Zap, Shield, TrendingUp, Clock, CreditCard } from 'lucide-react'
+import { createFileRoute, Link } from '@tanstack/react-router'
+import { PageLayout } from '@/components/layout/page-layout'
+import { buttonVariants } from '@/components/ui/button'
+import { DEMO_PLAYGROUND_URL } from '@/lib/urls'
+import { cn } from '@/lib/utils'
+import {
+  ArrowRight,
+  Check,
+  Zap,
+  Shield,
+  TrendingUp,
+  Clock,
+  CreditCard,
+  RotateCcw,
+  Quote,
+} from 'lucide-react'
 import { buildSeo } from '@/lib/seo'
 
 export const Route = createFileRoute('/products/shopify')({
@@ -9,122 +22,570 @@ export const Route = createFileRoute('/products/shopify')({
     buildSeo({
       title: 'Shopify Pay by Bank App for Lower Fees | Quidkey',
       description:
-        'Shopify-approved pay by bank app with lower fees and zero chargebacks. Improve conversion with bank prediction and install in minutes.',
+        'Official Shopify Payment Partner. Pay by bank app with up to 70% lower fees and zero chargebacks. Install in minutes.',
       path: '/products/shopify',
-      keywords: ['shopify pay by bank', 'shopify open banking', 'shopify payment app'],
+      keywords: [
+        'shopify pay by bank',
+        'shopify open banking',
+        'shopify payment app',
+        'shopify payment partner',
+      ],
     }),
 })
 
+/* ─── Merchant logos ─── */
+const LOGO_DEV_TOKEN = 'pk_DsNHFndhT3yo-85c5vdKKg'
+function logoUrl(domain: string, size: number) {
+  return `https://img.logo.dev/${domain}?token=${LOGO_DEV_TOKEN}&size=${size}`
+}
+
+const SHOPIFY_APP_URL = 'https://apps.shopify.com/quidkey-checkout'
+
+const merchants = [
+  { name: 'Grace & Co', domain: 'graceandcojewellery.co.uk' },
+  { name: 'Tryp.com', domain: 'tryp.com' },
+  { name: 'TransferMate', domain: 'transfermate.com' },
+  { name: 'SKUTopia', domain: 'skutopia.com' },
+  { name: 'Manière De Voir', domain: 'manieredevoir.com' },
+]
+
+/* ─── Numbered features ─── */
+const numberedFeatures = [
+  {
+    num: '01',
+    icon: Zap,
+    title: 'Bank Prediction',
+    description:
+      "Automatically detects your customer's bank for a one-tap payment experience. No manual selection needed.",
+  },
+  {
+    num: '02',
+    icon: Shield,
+    title: 'Zero Chargebacks',
+    description:
+      'Every payment is bank-authenticated — no card data, no disputes, no chargeback fees. Ever.',
+  },
+  {
+    num: '03',
+    icon: TrendingUp,
+    title: 'Lower Fees',
+    description:
+      'Save up to 70% compared to card processing. On $1M revenue, that\'s $25-45k back in your pocket annually.',
+  },
+  {
+    num: '04',
+    icon: Clock,
+    title: 'Fast Settlement',
+    description:
+      'Instant settlement in the UK and EU. 1-3 business days in the US. No more waiting for your money.',
+  },
+  {
+    num: '05',
+    icon: RotateCcw,
+    title: 'Instant Refunds',
+    description:
+      'Process refunds back to your customer\'s bank account instantly. Better experience, fewer support tickets.',
+  },
+  {
+    num: '06',
+    icon: CreditCard,
+    title: 'Works with Cards',
+    description:
+      'Pay-by-Bank sits alongside your existing payment methods. Customers choose. No disruption to your checkout.',
+  },
+]
+
+/* ─── Placeholder testimonials ─── */
+const testimonials = [
+  {
+    quote:
+      'We switched to Quidkey and saw our payment fees drop by over 60%. The integration took less than an hour.',
+    name: 'Coming soon',
+    role: 'Shopify Merchant',
+    company: '',
+  },
+  {
+    quote:
+      "Zero chargebacks since we added Pay-by-Bank. That alone has saved us thousands in dispute fees and admin time.",
+    name: 'Coming soon',
+    role: 'Shopify Plus Store',
+    company: '',
+  },
+  {
+    quote:
+      'Our customers love it — the checkout is faster than cards, and we get settled the same day. Win-win.',
+    name: 'Coming soon',
+    role: 'Ecommerce Brand',
+    company: '',
+  },
+]
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * Page
+ * ═══════════════════════════════════════════════════════════════════════════ */
 function ShopifyPage() {
-  const features = [
-    {
-      icon: ShoppingCart,
-      title: 'Shopify native',
-      description: 'Approved app that works directly with your checkout.',
-    },
-    {
-      icon: Zap,
-      title: 'Bank prediction',
-      description: "Shows your customer's bank for one-click payment.",
-    },
-    {
-      icon: Shield,
-      title: 'Zero chargebacks',
-      description: 'Bank authentication means no disputes.',
-    },
-    {
-      icon: TrendingUp,
-      title: 'Lower fees',
-      description: 'Save up to 70% vs cards.',
-    },
-    {
-      icon: Clock,
-      title: 'Fast settlement',
-      description: 'Instant in UK/EU. 1-3 days in US.',
-    },
-    {
-      icon: CreditCard,
-      title: 'Works with cards',
-      description: 'Offer both options. Customer chooses.',
-    },
-  ]
-
-  const benefits = [
-    {
-      stat: '70%',
-      statLabel: 'lower fees',
-      title: 'Cut payment costs',
-      description: 'Save $25-45k annually on $1M revenue.',
-    },
-    {
-      stat: '0%',
-      statLabel: 'chargebacks',
-      title: 'No disputes',
-      description: 'Bank authentication stops fraud.',
-    },
-    {
-      stat: '15%',
-      statLabel: 'checkout share',
-      title: 'Growing adoption',
-      description: 'Customers choosing bank payments.',
-    },
-  ]
-
-  const steps = [
-    {
-      step: '1',
-      title: 'Install the app',
-      description: 'One click from the Shopify App Store.',
-    },
-    {
-      step: '2',
-      title: 'Connect your bank',
-      description: 'Link your business bank account.',
-    },
-    {
-      step: '3',
-      title: 'Go live',
-      description: 'Pay by Bank appears at checkout.',
-    },
-  ]
-
   return (
     <PageLayout>
-      <PageHero
-        badge="Shopify App"
-        title="Pay by Bank for Shopify."
-        titleGradient="Lower fees. Zero chargebacks."
-        description="Shopify-approved app. Install in minutes. Save up to 70% on payment fees."
-        features={['Shopify approved', 'One-click install', 'Zero chargebacks']}
-      />
+      {/* ── Hero ── */}
+      <section className="relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden">
+        <div className="absolute inset-0 hero-gradient" aria-hidden="true" />
+        <div className="absolute inset-0 noise" aria-hidden="true" />
 
-      <FeatureGrid
-        title="Built for Shopify"
-        subtitle="Everything merchants need."
-        features={features}
-      />
+        <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+          {/* Shopify Payments Partner badge */}
+          <div className="inline-flex items-center gap-3 rounded-full bg-white border border-border shadow-sm px-5 py-2.5 mb-6">
+            <img
+              src={logoUrl('shopify.com', 24)}
+              srcSet={`${logoUrl('shopify.com', 24)} 1x, ${logoUrl('shopify.com', 48)} 2x`}
+              alt=""
+              width={24}
+              height={24}
+              className="h-6 w-6 object-contain"
+              aria-hidden="true"
+            />
+            <span className="text-sm font-medium tracking-tight">
+              <span className="text-[#5E8E3E]">shopify</span>{' '}
+              <span className="text-foreground/70 font-normal">payments</span>
+              <span className="text-muted-foreground font-normal"> — official partner</span>
+            </span>
+          </div>
 
-      <BenefitsSection
-        title="Real results"
-        subtitle="What merchants are seeing."
-        benefits={benefits}
-      />
+          {/* Headline */}
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6 leading-[1.1]">
+            <span className="text-foreground">
+              Cut Your Shopify
+              <br />
+              Payment Fees By Up to{' '}
+            </span>
+            <span className="gradient-text">70%</span>
+          </h1>
 
-      <HowItWorksSteps
-        title="Live in 3 steps"
-        subtitle="Go live today."
-        steps={steps}
-      />
+          <p className="text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 text-pretty">
+            Bank-authenticated payments. Zero chargebacks. Instant settlement.
+            Install in minutes and start saving today.
+          </p>
 
-      <RelatedLinksSection
-        links={[
-          { href: '/products/refunds', label: 'Refunds' },
-          { href: '/pricing', label: 'Pricing' },
-          { href: '/solutions/ecommerce', label: 'Ecommerce' },
-        ]}
-      />
+          {/* Feature checklist */}
+          <ul
+            className="flex flex-wrap justify-center gap-x-5 gap-y-3 mb-10"
+            role="list"
+          >
+            {['Shopify approved', 'One-click install', 'Zero chargebacks'].map(
+              (feature) => (
+                <li key={feature} className="flex items-center gap-2">
+                  <Check
+                    className="h-4 w-4 text-success flex-shrink-0"
+                    aria-hidden="true"
+                  />
+                  <span className="text-sm font-medium text-foreground/80">
+                    {feature}
+                  </span>
+                </li>
+              ),
+            )}
+          </ul>
 
-      <PageCTA />
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href={SHOPIFY_APP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(
+                buttonVariants({ size: 'lg' }),
+                'group shadow-lg shadow-primary/25 hover:shadow-primary/40',
+              )}
+            >
+              Install on Shopify
+              <ArrowRight
+                className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1"
+                aria-hidden="true"
+              />
+            </a>
+            <a
+              href={DEMO_PLAYGROUND_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={buttonVariants({ variant: 'outline', size: 'lg' })}
+            >
+              Get a demo
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Merchant trust strip ── */}
+      <section className="py-8 md:py-12 border-b border-border">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <p className="text-center text-sm text-muted-foreground mb-6">
+            Trusted by merchants worldwide
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
+            {merchants.map((m) => (
+              <div
+                key={m.domain}
+                className="flex items-center gap-2 opacity-50 hover:opacity-80 transition-opacity duration-200"
+              >
+                <img
+                  src={logoUrl(m.domain, 24)}
+                  srcSet={`${logoUrl(m.domain, 24)} 1x, ${logoUrl(m.domain, 48)} 2x`}
+                  alt={`${m.name} logo`}
+                  width={24}
+                  height={24}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-6 w-6 object-contain"
+                />
+                <span className="text-sm font-medium text-muted-foreground">
+                  {m.name}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Two-sided value proposition ── */}
+      <section className="py-16 md:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
+            <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-4">
+              How Pay-by-Bank{' '}
+              <span className="gradient-text">Improves</span> Your Store
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+            {/* For customers */}
+            <div className="bg-white rounded-2xl border border-border p-8 md:p-10">
+              <h3 className="text-2xl font-semibold text-foreground mb-8">
+                For Your Customers
+              </h3>
+              <div className="space-y-6">
+                {[
+                  {
+                    icon: Zap,
+                    title: 'Express checkout',
+                    desc: 'Pre-filled details with bank prediction. Faster than typing card numbers.',
+                  },
+                  {
+                    icon: Shield,
+                    title: 'Bank-level security',
+                    desc: 'Authenticated by their own bank app. No card details shared.',
+                  },
+                  {
+                    icon: CreditCard,
+                    title: 'Their choice',
+                    desc: 'Pay-by-Bank sits alongside cards and PayPal. Customers pick what works.',
+                  },
+                ].map((item) => (
+                  <div key={item.title} className="flex gap-4">
+                    <div className="flex-shrink-0">
+                      <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                        <item.icon className="h-5 w-5 text-primary" />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="font-semibold text-foreground mb-1">
+                        {item.title}
+                      </div>
+                      <p className="text-sm text-muted-foreground">
+                        {item.desc}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* For store owners */}
+            <div className="bg-white rounded-2xl border border-border p-8 md:p-10">
+              <h3 className="text-2xl font-semibold text-foreground mb-8">
+                For Store Owners
+              </h3>
+              <div className="grid grid-cols-2 gap-6 mb-6">
+                <div>
+                  <div className="text-4xl font-bold gradient-text mb-1">
+                    -70%
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    less payment costs with
+                    <br />
+                    pay-by-bank fees
+                  </div>
+                </div>
+                <div>
+                  <div className="text-4xl font-bold gradient-text mb-1">
+                    +37%
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    higher conversion with
+                    <br />
+                    less friction at checkout
+                  </div>
+                </div>
+              </div>
+              <div className="pt-6 border-t border-border">
+                <div className="text-4xl font-bold gradient-text mb-1">0%</div>
+                <div className="text-sm text-muted-foreground">
+                  chargebacks — bank authentication stops fraud and disputes
+                  before they happen
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Integration simplicity ── */}
+      <section className="py-16 md:py-24 bg-secondary/30">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+            <div>
+              <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-6 leading-[1.15]">
+                <span className="gradient-text">
+                  No need to change your checkout
+                </span>{' '}
+                — just add Pay-by-Bank like PayPal or Shop&nbsp;Pay.
+              </h2>
+            </div>
+            <div>
+              <p className="text-lg text-muted-foreground mb-6 text-pretty">
+                Quidkey adds Pay-by-Bank as an additional payment method at your
+                Shopify checkout. Your customers get one more way to pay — with
+                lower fees and faster settlement for you.
+              </p>
+              <ul className="space-y-3">
+                {[
+                  'Works with your existing checkout flow',
+                  'No code changes required',
+                  'Sits alongside cards, PayPal, and Shop Pay',
+                  'Live in under 10 minutes',
+                ].map((item) => (
+                  <li key={item} className="flex items-center gap-3">
+                    <Check
+                      className="h-4 w-4 text-success flex-shrink-0"
+                      aria-hidden="true"
+                    />
+                    <span className="text-sm font-medium text-foreground/80">
+                      {item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Numbered features ── */}
+      <section className="py-16 md:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
+            <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-4">
+              All-in-One Pay-by-Bank for Shopify
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Everything you need to accept bank payments, reduce costs, and
+              grow your store.
+            </p>
+          </div>
+
+          {/* Horizontal numbered nav */}
+          <div className="flex flex-wrap justify-center gap-4 md:gap-6 mb-12">
+            {numberedFeatures.map((f) => (
+              <div
+                key={f.num}
+                className="flex items-center gap-2 text-sm text-muted-foreground"
+              >
+                <span className="font-bold text-primary">{f.num}</span>
+                <span className="font-medium">{f.title}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Feature cards */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 stagger-children">
+            {numberedFeatures.map((f) => (
+              <div
+                key={f.num}
+                className="bg-white rounded-2xl border border-border p-6 card-hover"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-xs font-bold text-primary/60">
+                    {f.num}
+                  </span>
+                  <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <f.icon className="h-5 w-5 text-primary" />
+                  </div>
+                </div>
+                <h3 className="text-lg font-semibold text-foreground mb-2">
+                  {f.title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {f.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── How it works ── */}
+      <section className="py-16 md:py-24 bg-secondary/30">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
+            <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-4">
+              Live in 3 steps
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Go from install to accepting bank payments in under 10 minutes.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 md:gap-8">
+            {[
+              {
+                step: '1',
+                title: 'Install the app',
+                description:
+                  'One click from the Shopify App Store. No developer needed.',
+              },
+              {
+                step: '2',
+                title: 'Connect your bank',
+                description:
+                  'Link your business bank account to receive settlements.',
+              },
+              {
+                step: '3',
+                title: 'Go live',
+                description:
+                  'Pay-by-Bank appears at your checkout. Start saving immediately.',
+              },
+            ].map((item) => (
+              <div
+                key={item.step}
+                className="bg-white rounded-2xl border border-border p-6 md:p-8 text-center"
+              >
+                <div className="h-12 w-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-lg mx-auto mb-5">
+                  {item.step}
+                </div>
+                <h3 className="text-lg font-semibold text-foreground mb-2">
+                  {item.title}
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  {item.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Testimonials ── */}
+      <section className="py-16 md:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
+            <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-4">
+              What Merchants Say
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 md:gap-8">
+            {testimonials.map((t, i) => (
+              <div
+                key={i}
+                className="bg-white rounded-2xl border border-border p-6 md:p-8 flex flex-col"
+              >
+                <Quote
+                  className="h-8 w-8 text-primary/20 mb-4 flex-shrink-0"
+                  aria-hidden="true"
+                />
+                <p className="text-foreground/80 text-pretty mb-6 flex-1 italic">
+                  "{t.quote}"
+                </p>
+                <div className="pt-4 border-t border-border">
+                  <div className="font-semibold text-foreground text-sm">
+                    {t.name}
+                  </div>
+                  <div className="text-xs text-muted-foreground">{t.role}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Related pages ── */}
+      <section className="py-16 md:py-20 border-t border-border/70">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between gap-4 mb-8">
+            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">
+              Related pages
+            </h2>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              { href: '/products/refunds', label: 'Refunds' },
+              { href: '/pricing', label: 'Pricing' },
+              { href: '/solutions/ecommerce', label: 'Ecommerce' },
+            ].map((link) => (
+              <Link
+                key={link.href}
+                to={link.href}
+                className="group flex items-center justify-between gap-4 rounded-2xl border border-border bg-white px-5 py-4 transition-colors hover:border-primary/40 hover:bg-secondary/20"
+              >
+                <span className="font-medium text-foreground">
+                  {link.label}
+                </span>
+                <ArrowRight
+                  className="h-4 w-4 text-muted-foreground transition-transform duration-200 group-hover:translate-x-1 group-hover:text-foreground"
+                  aria-hidden="true"
+                />
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA ── */}
+      <section className="py-16 md:py-24 bg-foreground text-background">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-4">
+            Start saving today.
+          </h2>
+          <p className="text-lg text-background/70 mb-8 max-w-2xl mx-auto">
+            Join merchants saving thousands on payment fees. Zero chargebacks.
+            Live in minutes.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href={SHOPIFY_APP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(
+                buttonVariants({ size: 'lg', variant: 'secondary' }),
+                'group',
+              )}
+            >
+              Install on Shopify
+              <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+            </a>
+            <a
+              href={DEMO_PLAYGROUND_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(
+                buttonVariants({ size: 'lg', variant: 'outline' }),
+                'border-background/30 text-background hover:bg-background/10',
+              )}
+            >
+              Get a demo
+            </a>
+          </div>
+        </div>
+      </section>
     </PageLayout>
   )
 }
