@@ -46,12 +46,6 @@ const team = [
     imageSrc: '/images/team/matt-bartlett.webp',
   },
   {
-    name: 'Harry McNair',
-    role: 'Sales Development Executive',
-    linkedinUrl: 'https://www.linkedin.com/in/harry-mcnair-3a94b7181/',
-    imageSrc: '/images/team/harry-mcnair.webp',
-  },
-  {
     name: 'Steven Holmes',
     role: 'Technical Lead',
     linkedinUrl: 'https://www.linkedin.com/in/steven-holmes-7281a627/',
