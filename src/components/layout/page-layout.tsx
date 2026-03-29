@@ -5,6 +5,7 @@ import { buttonVariants } from '@/components/ui/button'
 import { DEMO_PLAYGROUND_URL } from '@/lib/urls'
 import { cn } from '@/lib/utils'
 import { ArrowRight, Check } from 'lucide-react'
+import { LinkedInIcon } from '@/components/icons'
 
 interface PageLayoutProps {
   children: React.ReactNode
@@ -489,11 +490,11 @@ export function TeamSection({
                     href={member.linkedinUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm font-medium text-primary hover:underline"
+                    className="text-muted-foreground hover:text-primary transition-colors"
                     aria-label={`LinkedIn profile for ${member.name}`}
                     title={`LinkedIn profile for ${member.name}`}
                   >
-                    LinkedIn
+                    <LinkedInIcon className="h-5 w-5" />
                   </a>
                 )}
               </div>
