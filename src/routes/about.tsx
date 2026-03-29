@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import {
   PageLayout,
   PageHero,
@@ -7,7 +7,6 @@ import {
   ContentSection,
   SectionHeader,
   TeamSection,
-  RelatedLinksSection,
 } from '@/components/layout/page-layout'
 import { buildSeo } from '@/lib/seo'
 import { ArrowLeftRight, Layers, Sparkles } from 'lucide-react'
@@ -157,6 +156,11 @@ function AboutPage() {
             </div>
           ))}
         </div>
+        <p className="text-center mt-8 text-muted-foreground">
+          <Link to="/workflows" className="text-primary hover:underline font-medium">
+            See all money workflows
+          </Link>
+        </p>
       </ContentSection>
 
       <TeamSection members={team} />
@@ -168,8 +172,19 @@ function AboutPage() {
             <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-4">
               Going global
             </h2>
-            <p className="text-lg text-background/70">
+            <p className="text-lg text-background/70 mb-4">
               We're building for global coverage from day one—starting with the markets where pay‑by‑bank is already winning.
+            </p>
+            <p className="text-background/60">
+              Collect payments with{' '}
+              <Link to="/products/local-accounts" className="text-background hover:underline font-medium">
+                local accounts
+              </Link>
+              {' '}and process{' '}
+              <Link to="/products/refunds" className="text-background hover:underline font-medium">
+                instant refunds
+              </Link>
+              {' '}in every market.
             </p>
           </div>
           <div className="bg-background rounded-2xl border border-white/10 p-6">
@@ -185,14 +200,6 @@ function AboutPage() {
           </div>
         </div>
       </ContentSection>
-
-      <RelatedLinksSection
-        links={[
-          { href: '/workflows', label: 'Money Workflows' },
-          { href: '/products/local-accounts', label: 'Local Accounts' },
-          { href: '/products/refunds', label: 'Refunds' },
-        ]}
-      />
 
       <PageCTA />
     </PageLayout>
