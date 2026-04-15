@@ -143,7 +143,7 @@ function BlogPostPage() {
                     return (
                       <h2
                         key={idx}
-                        className="text-2xl font-semibold tracking-tight text-foreground mt-10 mb-4 pt-6 border-t border-border first:mt-0 first:pt-0 first:border-t-0"
+                        className="text-2xl font-semibold tracking-tight text-foreground mt-10 mb-4"
                       >
                         {block.text}
                       </h2>
