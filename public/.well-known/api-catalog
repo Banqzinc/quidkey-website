@@ -1,0 +1,10 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://core.quidkey.com/api/v1",
+      "service-desc": [
+        { "href": "https://quidkey.com/openapi.json", "type": "application/json" }
+      ]
+    }
+  ]
+}
