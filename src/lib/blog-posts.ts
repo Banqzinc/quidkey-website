@@ -752,7 +752,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         type: 'html',
-        html: '<strong>Add Quidkey to your checkout today – </strong><a href="https://merchants.quidkey.com/signup">Start Accepting Payments</a>',
+        html: '<strong>Add Quidkey to your checkout today – </strong><a href="https://console.quidkey.com/signup">Start Accepting Payments</a>',
       },
     ],
   },
@@ -1045,7 +1045,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         type: 'html',
-        html: '<strong>Add Quidkey to your checkout today – </strong><a href="https://merchants.quidkey.com/signup">Start Accepting Payments</a>',
+        html: '<strong>Add Quidkey to your checkout today – </strong><a href="https://console.quidkey.com/signup">Start Accepting Payments</a>',
       },
     ],
   },
