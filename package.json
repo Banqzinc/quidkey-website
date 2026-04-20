@@ -6,6 +6,7 @@
     "dev": "vite dev --port 3000",
     "optimize:images": "node ./scripts/optimize-images.mjs",
     "generate:seo": "node ./scripts/generate-seo-files.mjs",
+    "generate:openapi": "node ./scripts/generate-public-openapi.mjs",
     "build": "npm run optimize:images && npm run generate:seo && vite build",
     "preview": "vite preview",
     "test": "vitest run"

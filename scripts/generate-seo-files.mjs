@@ -153,6 +153,7 @@ async function generate() {
     '# https://www.robotstxt.org/robotstxt.html',
     'User-agent: *',
     'Disallow:',
+    'Content-Signal: ai-train=no, search=yes, ai-input=yes',
     '',
     `Sitemap: ${siteOrigin}/sitemap.xml`,
     '',
