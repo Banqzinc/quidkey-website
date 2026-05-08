@@ -1,6 +1,34 @@
 /* Hand-written overrides on top of the prefixed prototype CSS. Loaded last
    from src/routes/index.tsx, after every base file. */
 
+/* Blog index cards use real post images instead of the prototype's striped
+   placeholder. The .bcard__media and .bhero__media containers already have
+   aspect-ratio: 16/9, so the img only needs to fill them. */
+.hp .bcard__link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+.hp .bcard__img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.hp .bcard__img--cover {
+  object-fit: cover;
+}
+.hp .bcard__img--contain {
+  object-fit: contain;
+  background: var(--bg-mute);
+  padding: 12%;
+}
+.hp .bhero__media {
+  display: block;
+  text-decoration: none;
+}
+
 /* Headings inside the .hp wrapper must use Outfit, not Space Grotesk.
    The site-wide styles.css applies `font-family: var(--font-display)`
    (= Space Grotesk) to every h1-h6 globally — that rule overrides

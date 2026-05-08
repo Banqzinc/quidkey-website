@@ -1,15 +1,19 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
+import { useMemo, useState } from 'react'
 
 import { HomepageNav } from '@/components/layout/homepage-nav'
 import { HomepageFooter } from '@/components/layout/homepage-footer'
 import { AudienceProvider } from '@/context/audience'
-import { blogPosts } from '@/lib/blog-posts'
+import { blogPosts, type BlogPost } from '@/lib/blog-posts'
+import {
+  BLOG_CATEGORIES,
+  formatBlogDate,
+  getBlogCategory,
+  getBlogReadMin,
+  type BlogCategory,
+} from '@/lib/blog-meta'
 import { buildSeo } from '@/lib/seo'
 
-// Pull in the prefixed homepage CSS so HomepageNav and HomepageFooter
-// render correctly. The .hp wrapper class is scoped to just the nav and
-// footer (not the article body) so the homepage's CSS reset doesn't mess
-// with the blog post's Tailwind-styled typography.
 import '@/styles/homepage/base.css'
 import '@/styles/homepage/tm2.css'
 import '@/styles/homepage/headings.css'
@@ -17,10 +21,13 @@ import '@/styles/homepage/integrations.css'
 import '@/styles/homepage/treasury-head.css'
 import '@/styles/homepage/mobile.css'
 import '@/styles/homepage/section-padding.css'
+import '@/styles/homepage/blog.css'
 import '@/styles/homepage/overrides.css'
 
 const FONT_HREF =
   'https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Caveat:wght@500;600;700&family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap'
+
+type ViewFilter = 'All' | BlogCategory
 
 export const Route = createFileRoute('/blog/')({
   component: BlogPage,
@@ -43,96 +50,176 @@ export const Route = createFileRoute('/blog/')({
   },
 })
 
-function BlogPage() {
-  const featuredPost = blogPosts.find((p) => p.featured) ?? blogPosts[0]
-  const otherPosts = blogPosts.filter((p) => p.slug !== featuredPost.slug)
+function PostCard({ post }: { post: BlogPost }) {
+  const category = getBlogCategory(post.slug)
+  const readMin = getBlogReadMin(post)
+  const fitClass = post.imageFit === 'contain' ? 'bcard__img--contain' : 'bcard__img--cover'
 
   return (
-    <AudienceProvider>
-      <div className="min-h-screen">
-        <div className="hp">
-          <HomepageNav />
+    <article className="bcard">
+      <Link to="/blog/$slug" params={{ slug: post.slug }} className="bcard__link">
+        <div className="bcard__media">
+          <img
+            src={post.image}
+            alt={post.title}
+            className={`bcard__img ${fitClass}`}
+            width={post.imageWidth ?? 1600}
+            height={post.imageHeight ?? 900}
+            loading="lazy"
+            decoding="async"
+          />
         </div>
-        <main className="pt-24 pb-16 md:pt-32 md:pb-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {/* Header */}
-          <div className="text-center mb-12 md:mb-16">
-            <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight mb-4">
-              Blog
-            </h1>
-            <p className="text-lg text-muted-foreground">
+        <div className="bcard__body">
+          <div className="bcard__meta">
+            <span className="bcard__date">{formatBlogDate(post.dateISO)}</span>
+            <span className="bcard__cat">{category}</span>
+          </div>
+          <h3 className="bcard__h">{post.title}</h3>
+          <p className="bcard__sub">{post.description}</p>
+          <div className="bcard__foot">
+            <span>{readMin} min read</span>
+            <span style={{ color: 'var(--faint)' }}>·</span>
+            <span>Read article</span>
+            <span className="bcard__foot-arrow">→</span>
+          </div>
+        </div>
+      </Link>
+    </article>
+  )
+}
+
+function BlogHero({ post }: { post: BlogPost }) {
+  const category = getBlogCategory(post.slug)
+  const readMin = getBlogReadMin(post)
+  const fitClass = post.imageFit === 'contain' ? 'bcard__img--contain' : 'bcard__img--cover'
+
+  return (
+    <section className="bhero">
+      <div className="container">
+        <div className="bhero__head">
+          <div>
+            <h1 className="bhero__title">From the Quidkey newsroom.</h1>
+            <p className="bhero__lede">
               Insights on pay by bank, clearing infrastructure, and programmable treasury.
             </p>
           </div>
-
-          {/* Featured post */}
-          <Link
-            to="/blog/$slug"
-            params={{ slug: featuredPost.slug }}
-            className="group block mb-12 md:mb-16"
-          >
-            <div className="grid md:grid-cols-2 gap-8 items-center bg-secondary/30 rounded-2xl p-6 md:p-8 card-hover">
-              <div className="aspect-[16/9] rounded-xl overflow-hidden">
-                <img
-                  src={featuredPost.image}
-                  alt={featuredPost.title}
-                  width={1200}
-                  height={675}
-                  loading="eager"
-                  decoding="async"
-                  className={`w-full h-full transition-transform duration-300 ${featuredPost.imageFit === 'contain' ? 'object-contain bg-secondary/20 p-4' : 'object-cover group-hover:scale-105'}`}
-                />
-              </div>
-              <div>
-                <div className="inline-block text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded mb-3">
-                  Featured
-                </div>
-                <div className="text-sm text-muted-foreground mb-2">{featuredPost.date}</div>
-                <h2 className="text-2xl md:text-3xl font-semibold text-foreground mb-3 group-hover:text-primary transition-colors">
-                  {featuredPost.title}
-                </h2>
-                <p className="text-muted-foreground">
-                  {featuredPost.description}
-                </p>
-              </div>
-            </div>
-          </Link>
-
-          {/* Other posts grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {otherPosts.map((post, index) => (
-              <Link
-                key={index}
-                to="/blog/$slug"
-                params={{ slug: post.slug }}
-                className="group bg-white rounded-2xl border border-border overflow-hidden card-hover"
-              >
-                <div className="aspect-[16/9] overflow-hidden">
-                  <img
-                    src={post.image}
-                    alt={post.title}
-                    width={1200}
-                    height={675}
-                    loading={index < 4 ? 'eager' : 'lazy'}
-                    decoding="async"
-                    className={`w-full h-full transition-transform duration-300 ${post.imageFit === 'contain' ? 'object-contain bg-secondary/20 p-4' : 'object-cover group-hover:scale-105'}`}
-                  />
-                </div>
-                <div className="p-6">
-                  <div className="text-sm text-muted-foreground mb-2">{post.date}</div>
-                  <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                    {post.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground line-clamp-2">
-                    {post.description}
-                  </p>
-                </div>
-              </Link>
-            ))}
-          </div>
         </div>
-      </main>
-        <div className="hp">
+        <article className="bhero__card">
+          <div className="bhero__copy">
+            <div className="bhero__meta">
+              <span style={{ color: 'var(--ink)', fontWeight: 600 }}>Latest</span>
+              <span className="bhero__meta-dot" />
+              <span>{formatBlogDate(post.dateISO)}</span>
+              <span className="bhero__meta-dot" />
+              <span>{category}</span>
+              <span className="bhero__meta-dot" />
+              <span>{readMin} min read</span>
+            </div>
+            <h2 className="bhero__h">{post.title}</h2>
+            {post.description && <p className="bhero__sub">{post.description}</p>}
+            <Link to="/blog/$slug" params={{ slug: post.slug }} className="btn btn--ink btn--lg bhero__cta">
+              Read more
+              <span className="btn__arrow" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  width="14"
+                  height="14"
+                >
+                  <path d="M5 12h14" />
+                  <path d="M13 5l7 7-7 7" />
+                </svg>
+              </span>
+            </Link>
+          </div>
+          <Link to="/blog/$slug" params={{ slug: post.slug }} className="bhero__media">
+            <img src={post.image} alt={post.title} className={`bcard__img ${fitClass}`} loading="eager" />
+          </Link>
+        </article>
+      </div>
+    </section>
+  )
+}
+
+function FilterPills({
+  value,
+  onChange,
+  counts,
+}: {
+  value: ViewFilter
+  onChange: (next: ViewFilter) => void
+  counts: Record<ViewFilter, number>
+}) {
+  const options: ViewFilter[] = ['All', ...BLOG_CATEGORIES]
+  return (
+    <div className="bpills" role="tablist" aria-label="Filter articles by category">
+      {options.map((c) => {
+        const active = value === c
+        return (
+          <button
+            key={c}
+            type="button"
+            role="tab"
+            aria-selected={active}
+            className={`bpill ${active ? 'is-on' : ''}`}
+            onClick={() => onChange(c)}
+          >
+            <span className="bpill__lbl">{c}</span>
+            <span className="bpill__count">{counts[c] ?? 0}</span>
+          </button>
+        )
+      })}
+    </div>
+  )
+}
+
+function BlogPage() {
+  const [view, setView] = useState<ViewFilter>('All')
+
+  const sorted = useMemo(
+    () => [...blogPosts].sort((a, b) => (a.dateISO < b.dateISO ? 1 : -1)),
+    [],
+  )
+  const hero = sorted[0]
+  const rest = sorted.slice(1)
+
+  const filtered = view === 'All' ? rest : rest.filter((p) => getBlogCategory(p.slug) === view)
+
+  const counts = useMemo<Record<ViewFilter, number>>(() => {
+    const c: Record<ViewFilter, number> = { All: rest.length, Engineering: 0, Product: 0, Leadership: 0 }
+    for (const p of rest) c[getBlogCategory(p.slug)] += 1
+    return c
+  }, [rest])
+
+  return (
+    <AudienceProvider>
+      <div className="hp">
+        <div className="blog-page">
+          <HomepageNav />
+          <BlogHero post={hero} />
+          <section className="barticles">
+            <div className="container">
+              <div className="bfilter">
+                <FilterPills value={view} onChange={setView} counts={counts} />
+                <span className="bfilter__count">
+                  {filtered.length} {filtered.length === 1 ? 'article' : 'articles'}
+                </span>
+              </div>
+              {filtered.length === 0 ? (
+                <div className="bempty">No articles in this category yet — check back soon.</div>
+              ) : (
+                <div className="barticles__grid">
+                  {filtered.map((post) => (
+                    <PostCard key={post.slug} post={post} />
+                  ))}
+                </div>
+              )}
+            </div>
+          </section>
           <HomepageFooter />
         </div>
       </div>

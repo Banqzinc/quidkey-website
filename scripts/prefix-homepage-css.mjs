@@ -31,6 +31,7 @@ const FILES = [
   { in: 'v-draft-7/treasury-head.css', out: 'treasury-head.css' },
   { in: 'v-draft-7/mobile.css', out: 'mobile.css' },
   { in: 'v-draft-7/section-padding-fix.css', out: 'section-padding.css' },
+  { in: 'blog.css', out: 'blog.css' },
 ]
 
 /**
