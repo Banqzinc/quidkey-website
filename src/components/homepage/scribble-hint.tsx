@@ -1,21 +1,15 @@
 // Hand-drawn "scribble" guide that overlays the hero viz with a Caveat-font
 // label, a curved arrow pointing into the phone, and prev/next navigation.
 //
-// Simplified port of app.jsx:457-792 (ScribbleHint + DemoHint). Differences
-// from the prototype:
-//   - The auto-driving stage system (which would auto-click through the
-//     demo as you advance stages) is dropped. Users navigate the demo
-//     themselves, and the hint shows the current stage's label.
-//   - When the demo's flowStep doesn't match the current stage's screen
-//     (because the user advanced the demo), the hint hides itself until
-//     prev/next is pressed.
-//   - Hint hides if the user has clicked anything inside the phone 3+
-//     times — same engagement-based suppression as the prototype.
-//
-// The hint positions itself relative to .hero__viz--mobile, which is the
-// container the prototype's CSS expects.
+// Simplified port of app.jsx:457-792 (ScribbleHint + DemoHint). The
+// stage-management/auto-driving logic lives in MerchantHeroViz; this file
+// is a pure presentation component that:
+//   - Measures the active [data-hint-id] target's bounding rect
+//   - Measures its own label height (so multi-line wrapped text doesn't
+//     overlap the prev/next nav)
+//   - Positions the label, nav, and a hand-drawn bezier arrow accordingly
 
-import { useEffect, useLayoutEffect, useState, type ReactNode } from 'react'
+import { useLayoutEffect, useRef, useState, type ReactNode } from 'react'
 
 export type ScribbleStage = {
   /** Matches MerchantHeroViz.flowStep so we can hide the hint when the demo
@@ -29,10 +23,13 @@ export type ScribbleStage = {
 
 type Rect = { x: number; y: number; w: number; h: number }
 type Bounds = { phoneLeft: number; containerW: number; containerH: number }
+type LabelBox = { w: number; h: number }
 
 const LABEL_GAP_FROM_PHONE = 20
 const LABEL_MAX_W = 220
 const LABEL_MIN_W = 110
+const NAV_GAP_TOP = 4
+const NAV_HEIGHT = 30 // approx — actual height comes from measurement when available
 
 export function ScribbleHint({
   stages,
@@ -54,7 +51,14 @@ export function ScribbleHint({
 
   const [rect, setRect] = useState<Rect | null>(null)
   const [bounds, setBounds] = useState<Bounds | null>(null)
+  const [lblBox, setLblBox] = useState<LabelBox | null>(null)
+  const [navBox, setNavBox] = useState<LabelBox | null>(null)
 
+  const lblRef = useRef<HTMLSpanElement | null>(null)
+  const navRef = useRef<HTMLDivElement | null>(null)
+
+  // Measure target rect + container bounds whenever the active target
+  // changes or the page reflows.
   useLayoutEffect(() => {
     if (!matches || suppressed) {
       setRect(null)
@@ -93,8 +97,6 @@ export function ScribbleHint({
     ro.observe(document.body)
     window.addEventListener('resize', measure)
     window.addEventListener('scroll', measure, { passive: true })
-
-    // Re-measure once after layout settles (font load can shift things).
     const t = setTimeout(measure, 100)
 
     return () => {
@@ -105,6 +107,29 @@ export function ScribbleHint({
       clearTimeout(t)
     }
   }, [matches, stage?.id, suppressed])
+
+  // Measure the actual rendered label box (height matters for multi-line
+  // labels — without this the nav/arrow overlap the text).
+  useLayoutEffect(() => {
+    if (!matches || !lblRef.current) {
+      setLblBox(null)
+      return
+    }
+    const r = lblRef.current.getBoundingClientRect()
+    setLblBox({ w: Math.round(r.width), h: Math.round(r.height) })
+  }, [matches, stage?.id, stage?.label, bounds?.phoneLeft, rect?.y])
+
+  // Measure the nav row too — it's tilted -4deg so its bounding rect can be
+  // a bit taller than the visible row, and we need to know the height to
+  // anchor the arrow start above it.
+  useLayoutEffect(() => {
+    if (!matches || !navRef.current) {
+      setNavBox(null)
+      return
+    }
+    const r = navRef.current.getBoundingClientRect()
+    setNavBox({ w: Math.round(r.width), h: Math.round(r.height) })
+  }, [matches, stage?.id, lblBox?.h])
 
   if (!matches || suppressed || !rect || !bounds) return null
 
@@ -118,12 +143,22 @@ export function ScribbleHint({
 
   const labelMaxW = corridorW
   const labelLeft = corridorLeft
-  // Generous estimate; CSS handles real layout. Used only for arrow geometry.
-  const estimatedLabelH = 56
-  const labelTop = Math.max(tipY - 28 - estimatedLabelH, 8)
 
+  // Use measured heights when we have them; fall back to conservative
+  // estimates on the very first paint.
+  const labelH = lblBox?.h ?? 64
+  const navH = navBox?.h ?? NAV_HEIGHT
+  const blockH = labelH + NAV_GAP_TOP + navH
+
+  // Position the label so its block (label + nav) sits ~28px above the
+  // target's vertical center, clamped to viewport top.
+  const labelTop = Math.max(tipY - 28 - blockH, 8)
+  const navTop = labelTop + labelH + NAV_GAP_TOP
+
+  // Arrow starts BELOW the entire label+nav block (right edge), curves down
+  // and right toward the target.
   const startX = corridorRight
-  const startY = labelTop + estimatedLabelH
+  const startY = labelTop + blockH
   const dx = tipX - startX
   const dy = tipY - startY
   const ctrl1X = startX + Math.max(dx * 0.2, 8)
@@ -135,14 +170,16 @@ export function ScribbleHint({
   return (
     <div className="demo-hint demo-hint--scribble">
       <span
+        ref={lblRef}
         className="demo-hint__scribble-lbl"
         style={{ left: labelLeft, top: labelTop, maxWidth: labelMaxW }}
       >
         {stage.label}
       </span>
       <div
+        ref={navRef}
         className="demo-hint__scribble-nav"
-        style={{ left: labelLeft, top: labelTop + estimatedLabelH + 4, maxWidth: labelMaxW }}
+        style={{ left: labelLeft, top: navTop, maxWidth: labelMaxW }}
       >
         <button
           type="button"
@@ -221,35 +258,4 @@ export function ScribbleHint({
       </svg>
     </div>
   )
-}
-
-/** Hook the MerchantHeroViz uses to manage scribble stage navigation.
- *
- *  Auto-sync rule: only snap currentIdx to a different stage when the
- *  CURRENT stage's screen no longer matches flowStep (i.e. the demo
- *  advanced to a new screen). Within a screen, leave currentIdx alone so
- *  manual prev/next navigation actually sticks.
- *
- *  Earlier we re-ran findIndex on every currentIdx change, which always
- *  returned the FIRST stage matching the screen and immediately reverted
- *  manual advances. Stages 0, 1, and 2 all live on `screen: 'checkout'`,
- *  so prev/next clicks on the checkout screen looked broken because the
- *  effect kept snapping back to stage 0. Fixed by short-circuiting when
- *  the current stage's screen already matches flowStep. */
-export function useScribbleStages(stages: ScribbleStage[], flowStep: string) {
-  const [currentIdx, setCurrentIdx] = useState(0)
-
-  useEffect(() => {
-    const currentStage = stages[currentIdx]
-    if (currentStage && currentStage.screen === flowStep) return
-    const nextStageOnScreen = stages.findIndex((s) => s.screen === flowStep)
-    if (nextStageOnScreen >= 0) {
-      setCurrentIdx(nextStageOnScreen)
-    }
-  }, [flowStep, stages, currentIdx])
-
-  const next = () => setCurrentIdx((i) => (i + 1) % stages.length)
-  const prev = () => setCurrentIdx((i) => (i - 1 + stages.length) % stages.length)
-
-  return { currentIdx, next, prev }
 }

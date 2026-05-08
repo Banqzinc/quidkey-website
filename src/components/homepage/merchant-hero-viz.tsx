@@ -14,7 +14,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 
-import { ScribbleHint, useScribbleStages, type ScribbleStage } from '@/components/homepage/scribble-hint'
+import { ScribbleHint, type ScribbleStage } from '@/components/homepage/scribble-hint'
 import { track } from '@/lib/track'
 
 const LOGO_DEV_TOKEN = 'pk_DsNHFndhT3yo-85c5vdKKg'
@@ -157,8 +157,7 @@ export function MerchantHeroViz() {
   // After 3 deliberate clicks the engagement-based suppression kicks in,
   // matching the prototype's behavior so we don't backseat-drive engaged users.
   const hintSuppressed = userClicks >= 3
-  const { currentIdx: scribbleIdx, next: scribbleNext, prev: scribblePrev } =
-    useScribbleStages(SCRIBBLE_STAGES, flowStep)
+  const [scribbleIdx, setScribbleIdx] = useState(0)
 
   const flowTimers = useRef<ReturnType<typeof setTimeout>[]>([])
   const queue = (fn: () => void, ms: number) => {
@@ -249,6 +248,109 @@ export function MerchantHeroViz() {
     setFlowStep('processing')
     queue(() => setFlowStep('app-launch-safari'), 1500)
     queue(() => setFlowStep('success'), 2500)
+  }
+
+  // ─── Scribble stage orchestration ─────────────────────────────────
+  // Each scribble stage configures the demo's visual state so the label
+  // always matches what the user is looking at on the phone screen.
+  // Maps to app.jsx:1521-1551.
+  useEffect(() => {
+    const stage = SCRIBBLE_STAGES[scribbleIdx]
+    if (!stage || stage.screen !== 'checkout') return
+    if (flowStep !== 'checkout') resetFlow()
+
+    if (scribbleIdx === 0) {
+      setPaymentMethod('predicted')
+      setExpanded(false)
+      setPickedIdx(null)
+    } else if (scribbleIdx === 1) {
+      setPaymentMethod('select')
+      setExpanded(true)
+      setPickedIdx(null)
+      const t = setTimeout(() => setPickedIdx(1), 600)
+      return () => clearTimeout(t)
+    } else if (scribbleIdx === 2) {
+      setPaymentMethod('predicted')
+      setExpanded(false)
+      setPickedIdx(null)
+    }
+    // Intentional: only re-run when scribbleIdx changes. Including
+    // flowStep would re-trigger the setup whenever the demo advances.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [scribbleIdx])
+
+  // When the demo advances to a new screen (e.g. user manually clicks the
+  // CTA, or a setTimeout chain advances flowStep), follow it. Use a
+  // functional updater so we don't need scribbleIdx in the deps and
+  // therefore don't fight manual prev/next clicks within the same screen.
+  // Maps to app.jsx:1500-1510.
+  useEffect(() => {
+    setScribbleIdx((idx) => {
+      const cur = SCRIBBLE_STAGES[idx]
+      if (cur && cur.screen === flowStep) return idx
+      const next = SCRIBBLE_STAGES.findIndex((s) => s.screen === flowStep)
+      return next >= 0 ? next : idx
+    })
+  }, [flowStep])
+
+  // Clicking Next on the scribble can also advance the DEMO when the user
+  // is on a stage that maps to a flow action. Maps to runStageNextAction
+  // at app.jsx:1554-1575.
+  //
+  // Importantly: we inline setFlowStep + queue() here rather than calling
+  // handleCheckoutCta / handleFaceIdComplete / handleBankPay — those
+  // helpers all call noteUserAction(), and counting scribble navigation
+  // as user clicks would suppress the hint after 3 Next presses (which
+  // is exactly enough to drive the demo to the success screen). The
+  // prototype handles this the same way.
+  const scribbleNext = () => {
+    const fromIdx = scribbleIdx
+    if (fromIdx === 2 && flowStep === 'checkout') {
+      setFlowStep('redirect')
+      queue(() => setFlowStep('launch'), 800)
+      queue(() => setFlowStep('login'), 1900)
+      return
+    }
+    if (fromIdx === 3 && flowStep === 'login') {
+      setFaceIdState('scanning')
+      queue(() => setFaceIdState('approved'), 1000)
+      queue(() => {
+        setFlowStep('bank')
+        setFaceIdState('idle')
+      }, 1900)
+      return
+    }
+    if (fromIdx === 4 && flowStep === 'bank') {
+      setFlowStep('processing')
+      queue(() => setFlowStep('app-launch-safari'), 1500)
+      queue(() => setFlowStep('success'), 2500)
+      return
+    }
+    if (fromIdx === 5) {
+      // Replay — reset the demo and start over from stage 0.
+      resetFlow()
+      setScribbleIdx(0)
+      return
+    }
+    setScribbleIdx((i) => Math.min(i + 1, SCRIBBLE_STAGES.length - 1))
+  }
+
+  const scribblePrev = () => {
+    const newIdx = Math.max(scribbleIdx - 1, 0)
+    const target = SCRIBBLE_STAGES[newIdx]
+    // If we're crossing into a different screen, rewind the phone there
+    // so the user actually sees what the new stage's label points at.
+    // This is more aggressive than the prototype (which just hides the
+    // scribble until the demo flowStep happens to match) but produces
+    // expected UX for back navigation.
+    if (target && target.screen !== flowStep) {
+      flowTimers.current.forEach(clearTimeout)
+      flowTimers.current = []
+      setFaceIdState('idle')
+      setBankAccountIdx(0)
+      setFlowStep(target.screen as FlowStep)
+    }
+    setScribbleIdx(newIdx)
   }
 
   const onTapPredicted = () => {
