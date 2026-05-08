@@ -1,6 +1,19 @@
 /* Hand-written overrides on top of the prefixed prototype CSS. Loaded last
    from src/routes/index.tsx, after every base file. */
 
+/* The prefixed base.css ships `.hp { overflow-x: hidden }` to prevent
+   horizontal scrollbars on viewports narrower than the design's content.
+   Per the W3C spec, when overflow is non-visible in only one axis, the
+   other axis computes as `auto` — which turns `.hp` into a scroll
+   container and breaks `position: sticky` for the nav inside it.
+
+   `overflow-x: clip` clips overflow the same way visually but does NOT
+   establish a scroll container, so the inner sticky nav works.
+   Browser support: Chrome 90+, Firefox 81+, Safari 15.4+. */
+.hp {
+  overflow-x: clip;
+}
+
 /* Blog index cards use real post images instead of the prototype's striped
    placeholder. The .bcard__media and .bhero__media containers already have
    aspect-ratio: 16/9, so the img only needs to fill them. */
