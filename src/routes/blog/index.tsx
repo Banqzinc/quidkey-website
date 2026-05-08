@@ -1,19 +1,46 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { MegaMenu } from '@/components/layout/mega-menu'
-import { Footer } from '@/components/layout/footer'
-import { Link } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
+
+import { HomepageNav } from '@/components/layout/homepage-nav'
+import { HomepageFooter } from '@/components/layout/homepage-footer'
+import { AudienceProvider } from '@/context/audience'
 import { blogPosts } from '@/lib/blog-posts'
 import { buildSeo } from '@/lib/seo'
 
+// Pull in the prefixed homepage CSS so HomepageNav and HomepageFooter
+// render correctly. The .hp wrapper class is scoped to just the nav and
+// footer (not the article body) so the homepage's CSS reset doesn't mess
+// with the blog post's Tailwind-styled typography.
+import '@/styles/homepage/base.css'
+import '@/styles/homepage/tm2.css'
+import '@/styles/homepage/headings.css'
+import '@/styles/homepage/integrations.css'
+import '@/styles/homepage/treasury-head.css'
+import '@/styles/homepage/mobile.css'
+import '@/styles/homepage/section-padding.css'
+import '@/styles/homepage/overrides.css'
+
+const FONT_HREF =
+  'https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Caveat:wght@500;600;700&family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap'
+
 export const Route = createFileRoute('/blog/')({
   component: BlogPage,
-  head: () =>
-    buildSeo({
+  head: () => {
+    const seo = buildSeo({
       title: 'Pay by Bank Blog: A2A & Open Banking Insights | Quidkey',
       description:
         'Expert insights on pay by bank, A2A payments, open banking, and cross-border payment infrastructure. Learn how to reduce fees and improve conversion.',
       path: '/blog',
-    }),
+    })
+    return {
+      ...seo,
+      links: [
+        ...(seo.links ?? []),
+        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' },
+        { rel: 'stylesheet', href: FONT_HREF },
+      ],
+    }
+  },
 })
 
 function BlogPage() {
@@ -21,9 +48,12 @@ function BlogPage() {
   const otherPosts = blogPosts.filter((p) => p.slug !== featuredPost.slug)
 
   return (
-    <div className="min-h-screen">
-      <MegaMenu />
-      <main className="pt-24 pb-16 md:pt-32 md:pb-24">
+    <AudienceProvider>
+      <div className="min-h-screen">
+        <div className="hp">
+          <HomepageNav />
+        </div>
+        <main className="pt-24 pb-16 md:pt-32 md:pb-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-12 md:mb-16">
@@ -102,7 +132,10 @@ function BlogPage() {
           </div>
         </div>
       </main>
-      <Footer />
-    </div>
+        <div className="hp">
+          <HomepageFooter />
+        </div>
+      </div>
+    </AudienceProvider>
   )
 }
