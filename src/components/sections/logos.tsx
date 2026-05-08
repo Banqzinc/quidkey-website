@@ -124,7 +124,7 @@ export function Logos() {
         <div className="trust__head">
           <p className="trust__lead">Trusted by global businesses</p>
         </div>
-        <Marquee items={CUSTOMER_ITEMS} ariaLabel="Trusted by global businesses" />
+        <Marquee items={CUSTOMER_ITEMS} ariaLabel="Integrations, platforms, and customers" />
       </div>
     </section>
   )

@@ -11,7 +11,6 @@
 
 import type { ReactNode } from 'react'
 
-import { HeroAudienceToggle } from '@/components/homepage/audience-toggle'
 import { useAudience, type Audience } from '@/context/audience'
 import { track } from '@/lib/track'
 import { MERCHANTS_LOGIN_URL, MERCHANTS_SIGNUP_URL } from '@/lib/urls'
@@ -99,25 +98,8 @@ export function HeroSection() {
       <div className="container">
         <div className={isMerchants ? 'hero__split' : ''}>
           <div className="hero__copy">
-            <HeroAudienceToggle />
             <h1 className="hero__title">{c.title}</h1>
             <p className="hero__sub">{c.sub}</p>
-            {isMerchants && (
-              <div className="hero__trust">
-                <span className="hero__trust-dot" aria-hidden="true" />
-                <span>
-                  <strong>SOC 2 Type II</strong>
-                </span>
-                <span className="hero__trust-sep" aria-hidden="true">
-                  ·
-                </span>
-                <span>Licensed in 5 regions</span>
-                <span className="hero__trust-sep" aria-hidden="true">
-                  ·
-                </span>
-                <span>PCI not applicable</span>
-              </div>
-            )}
             <div className="hero__ctas">
               <a
                 href={c.primary.href}
