@@ -28,6 +28,14 @@
   display: block;
   text-decoration: none;
 }
+/* Hero card is now wrapped in a single Link so the whole card is clickable
+   (matching the grid cards). Reset the link's typography and let it pass
+   styling through to the inner article. */
+.hp .bhero__card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
 
 /* Headings inside the .hp wrapper must use Outfit, not Space Grotesk.
    The site-wide styles.css applies `font-family: var(--font-display)`

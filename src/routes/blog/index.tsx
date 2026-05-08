@@ -104,42 +104,49 @@ function BlogHero({ post }: { post: BlogPost }) {
             </p>
           </div>
         </div>
-        <article className="bhero__card">
-          <div className="bhero__copy">
-            <div className="bhero__meta">
-              <span style={{ color: 'var(--ink)', fontWeight: 600 }}>Latest</span>
-              <span className="bhero__meta-dot" />
-              <span>{formatBlogDate(post.dateISO)}</span>
-              <span className="bhero__meta-dot" />
-              <span>{category}</span>
-              <span className="bhero__meta-dot" />
-              <span>{readMin} min read</span>
-            </div>
-            <h2 className="bhero__h">{post.title}</h2>
-            {post.description && <p className="bhero__sub">{post.description}</p>}
-            <Link to="/blog/$slug" params={{ slug: post.slug }} className="btn btn--ink btn--lg bhero__cta">
-              Read more
-              <span className="btn__arrow" aria-hidden="true">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  width="14"
-                  height="14"
-                >
-                  <path d="M5 12h14" />
-                  <path d="M13 5l7 7-7 7" />
-                </svg>
+        <Link
+          to="/blog/$slug"
+          params={{ slug: post.slug }}
+          className="bhero__card-link"
+          aria-label={`Read more: ${post.title}`}
+        >
+          <article className="bhero__card">
+            <div className="bhero__copy">
+              <div className="bhero__meta">
+                <span style={{ color: 'var(--ink)', fontWeight: 600 }}>Latest</span>
+                <span className="bhero__meta-dot" />
+                <span>{formatBlogDate(post.dateISO)}</span>
+                <span className="bhero__meta-dot" />
+                <span>{category}</span>
+                <span className="bhero__meta-dot" />
+                <span>{readMin} min read</span>
+              </div>
+              <h2 className="bhero__h">{post.title}</h2>
+              {post.description && <p className="bhero__sub">{post.description}</p>}
+              <span className="btn btn--ink btn--lg bhero__cta" aria-hidden="true">
+                Read more
+                <span className="btn__arrow">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    width="14"
+                    height="14"
+                  >
+                    <path d="M5 12h14" />
+                    <path d="M13 5l7 7-7 7" />
+                  </svg>
+                </span>
               </span>
-            </Link>
-          </div>
-          <Link to="/blog/$slug" params={{ slug: post.slug }} className="bhero__media">
-            <img src={post.image} alt={post.title} className={`bcard__img ${fitClass}`} loading="eager" />
-          </Link>
-        </article>
+            </div>
+            <div className="bhero__media">
+              <img src={post.image} alt={post.title} className={`bcard__img ${fitClass}`} loading="eager" />
+            </div>
+          </article>
+        </Link>
       </div>
     </section>
   )
