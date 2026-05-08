@@ -5,8 +5,10 @@ import { HomepageNav } from '@/components/layout/homepage-nav'
 import { HomepageFooter } from '@/components/layout/homepage-footer'
 import { HeroSection } from '@/components/sections/hero'
 import { Logos } from '@/components/sections/logos'
+import { WhatIsPayByBank } from '@/components/sections/what-is-pay-by-bank'
 import { WhyQuidkey } from '@/components/sections/why-quidkey'
 import { CrossBorderProof } from '@/components/sections/cross-border-proof'
+import { PricingSection } from '@/components/sections/pricing-section'
 import { Faq } from '@/components/sections/faq'
 import { Closer } from '@/components/sections/closer'
 import { buildSeo } from '@/lib/seo'
@@ -55,8 +57,10 @@ function HomePage() {
         <main>
           <HeroSection />
           <Logos />
+          <WhatIsPayByBank />
           <WhyQuidkey />
           <CrossBorderProof />
+          <PricingSection />
           <Faq />
           <Closer />
         </main>
