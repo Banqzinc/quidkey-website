@@ -3,6 +3,10 @@ import { createFileRoute } from '@tanstack/react-router'
 import { AudienceProvider } from '@/context/audience'
 import { HomepageNav } from '@/components/layout/homepage-nav'
 import { HomepageFooter } from '@/components/layout/homepage-footer'
+import { WhyQuidkey } from '@/components/sections/why-quidkey'
+import { CrossBorderProof } from '@/components/sections/cross-border-proof'
+import { Faq } from '@/components/sections/faq'
+import { Closer } from '@/components/sections/closer'
 import { buildSeo } from '@/lib/seo'
 
 import '@/styles/homepage/base.css'
@@ -46,7 +50,12 @@ function HomePage() {
     <AudienceProvider>
       <div className="hp">
         <HomepageNav />
-        <main />
+        <main>
+          <WhyQuidkey />
+          <CrossBorderProof />
+          <Faq />
+          <Closer />
+        </main>
         <HomepageFooter />
       </div>
     </AudienceProvider>
