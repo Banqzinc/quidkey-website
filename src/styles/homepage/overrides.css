@@ -1,6 +1,21 @@
 /* Hand-written overrides on top of the prefixed prototype CSS. Loaded last
    from src/routes/index.tsx, after every base file. */
 
+/* Headings inside the .hp wrapper must use Outfit, not Space Grotesk.
+   The site-wide styles.css applies `font-family: var(--font-display)`
+   (= Space Grotesk) to every h1-h6 globally — that rule overrides
+   the .hp wrapper's inherited Outfit because `h1, h2, ...` is its own
+   element-level declaration, not just inherited. The fix is a more
+   specific selector inside .hp that points headings back to Outfit. */
+.hp h1,
+.hp h2,
+.hp h3,
+.hp h4,
+.hp h5,
+.hp h6 {
+  font-family: var(--sans);
+}
+
 /* Sticky nav is `position: sticky; top: 16px;` with a 60px inner height +
    borders/padding (~92px total visible). The prototype's
    `scroll-padding-top: 25px` is too small: clicking #why / #integrations /
