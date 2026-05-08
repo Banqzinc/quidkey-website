@@ -321,10 +321,19 @@ function PreviewFor({ preview }: { preview: Preview }) {
 }
 
 function MerchantDeveloper() {
-  const [activeId, setActiveId] = useState<IntegrationOption['id']>('shopify')
-  const active = MERCHANT_INTEGRATIONS.find((o) => o.id === activeId) ?? MERCHANT_INTEGRATIONS[0]
+  // Mobile users can collapse all panels (activeId = null); desktop always
+  // keeps one open. Matches the prototype's behavior at app.jsx:3811.
+  const [activeId, setActiveId] = useState<IntegrationOption['id'] | null>('shopify')
+  const active =
+    MERCHANT_INTEGRATIONS.find((o) => o.id === activeId) ?? MERCHANT_INTEGRATIONS[0]
 
-  // ?int= deep-link support — only run on the client. Read once on mount.
+  // ?int= deep-link support — read on mount. We deliberately do NOT write
+  // back to the URL on click: this site's TanStack Router subscribes to
+  // `onResolved` and scrolls to top on every URL resolve (see
+  // src/router.tsx:18-20). Keeping the URL static means clicking an
+  // integration option doesn't yank the page back to the hero. Sharable
+  // deep-links still work for the recipient because the read on mount
+  // selects the right option.
   useEffect(() => {
     try {
       const q = new URL(window.location.href).searchParams.get('int')
@@ -337,20 +346,10 @@ function MerchantDeveloper() {
   }, [])
 
   const pickIntegration = (id: IntegrationOption['id']) => {
-    const isMobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 899px)').matches
+    const isMobile =
+      typeof window !== 'undefined' && window.matchMedia('(max-width: 899px)').matches
     const next = isMobile && activeId === id ? null : id
-    if (next) setActiveId(next)
-    try {
-      const url = new URL(window.location.href)
-      if (next) {
-        url.searchParams.set('int', next)
-      } else {
-        url.searchParams.delete('int')
-      }
-      window.history.replaceState({}, '', url.toString())
-    } catch {
-      // ignore
-    }
+    setActiveId(next)
   }
 
   return (

@@ -22,6 +22,7 @@ import '@/styles/homepage/integrations.css'
 import '@/styles/homepage/treasury-head.css'
 import '@/styles/homepage/mobile.css'
 import '@/styles/homepage/section-padding.css'
+import '@/styles/homepage/overrides.css'
 
 const FONT_HREF =
   'https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Caveat:wght@500;600;700&family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap'

@@ -1,0 +1,45 @@
+/* Hand-written overrides on top of the prefixed prototype CSS. Loaded last
+   from src/routes/index.tsx, after every base file. */
+
+/* Sticky nav is `position: sticky; top: 16px;` with a 60px inner height +
+   borders/padding (~92px total visible). The prototype's
+   `scroll-padding-top: 25px` is too small: clicking #why / #integrations /
+   #pricing / #treasury / #faq from the nav lands the section heading
+   underneath the nav. Push the scroll padding past the nav. */
+.hp {
+  scroll-padding-top: 100px;
+}
+
+/* Hero viz placeholder (used while MerchantHeroViz / FintechHeroViz are
+   being built). Without these rules, the two spans render inline and
+   collapse next to each other. */
+.hp .hero__viz-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+  border: 1px dashed var(--line-strong);
+  border-radius: 16px;
+  background: var(--bg-soft);
+}
+.hp .hero__viz-placeholder-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 24px;
+  text-align: center;
+  max-width: 280px;
+}
+.hp .hero__viz-placeholder-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.hp .hero__viz-placeholder-body {
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--faint);
+}
