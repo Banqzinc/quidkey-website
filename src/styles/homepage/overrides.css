@@ -107,3 +107,37 @@
   line-height: 1.4;
   color: var(--faint);
 }
+
+/* ── Legal pages ──────────────────────────────────────────────────
+   The homepage nav is sticky at top: 16px with a 60px inner height and
+   16px ring-shadow padding (~92px effective). The Claude prototype's
+   legal-shell.jsx sets the nav `position: static` and pins the page-tabs
+   strip at top: 0 — but we want the same floating sticky nav UX on legal
+   pages, so the tabs need to sit BELOW the nav rather than under it.
+   Legal article sections also need extra scroll-margin-top so anchor
+   clicks land below both the nav and the tabs strip.
+
+   Specificity bump to .hp.legal-page so these rules beat the prefixed
+   legal.css rules — Vite hot-reload can ship overrides.css before legal.css
+   in dev, in which case equal-specificity rules from legal.css win on
+   source order. */
+.hp.legal-page .legal-tabs {
+  top: 92px;
+}
+.hp.legal-page .legal-toc {
+  top: 168px;
+}
+.hp.legal-page .legal-article > section {
+  scroll-margin-top: 168px;
+}
+@media (max-width: 880px) {
+  .hp.legal-page .legal-tabs {
+    top: 80px;
+  }
+  .hp.legal-page .legal-toc {
+    top: auto;
+  }
+  .hp.legal-page .legal-article > section {
+    scroll-margin-top: 152px;
+  }
+}

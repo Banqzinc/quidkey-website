@@ -22,10 +22,21 @@ export type ScribbleStage = {
 }
 
 type Rect = { x: number; y: number; w: number; h: number }
-type Bounds = { phoneLeft: number; containerW: number; containerH: number }
+type Bounds = {
+  phoneLeft: number
+  containerW: number
+  containerH: number
+  /** Rightmost edge of any heading-column line-box that vertically overlaps
+   *  the label band. -Infinity when no heading column is found. Used to push
+   *  the label away from the headline so they never sit on the same line. */
+  copyRight: number
+}
 type LabelBox = { w: number; h: number }
 
 const LABEL_GAP_FROM_PHONE = 20
+/** Gap between the LEFT edge of the label block and the right edge of the
+ *  heading column. Keeps the hint from ever sitting on top of the headline. */
+const COPY_GAP = 16
 const LABEL_MAX_W = 220
 const LABEL_MIN_W = 110
 const NAV_GAP_TOP = 4
@@ -78,6 +89,40 @@ export function ScribbleHint({
       const cr = container.getBoundingClientRect()
       const pr = phone.getBoundingClientRect()
 
+      // Measure the headline column's rightmost line-box that vertically
+      // overlaps the label band. Heading text scales with vw, so earlier
+      // lines may extend further right than the corridor between heading
+      // and phone — but those lines are usually ABOVE the label band and
+      // don't actually compete for space. We only count lines/elements
+      // whose vertical extent intersects the band.
+      const tipYAbs = er.top + er.height / 2
+      const bandTop = tipYAbs - 180
+      const bandBot = tipYAbs + 20
+      const copyEl =
+        document.querySelector('.hero__split .hero__copy') ||
+        document.querySelector('.hero__copy')
+      let textRight = -Infinity
+      if (copyEl) {
+        const probe = copyEl.querySelectorAll<HTMLElement>(
+          '.hero__title, .hero__sub, .hero__ctas, .hero__proof'
+        )
+        probe.forEach((node) => {
+          const range = document.createRange()
+          range.selectNodeContents(node)
+          const rects = range.getClientRects()
+          for (let i = 0; i < rects.length; i++) {
+            const rr = rects[i]
+            if (rr.bottom < bandTop || rr.top > bandBot) continue
+            if (rr.right > textRight) textRight = rr.right
+          }
+          node.querySelectorAll<HTMLElement>('button, a, .btn').forEach((el) => {
+            const eer = el.getBoundingClientRect()
+            if (eer.bottom < bandTop || eer.top > bandBot) return
+            if (eer.right > textRight) textRight = eer.right
+          })
+        })
+      }
+
       setRect({
         x: Math.round(er.left - cr.left),
         y: Math.round(er.top - cr.top),
@@ -88,6 +133,7 @@ export function ScribbleHint({
         phoneLeft: Math.round(pr.left - cr.left),
         containerW: Math.round(cr.width),
         containerH: Math.round(cr.height),
+        copyRight: textRight === -Infinity ? -Infinity : Math.round(textRight - cr.left),
       })
     }
 
@@ -136,18 +182,29 @@ export function ScribbleHint({
   const tipX = bounds.phoneLeft - 14
   const tipY = rect.y + rect.h / 2
 
+  // Corridor is the horizontal band between the heading column's right edge
+  // (when it overlaps the label band) and the phone's left edge. -200 floor
+  // keeps the arrow geometry sane when no heading column is detected.
+  const corridorLeftRaw =
+    bounds.copyRight === -Infinity ? -200 : bounds.copyRight + COPY_GAP
   const corridorRight = bounds.phoneLeft - LABEL_GAP_FROM_PHONE
-  const corridorLeft = Math.max(corridorRight - LABEL_MAX_W, 8)
+  const corridorLeft = Math.max(corridorLeftRaw, -200)
   const corridorW = corridorRight - corridorLeft
   if (corridorW < LABEL_MIN_W) return null
 
-  const labelMaxW = corridorW
-  const labelLeft = corridorLeft
+  // Target a label width up to LABEL_MAX_W, but never wider than the
+  // corridor, never narrower than LABEL_MIN_W.
+  const labelMaxW = Math.max(LABEL_MIN_W, Math.min(LABEL_MAX_W, corridorW))
+  // Right-anchor the label to the phone (then clamp left so it never crosses
+  // the heading column). Mirrors app.jsx:497-499.
+  const labelLeft = Math.max(corridorLeft, corridorRight - labelMaxW)
 
   // Use measured heights when we have them; fall back to conservative
   // estimates on the very first paint.
   const labelH = lblBox?.h ?? 64
+  const labelW = lblBox?.w ?? Math.min(labelMaxW, 180)
   const navH = navBox?.h ?? NAV_HEIGHT
+  const navW = navBox?.w ?? 80
   const blockH = labelH + NAV_GAP_TOP + navH
 
   // Position the label so its block (label + nav) sits ~28px above the
@@ -155,9 +212,11 @@ export function ScribbleHint({
   const labelTop = Math.max(tipY - 28 - blockH, 8)
   const navTop = labelTop + labelH + NAV_GAP_TOP
 
-  // Arrow starts BELOW the entire label+nav block (right edge), curves down
-  // and right toward the target.
-  const startX = corridorRight
+  // Arrow starts at the right edge of the nav row (8px gap), or — if nav
+  // hasn't measured yet — from ~55% across the label so it doesn't start
+  // dead-center. Same heuristic as app.jsx:531-532.
+  const navRight = labelLeft + (navBox ? navW : labelW)
+  const startX = navBox ? navRight + 8 : labelLeft + labelW * 0.55
   const startY = labelTop + blockH
   const dx = tipX - startX
   const dy = tipY - startY

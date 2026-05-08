@@ -1,5 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { PageLayout } from '@/components/layout/page-layout'
+import {
+  ContactCard,
+  LegalSection,
+  LegalShell,
+  type LegalSectionDef,
+} from '@/components/layout/legal-shell'
 import { buildSeo } from '@/lib/seo'
 
 export const Route = createFileRoute('/privacy')({
@@ -13,23 +18,35 @@ export const Route = createFileRoute('/privacy')({
     }),
 })
 
+const SECTIONS: LegalSectionDef[] = [
+  { id: 'intro', title: 'Introduction' },
+  { id: 'what-we-collect', title: 'What we collect and why' },
+  { id: 'methods', title: 'Methods and sources' },
+  { id: 'retention-security', title: 'Data retention and security' },
+  { id: 'rights', title: 'How to exercise your privacy rights' },
+  { id: 'children', title: 'Information regarding children' },
+  { id: 'eu-uk-ch', title: 'EU, UK and Switzerland' },
+  { id: 'us-states', title: 'Additional notice for U.S. states' },
+]
+
 function PrivacyPage() {
   return (
-    <PageLayout>
-      <section className="pt-24 pb-16 md:pt-32 md:pb-24">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
-            Quidkey - Website Privacy Notice
-          </h1>
-          <div className="flex items-center gap-3 text-sm text-muted-foreground mb-12">
-            <span>Last updated June 2025</span>
-          </div>
-
-          <div className="space-y-10">
-            {/* Introduction */}
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">Introduction</h2>
-              <div className="space-y-4 text-base text-muted-foreground">
+    <LegalShell
+      pageId="privacy"
+      hero={{
+        title: 'Website Privacy Notice',
+        lede: 'How Quidkey collects, uses, and protects personal data when you browse this website, contact our team, or apply for a role.',
+        meta: [
+          { k: 'Effective', v: 'June 2025' },
+          { k: 'Last updated', v: 'June 2025' },
+          { k: 'Controller', v: 'Bnqz Inc.' },
+          { k: 'Contact', v: 'privacy@quidkey.com' },
+        ],
+      }}
+      sections={SECTIONS}
+    >
+      <LegalSection id="intro" num={1} title="Introduction">
+        <div className="space-y-4 text-base text-muted-foreground">
                 <p>
                   Bnqz Inc. and its affiliates (collectively, &ldquo;<strong>Quidkey</strong>&rdquo;,
                   the &ldquo;<strong>Company</strong>&rdquo; or &ldquo;<strong>we</strong>&rdquo;,
@@ -74,12 +91,10 @@ function PrivacyPage() {
                   </a>
                   .
                 </p>
-              </div>
-            </section>
+        </div>
+      </LegalSection>
 
-            {/* What we collect and why */}
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">What we collect and why</h2>
+      <LegalSection id="what-we-collect" num={2} title="What we collect and why">
               <div className="overflow-x-auto">
                 <table className="w-full text-sm border-collapse border border-border">
                   <thead>
@@ -201,12 +216,10 @@ function PrivacyPage() {
                 if you choose not to provide this information to us, we may not be able to process your
                 feedback and respond to your inquiry or otherwise provide the Website.
               </p>
-            </section>
+      </LegalSection>
 
-            {/* Methods and sources */}
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">Methods and sources for collecting your personal information</h2>
-              <div className="space-y-4 text-base text-muted-foreground">
+      <LegalSection id="methods" num={3} title="Methods and sources for collecting your personal information">
+        <div className="space-y-4 text-base text-muted-foreground">
                 <p>We collect the personal information from several sources:</p>
                 <ul className="list-disc pl-6 space-y-2">
                   <li>Through your interactions with and use of the Website, including both information you provide to us and information we derive from such usage;</li>
@@ -218,13 +231,11 @@ function PrivacyPage() {
                   do not, we will not be able to handle or respond to your inquiry, or to provide our
                   Website functionalities.
                 </p>
-              </div>
-            </section>
+        </div>
+      </LegalSection>
 
-            {/* Data retention and security */}
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">Data retention and security</h2>
-              <div className="space-y-4 text-base text-muted-foreground">
+      <LegalSection id="retention-security" num={4} title="Data retention and security">
+        <div className="space-y-4 text-base text-muted-foreground">
                 <p>
                   <strong>
                     We will retain your information for as long as needed to provide you with our
@@ -262,13 +273,11 @@ function PrivacyPage() {
                   although efforts are made to secure your personal information, there is no guarantee
                   that it will be immune from information security risks.
                 </p>
-              </div>
-            </section>
+        </div>
+      </LegalSection>
 
-            {/* How to exercise your privacy rights */}
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">How to exercise your privacy rights</h2>
-              <div className="space-y-4 text-base text-muted-foreground">
+      <LegalSection id="rights" num={5} title="How to exercise your privacy rights">
+        <div className="space-y-4 text-base text-muted-foreground">
                 <p>
                   For privacy requests, you can email us directly at{' '}
                   <a className="text-primary hover:underline" href="mailto:privacy@quidkey.com">
@@ -297,13 +306,11 @@ function PrivacyPage() {
                   World Wide Web Consortium, or W3C, has not yet established universal standards for
                   recognizable DNT signals, and therefore Quidkey and the Website do not recognize DNT.
                 </p>
-              </div>
-            </section>
+        </div>
+      </LegalSection>
 
-            {/* Information regarding children */}
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">Information regarding children</h2>
-              <div className="space-y-4 text-base text-muted-foreground">
+      <LegalSection id="children" num={6} title="Information regarding children">
+        <div className="space-y-4 text-base text-muted-foreground">
                 <p>
                   The Website is not directed to children under 18 (or other age as required by local
                   law), and, except for limited circumstances set forth below, we do not knowingly
@@ -313,13 +320,11 @@ function PrivacyPage() {
                   violation of applicable law, we will promptly take steps to delete such information
                   or, if appropriate and possible, seek written consent from such child&apos;s guardian.
                 </p>
-              </div>
-            </section>
+        </div>
+      </LegalSection>
 
-            {/* Additional information for the EU, UK and Switzerland */}
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">Additional information for the EU, UK and Switzerland</h2>
-              <div className="space-y-4 text-base text-muted-foreground">
+      <LegalSection id="eu-uk-ch" num={7} title="Additional information for the EU, UK and Switzerland">
+        <div className="space-y-4 text-base text-muted-foreground">
                 <p>
                   The following sections apply when the processing of your personal data is subject to
                   the data protection framework of the UK (UK GDPR), the EEA (EU GDPR) and/or
@@ -532,13 +537,11 @@ function PrivacyPage() {
                     .
                   </li>
                 </ul>
-              </div>
-            </section>
+        </div>
+      </LegalSection>
 
-            {/* Additional notice for U.S. states */}
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">Additional notice for individuals residing in certain U.S. states</h2>
-              <div className="space-y-4 text-base text-muted-foreground">
+      <LegalSection id="us-states" num={8} title="Additional notice for individuals residing in certain U.S. states">
+        <div className="space-y-4 text-base text-muted-foreground">
                 <p>
                   The following Section applies to individuals residing in certain U.S. states,
                   including, but not limited to, California, Colorado, Connecticut, Utah, Virginia and
@@ -616,11 +619,10 @@ function PrivacyPage() {
                     against you for exercising your rights described herein.
                   </li>
                 </ul>
-              </div>
-            </section>
-          </div>
         </div>
-      </section>
-    </PageLayout>
+      </LegalSection>
+
+      <ContactCard topic="this Privacy Notice" email="privacy@quidkey.com" />
+    </LegalShell>
   )
 }

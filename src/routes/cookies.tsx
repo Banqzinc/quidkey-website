@@ -1,5 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { PageLayout } from '@/components/layout/page-layout'
+import {
+  ContactCard,
+  LegalSection,
+  LegalShell,
+  type LegalSectionDef,
+} from '@/components/layout/legal-shell'
 import { Button } from '@/components/ui/button'
 import { buildSeo } from '@/lib/seo'
 import { openCookiebotPreferences } from '@/lib/cookiebot'
@@ -17,21 +22,38 @@ export const Route = createFileRoute('/cookies')({
     }),
 })
 
+const SECTIONS: LegalSectionDef[] = [
+  { id: 'preferences', title: 'Cookie preferences' },
+  { id: 'declaration', title: 'Cookie declaration' },
+]
+
 function CookiesPage() {
   return (
-    <PageLayout>
-      <section className="pt-24 pb-16 md:pt-32 md:pb-24">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
-            Cookies
-          </h1>
-          <p className="text-muted-foreground mb-8">
+    <LegalShell
+      pageId="cookies"
+      hero={{
+        title: 'Cookies',
+        lede: "What we store on your device when you visit Quidkey, and how to switch any of it off. You can update your consent at any time.",
+        meta: [
+          { k: 'Effective', v: 'June 2025' },
+          { k: 'Last updated', v: 'June 2025' },
+          { k: 'Provider', v: 'Cookiebot' },
+          { k: 'Read time', v: '2 min' },
+        ],
+      }}
+      sections={SECTIONS}
+    >
+      <LegalSection id="preferences" num={1} title="Cookie preferences">
+        <div className="space-y-4 text-base text-muted-foreground">
+          <p>
             You can update your cookie preferences at any time. If you're in a region where
             consent is required, we won't run analytics until you opt in.
           </p>
-
-          <div className="flex flex-col sm:flex-row gap-3 mb-10">
-            <Button type="button" onClick={() => openCookiebotPreferences({ fallbackUrl: '/cookies' })}>
+          <div className="flex flex-col sm:flex-row gap-3 pt-2">
+            <Button
+              type="button"
+              onClick={() => openCookiebotPreferences({ fallbackUrl: '/cookies' })}
+            >
               Manage cookie preferences
             </Button>
             <Button
@@ -42,14 +64,17 @@ function CookiesPage() {
               Privacy notice
             </Button>
           </div>
+        </div>
+      </LegalSection>
 
+      <LegalSection id="declaration" num={2} title="Cookie declaration">
+        <div className="space-y-4 text-base text-muted-foreground">
+          <p className="text-sm">
+            This section is provided by our consent manager (Cookiebot) and lists every
+            cookie set on this domain by category, with retention periods and the third
+            parties involved.
+          </p>
           <div className="rounded-2xl border border-border bg-white p-6 md:p-8">
-            <h2 className="text-xl font-semibold mb-2">Cookie declaration</h2>
-            <p className="text-sm text-muted-foreground mb-6">
-              This section is provided by our consent manager (Cookiebot) and lists cookies
-              by category.
-            </p>
-
             <div id="CookieDeclaration" />
             <script
               id="CookieDeclaration"
@@ -59,7 +84,9 @@ function CookiesPage() {
             />
           </div>
         </div>
-      </section>
-    </PageLayout>
+      </LegalSection>
+
+      <ContactCard topic="cookies on our site" email="privacy@quidkey.com" />
+    </LegalShell>
   )
 }

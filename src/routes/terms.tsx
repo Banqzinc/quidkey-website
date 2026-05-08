@@ -1,5 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { PageLayout } from '@/components/layout/page-layout'
+import {
+  ContactCard,
+  LegalSection,
+  LegalShell,
+  type LegalSectionDef,
+} from '@/components/layout/legal-shell'
 import { buildSeo } from '@/lib/seo'
 
 export const Route = createFileRoute('/terms')({
@@ -13,23 +18,34 @@ export const Route = createFileRoute('/terms')({
     }),
 })
 
+const SECTIONS: LegalSectionDef[] = [
+  { id: 'overview', title: 'Quidkey — Terms and Conditions' },
+  { id: 'eligibility', title: 'General Use and Eligibility' },
+  { id: 'restrictions', title: 'Restrictions' },
+  { id: 'liability', title: 'Limitation of Liability' },
+  { id: 'relationship', title: 'Relationship of the Parties' },
+  { id: 'disputes', title: 'Dispute Resolution and Governing Law' },
+  { id: 'misc', title: 'Miscellaneous' },
+]
+
 function TermsPage() {
   return (
-    <PageLayout>
-      <section className="pt-24 pb-16 md:pt-32 md:pb-24">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
-            Quidkey - End-User Terms &amp; Conditions
-          </h1>
-          <div className="flex items-center gap-3 text-sm text-muted-foreground mb-12">
-            <span>Last updated September 25, 2024</span>
-          </div>
-
-          <div className="space-y-10">
-            {/* Quidkey - Terms and Conditions */}
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">Quidkey - Terms and Conditions</h2>
-              <div className="space-y-4 text-base text-muted-foreground">
+    <LegalShell
+      pageId="terms"
+      hero={{
+        title: 'End-User Terms & Conditions',
+        lede: 'Quidkey’s website terms, acceptable use rules, disclaimers, third-party link guidance, and how to reach us with questions.',
+        meta: [
+          { k: 'Effective', v: 'Sep 25, 2024' },
+          { k: 'Last updated', v: 'Sep 25, 2024' },
+          { k: 'Counterparty', v: 'Bnqz Inc.' },
+          { k: 'Contact', v: 'legal@quidkey.com' },
+        ],
+      }}
+      sections={SECTIONS}
+    >
+      <LegalSection id="overview" num={1} title="Quidkey — Terms and Conditions">
+        <div className="space-y-4 text-base text-muted-foreground">
                 <p>
                   Thank you for visiting our website (together with any of our other websites,
                   sub-domains and mobile applications, the &ldquo;<strong>Website</strong>&rdquo;) and
@@ -140,13 +156,11 @@ function TermsPage() {
                     </ol>
                   </li>
                 </ol>
-              </div>
-            </section>
+        </div>
+      </LegalSection>
 
-            {/* General Use and Eligibility */}
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">General Use and Eligibility</h2>
-              <div className="space-y-4 text-base text-muted-foreground">
+      <LegalSection id="eligibility" num={2} title="General Use and Eligibility">
+        <div className="space-y-4 text-base text-muted-foreground">
                 <ol className="list-decimal pl-6 space-y-4">
                   <li>
                     By accessing the Website and/or using the Services, you agree to be bound by these
@@ -163,13 +177,11 @@ function TermsPage() {
                     18 years of age or older and have the legal authority to enter into these Terms.
                   </li>
                 </ol>
-              </div>
-            </section>
+        </div>
+      </LegalSection>
 
-            {/* Restrictions */}
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">Restrictions</h2>
-              <div className="space-y-4 text-base text-muted-foreground">
+      <LegalSection id="restrictions" num={3} title="Restrictions">
+        <div className="space-y-4 text-base text-muted-foreground">
                 <ol className="list-decimal pl-6 space-y-4">
                   <li>
                     Your use of the Website and the Service must not violate any applicable laws,
@@ -375,13 +387,11 @@ function TermsPage() {
                     connection with the indemnifiable claim.
                   </li>
                 </ol>
-              </div>
-            </section>
+        </div>
+      </LegalSection>
 
-            {/* Limitation of Liability */}
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">Limitation of Liability.</h2>
-              <div className="space-y-4 text-base text-muted-foreground">
+      <LegalSection id="liability" num={4} title="Limitation of Liability">
+        <div className="space-y-4 text-base text-muted-foreground">
                 <p>
                   TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW AND EXCEPT IN THE EVENT OF
                   QUIDKEY&apos;S INTENTIONAL MISCONDUCT, QUIDKEY, INCLUDING ITS EMPLOYEES, DIRECTORS,
@@ -405,15 +415,11 @@ function TermsPage() {
                   TRANSACTION FEES ACTUALLY RECEIVED BY QUIDKEY IN CONNECTION WITH YOUR USE OF THE
                   SERVICES DURING THE PRECEDING 60 DAYS.
                 </p>
-              </div>
-            </section>
+        </div>
+      </LegalSection>
 
-            {/* Relationship of the Parties */}
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">
-                Relationship of the Parties; No Professional Advice
-              </h2>
-              <div className="space-y-4 text-base text-muted-foreground">
+      <LegalSection id="relationship" num={5} title="Relationship of the Parties; No Professional Advice">
+        <div className="space-y-4 text-base text-muted-foreground">
                 <ol className="list-decimal pl-6 space-y-4">
                   <li>
                     The relationship between the parties hereto is strictly that of independent
@@ -435,13 +441,11 @@ function TermsPage() {
                     information or data, or any use of or reliance upon such information or data.
                   </li>
                 </ol>
-              </div>
-            </section>
+        </div>
+      </LegalSection>
 
-            {/* Dispute Resolution and Governing Law */}
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">Dispute Resolution and Governing Law</h2>
-              <div className="space-y-4 text-base text-muted-foreground">
+      <LegalSection id="disputes" num={6} title="Dispute Resolution and Governing Law">
+        <div className="space-y-4 text-base text-muted-foreground">
                 <ol className="list-decimal pl-6 space-y-4">
                   <li>
                     <p>Binding Individual Arbitration.</p>
@@ -583,13 +587,11 @@ function TermsPage() {
                     third party claim covered by the indemnity in Section &lrm;5.2.
                   </li>
                 </ol>
-              </div>
-            </section>
+        </div>
+      </LegalSection>
 
-            {/* Miscellaneous */}
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">Miscellaneous</h2>
-              <div className="space-y-4 text-base text-muted-foreground">
+      <LegalSection id="misc" num={7} title="Miscellaneous">
+        <div className="space-y-4 text-base text-muted-foreground">
                 <ol className="list-decimal pl-6 space-y-4">
                   <li>
                     Privacy. Please review our privacy policy which is available at{' '}
@@ -703,12 +705,11 @@ function TermsPage() {
                     any provision will not constitute a waiver.
                   </li>
                 </ol>
-              </div>
-            </section>
-          </div>
         </div>
-      </section>
-    </PageLayout>
+      </LegalSection>
+
+      <ContactCard topic="these terms" email="legal@quidkey.com" />
+    </LegalShell>
   )
 }
 
