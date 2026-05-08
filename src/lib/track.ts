@@ -2,12 +2,12 @@ import { useCallback } from 'react'
 
 import type { Audience } from '@/context/audience'
 
+// The globals for gtag, lintrk, and Snitcher are already declared by their
+// respective lib/* modules (google-analytics.ts, linkedin.ts, snitcher.ts).
+// We only add the one this file owns: Microsoft Clarity's window queue.
 declare global {
   interface Window {
-    gtag?: (...args: unknown[]) => void
-    clarity?: ((...args: unknown[]) => void) & { q?: unknown[][] }
-    lintrk?: (event: 'track', payload: { conversion_id: number }) => void
-    Snitcher?: { track?: (name: string, properties?: Record<string, unknown>) => void } | unknown[]
+    clarity?: ((...args: any[]) => void) & { q?: any[][] }
   }
 }
 
