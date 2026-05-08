@@ -1,0 +1,643 @@
+- generic [ref=e2]:
+  - navigation [ref=e3]:
+    - generic [ref=e4]:
+      - link "Quidkey home" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - img "Quidkey" [ref=e6]
+      - generic [ref=e7]:
+        - generic [ref=e8]:
+          - link "Why Quidkey" [ref=e9] [cursor=pointer]:
+            - /url: "#why"
+          - link "Integrations" [ref=e10] [cursor=pointer]:
+            - /url: "#integrations"
+          - link "Pricing" [ref=e11] [cursor=pointer]:
+            - /url: "#pricing"
+          - link "Treasury" [ref=e12] [cursor=pointer]:
+            - /url: "#treasury"
+          - link "Developers" [ref=e13] [cursor=pointer]:
+            - /url: https://quidkey.dev
+            - text: Developers
+            - img [ref=e14]
+          - link "Blog" [ref=e16] [cursor=pointer]:
+            - /url: /blog
+        - generic [ref=e17]:
+          - link "Sign in" [ref=e18] [cursor=pointer]:
+            - /url: https://console.quidkey.com
+          - link "Get started" [ref=e19] [cursor=pointer]:
+            - /url: https://console.quidkey.com/signup
+  - main [ref=e20]:
+    - generic [ref=e23]:
+      - generic [ref=e24]:
+        - heading "Increase checkout conversion. Lower payment fees." [level=1] [ref=e25]:
+          - text: Increase checkout conversion.
+          - emphasis [ref=e26]: Lower payment fees.
+        - paragraph [ref=e27]: Quidkey lets customers pay directly from their bank account at checkout. That means more completed purchases, lower payment costs, and zero card chargebacks.
+        - generic [ref=e28]:
+          - link "Add Pay by Bank to your checkout" [ref=e29] [cursor=pointer]:
+            - /url: https://console.quidkey.com/signup
+            - text: Add Pay by Bank to your checkout
+            - img [ref=e31]
+          - link "Book a demo" [ref=e33] [cursor=pointer]:
+            - /url: https://console.quidkey.com
+      - generic [ref=e36]:
+        - generic [ref=e39]: 9:41
+        - generic [ref=e999]:
+          - generic [ref=e1001]: Authorising payment…
+          - generic [ref=e1002]: Sending $149.00 to Northgate Goods
+    - generic [ref=e109]:
+      - paragraph [ref=e111]: Trusted by global businesses
+      - group "Integrations, platforms, and customers" [ref=e112]:
+        - generic [ref=e113]:
+          - generic [ref=e114]:
+            - generic [ref=e116]: SKUTopia
+            - generic [ref=e118]: TransferMate
+            - generic [ref=e120]: Grace & Co
+            - generic [ref=e122]: Tryp.com
+            - generic [ref=e123]:
+              - img [ref=e125]
+              - generic [ref=e127]: Visa
+            - generic [ref=e129]: FumoPay
+            - generic [ref=e131]: Shopify
+            - generic [ref=e133]: NetSuite
+            - generic [ref=e135]: QuickBooks
+          - generic [ref=e136]:
+            - generic [ref=e138]: SKUTopia
+            - generic [ref=e140]: TransferMate
+            - generic [ref=e142]: Grace & Co
+            - generic [ref=e144]: Tryp.com
+            - generic [ref=e145]:
+              - img [ref=e147]
+              - generic [ref=e149]: Visa
+            - generic [ref=e151]: FumoPay
+            - generic [ref=e153]: Shopify
+            - generic [ref=e155]: NetSuite
+            - generic [ref=e157]: QuickBooks
+    - generic [ref=e159]:
+      - generic [ref=e160]:
+        - generic [ref=e161]: What is Pay by Bank
+        - heading "A direct, account‑to‑account payment. No card in the middle." [level=2] [ref=e163]:
+          - generic [ref=e164]: A direct, account‑to‑account payment.
+          - generic [ref=e165]: No card in the middle.
+        - paragraph [ref=e166]: Pay by Bank lets customers pay directly from their bank account instead of using a card. They choose their bank, approve the payment securely, and complete the order.
+      - list [ref=e167]:
+        - listitem [ref=e168]:
+          - generic [ref=e169]:
+            - generic [ref=e170]: STEP 01
+            - heading "Click on your bank." [level=3] [ref=e171]
+            - paragraph [ref=e172]: At checkout, the customer picks their bank from the list or taps the one we predict.
+          - generic [ref=e174]:
+            - generic [ref=e175]:
+              - generic [ref=e176]: Total
+              - generic [ref=e177]: $149.00
+            - button "Pay with Chase" [ref=e179]:
+              - generic [ref=e182]: Pay with Chase
+              - img [ref=e184]
+            - button "Credit card" [ref=e187]:
+              - generic [ref=e188]:
+                - img [ref=e189]
+                - generic [ref=e191]: Credit card
+            - button "Apple Pay" [ref=e192]:
+              - generic [ref=e193]:
+                - img [ref=e194]
+                - generic [ref=e196]: Apple Pay
+        - listitem [ref=e197]:
+          - generic [ref=e198]:
+            - generic [ref=e199]: STEP 02
+            - heading "Confirm in the bank app." [level=3] [ref=e200]
+            - paragraph [ref=e201]: They get bounced to their bank app, confirm with Face ID, and bounce right back.
+          - generic [ref=e203]:
+            - generic [ref=e206]: Chase
+            - generic [ref=e208]:
+              - img [ref=e209]
+              - text: Authorise with Face ID
+            - generic [ref=e212]: $149.00
+            - generic [ref=e213]: FedNow · Instant
+            - generic [ref=e215]:
+              - generic [ref=e216]: To
+              - generic [ref=e217]: Northgate Goods
+            - generic [ref=e218]:
+              - generic [ref=e219]: Ref
+              - generic [ref=e220]: QK-NG-8842
+        - listitem [ref=e221]:
+          - generic [ref=e222]:
+            - generic [ref=e223]: STEP 03
+            - heading "Money settles." [level=3] [ref=e224]
+            - paragraph [ref=e225]: Funds move bank-to-bank on instant rails. You see the payment confirmed in seconds.
+          - generic [ref=e227]:
+            - generic [ref=e228]:
+              - img [ref=e230]
+              - text: Payment received
+            - generic [ref=e233]: + $149.00
+            - generic [ref=e234]:
+              - text: cleared
+              - generic [ref=e235]: ·
+              - text: 1.4s
+              - generic [ref=e236]: ·
+              - text: FedNow
+            - generic [ref=e238]:
+              - generic [ref=e239]:
+                - generic [ref=e240]: cash.in / chase
+                - generic [ref=e241]: +$149.00
+              - generic [ref=e242]:
+                - generic [ref=e243]: liab.merchant
+                - generic [ref=e244]: −$149.00
+              - generic [ref=e245]:
+                - generic [ref=e246]: reconciled
+                - generic [ref=e247]: $0.00
+    - generic [ref=e249]:
+      - generic [ref=e250]:
+        - generic [ref=e251]: Why Quidkey
+        - heading "A better checkout for customers. A better outcome for merchants." [level=2] [ref=e253]:
+          - text: A better checkout for customers.
+          - text: A better outcome for merchants.
+        - paragraph [ref=e254]: Quidkey adds Pay by Bank to your existing checkout, predicts the customer's bank, and lowers your fees, without changing how you operate.
+      - list [ref=e255]:
+        - listitem [ref=e256]:
+          - img [ref=e258]
+          - heading "Up and running in minutes" [level=3] [ref=e260]
+          - paragraph [ref=e261]: Shopify app, iFrame, or API. No big integration. No upfront costs.
+        - listitem [ref=e262]:
+          - img [ref=e264]
+          - heading "Smarter checkout" [level=3] [ref=e268]
+          - paragraph [ref=e269]: Quidkey predicts the customer's bank and shows it first, increasing checkout conversion.
+        - listitem [ref=e270]:
+          - img [ref=e272]
+          - heading "No new dashboards" [level=3] [ref=e274]
+          - paragraph [ref=e275]: Manage your Pay by Bank transactions in the same dashboard you already use.
+        - listitem [ref=e276]:
+          - img [ref=e278]
+          - heading "Zero chargebacks" [level=3] [ref=e281]
+          - paragraph [ref=e282]: Bank-authenticated payments remove the fraud and disputes that come with card chargebacks.
+        - listitem [ref=e283]:
+          - img [ref=e285]
+          - heading "Faster settlement" [level=3] [ref=e288]
+          - paragraph [ref=e289]: Funds move quickly, so your cash flow does too.
+        - listitem [ref=e290]:
+          - img [ref=e292]
+          - heading "Lower fees" [level=3] [ref=e296]
+          - paragraph [ref=e297]: No card fees, so you keep more of every sale.
+    - generic [ref=e299]:
+      - generic [ref=e300]:
+        - generic [ref=e301]: Cross-border
+        - heading "Cheaper cross-border payments." [level=2] [ref=e303]
+        - paragraph [ref=e304]: International card transactions can cost merchants up to 7.4% all-in. With Quidkey, every cross-border payment is a flat 3%, FX included.
+      - generic [ref=e305]:
+        - generic [ref=e306]:
+          - generic [ref=e307]:
+            - generic [ref=e308]: "3"
+            - generic [ref=e309]: "%"
+          - generic [ref=e310]:
+            - generic [ref=e311]: Quidkey, all-in
+            - paragraph [ref=e312]: Your checkout stays the same. The economics get better.
+        - generic [ref=e314]:
+          - generic [ref=e315]: Card networks
+          - generic [ref=e316]: up to 7.4%
+        - list [ref=e317]:
+          - listitem [ref=e318]:
+            - generic [ref=e319]: Interchange
+            - generic [ref=e320]: ≈ 2.0%
+          - listitem [ref=e321]:
+            - generic [ref=e322]: Scheme fees
+            - generic [ref=e323]: ≈ 0.4%
+          - listitem [ref=e324]:
+            - generic [ref=e325]: Cross-border surcharge
+            - generic [ref=e326]: ≈ 1.5%
+          - listitem [ref=e327]:
+            - generic [ref=e328]: FX markup
+            - generic [ref=e329]: ≈ 2.0%
+          - listitem [ref=e330]:
+            - generic [ref=e331]: Acquirer markup
+            - generic [ref=e332]: ≈ 1.5%
+    - generic [ref=e334]:
+      - generic [ref=e335]:
+        - generic [ref=e336]: Integrations
+        - heading "Six ways to ship Pay by Bank. Pick yours." [level=2] [ref=e338]:
+          - text: Six ways to ship Pay by Bank.
+          - text: Pick yours.
+      - generic [ref=e339]:
+        - tablist "Integration options" [ref=e340]:
+          - tab "Shopify One-click install" [expanded] [selected] [ref=e341] [cursor=pointer]:
+            - generic [ref=e344]:
+              - generic [ref=e346]: Shopify
+              - generic [ref=e347]: One-click install
+          - tab "Payment Link Zero integration · send a link" [ref=e348] [cursor=pointer]:
+            - img [ref=e350]
+            - generic [ref=e353]:
+              - generic [ref=e355]: Payment Link
+              - generic [ref=e356]: Zero integration · send a link
+          - tab "iFrame Web SDK · embed in your checkout" [ref=e357] [cursor=pointer]:
+            - img [ref=e359]
+            - generic [ref=e366]:
+              - generic [ref=e368]: iFrame
+              - generic [ref=e369]: Web SDK · embed in your checkout
+          - tab "Hosted Checkout Redirect · Completely managed" [ref=e370] [cursor=pointer]:
+            - img [ref=e372]
+            - generic [ref=e375]:
+              - generic [ref=e377]: Hosted Checkout
+              - generic [ref=e378]: Redirect · Completely managed
+          - tab "iOS Native SDK · Swift" [ref=e379] [cursor=pointer]:
+            - img [ref=e381]
+            - generic [ref=e383]:
+              - generic [ref=e385]: iOS
+              - generic [ref=e386]: Native SDK · Swift
+          - tab "Android Native SDK · Kotlin" [ref=e387] [cursor=pointer]:
+            - img [ref=e389]
+            - generic [ref=e399]:
+              - generic [ref=e401]: Android
+              - generic [ref=e402]: Native SDK · Kotlin
+          - link "Read the docs" [ref=e404] [cursor=pointer]:
+            - /url: https://docs.quidkey.com/
+        - generic [ref=e406]:
+          - generic [ref=e407]:
+            - generic [ref=e408]:
+              - heading "Shopify" [level=3] [ref=e409]
+              - paragraph [ref=e410]: Install from the Shopify App Store. No code, no theme edits.
+            - generic [ref=e411]:
+              - generic [ref=e412]:
+                - generic [ref=e413]: Time
+                - strong [ref=e414]: ~3 min
+              - generic [ref=e415]:
+                - generic [ref=e416]: Skill
+                - strong [ref=e417]: No code
+          - generic [ref=e419]:
+            - generic [ref=e422]: Shopify App Store
+            - generic [ref=e423]:
+              - generic [ref=e424]:
+                - img "Quidkey" [ref=e426]
+                - generic [ref=e427]:
+                  - generic [ref=e428]: Quidkey · Pay by Bank
+                  - generic [ref=e429]: by Quidkey · Verified partner
+                  - generic [ref=e430]:
+                    - generic [ref=e431]: Free to install
+                    - generic [ref=e433]: English
+                - link "Install" [ref=e434] [cursor=pointer]:
+                  - /url: https://apps.shopify.com/quidkey-checkout
+              - generic [ref=e435]:
+                - generic [ref=e436]:
+                  - img [ref=e438]
+                  - generic [ref=e440]: Adds Pay by Bank to your existing checkout
+                - generic [ref=e441]:
+                  - img [ref=e443]
+                  - generic [ref=e445]: ~70% lower fees vs. card processing
+                - generic [ref=e446]:
+                  - img [ref=e448]
+                  - generic [ref=e450]: Live in 3 minutes · no code, no theme edits
+              - generic [ref=e451]:
+                - generic [ref=e452]:
+                  - generic [ref=e453]: Pricing
+                  - generic [ref=e454]: Free to install · 1% + $0.30 / txn
+                - generic [ref=e455]:
+                  - generic [ref=e456]: Categories
+                  - generic [ref=e457]: Payment experience · Checkout
+                - generic [ref=e458]:
+                  - generic [ref=e459]: Support
+                  - generic [ref=e460]: support@quidkey.com
+          - link "Learn more about Shopify install" [ref=e462] [cursor=pointer]:
+            - /url: https://quidkey.dev/shopify
+            - text: Learn more about Shopify install
+            - img [ref=e463]
+    - generic [ref=e466]:
+      - generic [ref=e467]:
+        - generic [ref=e468]: Pricing
+        - heading "Simple, Transparent Pricing." [level=2] [ref=e470]
+        - paragraph [ref=e471]: No setup fees, monthly fees, or hidden fees. Pay only when you get paid.
+      - generic [ref=e472]:
+        - generic [ref=e473]: Show in
+        - tablist [ref=e474]:
+          - tab "USD" [selected] [ref=e475] [cursor=pointer]
+          - tab "EUR" [ref=e476] [cursor=pointer]
+          - tab "GBP" [ref=e477] [cursor=pointer]
+          - tab "AUD" [ref=e478] [cursor=pointer]
+      - generic [ref=e479]:
+        - generic [ref=e480]:
+          - generic [ref=e481]:
+            - generic [ref=e482]: Domestic
+            - generic [ref=e483]: per transaction
+          - generic [ref=e484]:
+            - generic [ref=e485]: 1%
+            - generic [ref=e486]: +
+            - generic [ref=e487]: $0.30
+          - generic [ref=e488]: In your home currency.
+          - list [ref=e489]:
+            - listitem [ref=e490]: No lock-in contracts
+            - listitem [ref=e491]: Unlimited volume
+            - listitem [ref=e492]: No charge for refunds
+            - listitem [ref=e493]: Shopify, Woo, BigCommerce
+        - generic [ref=e494]:
+          - generic [ref=e495]:
+            - generic [ref=e496]: Cross-border
+            - generic [ref=e497]: per transaction
+          - generic [ref=e498]:
+            - generic [ref=e499]: 3%
+            - generic [ref=e500]: +
+            - generic [ref=e501]: $0.30
+          - generic [ref=e502]: Mid-market FX, no markup on your customer.
+          - list [ref=e503]:
+            - listitem [ref=e504]: Mid-market FX, zero markup
+            - listitem [ref=e505]: No FX fee on the buyer
+            - listitem [ref=e506]: Multi-currency settlement
+            - listitem [ref=e507]: Local acquiring where possible
+      - link "High volume? Talk to us. We’ll build pricing that fits your book, bespoke per-transaction rates, settlement terms, and SLAs. Get in touch" [ref=e508] [cursor=pointer]:
+        - /url: /contact
+        - img [ref=e510]
+        - generic [ref=e513]:
+          - generic [ref=e514]: High volume?
+          - generic [ref=e515]: Talk to us. We’ll build pricing that fits your book, bespoke per-transaction rates, settlement terms, and SLAs.
+        - generic [ref=e517]: Get in touch
+    - generic [ref=e519]:
+      - generic [ref=e520]:
+        - generic [ref=e521]: Programmable treasury
+        - 'heading "Beyond checkout: Treasury Beta" [level=2] [ref=e523]':
+          - text: "Beyond checkout: Treasury"
+          - generic [ref=e524]: Beta
+        - paragraph [ref=e525]: Treasury sits on top of every revenue stream you already have, Stripe, Adyen, Amazon, Shop Pay. Decide in plain English what happens after the payment lands.
+        - generic "Treasury features" [ref=e526]:
+          - generic [ref=e527]: Programmable splits
+          - generic [ref=e529]: Automated tax routing
+          - generic [ref=e531]: Multi-currency · live FX
+          - generic [ref=e533]: Reserve & sweep accounts
+          - generic [ref=e535]: Audit-ready ledger
+          - generic [ref=e537]: Webhooks for everything
+      - generic [ref=e543]:
+        - generic [ref=e544]:
+          - generic [ref=e549]: treasury · acme studios
+          - generic [ref=e551]: connected
+        - generic [ref=e553]:
+          - generic [ref=e554]:
+            - generic [ref=e555]:
+              - generic [ref=e556]: Balances
+              - generic [ref=e557]: £491,269.55
+            - generic [ref=e558]:
+              - button "Transfer" [ref=e559] [cursor=pointer]:
+                - img [ref=e561]
+                - generic [ref=e563]: Transfer
+              - button "Send" [ref=e564] [cursor=pointer]:
+                - img [ref=e566]
+                - generic [ref=e568]: Send
+              - button "Convert" [ref=e569] [cursor=pointer]:
+                - img [ref=e571]
+                - generic [ref=e574]: Convert
+              - button "Deposit" [ref=e575] [cursor=pointer]:
+                - img [ref=e577]
+                - generic [ref=e579]: Deposit
+            - generic [ref=e580]:
+              - button "Grid view" [ref=e581] [cursor=pointer]:
+                - img [ref=e582]
+              - button "List view" [ref=e587] [cursor=pointer]:
+                - img [ref=e588]
+          - generic [ref=e592]:
+            - generic [ref=e593]:
+              - generic [ref=e594]:
+                - generic [ref=e596]: £
+                - generic [ref=e597]: GBP
+              - generic [ref=e598]: £142,308.45
+              - generic [ref=e599]: UK receiving account
+            - generic [ref=e600]:
+              - generic [ref=e601]:
+                - generic [ref=e603]: $
+                - generic [ref=e604]: USD
+              - generic [ref=e605]: $198,440.12
+              - generic [ref=e606]: US receiving account
+            - generic [ref=e607]:
+              - generic [ref=e608]:
+                - generic [ref=e610]: $
+                - generic [ref=e611]: USD
+              - generic [ref=e612]: $64,118.07
+              - generic [ref=e613]: US tax account
+              - generic [ref=e614]:
+                - img [ref=e616]
+                - generic [ref=e620]: Auto-reserve · product, city & state
+            - generic [ref=e621]:
+              - generic [ref=e622]:
+                - generic [ref=e624]: €
+                - generic [ref=e625]: EUR
+              - generic [ref=e626]: €86,402.91
+              - generic [ref=e627]: EU receiving account
+          - generic [ref=e628]:
+            - generic [ref=e629]:
+              - generic [ref=e630]:
+                - generic [ref=e631]: Recent activity
+                - generic [ref=e632]:
+                  - button "All" [ref=e633] [cursor=pointer]
+                  - button "Payments" [ref=e634] [cursor=pointer]
+                  - button "Routing" [ref=e635] [cursor=pointer]
+              - table [ref=e636]:
+                - rowgroup [ref=e637]:
+                  - row "Amount Type From To Date" [ref=e638]:
+                    - columnheader "Amount" [ref=e639]
+                    - columnheader "Type" [ref=e640]
+                    - columnheader "From" [ref=e641]
+                    - columnheader "To" [ref=e642]
+                    - columnheader "Date" [ref=e643]
+                - rowgroup [ref=e644]:
+                  - 'row "+£12,480.00 Payment Shopify · order #41928 GBP · Receiving 7 May" [ref=e645]':
+                    - cell "+£12,480.00" [ref=e646]:
+                      - generic [ref=e647]:
+                        - img [ref=e649]
+                        - text: +£12,480.00
+                    - cell "Payment" [ref=e651]
+                    - 'cell "Shopify · order #41928" [ref=e652]'
+                    - cell "GBP · Receiving" [ref=e653]
+                    - cell "7 May" [ref=e654]
+                  - row "−$1,632.18 Reserve USD · Receiving USD · Tax 7 May" [ref=e655]:
+                    - cell "−$1,632.18" [ref=e656]:
+                      - generic [ref=e657]:
+                        - img [ref=e659]
+                        - text: −$1,632.18
+                    - cell "Reserve" [ref=e663]
+                    - cell "USD · Receiving" [ref=e664]
+                    - cell "USD · Tax" [ref=e665]
+                    - cell "7 May" [ref=e666]
+                  - row "−€4,210.00 Payout EUR · Receiving Acme Studios 7 May" [ref=e667]:
+                    - cell "−€4,210.00" [ref=e668]:
+                      - generic [ref=e669]:
+                        - img [ref=e671]
+                        - text: −€4,210.00
+                    - cell "Payout" [ref=e673]
+                    - cell "EUR · Receiving" [ref=e674]
+                    - cell "Acme Studios" [ref=e675]
+                    - cell "7 May" [ref=e676]
+                  - row "+$8,920.50 Payment Stripe · batch 22-04 USD · Receiving 6 May" [ref=e677]:
+                    - cell "+$8,920.50" [ref=e678]:
+                      - generic [ref=e679]:
+                        - img [ref=e681]
+                        - text: +$8,920.50
+                    - cell "Payment" [ref=e683]
+                    - cell "Stripe · batch 22-04" [ref=e684]
+                    - cell "USD · Receiving" [ref=e685]
+                    - cell "6 May" [ref=e686]
+                  - row "−£2,150.00 Convert GBP · Receiving EUR · Receiving 6 May" [ref=e687]:
+                    - cell "−£2,150.00" [ref=e688]:
+                      - generic [ref=e689]:
+                        - img [ref=e691]
+                        - text: −£2,150.00
+                    - cell "Convert" [ref=e693]
+                    - cell "GBP · Receiving" [ref=e694]
+                    - cell "EUR · Receiving" [ref=e695]
+                    - cell "6 May" [ref=e696]
+            - generic [ref=e697]:
+              - generic [ref=e698]:
+                - generic [ref=e699]: Workflows
+                - generic [ref=e700]: "on"
+              - generic [ref=e701] [cursor=pointer]:
+                - generic [ref=e702]: When
+                - generic [ref=e703]: USD payment lands
+                - generic [ref=e704]: ▾
+              - list [ref=e705]:
+                - listitem [ref=e706]:
+                  - generic [ref=e1003]: "1"
+                  - generic [ref=e709]: Reserve tax
+                  - generic [ref=e710]: by product · city · state
+                - listitem [ref=e711]:
+                  - generic [ref=e1004]: "2"
+                  - generic [ref=e714]: Convert to GBP
+                  - generic [ref=e715]: USD → GBP · 0.7912
+                - listitem [ref=e716]:
+                  - generic [ref=e1005]: "3"
+                  - generic [ref=e719]: Split supplier cost
+                  - generic [ref=e720]: 60% · supplier share
+                - listitem [ref=e721]:
+                  - generic [ref=e1006]: "4"
+                  - generic [ref=e724]: Pay supplier
+                  - generic [ref=e725]: GZBT Co Ltd · CNY
+                - listitem [ref=e726]:
+                  - generic [ref=e1007]: "5"
+                  - generic [ref=e729]: Payout
+                  - generic [ref=e730]: T+0 · Faster Payments
+    - generic [ref=e732]:
+      - generic [ref=e733]: FAQ
+      - heading "Questions, answered." [level=2] [ref=e735]
+      - generic [ref=e736]:
+        - generic [ref=e737]:
+          - button "What is Pay by Bank?" [expanded] [ref=e738] [cursor=pointer]:
+            - generic [ref=e739]: What is Pay by Bank?
+            - img [ref=e741]
+          - generic [ref=e745]: Pay by Bank lets customers pay you directly from their bank account, no card in the middle. They pick their bank at checkout, approve in their banking app with biometrics, and funds move on instant rails (FedNow, RTP, FPS, SEPA Instant) in seconds.
+        - generic [ref=e746]:
+          - button "Do I need to replace card payments?" [ref=e747] [cursor=pointer]:
+            - generic [ref=e748]: Do I need to replace card payments?
+            - img [ref=e750]
+          - generic [ref=e751]: No. Quidkey works alongside your existing payment methods.
+        - generic [ref=e752]:
+          - button "Is it difficult to set up?" [ref=e753] [cursor=pointer]:
+            - generic [ref=e754]: Is it difficult to set up?
+            - img [ref=e756]
+          - generic [ref=e757]: No. If you’re on Shopify, it’s an app install. For custom checkouts, it’s a short API integration. Our team helps either way.
+        - generic [ref=e758]:
+          - button "Will customers understand how to use it?" [ref=e759] [cursor=pointer]:
+            - generic [ref=e760]: Will customers understand how to use it?
+            - img [ref=e762]
+          - generic [ref=e763]: Yes. They choose their bank, approve the payment securely, and complete checkout in a clear, simple flow.
+        - generic [ref=e764]:
+          - button "Is it secure?" [ref=e765] [cursor=pointer]:
+            - generic [ref=e766]: Is it secure?
+            - img [ref=e768]
+          - generic [ref=e769]: Yes. Payments are authenticated through the customer’s bank. No card numbers are stored or transmitted.
+        - generic [ref=e770]:
+          - button "Where is Quidkey available?" [ref=e771] [cursor=pointer]:
+            - generic [ref=e772]: Where is Quidkey available?
+            - img [ref=e774]
+          - generic [ref=e775]: We onboard businesses from 100+ countries selling into the US, UK, EU, and Australia. If your customers are in those markets, we can almost certainly support you, wherever your business is incorporated.
+        - generic [ref=e776]:
+          - button "Is Quidkey only for large merchants?" [ref=e777] [cursor=pointer]:
+            - generic [ref=e778]: Is Quidkey only for large merchants?
+            - img [ref=e780]
+          - generic [ref=e781]: No. Quidkey works for growing ecommerce businesses as well as larger merchants.
+    - generic [ref=e783]:
+      - heading "Add a payment option that helps you convert more customers" [level=2] [ref=e784]:
+        - text: Add a payment option that helps you
+        - text: convert more customers
+      - generic [ref=e785]:
+        - paragraph [ref=e786]: Add Pay by Bank to your checkout in minutes. Lower fees, higher conversion, zero chargebacks.
+        - generic [ref=e787]:
+          - link "Book a demo" [ref=e788] [cursor=pointer]:
+            - /url: https://console.quidkey.com/signup
+          - link "Read the docs" [ref=e789] [cursor=pointer]:
+            - /url: https://docs.quidkey.com/
+        - generic [ref=e790]:
+          - generic [ref=e791]: Not what you're looking for?
+          - tablist "Audience" [ref=e792]:
+            - tab "Merchants" [selected] [ref=e794] [cursor=pointer]
+            - tab "Fintechs" [ref=e795] [cursor=pointer]
+  - contentinfo [ref=e796]:
+    - generic [ref=e797]:
+      - generic [ref=e798]:
+        - generic [ref=e799]:
+          - img "Quidkey" [ref=e800]
+          - paragraph [ref=e801]: Pay by Bank checkout and programmable treasury, on one ledger.
+          - generic [ref=e802]:
+            - generic [ref=e803]: Get product updates
+            - generic [ref=e804]:
+              - textbox "Get product updates" [ref=e805]:
+                - /placeholder: you@company.com
+              - button "Subscribe" [ref=e806] [cursor=pointer]:
+                - img [ref=e807]
+            - generic [ref=e809]: Only product updates. No spam.
+        - generic [ref=e810]:
+          - generic [ref=e811]:
+            - heading "Products" [level=4] [ref=e812]
+            - list [ref=e813]:
+              - listitem [ref=e814]:
+                - link "Checkout" [ref=e815] [cursor=pointer]:
+                  - /url: /products/hosted-checkout
+              - listitem [ref=e816]:
+                - link "Treasury" [ref=e817] [cursor=pointer]:
+                  - /url: /workflows
+              - listitem [ref=e818]:
+                - link "Shopify app" [ref=e819] [cursor=pointer]:
+                  - /url: /products/shopify
+              - listitem [ref=e820]:
+                - link "API" [ref=e821] [cursor=pointer]:
+                  - /url: /products/iframe
+          - generic [ref=e822]:
+            - heading "Company" [level=4] [ref=e823]
+            - list [ref=e824]:
+              - listitem [ref=e825]:
+                - link "About" [ref=e826] [cursor=pointer]:
+                  - /url: "#"
+              - listitem [ref=e827]:
+                - link "Careers" [ref=e828] [cursor=pointer]:
+                  - /url: "#"
+              - listitem [ref=e829]:
+                - link "Blog" [ref=e830] [cursor=pointer]:
+                  - /url: /blog
+              - listitem [ref=e831]:
+                - link "Press" [ref=e832] [cursor=pointer]:
+                  - /url: "#"
+          - generic [ref=e833]:
+            - heading "Developers" [level=4] [ref=e834]
+            - list [ref=e835]:
+              - listitem [ref=e836]:
+                - link "Docs" [ref=e837] [cursor=pointer]:
+                  - /url: https://docs.quidkey.com/
+              - listitem [ref=e838]:
+                - link "Changelog" [ref=e839] [cursor=pointer]:
+                  - /url: "#"
+              - listitem [ref=e840]:
+                - link "Status" [ref=e841] [cursor=pointer]:
+                  - /url: https://status.quidkey.com
+              - listitem [ref=e842]:
+                - link "GitHub" [ref=e843] [cursor=pointer]:
+                  - /url: "#"
+          - generic [ref=e844]:
+            - heading "Legal" [level=4] [ref=e845]
+            - list [ref=e846]:
+              - listitem [ref=e847]:
+                - link "Terms" [ref=e848] [cursor=pointer]:
+                  - /url: /terms
+              - listitem [ref=e849]:
+                - link "Privacy" [ref=e850] [cursor=pointer]:
+                  - /url: /privacy
+              - listitem [ref=e851]:
+                - link "Security" [ref=e852] [cursor=pointer]:
+                  - /url: "#"
+              - listitem [ref=e853]:
+                - link "Contact" [ref=e854] [cursor=pointer]:
+                  - /url: /contact
+              - listitem [ref=e855]:
+                - link "Cookies" [ref=e856] [cursor=pointer]:
+                  - /url: "#cookiebot"
+      - generic [ref=e857]:
+        - generic [ref=e858]: © Quidkey 2026 · Banqzinc Inc.
+        - generic [ref=e859]: SOC 2 Type II · ISO 27001
+        - generic [ref=e860]: London · New York

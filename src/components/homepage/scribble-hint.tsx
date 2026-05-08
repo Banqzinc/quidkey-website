@@ -223,16 +223,27 @@ export function ScribbleHint({
   )
 }
 
-/** Hook the MerchantHeroViz uses to manage scribble stage navigation. */
+/** Hook the MerchantHeroViz uses to manage scribble stage navigation.
+ *
+ *  Auto-sync rule: only snap currentIdx to a different stage when the
+ *  CURRENT stage's screen no longer matches flowStep (i.e. the demo
+ *  advanced to a new screen). Within a screen, leave currentIdx alone so
+ *  manual prev/next navigation actually sticks.
+ *
+ *  Earlier we re-ran findIndex on every currentIdx change, which always
+ *  returned the FIRST stage matching the screen and immediately reverted
+ *  manual advances. Stages 0, 1, and 2 all live on `screen: 'checkout'`,
+ *  so prev/next clicks on the checkout screen looked broken because the
+ *  effect kept snapping back to stage 0. Fixed by short-circuiting when
+ *  the current stage's screen already matches flowStep. */
 export function useScribbleStages(stages: ScribbleStage[], flowStep: string) {
   const [currentIdx, setCurrentIdx] = useState(0)
 
-  // Auto-sync currentIdx with flowStep when the demo advances past the
-  // current scribble stage. Lets the hint follow the user as they tap
-  // through.
   useEffect(() => {
+    const currentStage = stages[currentIdx]
+    if (currentStage && currentStage.screen === flowStep) return
     const nextStageOnScreen = stages.findIndex((s) => s.screen === flowStep)
-    if (nextStageOnScreen >= 0 && nextStageOnScreen !== currentIdx) {
+    if (nextStageOnScreen >= 0) {
       setCurrentIdx(nextStageOnScreen)
     }
   }, [flowStep, stages, currentIdx])
