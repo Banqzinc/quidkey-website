@@ -1,19 +1,18 @@
-// Homepage Hero. Audience-aware copy + CTAs + a placeholder for the
-// merchant/fintech visualizations.
-//
-// IMPORTANT: the prototype's MerchantHeroViz (~900 lines, app.jsx:793-1697)
-// and FintechHeroViz (~89 lines, app.jsx:1721-1810) are intentionally NOT
-// ported in this commit. They're complex multi-stage state machines that
-// deserve their own dedicated commit (or commits). The placeholder below
-// keeps the page rendering and the layout in shape while the heavy viz
-// work is done separately. Tracking placeholders are wired so events fire
-// the moment the real visuals land.
+// Homepage Hero. Audience-aware copy + CTAs + the interactive merchant
+// payment-flow demo (or a fintech placeholder, see below).
 
-import type { ReactNode } from 'react'
+import { Suspense, lazy, type ReactNode } from 'react'
 
 import { useAudience, type Audience } from '@/context/audience'
 import { track } from '@/lib/track'
 import { MERCHANTS_LOGIN_URL, MERCHANTS_SIGNUP_URL } from '@/lib/urls'
+
+// Lazy-imported so the hero's HTML/text content paints first; the
+// interactive demo (~600 lines + multiple inline SVGs) hydrates a beat
+// later. Skeleton matches the phone-frame footprint to avoid layout shift.
+const MerchantHeroViz = lazy(() =>
+  import('@/components/homepage/merchant-hero-viz').then((m) => ({ default: m.MerchantHeroViz }))
+)
 
 type HeroCopy = {
   eyebrow: string
@@ -66,13 +65,23 @@ const RocketArrow = (
   </span>
 )
 
-function HeroVizPlaceholder({ flow }: { flow: 'merchant' | 'fintech' }) {
+function HeroVizSkeleton() {
+  // Matches the phone-frame footprint of MerchantHeroViz so the hero
+  // grid doesn't reflow when the lazy chunk hydrates.
+  return (
+    <div className="hero__viz hero__viz--mobile" aria-hidden="true">
+      <div className="phone-wrap">
+        <div className="phone phone--step-checkout phone--loading" />
+      </div>
+    </div>
+  )
+}
+
+function FintechHeroPlaceholder() {
   return (
     <div className="hero__viz-placeholder" aria-hidden="true">
       <div className="hero__viz-placeholder-card">
-        <span className="hero__viz-placeholder-eyebrow">
-          {flow === 'merchant' ? 'Merchant flow' : 'Fintech flow'}
-        </span>
+        <span className="hero__viz-placeholder-eyebrow">Fintech flow</span>
         <span className="hero__viz-placeholder-body">
           Interactive demo lands in a follow-up commit.
         </span>
@@ -117,9 +126,13 @@ export function HeroSection() {
                 {c.secondary.label}
               </a>
             </div>
-            {!isMerchants && <HeroVizPlaceholder flow="fintech" />}
+            {!isMerchants && <FintechHeroPlaceholder />}
           </div>
-          {isMerchants && <HeroVizPlaceholder flow="merchant" />}
+          {isMerchants && (
+            <Suspense fallback={<HeroVizSkeleton />}>
+              <MerchantHeroViz />
+            </Suspense>
+          )}
         </div>
       </div>
     </section>
