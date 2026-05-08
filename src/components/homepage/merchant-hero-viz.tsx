@@ -14,6 +14,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 
+import { ScribbleHint, useScribbleStages, type ScribbleStage } from '@/components/homepage/scribble-hint'
 import { track } from '@/lib/track'
 
 const LOGO_DEV_TOKEN = 'pk_DsNHFndhT3yo-85c5vdKKg'
@@ -122,6 +123,28 @@ const STAGE_INDEX: Record<FlowStep, number> = {
   success: 9,
 }
 
+// Scribble guide stages — hand-drawn callouts overlaid on the hero viz.
+// Each stage has a `screen` (matches FlowStep) and an `id` (matches the
+// data-hint-id on the target element inside the phone).
+const SCRIBBLE_STAGES: ScribbleStage[] = [
+  { screen: 'checkout', id: 'predicted-bank', label: "Customer's predicted bank" },
+  { screen: 'checkout', id: 'select-bank', label: 'They can still pick any other bank' },
+  { screen: 'checkout', id: 'checkout-cta', label: 'One tap to pay' },
+  {
+    screen: 'login',
+    id: 'face-id',
+    label: (
+      <>
+        Authorise with
+        <br />
+        Face ID
+      </>
+    ),
+  },
+  { screen: 'bank', id: 'bank-pay', label: 'Confirm in the bank app' },
+  { screen: 'success', id: 'replay', label: 'Done, replay?' },
+]
+
 export function MerchantHeroViz() {
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('predicted')
   const [pickedIdx, setPickedIdx] = useState<number | null>(null)
@@ -129,6 +152,13 @@ export function MerchantHeroViz() {
   const [flowStep, setFlowStep] = useState<FlowStep>('checkout')
   const [faceIdState, setFaceIdState] = useState<FaceIdState>('idle')
   const [bankAccountIdx, setBankAccountIdx] = useState(0)
+  const [userClicks, setUserClicks] = useState(0)
+  const noteUserAction = () => setUserClicks((n) => n + 1)
+  // After 3 deliberate clicks the engagement-based suppression kicks in,
+  // matching the prototype's behavior so we don't backseat-drive engaged users.
+  const hintSuppressed = userClicks >= 3
+  const { currentIdx: scribbleIdx, next: scribbleNext, prev: scribblePrev } =
+    useScribbleStages(SCRIBBLE_STAGES, flowStep)
 
   const flowTimers = useRef<ReturnType<typeof setTimeout>[]>([])
   const queue = (fn: () => void, ms: number) => {
@@ -165,16 +195,19 @@ export function MerchantHeroViz() {
   const miniBanks = BANKS.slice(1, 4)
 
   const selectBank = (i: number) => {
+    noteUserAction()
     setPickedIdx(i)
     setPaymentMethod('select')
   }
 
   const pickNonBank = (m: 'apple' | 'card' | 'paypal') => {
+    noteUserAction()
     setPaymentMethod(m)
     setExpanded(false)
   }
 
   const tapSelectBank = () => {
+    noteUserAction()
     setPaymentMethod('select')
     setExpanded(true)
   }
@@ -195,12 +228,14 @@ export function MerchantHeroViz() {
   const handleCheckoutCta = () => {
     if (paymentMethod !== 'predicted' && paymentMethod !== 'select') return
     if (paymentMethod === 'select' && !pickedBank) return
+    noteUserAction()
     setFlowStep('redirect')
     queue(() => setFlowStep('launch'), 800)
     queue(() => setFlowStep('login'), 1900)
   }
 
   const handleFaceIdComplete = () => {
+    noteUserAction()
     setFaceIdState('scanning')
     queue(() => setFaceIdState('approved'), 1000)
     queue(() => {
@@ -210,13 +245,20 @@ export function MerchantHeroViz() {
   }
 
   const handleBankPay = () => {
+    noteUserAction()
     setFlowStep('processing')
     queue(() => setFlowStep('app-launch-safari'), 1500)
     queue(() => setFlowStep('success'), 2500)
   }
 
+  const onTapPredicted = () => {
+    noteUserAction()
+    setPaymentMethod('predicted')
+    setExpanded(false)
+  }
+
   return (
-    <div className="hero__viz hero__viz--mobile">
+    <div className="hero__viz hero__viz--mobile hero__viz--scribble">
       <div className="phone-wrap">
         <div className={`phone phone--step-${flowStep}`}>
           <div className="phone__notch" aria-hidden="true" />
@@ -238,8 +280,7 @@ export function MerchantHeroViz() {
               pickedIdx={pickedIdx}
               ctaLabel={ctaLabel}
               miniBanks={miniBanks}
-              setPaymentMethod={setPaymentMethod}
-              setExpanded={setExpanded}
+              onTapPredicted={onTapPredicted}
               tapSelectBank={tapSelectBank}
               selectBank={selectBank}
               pickNonBank={pickNonBank}
@@ -266,6 +307,14 @@ export function MerchantHeroViz() {
           {flowStep === 'success' && <SuccessScreen activeBank={activeBank} onReplay={resetFlow} />}
         </div>
       </div>
+      <ScribbleHint
+        stages={SCRIBBLE_STAGES}
+        currentIdx={scribbleIdx}
+        flowStep={flowStep}
+        suppressed={hintSuppressed}
+        onPrev={scribblePrev}
+        onNext={scribbleNext}
+      />
     </div>
   )
 }
@@ -280,8 +329,7 @@ type CheckoutScreenProps = {
   pickedIdx: number | null
   ctaLabel: string
   miniBanks: ReadonlyArray<Bank>
-  setPaymentMethod: (m: PaymentMethod) => void
-  setExpanded: (b: boolean) => void
+  onTapPredicted: () => void
   tapSelectBank: () => void
   selectBank: (i: number) => void
   pickNonBank: (m: 'apple' | 'card' | 'paypal') => void
@@ -296,8 +344,7 @@ function CheckoutScreen({
   pickedIdx,
   ctaLabel,
   miniBanks,
-  setPaymentMethod,
-  setExpanded,
+  onTapPredicted,
   tapSelectBank,
   selectBank,
   pickNonBank,
@@ -342,11 +389,9 @@ function CheckoutScreen({
 
         <button
           type="button"
+          data-hint-id="predicted-bank"
           className={`mck__opt mck__opt--bank ${isPredicted ? 'mck__opt--active' : ''}`}
-          onClick={() => {
-            setPaymentMethod('predicted')
-            setExpanded(false)
-          }}
+          onClick={onTapPredicted}
           style={{ height: '96px' }}
         >
           <div className="mck__opt-row">
@@ -366,7 +411,13 @@ function CheckoutScreen({
         </button>
 
         <div className={`mck__opt mck__select ${expanded ? 'is-open' : ''} ${isSelectMode ? 'mck__select--on' : ''}`}>
-          <button type="button" className="mck__select-head" onClick={tapSelectBank} aria-expanded={expanded}>
+          <button
+            type="button"
+            data-hint-id="select-bank"
+            className="mck__select-head"
+            onClick={tapSelectBank}
+            aria-expanded={expanded}
+          >
             <span className={`mck__radio ${isSelectMode ? 'is-on' : ''}`}>
               <span />
             </span>
@@ -484,6 +535,7 @@ function CheckoutScreen({
       <div className="phone__action">
         <button
           type="button"
+          data-hint-id="checkout-cta"
           className="phone__action-cta"
           disabled={paymentMethod === 'select' && !pickedBank}
           onClick={handleCheckoutCta}
@@ -577,7 +629,7 @@ function LoginScreen({
         <div className="bnk__login-or">
           <span>or</span>
         </div>
-        <button type="button" className="bnk__login-faceid" onClick={onSignIn}>
+        <button type="button" data-hint-id="face-id" className="bnk__login-faceid" onClick={onSignIn}>
           <svg
             viewBox="0 0 48 48"
             width="22"
@@ -749,6 +801,7 @@ function BankAppScreen({
       <div className="phone__action">
         <button
           type="button"
+          data-hint-id="bank-pay"
           className="phone__action-cta phone__action-cta--bank"
           onClick={onPay}
           style={{ background: bankBrandColor(activeBank) }}
@@ -837,7 +890,12 @@ function SuccessScreen({ activeBank, onReplay }: { activeBank: Bank; onReplay: (
         </div>
       </div>
       <div className="phone__action">
-        <button type="button" className="phone__action-cta phone__action-cta--ghost" onClick={onReplay}>
+        <button
+          type="button"
+          data-hint-id="replay"
+          className="phone__action-cta phone__action-cta--ghost"
+          onClick={onReplay}
+        >
           <span>Replay demo</span>
         </button>
       </div>

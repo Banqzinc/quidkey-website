@@ -4,7 +4,7 @@
 //                iOS, Android) with a dynamic preview panel
 //   fintechs  -> simpler 2-tab API code editor
 
-import { useEffect, useState, type ReactNode } from 'react'
+import { Fragment, useEffect, useState, type ReactNode } from 'react'
 
 import { CodePreview, type CodeTab } from '@/components/homepage/code-preview'
 import { IntegrationIcon } from '@/components/homepage/integration-icon'
@@ -366,7 +366,7 @@ function MerchantDeveloper() {
         <div className="intg__grid">
           <div className="intg__list" role="tablist" aria-label="Integration options">
             {MERCHANT_INTEGRATIONS.map((o) => (
-              <div key={o.id}>
+              <Fragment key={o.id}>
                 <button
                   type="button"
                   role="tab"
@@ -456,7 +456,7 @@ function MerchantDeveloper() {
                     </div>
                   </div>
                 )}
-              </div>
+              </Fragment>
             ))}
             <div className="dev__links intg__doclinks">
               <DeveloperLink label="Read the docs" />
