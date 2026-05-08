@@ -8,7 +8,9 @@ import { Logos } from '@/components/sections/logos'
 import { WhatIsPayByBank } from '@/components/sections/what-is-pay-by-bank'
 import { WhyQuidkey } from '@/components/sections/why-quidkey'
 import { CrossBorderProof } from '@/components/sections/cross-border-proof'
+import { Developer } from '@/components/sections/developer'
 import { PricingSection } from '@/components/sections/pricing-section'
+import { Products } from '@/components/sections/products'
 import { Faq } from '@/components/sections/faq'
 import { Closer } from '@/components/sections/closer'
 import { buildSeo } from '@/lib/seo'
@@ -60,7 +62,9 @@ function HomePage() {
           <WhatIsPayByBank />
           <WhyQuidkey />
           <CrossBorderProof />
+          <Developer />
           <PricingSection />
+          <Products />
           <Faq />
           <Closer />
         </main>
