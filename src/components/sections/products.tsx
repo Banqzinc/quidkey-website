@@ -43,7 +43,7 @@ const PRODUCT_COPY: Record<Audience, ProductCopy> = {
     ),
     headPill: { cls: 'pill--ink', label: 'Beta', noDot: true },
     sub:
-      'Treasury sits on top of every revenue stream you already have, Stripe, Adyen, Amazon, Shop Pay. Decide in plain English what happens after the payment lands.',
+      'Connect the revenue streams you already use, from Stripe and Adyen to Amazon and Shop Pay, and decide what happens after each payment lands.',
     also: [
       'Programmable splits',
       'Automated tax routing',
