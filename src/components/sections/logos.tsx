@@ -122,7 +122,7 @@ export function Logos() {
     <section className="logos trust-strip">
       <div className="container">
         <div className="trust__head">
-          <p className="trust__lead">Trusted by global businesses</p>
+          <p className="trust__lead">Trusted by global merchants and powered by leading partners</p>
         </div>
         <Marquee items={CUSTOMER_ITEMS} ariaLabel="Integrations, platforms, and customers" />
       </div>
