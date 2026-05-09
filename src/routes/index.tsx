@@ -31,7 +31,7 @@ export const Route = createFileRoute('/')({
   component: HomePage,
   head: () => {
     const seo = buildSeo({
-      title: 'Add Pay by Bank to your checkout. Increase conversion, lower fees.',
+      title: 'Quidkey | Add Pay by Bank to your checkout. Increase conversion, lower fees.',
       description:
         'Add Pay by Bank to your checkout and automate what happens after payment: tax, splits, and FX. Global coverage, one integration.',
       path: '/',
