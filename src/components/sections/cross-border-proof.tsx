@@ -9,8 +9,8 @@ export function CrossBorderProof() {
           </span>
           <h2 className="xbproof__h">Cheaper cross-border payments.</h2>
           <p className="xbproof__b">
-            Quidkey adds Pay by Bank to your checkout so customers can pay directly from their bank account. More
-            completed purchases, lower payment costs, and zero card chargebacks.
+            Cross-border card payments average 7.4% all-in for merchants. With Quidkey, cross-border Pay by Bank costs
+            3%, with FX included.
           </p>
         </div>
         <div className="xbproof__stat" aria-hidden="true">
