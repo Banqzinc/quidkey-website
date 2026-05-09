@@ -270,13 +270,10 @@ const merchant = await Quidkey.merchants.create({
   ],
 }
 
-const MERCHANT_HEADING: ReactNode = (
-  <>
-    Six ways to ship Pay by Bank.
-    <br />
-    <span className="grad-text">Pick yours.</span>
-  </>
-)
+const MERCHANT_HEADING: ReactNode = <>Add Pay by Bank to any checkout.</>
+
+const MERCHANT_SUB =
+  'Easy to add, fast to launch. Install on Shopify, send no-code payment links, or build custom checkout flows using our APIs and SDKs.'
 
 function DeveloperLink({ label }: { label: string }) {
   const isDocs = label === 'Read the docs'
@@ -361,6 +358,7 @@ function MerchantDeveloper() {
             Integrations
           </div>
           <h2 className="section__h">{MERCHANT_HEADING}</h2>
+          <p className="section__sub">{MERCHANT_SUB}</p>
         </div>
 
         <div className="intg__grid">
