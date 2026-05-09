@@ -33,7 +33,7 @@ export const Route = createFileRoute('/')({
     const seo = buildSeo({
       title: 'Add Pay by Bank to your checkout. Increase conversion, lower fees.',
       description:
-        'AI-native clearing house for pay by bank. Unify checkout, routing, and treasury workflows—tax, splits, FX, payouts—with one integration.',
+        'Add Pay by Bank to your checkout and automate what happens after payment: tax, splits, and FX. Global coverage, one integration.',
       path: '/',
       keywords: ['pay by bank', 'AI clearing house', 'open banking payments'],
     })
