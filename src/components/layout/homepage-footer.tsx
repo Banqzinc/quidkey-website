@@ -122,17 +122,19 @@ export function HomepageFooter({ variant = 'home' }: { variant?: 'home' | 'legal
     { label: 'GitHub', href: '#' },
   ]
 
+  // Cookies should open the Cookiebot consent banner rather than navigate
+  // anywhere. Same behaviour on home and legal variants — matches the legacy
+  // footer on main. The `/cookies` route stays as a graceful fallback when
+  // Cookiebot fails to load.
   const legalLinks: FooterLink[] = [
     { label: 'Privacy Notice', href: '/privacy' },
     { label: 'End-User Privacy', href: '/end-user-privacy' },
     { label: 'Terms of Use', href: '/terms' },
     {
       label: 'Cookies',
-      href: '/cookies',
+      href: '#cookiebot',
+      external: true,
       onClick: (event) => {
-        // On the home variant, hijack the click to surface the Cookiebot
-        // banner; on legal pages we want a normal navigation to /cookies.
-        if (variant === 'legal') return
         event.preventDefault()
         openCookiebotPreferences({ fallbackUrl: '/cookies' })
       },

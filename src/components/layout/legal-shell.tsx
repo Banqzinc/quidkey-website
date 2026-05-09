@@ -7,6 +7,7 @@ import { Link, type LinkProps } from '@tanstack/react-router'
 import { useEffect, useState, type ReactNode } from 'react'
 
 import { AudienceProvider } from '@/context/audience'
+import { openCookiebotPreferences } from '@/lib/cookiebot'
 import { HomepageFooter } from './homepage-footer'
 import { HomepageNav } from './homepage-nav'
 
@@ -81,11 +82,31 @@ function PageTabs({ pageId }: { pageId: LegalPageId }) {
     <div className="legal-tabs">
       <div className="container">
         <div className="legal-tabs__inner">
-          {LEGAL_PAGES.map((p) => (
-            <Link key={p.id} to={p.to} className={p.id === pageId ? 'is-on' : ''}>
-              {p.label}
-            </Link>
-          ))}
+          {LEGAL_PAGES.map((p) => {
+            // Cookies is the consent banner, not a sibling doc. Render as a
+            // plain anchor so the click opens Cookiebot; /cookies stays as
+            // the fallback if the banner can't load.
+            if (p.id === 'cookies') {
+              return (
+                <a
+                  key={p.id}
+                  href="#cookiebot"
+                  className={p.id === pageId ? 'is-on' : ''}
+                  onClick={(event) => {
+                    event.preventDefault()
+                    openCookiebotPreferences({ fallbackUrl: '/cookies' })
+                  }}
+                >
+                  {p.label}
+                </a>
+              )
+            }
+            return (
+              <Link key={p.id} to={p.to} className={p.id === pageId ? 'is-on' : ''}>
+                {p.label}
+              </Link>
+            )
+          })}
         </div>
       </div>
     </div>
