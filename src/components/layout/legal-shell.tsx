@@ -7,7 +7,6 @@ import { Link, type LinkProps } from '@tanstack/react-router'
 import { useEffect, useState, type ReactNode } from 'react'
 
 import { AudienceProvider } from '@/context/audience'
-import { openCookiebotPreferences } from '@/lib/cookiebot'
 import { HomepageFooter } from './homepage-footer'
 import { HomepageNav } from './homepage-nav'
 
@@ -25,7 +24,6 @@ export type LegalPageId =
   | 'privacy'
   | 'end-user-privacy'
   | 'terms'
-  | 'cookies'
   | 'complaints'
 
 export type LegalSectionDef = { id: string; title: string }
@@ -36,14 +34,13 @@ export type LegalHero = {
   meta: LegalHeroMeta[]
 }
 
-// Tab order from legal-shell.jsx:8-14 — privacy, end-user, terms, cookies,
-// complaints. Routes match the existing TanStack file-route paths.
+// Tab order — the four real legal pages. Cookies is intentionally not a
+// sibling page: it's the consent banner, surfaced from the footer link.
 type LegalPageEntry = { id: LegalPageId; to: LinkProps['to']; label: string }
 export const LEGAL_PAGES: LegalPageEntry[] = [
   { id: 'privacy', to: '/privacy', label: 'Privacy Notice' },
   { id: 'end-user-privacy', to: '/end-user-privacy', label: 'End-User Privacy' },
   { id: 'terms', to: '/terms', label: 'Terms of Use' },
-  { id: 'cookies', to: '/cookies', label: 'Cookies' },
   { id: 'complaints', to: '/complaints', label: 'Complaints Procedure' },
 ]
 
@@ -82,31 +79,11 @@ function PageTabs({ pageId }: { pageId: LegalPageId }) {
     <div className="legal-tabs">
       <div className="container">
         <div className="legal-tabs__inner">
-          {LEGAL_PAGES.map((p) => {
-            // Cookies is the consent banner, not a sibling doc. Render as a
-            // plain anchor so the click opens Cookiebot; /cookies stays as
-            // the fallback if the banner can't load.
-            if (p.id === 'cookies') {
-              return (
-                <a
-                  key={p.id}
-                  href="#cookiebot"
-                  className={p.id === pageId ? 'is-on' : ''}
-                  onClick={(event) => {
-                    event.preventDefault()
-                    openCookiebotPreferences({ fallbackUrl: '/cookies' })
-                  }}
-                >
-                  {p.label}
-                </a>
-              )
-            }
-            return (
-              <Link key={p.id} to={p.to} className={p.id === pageId ? 'is-on' : ''}>
-                {p.label}
-              </Link>
-            )
-          })}
+          {LEGAL_PAGES.map((p) => (
+            <Link key={p.id} to={p.to} className={p.id === pageId ? 'is-on' : ''}>
+              {p.label}
+            </Link>
+          ))}
         </div>
       </div>
     </div>
