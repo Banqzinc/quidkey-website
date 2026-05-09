@@ -9,8 +9,8 @@ export function CrossBorderProof() {
           </span>
           <h2 className="xbproof__h">Cheaper cross-border payments.</h2>
           <p className="xbproof__b">
-            International card transactions can cost merchants up to 7.4% all-in. With Quidkey, every cross-border
-            payment is a flat 3%, FX included.
+            Quidkey adds Pay by Bank to your checkout so customers can pay directly from their bank account. More
+            completed purchases, lower payment costs, and zero card chargebacks.
           </p>
         </div>
         <div className="xbproof__stat" aria-hidden="true">
