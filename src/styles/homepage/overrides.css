@@ -163,3 +163,42 @@
   padding: 8px 14px;
   text-align: center;
 }
+
+/* ── Blog article ─────────────────────────────────────────────────
+   The prefixed article.css ships a single hero figure variant with
+   `object-fit: cover`. Some posts ship logos or screenshots that need
+   `contain` framing — mirror the .bcard__img--contain pattern used on
+   the blog index. */
+.hp .afig__media--contain {
+  background: var(--bg-mute);
+}
+.hp .afig__media--contain img {
+  object-fit: contain;
+  padding: clamp(16px, 4vw, 40px);
+}
+
+/* The .aprose ul/ol baseline lays out its items with `display: flex;
+   flex-direction: column; gap: 8px`. The base.css reset sets
+   `ul, ol { list-style: none }` globally inside .hp — restore native
+   bullet/number markers so prose lists actually look like lists. */
+.hp .aprose ul {
+  list-style: disc;
+}
+.hp .aprose ol {
+  list-style: decimal;
+}
+
+/* Article-page links inside .aprose render as underlined ink — but the
+   prose may also contain inline anchors that are NOT real navigation
+   (e.g., footnote markers). Keep the global hover state from article.css. */
+.hp .article-page a:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Share rail buttons need real button reset so the <button> for "copy
+   link" doesn't inherit the page's button defaults. */
+.hp .ashare__btn {
+  font: inherit;
+}

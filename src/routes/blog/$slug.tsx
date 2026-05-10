@@ -2,16 +2,29 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 
 import { HomepageNav } from '@/components/layout/homepage-nav'
 import { HomepageFooter } from '@/components/layout/homepage-footer'
-import { LinkedInIcon } from '@/components/icons'
 import { AudienceProvider } from '@/context/audience'
-import { getBlogPost, getRelatedPosts, getYouTubeEmbedUrl } from '@/lib/blog-posts'
-import { MERCHANTS_SIGNUP_URL } from '@/lib/urls'
+import {
+  getBlogPost,
+  getYouTubeEmbedUrl,
+} from '@/lib/blog-posts'
+import { getBlogCategory } from '@/lib/blog-meta'
 import { buildSeo, buildArticleSchema, buildVideoSchema, getSiteUrl } from '@/lib/seo'
 
-// Pull in the prefixed homepage CSS so HomepageNav and HomepageFooter
-// render correctly. The .hp wrapper class is scoped to just the nav and
-// footer (not the article body) so the homepage's CSS reset doesn't mess
-// with the blog post's Tailwind-styled typography.
+import { ArticleProgressBar } from '@/components/blog/article-progress-bar'
+import { ArticleBreadcrumb } from '@/components/blog/article-breadcrumb'
+import { ArticleHero } from '@/components/blog/article-hero'
+import { ArticleHeroFigure } from '@/components/blog/article-hero-figure'
+import { ArticleTOC } from '@/components/blog/article-toc'
+import { ArticleShareRail } from '@/components/blog/article-share-rail'
+import { ArticleBody } from '@/components/blog/article-body'
+import { ArticleFooter } from '@/components/blog/article-footer'
+import { ArticleRelated } from '@/components/blog/article-related'
+import { deriveSections } from '@/lib/blog-meta'
+
+// Pull in the prefixed homepage CSS so the article body, nav, and footer all
+// share the same .hp-scoped tokens. blog.css ships .bcard styles for the
+// related-articles grid; article.css holds every editorial style for the
+// article page itself.
 import '@/styles/homepage/base.css'
 import '@/styles/homepage/tm2.css'
 import '@/styles/homepage/headings.css'
@@ -19,6 +32,8 @@ import '@/styles/homepage/integrations.css'
 import '@/styles/homepage/treasury-head.css'
 import '@/styles/homepage/mobile.css'
 import '@/styles/homepage/section-padding.css'
+import '@/styles/homepage/blog.css'
+import '@/styles/homepage/article.css'
 import '@/styles/homepage/overrides.css'
 
 const FONT_HREF =
@@ -99,275 +114,75 @@ export const Route = createFileRoute('/blog/$slug')({
   component: BlogPostPage,
 })
 
+function NotFound() {
+  return (
+    <div className="min-h-screen">
+      <div className="hp">
+        <HomepageNav />
+      </div>
+      <main className="pt-24 pb-16 md:pt-32 md:pb-24">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+          <div className="rounded-2xl border border-border bg-secondary/20 p-8">
+            <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-3">
+              Post not found
+            </h1>
+            <p className="text-muted-foreground mb-6">
+              This article doesn't exist yet. Head back to the blog index to browse
+              available posts.
+            </p>
+            <Link to="/blog" className="text-primary hover:underline">
+              Back to Blog
+            </Link>
+          </div>
+        </div>
+      </main>
+      <div className="hp">
+        <HomepageFooter />
+      </div>
+    </div>
+  )
+}
+
 function BlogPostPage() {
   const { slug } = Route.useParams()
   const post = getBlogPost(slug)
 
+  if (!post) {
+    return (
+      <AudienceProvider>
+        <NotFound />
+      </AudienceProvider>
+    )
+  }
+
+  const category = getBlogCategory(post.slug)
+  const sections = deriveSections(post.blocks)
+  const canonical = `${getSiteUrl()}/blog/${post.slug}`
+
   return (
     <AudienceProvider>
-      <div className="min-h-screen">
-        <div className="hp">
-          <HomepageNav />
-        </div>
-
-        <main className="pt-24 pb-16 md:pt-32 md:pb-24">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          {!post ? (
-            <div className="rounded-2xl border border-border bg-secondary/20 p-8">
-              <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-3">
-                Post not found
-              </h1>
-              <p className="text-muted-foreground mb-6">
-                This article doesn't exist yet. Head back to the blog index to
-                browse available posts.
-              </p>
-              <Link to="/blog" className="text-primary hover:underline">
-                Back to Blog
-              </Link>
+      <div className="hp">
+        <ArticleProgressBar />
+        <HomepageNav />
+        <div className="article-page">
+          <ArticleBreadcrumb category={category} />
+          <ArticleHero post={post} />
+          <ArticleHeroFigure post={post} />
+          <section className="abody">
+            <div className="container">
+              <div className="abody__grid">
+                <ArticleTOC slug={post.slug} sections={sections} />
+                <main>
+                  <ArticleBody post={post} />
+                  <ArticleFooter post={post} />
+                </main>
+              </div>
             </div>
-          ) : (
-            <article>
-              {/* Header */}
-              <div className="mb-10">
-                <Link
-                  to="/blog"
-                  className="text-sm text-muted-foreground hover:text-foreground"
-                >
-                  ← Back to Blog
-                </Link>
-                <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight mt-4 mb-3">
-                  {post.title}
-                </h1>
-                <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                  <time dateTime={post.dateISO}>{post.date}</time>
-                  <span>•</span>
-                  <span>By {post.author}</span>
-                  {post.authorLinkedIn && (
-                    <a
-                      href={post.authorLinkedIn}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center text-muted-foreground hover:text-primary transition-colors"
-                      aria-label={`${post.author} on LinkedIn`}
-                    >
-                      <LinkedInIcon className="h-4 w-4" />
-                      <span className="sr-only">LinkedIn</span>
-                    </a>
-                  )}
-                </div>
-                <p className="text-lg text-muted-foreground mt-4">
-                  {post.description}
-                </p>
-              </div>
-
-              {/* Featured Image */}
-              <div className="aspect-[16/9] rounded-2xl overflow-hidden mb-10">
-                <img
-                  src={post.image}
-                  alt={post.title}
-                  width={1200}
-                  height={675}
-                  loading="eager"
-                  decoding="async"
-                  className={`w-full h-full ${post.imageFit === 'contain' ? 'object-contain bg-secondary/20 p-6' : 'object-cover'}`}
-                />
-              </div>
-
-              {/* Content */}
-              <div className="space-y-5">
-                {post.blocks.map((block, idx) => {
-                  if (block.type === 'h2') {
-                    return (
-                      <h2
-                        key={idx}
-                        className="text-2xl font-semibold tracking-tight text-foreground mt-10 mb-4"
-                      >
-                        {block.text}
-                      </h2>
-                    )
-                  }
-                  if (block.type === 'h3') {
-                    return (
-                      <h3
-                        key={idx}
-                        className="text-xl font-semibold tracking-tight text-foreground mt-8 mb-3"
-                      >
-                        {block.text}
-                      </h3>
-                    )
-                  }
-                  if (block.type === 'p') {
-                    return (
-                      <p
-                        key={idx}
-                        className="text-base leading-7 text-muted-foreground"
-                      >
-                        {block.text}
-                      </p>
-                    )
-                  }
-                  if (block.type === 'ul') {
-                    return (
-                      <ul key={idx} className="space-y-2 pl-6 my-4">
-                        {block.items.map((item, itemIdx) => (
-                          <li
-                            key={itemIdx}
-                            className="text-base leading-7 text-muted-foreground relative before:content-['•'] before:absolute before:-left-4 before:text-primary before:font-bold"
-                          >
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    )
-                  }
-                  if (block.type === 'ol') {
-                    return (
-                      <ol key={idx} className="space-y-2 pl-6 my-4 list-decimal">
-                        {block.items.map((item, itemIdx) => (
-                          <li
-                            key={itemIdx}
-                            className="text-base leading-7 text-muted-foreground"
-                          >
-                            {item}
-                          </li>
-                        ))}
-                      </ol>
-                    )
-                  }
-                  if (block.type === 'html') {
-                    return (
-                      <div
-                        key={idx}
-                        className="text-base leading-7 text-muted-foreground [&_strong]:text-foreground [&_strong]:font-semibold [&_em]:italic [&_a]:text-primary [&_a]:hover:underline [&_a]:font-medium [&_ul]:space-y-2 [&_ul]:pl-6 [&_ul]:my-2 [&_li]:relative [&_li]:before:content-['•'] [&_li]:before:absolute [&_li]:before:-left-4 [&_li]:before:text-primary [&_li]:before:font-bold"
-                        dangerouslySetInnerHTML={{ __html: block.html }}
-                      />
-                    )
-                  }
-                  if (block.type === 'table') {
-                    return (
-                      <div key={idx} className="my-6 overflow-x-auto rounded-xl border border-border">
-                        <table className="w-full text-sm">
-                          <thead>
-                            <tr className="border-b border-border bg-secondary/50">
-                              {block.headers.map((header, hIdx) => (
-                                <th
-                                  key={hIdx}
-                                  className="px-4 py-3 text-left font-semibold text-foreground"
-                                >
-                                  {header}
-                                </th>
-                              ))}
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {block.rows.map((row, rIdx) => (
-                              <tr
-                                key={rIdx}
-                                className="border-b border-border last:border-b-0 even:bg-secondary/10"
-                              >
-                                {row.map((cell, cIdx) => (
-                                  <td
-                                    key={cIdx}
-                                    className={`px-4 py-3 align-top leading-6 ${cIdx === 0 ? 'font-medium text-foreground w-[28%] text-sm' : 'text-muted-foreground'}`}
-                                  >
-                                    {cell}
-                                  </td>
-                                ))}
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    )
-                  }
-                  if (block.type === 'youtube') {
-                    return (
-                      <div key={idx} className="my-8 aspect-video rounded-2xl overflow-hidden">
-                        <iframe
-                          width="100%"
-                          height="100%"
-                          src={getYouTubeEmbedUrl(block.videoId)}
-                          title={block.title}
-                          frameBorder="0"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                          referrerPolicy="strict-origin-when-cross-origin"
-                          allowFullScreen
-                        />
-                      </div>
-                    )
-                  }
-                  return null
-                })}
-              </div>
-
-              {/* Footer CTA */}
-              <div className="mt-16 pt-8 border-t border-border">
-                <div className="bg-secondary/50 rounded-2xl p-6 md:p-8">
-                  <h3 className="text-xl font-semibold mb-2">
-                    Ready to get started?
-                  </h3>
-                  <p className="text-muted-foreground mb-4">
-                    Add Quidkey to your checkout and start accepting bank
-                    payments today.
-                  </p>
-                  <a
-                    href={MERCHANTS_SIGNUP_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center rounded-full bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary-hover transition-colors"
-                  >
-                    Get Started
-                  </a>
-                </div>
-              </div>
-              {/* Related Posts */}
-              {post.relatedSlugs && post.relatedSlugs.length > 0 && (() => {
-                const relatedPosts = getRelatedPosts(post.relatedSlugs)
-                if (relatedPosts.length === 0) return null
-                return (
-                  <div className="mt-16 pt-8 border-t border-border">
-                    <h2 className="text-2xl font-semibold tracking-tight mb-6">Related Posts</h2>
-                    <div className="grid sm:grid-cols-2 gap-6">
-                      {relatedPosts.map((related) => (
-                        <Link
-                          key={related.slug}
-                          to="/blog/$slug"
-                          params={{ slug: related.slug }}
-                          className="group bg-white rounded-2xl border border-border overflow-hidden card-hover"
-                        >
-                          <div className="aspect-[16/9] overflow-hidden">
-                            <img
-                              src={related.image}
-                              alt={related.title}
-                              width={1200}
-                              height={675}
-                              loading="eager"
-                              decoding="async"
-                              className={`w-full h-full transition-transform duration-300 ${related.imageFit === 'contain' ? 'object-contain bg-secondary/20 p-4' : 'object-cover group-hover:scale-105'}`}
-                            />
-                          </div>
-                          <div className="p-6">
-                            <div className="text-sm text-muted-foreground mb-2">{related.date}</div>
-                            <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                              {related.title}
-                            </h3>
-                            <p className="text-sm text-muted-foreground line-clamp-2">
-                              {related.description}
-                            </p>
-                          </div>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )
-              })()}
-            </article>
-          )}
+            <ArticleShareRail slug={post.slug} title={post.title} url={canonical} />
+          </section>
+          <ArticleRelated fromSlug={post.slug} relatedSlugs={post.relatedSlugs} />
         </div>
-      </main>
-        <div className="hp">
-          <HomepageFooter />
-        </div>
+        <HomepageFooter />
       </div>
     </AudienceProvider>
   )

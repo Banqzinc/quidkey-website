@@ -32,6 +32,7 @@ const FILES = [
   { in: 'v-draft-7/mobile.css', out: 'mobile.css' },
   { in: 'v-draft-7/section-padding-fix.css', out: 'section-padding.css' },
   { in: 'blog.css', out: 'blog.css' },
+  { in: 'article.css', out: 'article.css' },
 ]
 
 /**

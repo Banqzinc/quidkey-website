@@ -80,3 +80,54 @@ export function formatBlogDate(dateISO: string): string {
     year: 'numeric',
   }).format(d)
 }
+
+/** Total raw word count across all body blocks — used for the hero meta strip. */
+export function countWords(blocks: BlogPost['blocks']): number {
+  return blocks.reduce((n, b) => n + countBlockWords(b), 0)
+}
+
+/**
+ * Convert a heading into a URL-safe slug for use as an in-page anchor.
+ * Lowercases, strips non-word chars, collapses whitespace to hyphens.
+ */
+export function slugifyHeading(text: string): string {
+  return text
+    .normalize('NFKD')
+    .replace(/[̀-ͯ]/g, '') // strip combining diacritics
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '') // drop punctuation
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+}
+
+export type BlogSection = {
+  id: string
+  title: string
+  /** Two-digit sequence number ("01", "02", ...) for the prose H2 prefix. */
+  num: string
+}
+
+/**
+ * Derive table-of-contents entries from the post's `h2` blocks. IDs are
+ * slugified from the heading text; collisions are disambiguated with `-2`,
+ * `-3`, etc. The matching IDs are also injected on the rendered headings so
+ * `#anchor` links work without any post-side bookkeeping.
+ */
+export function deriveSections(blocks: BlogPost['blocks']): BlogSection[] {
+  const sections: BlogSection[] = []
+  const seen = new Map<string, number>()
+  for (const b of blocks) {
+    if (b.type !== 'h2') continue
+    const base = slugifyHeading(b.text) || 'section'
+    const count = (seen.get(base) ?? 0) + 1
+    seen.set(base, count)
+    const id = count === 1 ? base : `${base}-${count}`
+    sections.push({
+      id,
+      title: b.text,
+      num: String(sections.length + 1).padStart(2, '0'),
+    })
+  }
+  return sections
+}
