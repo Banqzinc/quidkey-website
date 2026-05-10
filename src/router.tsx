@@ -19,9 +19,16 @@ export const getRouter = () => {
   // this fires, and racing scrollTo({top:0}) against that scrollIntoView
   // breaks the smooth scroll when the page is already at scrollY=0 — anchor
   // clicks from the top silently fail to scroll.
+  //
+  // `behavior: 'instant'` is required because <html> has `scroll-smooth`
+  // (used for anchor jumps within the same page). Without it, route
+  // navigations animate from the previous page's scroll position to the
+  // top of the new page — a visible "starts halfway, then scrolls up"
+  // effect. Instant scroll makes the new page render at top with no
+  // animation.
   router.subscribe('onResolved', (e) => {
     if (e.toLocation.hash) return
-    window.scrollTo({ top: 0, left: 0 })
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   })
 
   return router
