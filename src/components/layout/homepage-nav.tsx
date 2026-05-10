@@ -59,10 +59,10 @@ export function HomepageNav() {
         </Link>
         <div className="nav__right">
           <div className="nav__links">
-            <a href="#why">Why Quidkey</a>
-            <a href="#integrations">Integrations</a>
-            <a href="#pricing">Pricing</a>
-            <a href="#treasury">Treasury</a>
+            <Link to="/" hash="why">Why Quidkey</Link>
+            <Link to="/" hash="integrations">Integrations</Link>
+            <Link to="/" hash="pricing">Pricing</Link>
+            <Link to="/" hash="treasury">Treasury</Link>
             <a
               href={DEVELOPERS_URL}
               target="_blank"
@@ -129,18 +129,18 @@ export function HomepageNav() {
       >
         <div className="nav__mobile-inner">
           <div className="nav__mobile-links">
-            <a href="#why" onClick={closeMenu}>
+            <Link to="/" hash="why" onClick={closeMenu}>
               Why Quidkey
-            </a>
-            <a href="#integrations" onClick={closeMenu}>
+            </Link>
+            <Link to="/" hash="integrations" onClick={closeMenu}>
               Integrations
-            </a>
-            <a href="#pricing" onClick={closeMenu}>
+            </Link>
+            <Link to="/" hash="pricing" onClick={closeMenu}>
               Pricing
-            </a>
-            <a href="#treasury" onClick={closeMenu}>
+            </Link>
+            <Link to="/" hash="treasury" onClick={closeMenu}>
               Treasury
-            </a>
+            </Link>
             <a
               href={DEVELOPERS_URL}
               target="_blank"
