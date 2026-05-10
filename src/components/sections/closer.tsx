@@ -8,13 +8,21 @@ import type { ReactNode } from 'react'
 import { AudienceToggle } from '@/components/homepage/audience-toggle'
 import { useAudience, type Audience } from '@/context/audience'
 import { track } from '@/lib/track'
-import { MERCHANTS_LOGIN_URL, MERCHANTS_SIGNUP_URL, DOCS_URL } from '@/lib/urls'
+import { DEMO_BOOKING_URL, MERCHANTS_LOGIN_URL, DOCS_URL } from '@/lib/urls'
+
+type CloserCta<C extends 'get_started' | 'demo' | 'docs'> = {
+  label: string
+  href: string
+  cta: C
+  /** Open in a new tab. Used for off-site CTAs like demo booking. */
+  external?: boolean
+}
 
 type CloserCopy = {
   h: ReactNode
   sub?: string
-  primary: { label: string; href: string; cta: 'get_started' | 'demo' | 'docs' }
-  secondary: { label: string; href: string; cta: 'demo' | 'docs' }
+  primary: CloserCta<'get_started' | 'demo' | 'docs'>
+  secondary: CloserCta<'demo' | 'docs'>
 }
 
 const CLOSER_COPY: Record<Audience, CloserCopy> = {
@@ -28,7 +36,7 @@ const CLOSER_COPY: Record<Audience, CloserCopy> = {
     ),
     sub:
       'Add Pay by Bank to your checkout in minutes. Lower fees, higher conversion, zero chargebacks.',
-    primary: { label: 'Book a demo', href: MERCHANTS_SIGNUP_URL, cta: 'demo' },
+    primary: { label: 'Book a demo', href: DEMO_BOOKING_URL, cta: 'demo', external: true },
     secondary: { label: 'Read the docs', href: DOCS_URL, cta: 'docs' },
   },
   fintechs: {
@@ -63,6 +71,7 @@ export function Closer() {
               href={c.primary.href}
               className="closer__cta closer__cta--primary"
               onClick={trackCta(c.primary.cta)}
+              {...(c.primary.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
             >
               {c.primary.label}
             </a>
@@ -70,6 +79,7 @@ export function Closer() {
               href={c.secondary.href}
               className="closer__cta closer__cta--secondary"
               onClick={trackCta(c.secondary.cta)}
+              {...(c.secondary.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
             >
               {c.secondary.label}
             </a>

@@ -5,7 +5,7 @@ import { Suspense, lazy, type ReactNode } from 'react'
 
 import { useAudience, type Audience } from '@/context/audience'
 import { track } from '@/lib/track'
-import { MERCHANTS_LOGIN_URL, MERCHANTS_SIGNUP_URL } from '@/lib/urls'
+import { DEMO_BOOKING_URL, MERCHANTS_LOGIN_URL, MERCHANTS_SIGNUP_URL } from '@/lib/urls'
 
 // Lazy-imported so the hero's HTML/text content paints first; the
 // interactive demo (~600 lines + multiple inline SVGs) hydrates a beat
@@ -14,12 +14,20 @@ const MerchantHeroViz = lazy(() =>
   import('@/components/homepage/merchant-hero-viz').then((m) => ({ default: m.MerchantHeroViz }))
 )
 
+type HeroCta = {
+  label: string
+  href: string
+  cta: 'get_started' | 'demo' | 'docs'
+  /** Open in a new tab. Used for off-site CTAs like demo booking. */
+  external?: boolean
+}
+
 type HeroCopy = {
   eyebrow: string
   title: ReactNode
   sub: string
-  primary: { label: string; href: string; cta: 'get_started' | 'demo' | 'docs' }
-  secondary: { label: string; href: string; cta: 'get_started' | 'demo' | 'docs' }
+  primary: HeroCta
+  secondary: HeroCta
 }
 
 const HERO_COPY: Record<Audience, HeroCopy> = {
@@ -33,7 +41,7 @@ const HERO_COPY: Record<Audience, HeroCopy> = {
     sub:
       'Quidkey adds Pay by Bank to your checkout so customers can pay directly from their bank account. More completed purchases, lower payment costs, and zero chargebacks.',
     primary: { label: 'Add Pay by Bank to your checkout', href: MERCHANTS_SIGNUP_URL, cta: 'get_started' },
-    secondary: { label: 'Book a demo', href: MERCHANTS_LOGIN_URL, cta: 'demo' },
+    secondary: { label: 'Book a demo', href: DEMO_BOOKING_URL, cta: 'demo', external: true },
   },
   fintechs: {
     eyebrow: 'For fintechs',
@@ -114,6 +122,7 @@ export function HeroSection() {
                 href={c.primary.href}
                 className="btn btn--xl btn--ink"
                 onClick={trackPrimary}
+                {...(c.primary.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
               >
                 {c.primary.label}
                 {RocketArrow}
@@ -122,6 +131,7 @@ export function HeroSection() {
                 href={c.secondary.href}
                 className="btn btn--xl btn--ghost"
                 onClick={trackSecondary}
+                {...(c.secondary.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
               >
                 {c.secondary.label}
               </a>
