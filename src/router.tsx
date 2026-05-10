@@ -14,8 +14,13 @@ export const getRouter = () => {
     defaultPreloadStaleTime: 0,
   })
 
-  // Scroll to top on every navigation (new pages, back/forward all start at top)
-  router.subscribe('onResolved', () => {
+  // Scroll to top on every navigation, except when the URL has a hash:
+  // TanStack's handleHashScroll runs scrollIntoView on the target right after
+  // this fires, and racing scrollTo({top:0}) against that scrollIntoView
+  // breaks the smooth scroll when the page is already at scrollY=0 — anchor
+  // clicks from the top silently fail to scroll.
+  router.subscribe('onResolved', (e) => {
+    if (e.toLocation.hash) return
     window.scrollTo({ top: 0, left: 0 })
   })
 
