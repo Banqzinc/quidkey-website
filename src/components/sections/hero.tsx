@@ -39,7 +39,7 @@ const HERO_COPY: Record<Audience, HeroCopy> = {
       </>
     ),
     sub:
-      'Quidkey adds Pay by Bank to your checkout so customers can pay directly from their bank account. More completed purchases, lower payment costs, and zero chargebacks.',
+      'Quidkey adds Pay by Bank to your checkout so customers can pay directly from their bank account, globally',
     primary: { label: 'Add Pay by Bank to your checkout', href: MERCHANTS_SIGNUP_URL, cta: 'get_started' },
     secondary: { label: 'Book a demo', href: DEMO_BOOKING_URL, cta: 'demo', external: true },
   },
