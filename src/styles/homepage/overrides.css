@@ -202,3 +202,47 @@
 .hp .ashare__btn {
   font: inherit;
 }
+
+/* ── Why Quidkey · 4-card grid ───────────────────────────────────
+   Mirrors the existing --six modifier from headings.css but for 4
+   value props: 4 cols on desktop, 2 cols on tablet, 1 col on mobile.
+   No dividers anywhere; spacing comes from gap. */
+.hp .why__grid--four {
+  grid-template-columns: repeat(4, 1fr) !important;
+  grid-auto-rows: auto;
+  gap: clamp(32px, 4vw, 56px) clamp(32px, 4vw, 56px) !important;
+  border-top: 0 !important;
+  border-bottom: 0 !important;
+}
+.hp .why__grid--four > .why__cardx {
+  padding: 0 !important;
+  border: 0 !important;
+}
+.hp .why__grid--four > .why__cardx + .why__cardx {
+  border-left: 0 !important;
+}
+
+/* Tablet — 2×2 grid. */
+@media (max-width: 980px) {
+  .hp .why__grid--four {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: clamp(28px, 4vw, 44px) clamp(28px, 4vw, 44px) !important;
+  }
+  .hp .why__grid--four > .why__cardx {
+    padding: 0 !important;
+    border: 0 !important;
+  }
+}
+
+/* Mobile — single column stack. */
+@media (max-width: 600px) {
+  .hp .why__grid--four {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+  .hp .why__grid--four > .why__cardx,
+  .hp .why__grid--four > .why__cardx + .why__cardx {
+    padding: 0 !important;
+    border: 0 !important;
+  }
+}

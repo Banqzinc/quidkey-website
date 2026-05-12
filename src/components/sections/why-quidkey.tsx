@@ -1,5 +1,5 @@
-// 6-card grid of Quidkey value props. Card order is locked per chat51.md:
-//   bolt -> target -> dashboard -> shield -> clock -> coin
+// 4-card grid of Quidkey value props. Card order:
+//   bolt -> target -> shield -> coin
 
 import { WhyIcon } from '@/components/homepage/icons'
 
@@ -25,24 +25,12 @@ const POINTS: Point[] = [
   },
   {
     n: '03',
-    icon: 'dashboard',
-    title: 'No new dashboards',
-    body: 'Manage your Pay by Bank transactions in the same dashboard you already use.',
-  },
-  {
-    n: '04',
     icon: 'shield',
     title: 'Zero chargebacks',
     body: 'Bank-authenticated payments remove the fraud and disputes that come with card chargebacks.',
   },
   {
-    n: '05',
-    icon: 'clock',
-    title: 'Faster settlement',
-    body: 'Funds move quickly, so your cash flow does too.',
-  },
-  {
-    n: '06',
+    n: '04',
     icon: 'coin',
     title: 'Lower fees',
     body: 'No card fees, so you keep more of every sale.',
@@ -69,7 +57,7 @@ export function WhyQuidkey() {
           </p>
         </div>
 
-        <div className="why__grid why__grid--three why__grid--six" role="list">
+        <div className="why__grid why__grid--three why__grid--four" role="list">
           {POINTS.map((p) => (
             <div key={p.n} className="why__cardx" role="listitem">
               <span className="why__cardx-icon" aria-hidden="true">
