@@ -125,7 +125,7 @@ export function HomepageNav() {
       <div
         id="nav-mobile-menu"
         className={`nav__mobile ${mobileOpen ? 'is-open' : ''}`}
-        aria-hidden={!mobileOpen}
+        inert={!mobileOpen}
       >
         <div className="nav__mobile-inner">
           <div className="nav__mobile-links">

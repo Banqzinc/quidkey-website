@@ -57,6 +57,7 @@ async function optimizeDirectory({ dir, width, quality, includeExts }) {
 async function optimize() {
   const blogDir = path.join(PUBLIC_DIR, 'images', 'blog')
   const teamDir = path.join(PUBLIC_DIR, 'images', 'team')
+  const homepageDir = path.join(PUBLIC_DIR, 'homepage')
 
   const blog = await optimizeDirectory({
     dir: blogDir,
@@ -67,6 +68,13 @@ async function optimize() {
 
   const team = await optimizeDirectory({
     dir: teamDir,
+    width: 800,
+    quality: 75,
+    includeExts: ['.jpg', '.jpeg', '.png'],
+  })
+
+  const homepage = await optimizeDirectory({
+    dir: homepageDir,
     width: 800,
     quality: 75,
     includeExts: ['.jpg', '.jpeg', '.png'],
@@ -89,7 +97,7 @@ async function optimize() {
 
   // eslint-disable-next-line no-console
   console.log(
-    `[optimize-images] Wrote ${blog.length} blog webp, ${team.length} team webp, plus global-map.webp`
+    `[optimize-images] Wrote ${blog.length} blog webp, ${team.length} team webp, ${homepage.length} homepage webp, plus global-map.webp`
   )
 }
 
