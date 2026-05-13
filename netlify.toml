@@ -111,3 +111,238 @@
   to = "/blog/a2a-payments-cut-merchant-fees"
   status = 301
   force = true
+
+# Retire legacy product/solution/about/careers pages — the homepage redesign
+# replaces them with sections on `/`. Each rule maps to the closest section
+# anchor on the new homepage; orphans (no equivalent section) land on `/`.
+# Doubled for trailing-slash variants to match the existing pattern.
+
+# /about — no equivalent section
+[[redirects]]
+  from = "/about"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/about/"
+  to = "/"
+  status = 301
+  force = true
+
+# /careers — no careers section yet
+[[redirects]]
+  from = "/careers"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/careers/"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/careers/*"
+  to = "/"
+  status = 301
+  force = true
+
+# /contact — footer now exposes mailto; direct URL hits land on home
+[[redirects]]
+  from = "/contact"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/contact/"
+  to = "/"
+  status = 301
+  force = true
+
+# /pricing — section anchor exists on new homepage
+[[redirects]]
+  from = "/pricing"
+  to = "/#pricing"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/pricing/"
+  to = "/#pricing"
+  status = 301
+  force = true
+
+# /workflows — treasury section
+[[redirects]]
+  from = "/workflows"
+  to = "/#treasury"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/workflows/"
+  to = "/#treasury"
+  status = 301
+  force = true
+
+# /products/* — checkout-flavored products go to integrations,
+# treasury-flavored go to treasury, the rest land on home
+[[redirects]]
+  from = "/products/hosted-checkout"
+  to = "/#integrations"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/products/hosted-checkout/"
+  to = "/#integrations"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/products/iframe"
+  to = "/#integrations"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/products/iframe/"
+  to = "/#integrations"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/products/shopify"
+  to = "/#integrations"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/products/shopify/"
+  to = "/#integrations"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/products/local-accounts"
+  to = "/#treasury"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/products/local-accounts/"
+  to = "/#treasury"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/products/multi-currency"
+  to = "/#treasury"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/products/multi-currency/"
+  to = "/#treasury"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/products/payment-links"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/products/payment-links/"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/products/refunds"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/products/refunds/"
+  to = "/"
+  status = 301
+  force = true
+
+# /solutions/* — audience landings, no equivalent section
+[[redirects]]
+  from = "/solutions/ecommerce"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/solutions/ecommerce/"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/solutions/fintechs"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/solutions/fintechs/"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/solutions/marketplaces"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/solutions/marketplaces/"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/solutions/professional-services"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/solutions/professional-services/"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/solutions/saas"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/solutions/saas/"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/solutions/travel"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/solutions/travel/"
+  to = "/"
+  status = 301
+  force = true

@@ -260,7 +260,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         type: 'html',
-        html: 'Watch it in action below, or <a href="/contact">get in touch</a> to see how it works for your business.',
+        html: 'Watch it in action below, or <a href="mailto:support@quidkey.com">get in touch</a> to see how it works for your business.',
       },
       {
         type: 'youtube',

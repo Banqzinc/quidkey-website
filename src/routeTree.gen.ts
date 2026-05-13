@@ -9,38 +9,14 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as WorkflowsRouteImport } from './routes/workflows'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as PrivacyRouteImport } from './routes/privacy'
-import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as EndUserPrivacyRouteImport } from './routes/end-user-privacy'
-import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ComplaintsRouteImport } from './routes/complaints'
-import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as CareersIndexRouteImport } from './routes/careers/index'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
-import { Route as SolutionsTravelRouteImport } from './routes/solutions/travel'
-import { Route as SolutionsSaasRouteImport } from './routes/solutions/saas'
-import { Route as SolutionsProfessionalServicesRouteImport } from './routes/solutions/professional-services'
-import { Route as SolutionsMarketplacesRouteImport } from './routes/solutions/marketplaces'
-import { Route as SolutionsFintechsRouteImport } from './routes/solutions/fintechs'
-import { Route as SolutionsEcommerceRouteImport } from './routes/solutions/ecommerce'
-import { Route as ProductsShopifyRouteImport } from './routes/products/shopify'
-import { Route as ProductsRefundsRouteImport } from './routes/products/refunds'
-import { Route as ProductsPaymentLinksRouteImport } from './routes/products/payment-links'
-import { Route as ProductsMultiCurrencyRouteImport } from './routes/products/multi-currency'
-import { Route as ProductsLocalAccountsRouteImport } from './routes/products/local-accounts'
-import { Route as ProductsIframeRouteImport } from './routes/products/iframe'
-import { Route as ProductsHostedCheckoutRouteImport } from './routes/products/hosted-checkout'
-import { Route as CareersRoleIdRouteImport } from './routes/careers/$roleId'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 
-const WorkflowsRoute = WorkflowsRouteImport.update({
-  id: '/workflows',
-  path: '/workflows',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
@@ -51,19 +27,9 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PricingRoute = PricingRouteImport.update({
-  id: '/pricing',
-  path: '/pricing',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const EndUserPrivacyRoute = EndUserPrivacyRouteImport.update({
   id: '/end-user-privacy',
   path: '/end-user-privacy',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ComplaintsRoute = ComplaintsRouteImport.update({
@@ -71,95 +37,14 @@ const ComplaintsRoute = ComplaintsRouteImport.update({
   path: '/complaints',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CareersIndexRoute = CareersIndexRouteImport.update({
-  id: '/careers/',
-  path: '/careers/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
   id: '/blog/',
   path: '/blog/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SolutionsTravelRoute = SolutionsTravelRouteImport.update({
-  id: '/solutions/travel',
-  path: '/solutions/travel',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SolutionsSaasRoute = SolutionsSaasRouteImport.update({
-  id: '/solutions/saas',
-  path: '/solutions/saas',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SolutionsProfessionalServicesRoute =
-  SolutionsProfessionalServicesRouteImport.update({
-    id: '/solutions/professional-services',
-    path: '/solutions/professional-services',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const SolutionsMarketplacesRoute = SolutionsMarketplacesRouteImport.update({
-  id: '/solutions/marketplaces',
-  path: '/solutions/marketplaces',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SolutionsFintechsRoute = SolutionsFintechsRouteImport.update({
-  id: '/solutions/fintechs',
-  path: '/solutions/fintechs',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SolutionsEcommerceRoute = SolutionsEcommerceRouteImport.update({
-  id: '/solutions/ecommerce',
-  path: '/solutions/ecommerce',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProductsShopifyRoute = ProductsShopifyRouteImport.update({
-  id: '/products/shopify',
-  path: '/products/shopify',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProductsRefundsRoute = ProductsRefundsRouteImport.update({
-  id: '/products/refunds',
-  path: '/products/refunds',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProductsPaymentLinksRoute = ProductsPaymentLinksRouteImport.update({
-  id: '/products/payment-links',
-  path: '/products/payment-links',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProductsMultiCurrencyRoute = ProductsMultiCurrencyRouteImport.update({
-  id: '/products/multi-currency',
-  path: '/products/multi-currency',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProductsLocalAccountsRoute = ProductsLocalAccountsRouteImport.update({
-  id: '/products/local-accounts',
-  path: '/products/local-accounts',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProductsIframeRoute = ProductsIframeRouteImport.update({
-  id: '/products/iframe',
-  path: '/products/iframe',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProductsHostedCheckoutRoute = ProductsHostedCheckoutRouteImport.update({
-  id: '/products/hosted-checkout',
-  path: '/products/hosted-checkout',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CareersRoleIdRoute = CareersRoleIdRouteImport.update({
-  id: '/careers/$roleId',
-  path: '/careers/$roleId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogSlugRoute = BlogSlugRouteImport.update({
@@ -170,214 +55,74 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
   '/complaints': typeof ComplaintsRoute
-  '/contact': typeof ContactRoute
   '/end-user-privacy': typeof EndUserPrivacyRoute
-  '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
-  '/workflows': typeof WorkflowsRoute
   '/blog/$slug': typeof BlogSlugRoute
-  '/careers/$roleId': typeof CareersRoleIdRoute
-  '/products/hosted-checkout': typeof ProductsHostedCheckoutRoute
-  '/products/iframe': typeof ProductsIframeRoute
-  '/products/local-accounts': typeof ProductsLocalAccountsRoute
-  '/products/multi-currency': typeof ProductsMultiCurrencyRoute
-  '/products/payment-links': typeof ProductsPaymentLinksRoute
-  '/products/refunds': typeof ProductsRefundsRoute
-  '/products/shopify': typeof ProductsShopifyRoute
-  '/solutions/ecommerce': typeof SolutionsEcommerceRoute
-  '/solutions/fintechs': typeof SolutionsFintechsRoute
-  '/solutions/marketplaces': typeof SolutionsMarketplacesRoute
-  '/solutions/professional-services': typeof SolutionsProfessionalServicesRoute
-  '/solutions/saas': typeof SolutionsSaasRoute
-  '/solutions/travel': typeof SolutionsTravelRoute
   '/blog/': typeof BlogIndexRoute
-  '/careers/': typeof CareersIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
   '/complaints': typeof ComplaintsRoute
-  '/contact': typeof ContactRoute
   '/end-user-privacy': typeof EndUserPrivacyRoute
-  '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
-  '/workflows': typeof WorkflowsRoute
   '/blog/$slug': typeof BlogSlugRoute
-  '/careers/$roleId': typeof CareersRoleIdRoute
-  '/products/hosted-checkout': typeof ProductsHostedCheckoutRoute
-  '/products/iframe': typeof ProductsIframeRoute
-  '/products/local-accounts': typeof ProductsLocalAccountsRoute
-  '/products/multi-currency': typeof ProductsMultiCurrencyRoute
-  '/products/payment-links': typeof ProductsPaymentLinksRoute
-  '/products/refunds': typeof ProductsRefundsRoute
-  '/products/shopify': typeof ProductsShopifyRoute
-  '/solutions/ecommerce': typeof SolutionsEcommerceRoute
-  '/solutions/fintechs': typeof SolutionsFintechsRoute
-  '/solutions/marketplaces': typeof SolutionsMarketplacesRoute
-  '/solutions/professional-services': typeof SolutionsProfessionalServicesRoute
-  '/solutions/saas': typeof SolutionsSaasRoute
-  '/solutions/travel': typeof SolutionsTravelRoute
   '/blog': typeof BlogIndexRoute
-  '/careers': typeof CareersIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
   '/complaints': typeof ComplaintsRoute
-  '/contact': typeof ContactRoute
   '/end-user-privacy': typeof EndUserPrivacyRoute
-  '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
-  '/workflows': typeof WorkflowsRoute
   '/blog/$slug': typeof BlogSlugRoute
-  '/careers/$roleId': typeof CareersRoleIdRoute
-  '/products/hosted-checkout': typeof ProductsHostedCheckoutRoute
-  '/products/iframe': typeof ProductsIframeRoute
-  '/products/local-accounts': typeof ProductsLocalAccountsRoute
-  '/products/multi-currency': typeof ProductsMultiCurrencyRoute
-  '/products/payment-links': typeof ProductsPaymentLinksRoute
-  '/products/refunds': typeof ProductsRefundsRoute
-  '/products/shopify': typeof ProductsShopifyRoute
-  '/solutions/ecommerce': typeof SolutionsEcommerceRoute
-  '/solutions/fintechs': typeof SolutionsFintechsRoute
-  '/solutions/marketplaces': typeof SolutionsMarketplacesRoute
-  '/solutions/professional-services': typeof SolutionsProfessionalServicesRoute
-  '/solutions/saas': typeof SolutionsSaasRoute
-  '/solutions/travel': typeof SolutionsTravelRoute
   '/blog/': typeof BlogIndexRoute
-  '/careers/': typeof CareersIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/about'
     | '/complaints'
-    | '/contact'
     | '/end-user-privacy'
-    | '/pricing'
     | '/privacy'
     | '/terms'
-    | '/workflows'
     | '/blog/$slug'
-    | '/careers/$roleId'
-    | '/products/hosted-checkout'
-    | '/products/iframe'
-    | '/products/local-accounts'
-    | '/products/multi-currency'
-    | '/products/payment-links'
-    | '/products/refunds'
-    | '/products/shopify'
-    | '/solutions/ecommerce'
-    | '/solutions/fintechs'
-    | '/solutions/marketplaces'
-    | '/solutions/professional-services'
-    | '/solutions/saas'
-    | '/solutions/travel'
     | '/blog/'
-    | '/careers/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/about'
     | '/complaints'
-    | '/contact'
     | '/end-user-privacy'
-    | '/pricing'
     | '/privacy'
     | '/terms'
-    | '/workflows'
     | '/blog/$slug'
-    | '/careers/$roleId'
-    | '/products/hosted-checkout'
-    | '/products/iframe'
-    | '/products/local-accounts'
-    | '/products/multi-currency'
-    | '/products/payment-links'
-    | '/products/refunds'
-    | '/products/shopify'
-    | '/solutions/ecommerce'
-    | '/solutions/fintechs'
-    | '/solutions/marketplaces'
-    | '/solutions/professional-services'
-    | '/solutions/saas'
-    | '/solutions/travel'
     | '/blog'
-    | '/careers'
   id:
     | '__root__'
     | '/'
-    | '/about'
     | '/complaints'
-    | '/contact'
     | '/end-user-privacy'
-    | '/pricing'
     | '/privacy'
     | '/terms'
-    | '/workflows'
     | '/blog/$slug'
-    | '/careers/$roleId'
-    | '/products/hosted-checkout'
-    | '/products/iframe'
-    | '/products/local-accounts'
-    | '/products/multi-currency'
-    | '/products/payment-links'
-    | '/products/refunds'
-    | '/products/shopify'
-    | '/solutions/ecommerce'
-    | '/solutions/fintechs'
-    | '/solutions/marketplaces'
-    | '/solutions/professional-services'
-    | '/solutions/saas'
-    | '/solutions/travel'
     | '/blog/'
-    | '/careers/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
   ComplaintsRoute: typeof ComplaintsRoute
-  ContactRoute: typeof ContactRoute
   EndUserPrivacyRoute: typeof EndUserPrivacyRoute
-  PricingRoute: typeof PricingRoute
   PrivacyRoute: typeof PrivacyRoute
   TermsRoute: typeof TermsRoute
-  WorkflowsRoute: typeof WorkflowsRoute
   BlogSlugRoute: typeof BlogSlugRoute
-  CareersRoleIdRoute: typeof CareersRoleIdRoute
-  ProductsHostedCheckoutRoute: typeof ProductsHostedCheckoutRoute
-  ProductsIframeRoute: typeof ProductsIframeRoute
-  ProductsLocalAccountsRoute: typeof ProductsLocalAccountsRoute
-  ProductsMultiCurrencyRoute: typeof ProductsMultiCurrencyRoute
-  ProductsPaymentLinksRoute: typeof ProductsPaymentLinksRoute
-  ProductsRefundsRoute: typeof ProductsRefundsRoute
-  ProductsShopifyRoute: typeof ProductsShopifyRoute
-  SolutionsEcommerceRoute: typeof SolutionsEcommerceRoute
-  SolutionsFintechsRoute: typeof SolutionsFintechsRoute
-  SolutionsMarketplacesRoute: typeof SolutionsMarketplacesRoute
-  SolutionsProfessionalServicesRoute: typeof SolutionsProfessionalServicesRoute
-  SolutionsSaasRoute: typeof SolutionsSaasRoute
-  SolutionsTravelRoute: typeof SolutionsTravelRoute
   BlogIndexRoute: typeof BlogIndexRoute
-  CareersIndexRoute: typeof CareersIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/workflows': {
-      id: '/workflows'
-      path: '/workflows'
-      fullPath: '/workflows'
-      preLoaderRoute: typeof WorkflowsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/terms': {
       id: '/terms'
       path: '/terms'
@@ -392,25 +137,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/pricing': {
-      id: '/pricing'
-      path: '/pricing'
-      fullPath: '/pricing'
-      preLoaderRoute: typeof PricingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/end-user-privacy': {
       id: '/end-user-privacy'
       path: '/end-user-privacy'
       fullPath: '/end-user-privacy'
       preLoaderRoute: typeof EndUserPrivacyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/complaints': {
@@ -420,13 +151,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ComplaintsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -434,116 +158,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/careers/': {
-      id: '/careers/'
-      path: '/careers'
-      fullPath: '/careers/'
-      preLoaderRoute: typeof CareersIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/blog/': {
       id: '/blog/'
       path: '/blog'
       fullPath: '/blog/'
       preLoaderRoute: typeof BlogIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/solutions/travel': {
-      id: '/solutions/travel'
-      path: '/solutions/travel'
-      fullPath: '/solutions/travel'
-      preLoaderRoute: typeof SolutionsTravelRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/solutions/saas': {
-      id: '/solutions/saas'
-      path: '/solutions/saas'
-      fullPath: '/solutions/saas'
-      preLoaderRoute: typeof SolutionsSaasRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/solutions/professional-services': {
-      id: '/solutions/professional-services'
-      path: '/solutions/professional-services'
-      fullPath: '/solutions/professional-services'
-      preLoaderRoute: typeof SolutionsProfessionalServicesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/solutions/marketplaces': {
-      id: '/solutions/marketplaces'
-      path: '/solutions/marketplaces'
-      fullPath: '/solutions/marketplaces'
-      preLoaderRoute: typeof SolutionsMarketplacesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/solutions/fintechs': {
-      id: '/solutions/fintechs'
-      path: '/solutions/fintechs'
-      fullPath: '/solutions/fintechs'
-      preLoaderRoute: typeof SolutionsFintechsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/solutions/ecommerce': {
-      id: '/solutions/ecommerce'
-      path: '/solutions/ecommerce'
-      fullPath: '/solutions/ecommerce'
-      preLoaderRoute: typeof SolutionsEcommerceRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/products/shopify': {
-      id: '/products/shopify'
-      path: '/products/shopify'
-      fullPath: '/products/shopify'
-      preLoaderRoute: typeof ProductsShopifyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/products/refunds': {
-      id: '/products/refunds'
-      path: '/products/refunds'
-      fullPath: '/products/refunds'
-      preLoaderRoute: typeof ProductsRefundsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/products/payment-links': {
-      id: '/products/payment-links'
-      path: '/products/payment-links'
-      fullPath: '/products/payment-links'
-      preLoaderRoute: typeof ProductsPaymentLinksRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/products/multi-currency': {
-      id: '/products/multi-currency'
-      path: '/products/multi-currency'
-      fullPath: '/products/multi-currency'
-      preLoaderRoute: typeof ProductsMultiCurrencyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/products/local-accounts': {
-      id: '/products/local-accounts'
-      path: '/products/local-accounts'
-      fullPath: '/products/local-accounts'
-      preLoaderRoute: typeof ProductsLocalAccountsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/products/iframe': {
-      id: '/products/iframe'
-      path: '/products/iframe'
-      fullPath: '/products/iframe'
-      preLoaderRoute: typeof ProductsIframeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/products/hosted-checkout': {
-      id: '/products/hosted-checkout'
-      path: '/products/hosted-checkout'
-      fullPath: '/products/hosted-checkout'
-      preLoaderRoute: typeof ProductsHostedCheckoutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/careers/$roleId': {
-      id: '/careers/$roleId'
-      path: '/careers/$roleId'
-      fullPath: '/careers/$roleId'
-      preLoaderRoute: typeof CareersRoleIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog/$slug': {
@@ -558,31 +177,12 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
   ComplaintsRoute: ComplaintsRoute,
-  ContactRoute: ContactRoute,
   EndUserPrivacyRoute: EndUserPrivacyRoute,
-  PricingRoute: PricingRoute,
   PrivacyRoute: PrivacyRoute,
   TermsRoute: TermsRoute,
-  WorkflowsRoute: WorkflowsRoute,
   BlogSlugRoute: BlogSlugRoute,
-  CareersRoleIdRoute: CareersRoleIdRoute,
-  ProductsHostedCheckoutRoute: ProductsHostedCheckoutRoute,
-  ProductsIframeRoute: ProductsIframeRoute,
-  ProductsLocalAccountsRoute: ProductsLocalAccountsRoute,
-  ProductsMultiCurrencyRoute: ProductsMultiCurrencyRoute,
-  ProductsPaymentLinksRoute: ProductsPaymentLinksRoute,
-  ProductsRefundsRoute: ProductsRefundsRoute,
-  ProductsShopifyRoute: ProductsShopifyRoute,
-  SolutionsEcommerceRoute: SolutionsEcommerceRoute,
-  SolutionsFintechsRoute: SolutionsFintechsRoute,
-  SolutionsMarketplacesRoute: SolutionsMarketplacesRoute,
-  SolutionsProfessionalServicesRoute: SolutionsProfessionalServicesRoute,
-  SolutionsSaasRoute: SolutionsSaasRoute,
-  SolutionsTravelRoute: SolutionsTravelRoute,
   BlogIndexRoute: BlogIndexRoute,
-  CareersIndexRoute: CareersIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

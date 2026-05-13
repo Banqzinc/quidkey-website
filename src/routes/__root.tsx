@@ -8,8 +8,6 @@ import { trackPageView, updateGoogleConsentFromCookiebot } from '@/lib/google-an
 import { initUserbackWithCookiebot } from '@/lib/userback'
 import { initSnitcherWithCookiebot } from '@/lib/snitcher'
 import { initLinkedInWithCookiebot } from '@/lib/linkedin'
-import { MegaMenu } from '@/components/layout/mega-menu'
-import { Footer } from '@/components/layout/footer'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { ArrowRight } from 'lucide-react'
@@ -80,62 +78,60 @@ export const Route = createRootRoute({
 })
 
 function NotFoundPage() {
+  // Minimal 404 — no nav, no footer. The new-design pages (homepage, blog,
+  // legal) all use the .hp-scoped HomepageNav/HomepageFooter which require
+  // their own CSS bundle that isn't loaded at the root level. A standalone
+  // centered card keeps the 404 visually clean without dragging that
+  // bundle onto every request.
   const quickLinks = [
     { href: '/', label: 'Homepage' },
-    { href: '/products/shopify', label: 'Shopify App' },
-    { href: '/pricing', label: 'Pricing' },
     { href: '/blog', label: 'Blog' },
-    { href: '/contact', label: 'Contact' },
   ]
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <MegaMenu />
-      <main className="flex-1 relative flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 hero-gradient" aria-hidden="true" />
-        <div className="absolute inset-0 noise" aria-hidden="true" />
+    <main className="min-h-screen relative flex items-center justify-center overflow-hidden">
+      <div className="absolute inset-0 hero-gradient" aria-hidden="true" />
+      <div className="absolute inset-0 noise" aria-hidden="true" />
 
-        <div className="relative mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 py-24 md:py-32 text-center">
-          <p className="text-8xl sm:text-9xl font-bold gradient-text leading-none mb-6 select-none">
-            404
-          </p>
+      <div className="relative mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 py-24 md:py-32 text-center">
+        <p className="text-8xl sm:text-9xl font-bold gradient-text leading-none mb-6 select-none">
+          404
+        </p>
 
-          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground mb-3">
-            Page not found
-          </h1>
-          <p className="text-lg text-muted-foreground mb-10 max-w-md mx-auto text-pretty">
-            The page you're looking for doesn't exist or has been moved.
-          </p>
+        <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground mb-3">
+          Page not found
+        </h1>
+        <p className="text-lg text-muted-foreground mb-10 max-w-md mx-auto text-pretty">
+          The page you're looking for doesn't exist or has been moved.
+        </p>
 
-          <Link
-            to="/"
-            className={cn(
-              buttonVariants({ size: 'lg' }),
-              'group shadow-lg shadow-primary/25 hover:shadow-primary/40 mb-12'
-            )}
-          >
-            Back to homepage
-            <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
-          </Link>
+        <Link
+          to="/"
+          className={cn(
+            buttonVariants({ size: 'lg' }),
+            'group shadow-lg shadow-primary/25 hover:shadow-primary/40 mb-12'
+          )}
+        >
+          Back to homepage
+          <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+        </Link>
 
-          <div className="border-t border-border pt-8">
-            <p className="text-sm text-muted-foreground mb-4">Or try one of these pages</p>
-            <div className="flex flex-wrap justify-center gap-3">
-              {quickLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  to={link.href}
-                  className="text-sm font-medium text-foreground/70 hover:text-primary transition-colors"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
+        <div className="border-t border-border pt-8">
+          <p className="text-sm text-muted-foreground mb-4">Or try one of these pages</p>
+          <div className="flex flex-wrap justify-center gap-3">
+            {quickLinks.map((link) => (
+              <Link
+                key={link.href}
+                to={link.href}
+                className="text-sm font-medium text-foreground/70 hover:text-primary transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
         </div>
-      </main>
-      <Footer />
-    </div>
+      </div>
+    </main>
   )
 }
 

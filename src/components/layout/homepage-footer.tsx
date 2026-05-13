@@ -4,7 +4,7 @@ import { type FormEvent, useState } from 'react'
 import { useAudience } from '@/context/audience'
 import { openCookiebotPreferences } from '@/lib/cookiebot'
 import { track } from '@/lib/track'
-import { DOCS_URL } from '@/lib/urls'
+import { CONTACT_EMAIL, DOCS_URL } from '@/lib/urls'
 
 const STATUS_URL = 'https://status.quidkey.com'
 const DEVELOPERS_URL = 'https://quidkey.dev'
@@ -12,6 +12,8 @@ const DEVELOPERS_URL = 'https://quidkey.dev'
 type FooterLink = {
   label: string
   href: string
+  /** Optional in-page anchor (e.g. "treasury") for Link-based items. */
+  hash?: string
   external?: boolean
   onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void
 }
@@ -21,25 +23,31 @@ function FooterColumn({ heading, links }: { heading: string; links: FooterLink[]
     <div className="ft__col">
       <h4>{heading}</h4>
       <ul>
-        {links.map((link) => (
-          <li key={`${heading}-${link.label}`}>
-            {link.external || link.href === '#' ? (
-              <a
-                href={link.href}
-                {...(link.external && link.href !== '#'
-                  ? { target: '_blank', rel: 'noopener noreferrer' }
-                  : {})}
-                onClick={link.onClick}
-              >
-                {link.label}
-              </a>
-            ) : (
-              <Link to={link.href} onClick={link.onClick}>
+        {links.map((link) => {
+          const isMailto = link.href.startsWith('mailto:')
+          if (link.external || link.href === '#' || isMailto) {
+            return (
+              <li key={`${heading}-${link.label}`}>
+                <a
+                  href={link.href}
+                  {...(link.external && link.href !== '#' && !isMailto
+                    ? { target: '_blank', rel: 'noopener noreferrer' }
+                    : {})}
+                  onClick={link.onClick}
+                >
+                  {link.label}
+                </a>
+              </li>
+            )
+          }
+          return (
+            <li key={`${heading}-${link.label}`}>
+              <Link to={link.href} hash={link.hash} onClick={link.onClick}>
                 {link.label}
               </Link>
-            )}
-          </li>
-        ))}
+            </li>
+          )
+        })}
       </ul>
     </div>
   )
@@ -81,8 +89,8 @@ export function HomepageFooter({ variant = 'home' }: { variant?: 'home' | 'legal
         { label: 'Workflows', href: '#' },
       ]
     : [
-        { label: 'Checkout', href: '/products/hosted-checkout' },
-        { label: 'Treasury', href: '/workflows' },
+        { label: 'Checkout', href: '/', hash: 'integrations' },
+        { label: 'Treasury', href: '/', hash: 'treasury' },
         {
           label: 'API',
           href: DEVELOPERS_URL,
@@ -92,8 +100,8 @@ export function HomepageFooter({ variant = 'home' }: { variant?: 'home' | 'legal
       ]
 
   const legalProductLinks: FooterLink[] = [
-    { label: 'Checkout', href: '/products/hosted-checkout' },
-    { label: 'Treasury', href: '/workflows' },
+    { label: 'Checkout', href: '/', hash: 'integrations' },
+    { label: 'Treasury', href: '/', hash: 'treasury' },
     {
       label: 'API',
       href: DEVELOPERS_URL,
@@ -104,7 +112,10 @@ export function HomepageFooter({ variant = 'home' }: { variant?: 'home' | 'legal
 
   const productLinks = variant === 'legal' ? legalProductLinks : homeProductLinks
 
-  const companyLinks: FooterLink[] = [{ label: 'Blog', href: '/blog' }]
+  const companyLinks: FooterLink[] = [
+    { label: 'Blog', href: '/blog' },
+    { label: 'Contact', href: `mailto:${CONTACT_EMAIL}` },
+  ]
 
   const developerLinks: FooterLink[] = [
     {
