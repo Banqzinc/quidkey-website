@@ -44,6 +44,134 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'payto-explained-australian-merchants-guide',
+    date: 'May 13, 2026',
+    dateISO: '2026-05-13',
+    title: 'PayTo Explained: The Complete Guide for Australian Merchants Ready to Cut Card Fees',
+    seoTitle: 'PayTo Explained: Australian Merchant Guide | Quidkey',
+    description:
+      "PayTo is Australia's real-time bank payment system. Learn how it works, the fee savings, how it handles fraud, and how to add Pay by Bank to your store.",
+    keyword: 'PayTo Australia',
+    author: 'Jenny Zeko',
+    image: '/images/blog/payto-australia.webp',
+    imageWidth: 699,
+    imageHeight: 391,
+    featured: true,
+    relatedSlugs: ['pay-by-bank-the-future-of-payments', 'quidkey-is-live-on-shopify'],
+    blocks: [
+      { type: 'p', text: 'Something shifted in April 2026.' },
+      {
+        type: 'p',
+        text: 'Citi launched PayTo initiator services for its institutional clients in Australia. Ant International integrated PayTo into its payment platform for Australian SMEs. In the same month, two major financial institutions made the same bet: the future of payments in Australia runs through bank accounts, not card networks.',
+      },
+      {
+        type: 'p',
+        text: 'If you are an Australian merchant still paying 1.5% to 3% on every transaction, this is worth understanding.',
+      },
+      { type: 'h2', text: 'What is PayTo?' },
+      {
+        type: 'p',
+        text: "PayTo is Australia's real-time account-to-account (A2A) payment system, built on the New Payments Platform (NPP). It lets businesses initiate payment requests directly from a customer's bank account, based on a pre-authorised agreement set up through the customer's own banking app.",
+      },
+      {
+        type: 'p',
+        text: 'It is not a new idea. The UK has had open banking payments since 2018. Europe has SEPA Instant. The US has FedNow and RTP. Australia now has PayTo, and the infrastructure has reached the point where real businesses are using it for real transactions.',
+      },
+      {
+        type: 'p',
+        text: 'PayTo is not a workaround or a niche product. It is a direct alternative to card processing for online and in-app payments.',
+      },
+      { type: 'h2', text: 'How does PayTo work?' },
+      { type: 'p', text: 'The flow is straightforward.' },
+      {
+        type: 'p',
+        text: 'A customer selects Pay by Bank at your checkout. They authorise the payment through their banking app using their existing bank login. The funds move directly from their account to yours in real time. No card network sits in the middle. No intermediary holds your money overnight.',
+      },
+      {
+        type: 'p',
+        text: "The authorisation happens inside the customer's own bank, which means it uses the same security layer they use to log in and manage their finances. That level of authentication is not available when a customer types a card number into a checkout field.",
+      },
+      {
+        type: 'p',
+        text: 'Once an agreement is set up, repeat payments, subscriptions, and recurring charges can be collected against it automatically. The customer stays in control and can pause or cancel through their banking app at any time.',
+      },
+      { type: 'h2', text: 'What does it mean for fees?' },
+      { type: 'p', text: 'This is where it gets concrete.' },
+      {
+        type: 'p',
+        text: 'Card processing in Australia typically costs between 1.5% and 3% per transaction, depending on your payment provider, card type, and monthly volume. For a merchant doing $100,000 per month, that is between $1,500 and $3,000 going to card networks every single month.',
+      },
+      {
+        type: 'p',
+        text: 'PayTo operates on bank payment rails, not card rails. That removes interchange fees, scheme fees, and the card network margin entirely. The savings for merchants using Pay by Bank typically run up to 70% compared to card processing.',
+      },
+      {
+        type: 'p',
+        text: 'Over a year, for a mid-size ecommerce merchant, that gap compounds quickly.',
+      },
+      { type: 'h2', text: 'What about fraud?' },
+      {
+        type: 'p',
+        text: 'Card payments have a structural vulnerability. A card number, expiry date, and CVV are all a fraudster needs to make a purchase. The dispute process exists precisely because card credentials can be stolen, shared, or misused.',
+      },
+      { type: 'p', text: 'PayTo does not have this problem.' },
+      {
+        type: 'p',
+        text: "Payments are initiated through the customer's bank using bank-level authentication. There is no card data exchanged at checkout. A fraudster cannot make a PayTo payment using stolen credentials because the authorisation happens inside the customer's own banking app, not in a checkout form.",
+      },
+      { type: 'h2', text: 'What about settlement?' },
+      {
+        type: 'p',
+        text: 'Card payments typically settle in one to two business days. During that window, the money is technically in transit and not in your account.',
+      },
+      {
+        type: 'p',
+        text: 'PayTo payments settle in real time. The funds arrive in your account immediately after the transaction completes. For merchants managing cash flow, purchasing inventory, or running high-volume operations, instant settlement is a meaningful operational advantage.',
+      },
+      { type: 'h2', text: 'Who should use PayTo?' },
+      {
+        type: 'p',
+        text: 'PayTo works across a wide range of transaction types: ecommerce checkout, in-app payments, subscription billing, invoice collection, and utility payments.',
+      },
+      { type: 'p', text: 'It is particularly well suited for merchants who:' },
+      {
+        type: 'ul',
+        items: [
+          'Process high volumes where card fees add up to a significant monthly cost',
+          'Deal with chargebacks regularly and spend time and money managing disputes',
+          'Run subscription or recurring billing where card expiry causes failed payments',
+          'Issue invoices and want a faster, cheaper way to collect payment than bank transfer or card',
+        ],
+      },
+      {
+        type: 'p',
+        text: 'If you are on Shopify, WooCommerce, or running a custom checkout, PayTo is available as an add-on payment method alongside your existing options. Customers who prefer cards keep using cards. Customers who prefer bank payments get that choice. You benefit on both fronts.',
+      },
+      { type: 'h2', text: 'How to get started' },
+      { type: 'p', text: 'Australian merchants can add Pay by Bank via Quidkey.' },
+      {
+        type: 'p',
+        text: 'Quidkey connects directly to PayTo infrastructure and adds bank payments to your checkout without replacing what you already have. For Shopify merchants, setup takes minutes through the Quidkey app. For custom checkouts, Quidkey is available via iFrame or API.',
+      },
+      {
+        type: 'p',
+        text: 'There are no upfront costs and no monthly fees. You pay per transaction, and the rate is significantly lower than card processing.',
+      },
+      {
+        type: 'p',
+        text: 'The infrastructure is live. The institutions are on board. The merchants who add Pay by Bank now are the ones who will have the cost and fraud advantage when the rest of the market catches up.',
+      },
+      {
+        type: 'html',
+        html: '<a href="https://console.quidkey.com/signup"><strong>Get started with Quidkey →</strong></a>',
+      },
+      {
+        type: 'html',
+        html: '<em>Sources: Australian Payments Plus (PayTo), Zai (PayTo for merchants), Ant International (April 2026 launch), Chargebacks911 (2026 chargeback statistics).</em>',
+      },
+    ],
+  },
+  {
     slug: 'the-missing-primitive-in-the-agent-economy',
     date: 'April 15, 2026',
     dateISO: '2026-04-15',
