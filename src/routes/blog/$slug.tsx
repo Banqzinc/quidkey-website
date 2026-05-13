@@ -172,7 +172,7 @@ function BlogPostPage() {
             <div className="container">
               <div className="abody__grid">
                 <ArticleTOC slug={post.slug} sections={sections} />
-                <main>
+                <main id="main">
                   <ArticleBody post={post} />
                   <ArticleFooter post={post} />
                 </main>

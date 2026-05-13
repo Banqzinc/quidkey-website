@@ -55,7 +55,7 @@ export function HomepageNav() {
     <nav className={`nav ${scrolled ? 'is-scrolled' : ''} ${mobileOpen ? 'nav--menu-open' : ''}`}>
       <div className="container nav__inner">
         <Link to="/" className="nav__brand" onClick={closeMenu} aria-label="Quidkey home">
-          <img src="/quidkey-logo.svg" alt="Quidkey" className="nav__brand-logo" />
+          <img src="/quidkey-logo.svg" alt="Quidkey" className="nav__brand-logo" width="116" height="32" />
         </Link>
         <div className="nav__right">
           <div className="nav__links">
@@ -94,6 +94,7 @@ export function HomepageNav() {
               href={MERCHANTS_LOGIN_URL}
               className="btn btn--text nav__signin-desktop"
               onClick={trackSignIn}
+              aria-label="Sign in to merchant dashboard"
             >
               Sign in
             </a>
@@ -179,6 +180,7 @@ export function HomepageNav() {
                 trackSignIn()
                 closeMenu()
               }}
+              aria-label="Sign in to merchant dashboard"
             >
               Sign in
             </a>

@@ -1,5 +1,26 @@
 @import 'tailwindcss';
 
+/* Skip-to-content link — visually hidden until focused. WCAG bypass mechanism. */
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  padding: 8px 16px;
+  background: #000;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 0 0 6px 0;
+  transform: translateY(-100%);
+  transition: transform 0.15s;
+}
+.skip-link:focus {
+  transform: translateY(0);
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
 /* Quidkey Website - Bold, Refined, Fintech Aesthetic */
 @theme {
   /* Typography - Distinctive font pairing */

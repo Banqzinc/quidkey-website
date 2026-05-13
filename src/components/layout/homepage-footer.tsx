@@ -165,7 +165,7 @@ export function HomepageFooter({ variant = 'home' }: { variant?: 'home' | 'legal
       <div className="container">
         <div className="ft__top">
           <div>
-            <img src="/quidkey-logo.svg" alt="Quidkey" className="ft__brand-logo" />
+            <img src="/quidkey-logo.svg" alt="Quidkey" className="ft__brand-logo" width="116" height="32" />
             <p className="ft__tag">
               Pay by Bank checkout and programmable treasury, on one ledger.
             </p>
