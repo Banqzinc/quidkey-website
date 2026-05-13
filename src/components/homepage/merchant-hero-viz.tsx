@@ -367,9 +367,9 @@ export function MerchantHeroViz() {
           <div className="phone__statusbar">
             <span className="phone__time">9:41</span>
             <span className="phone__icons" aria-hidden="true">
-              <img src="/homepage/ios-cellular.svg" alt="" className="phone__icon phone__icon--cellular" />
-              <img src="/homepage/ios-wifi.svg" alt="" className="phone__icon phone__icon--wifi" />
-              <img src="/homepage/ios-battery.svg" alt="" className="phone__icon phone__icon--battery" />
+              <img src="/homepage/ios-cellular.svg" alt="" width="20" height="13" className="phone__icon phone__icon--cellular" />
+              <img src="/homepage/ios-wifi.svg" alt="" width="18" height="13" className="phone__icon phone__icon--wifi" />
+              <img src="/homepage/ios-battery.svg" alt="" width="28" height="13" className="phone__icon phone__icon--battery" />
             </span>
           </div>
 
@@ -471,6 +471,8 @@ function CheckoutScreen({
             <img
               src="/homepage/product-shoe-blue.webp"
               alt=""
+              width="800"
+              height="800"
               onError={(e) => {
                 e.currentTarget.style.display = 'none'
               }}
@@ -501,7 +503,7 @@ function CheckoutScreen({
               <span />
             </span>
             <div className="mck__opt-logo">
-              <img src={`https://img.logo.dev/${BANKS[0].domain}?token=${LOGO_DEV_TOKEN}`} alt="" />
+              <img src={`https://img.logo.dev/${BANKS[0].domain}?token=${LOGO_DEV_TOKEN}`} alt="" width="38" height="38" />
             </div>
             <div className="mck__opt-info">
               <div className="mck__opt-title">
@@ -547,7 +549,7 @@ function CheckoutScreen({
               <span className="mck__select-mini" aria-hidden="true">
                 {miniBanks.map((b) => (
                   <span key={b.name} className="mck__select-mini-chip">
-                    <img src={`https://img.logo.dev/${b.domain}?token=${LOGO_DEV_TOKEN}`} alt="" />
+                    <img src={`https://img.logo.dev/${b.domain}?token=${LOGO_DEV_TOKEN}`} alt="" width="18" height="18" />
                   </span>
                 ))}
                 <span className="mck__select-mini-plus" aria-hidden="true">+</span>
@@ -576,7 +578,7 @@ function CheckoutScreen({
                     className={`mck__select-bank ${i === pickedIdx ? 'is-on' : ''}`}
                     onClick={() => selectBank(i)}
                   >
-                    <img src={`https://img.logo.dev/${b.domain}?token=${LOGO_DEV_TOKEN}`} alt="" />
+                    <img src={`https://img.logo.dev/${b.domain}?token=${LOGO_DEV_TOKEN}`} alt="" width="22" height="22" />
                     <span>{b.name}</span>
                   </button>
                 ))}
@@ -656,6 +658,8 @@ function RedirectScreen({ activeBank }: { activeBank: Bank }) {
         <img
           src={`https://img.logo.dev/${activeBank.domain}?token=${LOGO_DEV_TOKEN}`}
           alt=""
+          width="38"
+          height="38"
           onError={(e) => {
             e.currentTarget.style.display = 'none'
           }}
@@ -677,6 +681,8 @@ function LaunchScreen({ activeBank }: { activeBank: Bank }) {
         <img
           src={`https://img.logo.dev/${activeBank.domain}?token=${LOGO_DEV_TOKEN}`}
           alt=""
+          width="60"
+          height="60"
           onError={(e) => {
             e.currentTarget.style.display = 'none'
           }}
@@ -702,6 +708,8 @@ function LoginScreen({
           <img
             src={`https://img.logo.dev/${activeBank.domain}?token=${LOGO_DEV_TOKEN}`}
             alt={activeBank.name}
+            width="56"
+            height="56"
             onError={(e) => {
               e.currentTarget.style.display = 'none'
             }}
@@ -850,6 +858,8 @@ function BankAppScreen({
             <img
               src={`https://img.logo.dev/${activeBank.domain}?token=${LOGO_DEV_TOKEN}`}
               alt=""
+              width="16"
+              height="16"
               onError={(e) => {
                 e.currentTarget.style.display = 'none'
               }}

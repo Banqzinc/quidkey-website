@@ -13,7 +13,7 @@ export function ShopifyInstallMock() {
       <div className="intg__shopify-body">
         <div className="intg__shopify-app">
           <div className="intg__shopify-icon">
-            <img src="/quidkey-logo.svg" alt="Quidkey" />
+            <img src="/quidkey-logo.svg" alt="Quidkey" width="32" height="32" />
           </div>
           <div className="intg__shopify-meta">
             <div className="intg__shopify-name">Quidkey · Pay by Bank</div>
