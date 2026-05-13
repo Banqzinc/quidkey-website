@@ -41,7 +41,7 @@ export function CheckoutMini() {
         <div className="cv__logo">
           <img
             src={`https://img.logo.dev/${bank.domain}?token=${LOGO_DEV_TOKEN}`}
-            alt=""
+            alt={`${bank.name} logo`}
             className={fading ? 'is-fading' : ''}
           />
         </div>

@@ -43,7 +43,7 @@ export function WhatIsPayByBank() {
                 <button className="pbb__mock-opt pbb__mock-opt--active" type="button">
                   <span className="pbb__mock-opt-l">
                     <span className="pbb__mock-bnklogo" aria-hidden="true">
-                      <img src={`https://img.logo.dev/chase.com?token=${LOGO_DEV_TOKEN}`} alt="" width="15" height="15" />
+                      <img src={`https://img.logo.dev/chase.com?token=${LOGO_DEV_TOKEN}`} alt="Chase Bank logo" width="15" height="15" />
                     </span>
                     <span className="pbb__mock-opt-t">Pay with Chase</span>
                   </span>
@@ -102,7 +102,7 @@ export function WhatIsPayByBank() {
               <div className="pbb__mock-sheet">
                 <div className="pbb__mock-bank-head">
                   <span className="pbb__mock-bank-mark pbb__mock-bank-mark--logo" aria-hidden="true">
-                    <img src={`https://img.logo.dev/chase.com?token=${LOGO_DEV_TOKEN}`} alt="" width="22" height="22" />
+                    <img src={`https://img.logo.dev/chase.com?token=${LOGO_DEV_TOKEN}`} alt="Chase Bank logo" width="22" height="22" />
                   </span>
                   <span className="pbb__mock-bank-name">Chase</span>
                 </div>
