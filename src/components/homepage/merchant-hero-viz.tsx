@@ -469,7 +469,7 @@ function CheckoutScreen({
         <div className="mck__product">
           <div className="mck__product-img" aria-hidden="true">
             <img
-              src="/homepage/product-shoe-blue.png"
+              src="/homepage/product-shoe-blue.webp"
               alt=""
               onError={(e) => {
                 e.currentTarget.style.display = 'none'

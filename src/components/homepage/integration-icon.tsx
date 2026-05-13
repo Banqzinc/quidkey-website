@@ -25,8 +25,8 @@ export function IntegrationIcon({ id, large }: { id: string; large?: boolean }) 
         className="intg__shopify-mark"
         style={{ display: 'inline-block', width: size, height: size, position: 'relative' }}
       >
-        <img className="intg__shopify-mark-black" src="/homepage/shopify-bag-black.png" alt="" width={size} height={size} />
-        <img className="intg__shopify-mark-white" src="/homepage/shopify-bag-white.png" alt="" width={size} height={size} />
+        <img className="intg__shopify-mark-black" src="/homepage/shopify-bag-black.webp" alt="" width={size} height={size} />
+        <img className="intg__shopify-mark-white" src="/homepage/shopify-bag-white.webp" alt="" width={size} height={size} />
       </span>
     )
   }

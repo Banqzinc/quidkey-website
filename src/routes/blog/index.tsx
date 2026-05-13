@@ -108,7 +108,6 @@ function BlogHero({ post }: { post: BlogPost }) {
           to="/blog/$slug"
           params={{ slug: post.slug }}
           className="bhero__card-link"
-          aria-label={`Read more: ${post.title}`}
         >
           <article className="bhero__card">
             <div className="bhero__copy">

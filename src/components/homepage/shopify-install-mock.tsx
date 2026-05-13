@@ -5,7 +5,7 @@ export function ShopifyInstallMock() {
     <div className="intg__shopify">
       <div className="intg__shopify-head">
         <div className="intg__shopify-head-l">
-          <img src="/homepage/shopify-bag-black.png" alt="" className="intg__shopify-headlogo" width="14" height="14" />
+          <img src="/homepage/shopify-bag-black.webp" alt="" className="intg__shopify-headlogo" width="14" height="14" />
           <span>Shopify App Store</span>
         </div>
         <span />
