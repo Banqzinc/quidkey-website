@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+  "skills": [
+    {
+      "name": "quidkey-pay-by-bank-integration",
+      "type": "skill-md",
+      "description": "Integrate Quidkey Pay-by-Bank — authenticate with OAuth 2.0 client_credentials, create hosted payment links or embed an iframe checkout, then accept account-to-account bank payments across the EU and UK.",
+      "url": "/.well-known/agent-skills/quidkey-pay-by-bank-integration/SKILL.md",
+      "digest": "sha256:841d60c4cc13d420c7affa6e95b1359a08b62c26a0d27bf9111c02a302e4880a"
+    }
+  ]
+}
