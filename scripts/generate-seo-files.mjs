@@ -75,19 +75,6 @@ async function extractBlogPosts() {
   return posts
 }
 
-async function extractCareerRoleIds() {
-  const file = path.join(ROOT, 'src', 'routes', 'careers', 'index.tsx')
-  const text = await fs.readFile(file, 'utf8')
-
-  const ids = []
-  const re = /\bid:\s*'([^']+)'/g
-  let match
-  while ((match = re.exec(text))) {
-    ids.push(match[1])
-  }
-  return [...new Set(ids)]
-}
-
 function formatDateISO(date = new Date()) {
   return date.toISOString().slice(0, 10)
 }
@@ -118,17 +105,10 @@ async function generate() {
     lastmod: p.dateISO,
   }))
 
-  const roleIds = await extractCareerRoleIds()
-  const careerRoutes = roleIds.map((id) => ({
-    path: `/careers/${id}`,
-    lastmod: today,
-  }))
-
   const entries = new Map()
 
   for (const p of staticRoutes) entries.set(p, { path: p, lastmod: today })
   for (const r of blogRoutes) entries.set(r.path, r)
-  for (const r of careerRoutes) entries.set(r.path, r)
 
   // Ensure homepage is first
   const paths = [...entries.keys()].sort((a, b) => {
