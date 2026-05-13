@@ -130,7 +130,12 @@ export function HomepageFooter({ variant = 'home' }: { variant?: 'home' | 'legal
       external: true,
       onClick: trackOutbound(STATUS_URL, 'footer_status'),
     },
-    { label: 'GitHub', href: '#' },
+    {
+      label: 'GitHub',
+      href: 'https://github.com/Banqzinc',
+      external: true,
+      onClick: trackOutbound('https://github.com/Banqzinc', 'footer_github'),
+    },
   ]
 
   // Cookies opens the Cookiebot consent banner rather than navigating to a

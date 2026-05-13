@@ -43,7 +43,7 @@ const MERCHANT_INTEGRATIONS: IntegrationOption[] = [
     minutes: '~3 min',
     skill: 'No code',
     learnMore: 'Shopify install',
-    learnHref: 'https://quidkey.dev/shopify',
+    learnHref: 'https://docs.quidkey.com/guides/shopify/onboarding',
     preview: { kind: 'shopify' },
   },
   {
@@ -54,7 +54,7 @@ const MERCHANT_INTEGRATIONS: IntegrationOption[] = [
     minutes: '~30 sec',
     skill: 'No code',
     learnMore: 'Payment Links',
-    learnHref: 'https://quidkey.dev/payment-links',
+    learnHref: 'https://docs.quidkey.com/guides/payment-links/create',
     preview: { kind: 'paylink' },
   },
   {
@@ -65,7 +65,7 @@ const MERCHANT_INTEGRATIONS: IntegrationOption[] = [
     minutes: '~30 min',
     skill: 'Frontend dev',
     learnMore: 'the Web SDK',
-    learnHref: 'https://quidkey.dev/web-sdk',
+    learnHref: 'https://docs.quidkey.com/guides/embedded-flow/overview',
     preview: {
       kind: 'multi-code',
       tabs: [
@@ -113,7 +113,7 @@ export default function Checkout({ cart }) {
     minutes: '~15 min',
     skill: 'Backend dev',
     learnMore: 'Hosted Checkout',
-    learnHref: 'https://quidkey.dev/hosted',
+    learnHref: 'https://docs.quidkey.com/guides/payment-links/overview',
     preview: {
       kind: 'multi-code',
       tabs: [
@@ -161,7 +161,7 @@ curl https://api.quidkey.com/v1/checkout/sessions \\
     minutes: '~1 hour',
     skill: 'iOS dev',
     learnMore: 'the iOS SDK',
-    learnHref: 'https://quidkey.dev/ios',
+    learnHref: 'https://docs.quidkey.com/',
     preview: {
       kind: 'code',
       tab: {
@@ -196,7 +196,7 @@ struct CheckoutView: View {
     minutes: '~1 hour',
     skill: 'Android dev',
     learnMore: 'the Android SDK',
-    learnHref: 'https://quidkey.dev/android',
+    learnHref: 'https://docs.quidkey.com/',
     preview: {
       kind: 'code',
       tab: {

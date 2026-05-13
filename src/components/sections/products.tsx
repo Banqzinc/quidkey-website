@@ -5,6 +5,7 @@
 //   fintechs  -> THREE cards (Rails, Accounts, Workflows) each with its own
 //                mini-viz from VizFor.
 
+import { Link } from '@tanstack/react-router'
 import { Suspense, lazy, type ReactNode } from 'react'
 
 import { VizFor } from '@/components/homepage/product-minis'
@@ -224,9 +225,9 @@ export function Products() {
                       </div>
                     )}
                     {!isSplit && (
-                      <a href="#" className="product__cta">
+                      <Link to="/" hash="integrations" className="product__cta">
                         {card.cta}
-                      </a>
+                      </Link>
                     )}
                   </div>
                 )}
