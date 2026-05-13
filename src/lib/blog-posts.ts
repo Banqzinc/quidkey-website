@@ -896,8 +896,7 @@ export const blogPosts: BlogPost[] = [
     dateISO: '2026-03-04',
     title:
       "We launched a new website in a day. Here's everything you need to know.",
-    seoTitle:
-      "We launched a new website in a day. Here's everything you need to know.",
+    seoTitle: 'We launched a new website in a day | Quidkey',
     description:
       'How we built and shipped the new Quidkey website in a single day using Claude Code and Cursor — and how our team now maintains it directly from Slack.',
     keyword: 'AI website launch',

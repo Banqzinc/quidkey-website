@@ -77,7 +77,7 @@ function LogoMark({ item }: { item: LogoItem }) {
   if (item.imgUrl) {
     return (
       <div className="logos__item logos__item--customer logos__item--imgurl">
-        <img src={item.imgUrl} alt="" className="logos__img-mark" />
+        <img src={item.imgUrl} alt="" className="logos__img-mark" width="80" height="22" />
         <span className="logos__sr">{item.name}</span>
       </div>
     )
@@ -94,7 +94,7 @@ function LogoMark({ item }: { item: LogoItem }) {
   }
   return (
     <div className="logos__item logos__item--customer">
-      <img src={`https://img.logo.dev/${item.domain}?token=${LOGO_DEV_TOKEN}`} alt="" />
+      <img src={`https://img.logo.dev/${item.domain}?token=${LOGO_DEV_TOKEN}`} alt="" width="18" height="18" />
       <span>{item.name}</span>
     </div>
   )

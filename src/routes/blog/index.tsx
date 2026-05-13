@@ -142,7 +142,14 @@ function BlogHero({ post }: { post: BlogPost }) {
               </span>
             </div>
             <div className="bhero__media">
-              <img src={post.image} alt={post.title} className={`bcard__img ${fitClass}`} loading="eager" />
+              <img
+                src={post.image}
+                alt={post.title}
+                className={`bcard__img ${fitClass}`}
+                loading="eager"
+                width={post.imageWidth ?? 1600}
+                height={post.imageHeight ?? 900}
+              />
             </div>
           </article>
         </Link>
