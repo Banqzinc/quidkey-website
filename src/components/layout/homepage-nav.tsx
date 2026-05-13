@@ -19,13 +19,17 @@ export function HomepageNav() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Lock body scroll while the mobile menu is open.
+  // Lock the page while the mobile menu is open. We toggle a class on
+  // <html> and rely on touch-action: none in CSS, rather than setting
+  // body.style.overflow = 'hidden'. The overflow trick silently cancels
+  // position: sticky on the nav (see src/styles.css comment near
+  // overflow-x: clip), which used to push the nav and menu sheet off-
+  // screen whenever the menu opened while scrolled past the hero.
   useEffect(() => {
     if (!mobileOpen) return
-    const prev = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
+    document.documentElement.classList.add('nav-menu-open')
     return () => {
-      document.body.style.overflow = prev
+      document.documentElement.classList.remove('nav-menu-open')
     }
   }, [mobileOpen])
 

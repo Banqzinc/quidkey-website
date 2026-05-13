@@ -246,3 +246,30 @@
     border: 0 !important;
   }
 }
+
+/* Mobile menu scroll lock. The previous approach set
+   `document.body.style.overflow = 'hidden'` which cancels the sticky nav
+   (same overflow-on-an-axis-breaks-sticky issue documented above) and
+   used to push the nav and menu sheet off-screen whenever the menu was
+   opened while scrolled past the hero. touch-action: none on <html>
+   blocks finger pan without changing overflow, so sticky keeps working.
+   The menu sheet itself still needs pan-y to scroll its own contents. */
+html.nav-menu-open {
+  touch-action: none;
+}
+html.nav-menu-open body {
+  overscroll-behavior: none;
+}
+html.nav-menu-open .nav__mobile {
+  touch-action: pan-y;
+}
+
+/* Integration rail: stop the 1px black hairline that briefly painted at
+   the top of an item when the active panel moved between siblings. The
+   moving panel flips border-top-style/width instantly between rules,
+   while border-top-color crossfades currentcolor (--ink) ↔ transparent
+   over 150ms — visible as a black hairline. Drop border-color from the
+   transition; the active border still appears, just without the fade. */
+.hp .intg__opt {
+  transition: background .15s, color .15s, box-shadow .15s;
+}
