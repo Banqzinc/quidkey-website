@@ -14,3 +14,9 @@ todos.json
 
 # Local Netlify folder
 .netlify
+
+# Playwright MCP test artifacts
+.playwright-mcp/
+*.png
+!public/**/*.png
+!src/**/*.png

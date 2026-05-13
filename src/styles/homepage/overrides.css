@@ -1,0 +1,248 @@
+/* Hand-written overrides on top of the prefixed prototype CSS. Loaded last
+   from src/routes/index.tsx, after every base file. */
+
+/* The prefixed base.css ships `.hp { overflow-x: hidden }` to prevent
+   horizontal scrollbars on viewports narrower than the design's content.
+   Per the W3C spec, when overflow is non-visible in only one axis, the
+   other axis computes as `auto` — which turns `.hp` into a scroll
+   container and breaks `position: sticky` for the nav inside it.
+
+   `overflow-x: clip` clips overflow the same way visually but does NOT
+   establish a scroll container, so the inner sticky nav works.
+   Browser support: Chrome 90+, Firefox 81+, Safari 15.4+. */
+.hp {
+  overflow-x: clip;
+}
+
+/* Blog index cards use real post images instead of the prototype's striped
+   placeholder. The .bcard__media and .bhero__media containers already have
+   aspect-ratio: 16/9, so the img only needs to fill them. */
+.hp .bcard__link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+.hp .bcard__img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.hp .bcard__img--cover {
+  object-fit: cover;
+}
+.hp .bcard__img--contain {
+  object-fit: contain;
+  background: var(--bg-mute);
+  padding: 12%;
+}
+.hp .bhero__media {
+  display: block;
+  text-decoration: none;
+}
+/* Hero card is now wrapped in a single Link so the whole card is clickable
+   (matching the grid cards). Reset the link's typography and let it pass
+   styling through to the inner article. */
+.hp .bhero__card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Headings inside the .hp wrapper must use Outfit, not Space Grotesk.
+   The site-wide styles.css applies `font-family: var(--font-display)`
+   (= Space Grotesk) to every h1-h6 globally — that rule overrides
+   the .hp wrapper's inherited Outfit because `h1, h2, ...` is its own
+   element-level declaration, not just inherited. The fix is a more
+   specific selector inside .hp that points headings back to Outfit. */
+.hp h1,
+.hp h2,
+.hp h3,
+.hp h4,
+.hp h5,
+.hp h6 {
+  font-family: var(--sans);
+}
+
+/* Sticky nav is `position: sticky; top: 16px;` with a 60px inner height +
+   borders/padding (~92px total visible). The prototype's
+   `scroll-padding-top: 25px` is too small: clicking #why / #integrations /
+   #pricing / #treasury / #faq from the nav lands the section heading
+   underneath the nav. Push the scroll padding past the nav. */
+.hp {
+  scroll-padding-top: 100px;
+}
+
+/* Hero viz placeholder (used while MerchantHeroViz / FintechHeroViz are
+   being built). Without these rules, the two spans render inline and
+   collapse next to each other. */
+.hp .hero__viz-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+  border: 1px dashed var(--line-strong);
+  border-radius: 16px;
+  background: var(--bg-soft);
+}
+.hp .hero__viz-placeholder-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 24px;
+  text-align: center;
+  max-width: 280px;
+}
+.hp .hero__viz-placeholder-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.hp .hero__viz-placeholder-body {
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--faint);
+}
+
+/* ── Legal pages ──────────────────────────────────────────────────
+   The homepage nav is sticky at top: 16px with a 60px inner height and
+   16px ring-shadow padding (~92px effective). The Claude prototype's
+   legal-shell.jsx sets the nav `position: static` and pins the page-tabs
+   strip at top: 0 — but we want the same floating sticky nav UX on legal
+   pages, so the tabs need to sit BELOW the nav rather than under it.
+   Legal article sections also need extra scroll-margin-top so anchor
+   clicks land below both the nav and the tabs strip.
+
+   Specificity bump to .hp.legal-page so these rules beat the prefixed
+   legal.css rules — Vite hot-reload can ship overrides.css before legal.css
+   in dev, in which case equal-specificity rules from legal.css win on
+   source order. */
+.hp.legal-page .legal-tabs {
+  top: 92px;
+}
+.hp.legal-page .legal-toc {
+  top: 168px;
+}
+.hp.legal-page .legal-article > section {
+  scroll-margin-top: 168px;
+}
+@media (max-width: 880px) {
+  .hp.legal-page .legal-tabs {
+    top: 80px;
+  }
+  .hp.legal-page .legal-toc {
+    top: auto;
+  }
+  .hp.legal-page .legal-article > section {
+    scroll-margin-top: 152px;
+  }
+}
+
+/* The article's descendant link rule (`.legal-article a`) applies underline +
+   ink-color to every anchor, including the ContactCard's pill buttons that
+   sit at the end of the contact section. Restore button typography. */
+.hp.legal-page .legal-article a.btn {
+  text-decoration: none;
+}
+.hp.legal-page .legal-article a.btn--ink {
+  color: var(--bg);
+}
+.hp.legal-page .legal-article a.btn--ghost {
+  color: var(--ink);
+}
+/* Pill buttons let their label wrap on narrow viewports so a long email
+   address doesn't overflow the contact card. */
+.hp.legal-page .legal-contact .btn {
+  white-space: normal;
+  height: auto;
+  min-height: 36px;
+  padding: 8px 14px;
+  text-align: center;
+}
+
+/* ── Blog article ─────────────────────────────────────────────────
+   The prefixed article.css ships a single hero figure variant with
+   `object-fit: cover`. Some posts ship logos or screenshots that need
+   `contain` framing — mirror the .bcard__img--contain pattern used on
+   the blog index. */
+.hp .afig__media--contain {
+  background: var(--bg-mute);
+}
+.hp .afig__media--contain img {
+  object-fit: contain;
+  padding: clamp(16px, 4vw, 40px);
+}
+
+/* The .aprose ul/ol baseline lays out its items with `display: flex;
+   flex-direction: column; gap: 8px`. The base.css reset sets
+   `ul, ol { list-style: none }` globally inside .hp — restore native
+   bullet/number markers so prose lists actually look like lists. */
+.hp .aprose ul {
+  list-style: disc;
+}
+.hp .aprose ol {
+  list-style: decimal;
+}
+
+/* Article-page links inside .aprose render as underlined ink — but the
+   prose may also contain inline anchors that are NOT real navigation
+   (e.g., footnote markers). Keep the global hover state from article.css. */
+.hp .article-page a:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Share rail buttons need real button reset so the <button> for "copy
+   link" doesn't inherit the page's button defaults. */
+.hp .ashare__btn {
+  font: inherit;
+}
+
+/* ── Why Quidkey · 4-card grid ───────────────────────────────────
+   Mirrors the existing --six modifier from headings.css but for 4
+   value props: 4 cols on desktop, 2 cols on tablet, 1 col on mobile.
+   No dividers anywhere; spacing comes from gap. */
+.hp .why__grid--four {
+  grid-template-columns: repeat(4, 1fr) !important;
+  grid-auto-rows: auto;
+  gap: clamp(32px, 4vw, 56px) clamp(32px, 4vw, 56px) !important;
+  border-top: 0 !important;
+  border-bottom: 0 !important;
+}
+.hp .why__grid--four > .why__cardx {
+  padding: 0 !important;
+  border: 0 !important;
+}
+.hp .why__grid--four > .why__cardx + .why__cardx {
+  border-left: 0 !important;
+}
+
+/* Tablet — 2×2 grid. */
+@media (max-width: 980px) {
+  .hp .why__grid--four {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: clamp(28px, 4vw, 44px) clamp(28px, 4vw, 44px) !important;
+  }
+  .hp .why__grid--four > .why__cardx {
+    padding: 0 !important;
+    border: 0 !important;
+  }
+}
+
+/* Mobile — single column stack. */
+@media (max-width: 600px) {
+  .hp .why__grid--four {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+  .hp .why__grid--four > .why__cardx,
+  .hp .why__grid--four > .why__cardx + .why__cardx {
+    padding: 0 !important;
+    border: 0 !important;
+  }
+}

@@ -37,7 +37,8 @@ export function Footer() {
       { label: 'Privacy Notice', href: '/privacy' },
       { label: 'End-User Privacy Notice', href: '/end-user-privacy' },
       { label: 'Terms of Use', href: '/terms' },
-      { label: 'Cookies', href: '/cookies' },
+      // Cookies opens the Cookiebot consent banner — there is no /cookies page.
+      { label: 'Cookies', href: '#cookiebot' },
       { label: 'Complaints Procedure', href: '/complaints' },
     ],
   }
@@ -54,16 +55,16 @@ export function Footer() {
                 {links.map((link, index) => (
                   <li key={index}>
                     {category === 'Legal' && link.label === 'Cookies' ? (
-                      <Link
-                        to={link.href}
+                      <a
+                        href={link.href}
                         onClick={(event) => {
                           event.preventDefault()
-                          openCookiebotPreferences({ fallbackUrl: link.href })
+                          openCookiebotPreferences()
                         }}
                         className="text-sm text-background/60 hover:text-background transition-colors"
                       >
                         {link.label}
-                      </Link>
+                      </a>
                     ) : /^https?:\/\//.test(link.href) ? (
                       <a
                         href={link.href}

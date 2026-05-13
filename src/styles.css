@@ -56,7 +56,11 @@
     color-scheme: light;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
-    overflow-x: hidden;
+    /* `overflow-x: clip` clips horizontal overflow without making the element
+       a scroll container. Using `hidden` would force the browser to compute
+       the other axis as `auto`, which silently creates a scroll context and
+       breaks `position: sticky` for descendants (the homepage + legal nav). */
+    overflow-x: clip;
     scroll-behavior: smooth;
   }
 
@@ -65,7 +69,7 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   /* Headings use display font */

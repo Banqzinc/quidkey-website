@@ -34,6 +34,12 @@ export type BlogPost = {
   blocks: BlogPostBlock[]
   featured?: boolean
   relatedSlugs?: string[]
+  /** Free-form topic tags shown above the author bio. Hidden when empty. */
+  tags?: string[]
+  /** Author's role/title (e.g., "Co-founder, Quidkey"). Hidden when empty. */
+  authorRole?: string
+  /** 1–2 sentence author bio shown in the article footer. Hidden when empty. */
+  authorBio?: string
 }
 
 export const blogPosts: BlogPost[] = [
