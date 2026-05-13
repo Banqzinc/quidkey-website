@@ -57,7 +57,7 @@ function HomePage() {
     <AudienceProvider>
       <div className="hp">
         <HomepageNav />
-        <main>
+        <main id="main">
           <HeroSection />
           <Logos />
           <WhatIsPayByBank />

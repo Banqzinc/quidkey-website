@@ -314,7 +314,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         type: 'html',
-        html: '<em>Want the full technical picture? Read the complete white paper from our Founder <a href="https://rabea.sh/posts/banking-as-a-service-for-ai-agents">here</a>.</em>',
+        html: '<em>Want the full technical picture? <a href="https://rabea.sh/posts/banking-as-a-service-for-ai-agents">Read the complete white paper from our Founder</a>.</em>',
       },
     ],
   },
@@ -903,7 +903,7 @@ export const blogPosts: BlogPost[] = [
     author: 'Quidkey Team',
     image: '/images/blog/website-launch-ai.webp',
     featured: true,
-    relatedSlugs: ['quidkey-is-live-on-shopify', 'quidkey-a-global-clearing-house-for-modern-payments'],
+    relatedSlugs: ['quidkey-is-live-on-shopify', 'quidkey-a-global-clearing-house-for-modern-payments', 'the-missing-primitive-in-the-agent-economy'],
     blocks: [
       {
         type: 'p',
@@ -1310,7 +1310,7 @@ export const blogPosts: BlogPost[] = [
     keyword: 'global clearing house',
     author: 'Bhavna Saraf',
     image: '/images/blog/global-clearing-house.webp',
-    relatedSlugs: ['soc-2-type-ii-compliance-global-payments', 'we-launched-a-new-website-in-a-day'],
+    relatedSlugs: ['soc-2-type-ii-compliance-global-payments', 'we-launched-a-new-website-in-a-day', 'the-missing-primitive-in-the-agent-economy'],
     blocks: [
       {
         type: 'p',
@@ -1421,7 +1421,7 @@ export const blogPosts: BlogPost[] = [
     keyword: 'pay by bank travel payments',
     author: 'Quidkey Team',
     image: '/images/blog/tryp-partnership.webp',
-    relatedSlugs: ['pay-by-bank-the-future-of-payments', 'quidkey-and-transfermate-drive-down-card-costs-for-merchants'],
+    relatedSlugs: ['pay-by-bank-the-future-of-payments', 'quidkey-and-transfermate-drive-down-card-costs-for-merchants', 'payto-explained-australian-merchants-guide'],
     blocks: [
       {
         type: 'p',
@@ -1623,7 +1623,7 @@ export const blogPosts: BlogPost[] = [
     keyword: 'pay by bank',
     author: 'Quidkey Team',
     image: '/images/blog/pay-by-bank.webp',
-    relatedSlugs: ['open-banking-payments-in-the-uk', 'a2a-payments-cut-merchant-fees'],
+    relatedSlugs: ['open-banking-payments-in-the-uk', 'a2a-payments-cut-merchant-fees', 'payto-explained-australian-merchants-guide'],
     blocks: [
       { type: 'h2', text: 'What is Pay by Bank?' },
       {

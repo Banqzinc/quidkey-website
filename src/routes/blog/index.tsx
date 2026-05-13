@@ -213,26 +213,28 @@ function BlogPage() {
       <div className="hp">
         <div className="blog-page">
           <HomepageNav />
-          <BlogHero post={hero} />
-          <section className="barticles">
-            <div className="container">
-              <div className="bfilter">
-                <FilterPills value={view} onChange={setView} counts={counts} />
-                <span className="bfilter__count">
-                  {filtered.length} {filtered.length === 1 ? 'article' : 'articles'}
-                </span>
-              </div>
-              {filtered.length === 0 ? (
-                <div className="bempty">No articles in this category yet — check back soon.</div>
-              ) : (
-                <div className="barticles__grid">
-                  {filtered.map((post) => (
-                    <PostCard key={post.slug} post={post} />
-                  ))}
+          <main id="main">
+            <BlogHero post={hero} />
+            <section className="barticles">
+              <div className="container">
+                <div className="bfilter">
+                  <FilterPills value={view} onChange={setView} counts={counts} />
+                  <span className="bfilter__count">
+                    {filtered.length} {filtered.length === 1 ? 'article' : 'articles'}
+                  </span>
                 </div>
-              )}
-            </div>
-          </section>
+                {filtered.length === 0 ? (
+                  <div className="bempty">No articles in this category yet — check back soon.</div>
+                ) : (
+                  <div className="barticles__grid">
+                    {filtered.map((post) => (
+                      <PostCard key={post.slug} post={post} />
+                    ))}
+                  </div>
+                )}
+              </div>
+            </section>
+          </main>
           <HomepageFooter />
         </div>
       </div>

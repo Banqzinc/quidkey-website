@@ -167,15 +167,15 @@ export function ContactCard({
   return (
     <div className="legal-contact">
       <div className="legal-contact__l">
-        <h4>Questions about {topic}?</h4>
+        <h3>Questions about {topic}?</h3>
         <p>
           Our team can usually answer within two working days. Use the contact details below or
           write to us at the address in the document metadata.
         </p>
       </div>
       <div className="legal-contact__r">
-        <a href={`mailto:${email}`} className="btn btn--ink btn--pill">
-          Email {email}
+        <a href={`mailto:${email}`} className="btn btn--ink btn--pill" aria-label={`Email ${email}`}>
+          {email}
         </a>
         {showComplaintsLink && (
           <Link to="/complaints" className="btn btn--ghost btn--pill">
@@ -216,16 +216,18 @@ export function LegalShell({
     <AudienceProvider>
       <div className="hp legal-page">
         <HomepageNav />
-        <PageHero hero={hero} />
-        <PageTabs pageId={pageId} />
-        <div className="legal-body">
-          <div className="container">
-            <div className="legal-body__grid">
-              <TOC sections={sections} />
-              <article className="legal-article">{children}</article>
+        <main id="main">
+          <PageHero hero={hero} />
+          <PageTabs pageId={pageId} />
+          <div className="legal-body">
+            <div className="container">
+              <div className="legal-body__grid">
+                <TOC sections={sections} />
+                <article className="legal-article">{children}</article>
+              </div>
             </div>
           </div>
-        </div>
+        </main>
         <HomepageFooter variant="legal" />
       </div>
     </AudienceProvider>

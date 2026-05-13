@@ -194,6 +194,7 @@ gtag('config', '${GA_MEASUREMENT_ID}', { send_page_view: false });
       </head>
       {/* suppressHydrationWarning: TanStack Start's <Scripts /> can cause minor SSR/client differences */}
       <body className="antialiased" suppressHydrationWarning>
+        <a href="#main" className="skip-link">Skip to main content</a>
         {children}
         {ENABLE_TRACKERS ? (
           <>
