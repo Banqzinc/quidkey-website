@@ -24,8 +24,8 @@ export function PartnerTreasury() {
           <h2 className="ptreasury__title">The console behind your brand.</h2>
           <p className="ptreasury__sub">
             Merchants connect Stripe, Shopify, and bank feeds. You ship the
-            post-payment surface — splits, FX, reserves, payouts — without
-            building it.
+            post-payment surface without building it: splits, FX, reserves,
+            payouts.
           </p>
         </div>
         <div className="ptreasury__mockup-wrap">

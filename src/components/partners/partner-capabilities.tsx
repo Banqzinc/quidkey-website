@@ -49,8 +49,7 @@ export function PartnerCapabilities() {
             <h2 className="feat__title">Pick what your stack is missing.</h2>
           </div>
           <p className="feat__sub">
-            Six building blocks. Take one, take all six. White-labeled under your brand, via our
-            Partner API or a hosted portal.
+            Six building blocks. Take one or all six, white-labeled under your brand.
           </p>
         </div>
 

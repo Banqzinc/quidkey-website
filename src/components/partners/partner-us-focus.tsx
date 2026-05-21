@@ -50,10 +50,9 @@ export function PartnerUSFocus() {
             Built around the US. For US and <em>non-US merchants.</em>
           </h2>
           <p className="us__lead">
-            Most partner questions are about the US. The dominant US Pay by Bank rail is still ACH,
-            and ACH chargebacks can be raised up to 60 days after settlement. So we built around
-            that problem, and around helping businesses anywhere in the world collect from US
-            customers.
+            Most partner questions are about the US, the world&rsquo;s biggest market. We get
+            eligible merchants live there in weeks, with no US entity or money transmitter license
+            required.
           </p>
         </div>
 
