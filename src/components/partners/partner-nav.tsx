@@ -1,6 +1,5 @@
-import { AudienceToggle } from '@/components/homepage/audience-toggle'
 import { track } from '@/lib/track'
-import { DEMO_BOOKING_URL, PARTNERS_EMAIL } from '@/lib/urls'
+import { DEMO_BOOKING_URL } from '@/lib/urls'
 
 const NAV_LINKS = [
   { href: '#capabilities', label: 'Capabilities' },
@@ -9,15 +8,9 @@ const NAV_LINKS = [
   { href: '#architecture', label: 'Architecture' },
 ]
 
-const MAILTO = `mailto:${PARTNERS_EMAIL}`
-
 export function PartnerNav() {
   const trackBook = () => {
     track({ name: 'homepage_cta_click', location: 'nav', label: 'demo', audience: 'fintechs' })
-  }
-
-  const trackEmail = () => {
-    track({ name: 'homepage_outbound_click', href: MAILTO, label: 'partners_email_nav' })
   }
 
   return (
@@ -25,7 +18,6 @@ export function PartnerNav() {
       <div className="nav__inner">
         <a href="#" className="nav__brand">
           <img src="/quidkey-logo.svg" alt="Quidkey" className="nav__brand-logo" />
-          <span className="nav__brand-tag">PARTNER PROGRAM</span>
         </a>
         <div className="nav__links">
           {NAV_LINKS.map((link) => (
@@ -35,10 +27,6 @@ export function PartnerNav() {
           ))}
         </div>
         <div className="nav__ctas">
-          <AudienceToggle source="partner_nav" />
-          <a href={MAILTO} className="btn btn--text" onClick={trackEmail}>
-            {PARTNERS_EMAIL}
-          </a>
           <a
             href={DEMO_BOOKING_URL}
             className="btn btn--ink"
