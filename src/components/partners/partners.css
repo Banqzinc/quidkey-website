@@ -17,6 +17,16 @@
 .partners-root .hero__inner { max-width: 1100px; }
 .partners-root .hero__eyebrow { margin-bottom: 24px; }
 
+/* Match the homepage's split-hero title size. The default
+   `.hp .hero__title` clamps up to 88px to fill a full-width hero — but
+   that's noticeably bigger than the merchant hero, which uses
+   `.hero--split` to shrink the title alongside the phone viz. Reuse the
+   split clamp here so both heroes feel the same weight. */
+.partners-root .hero__title {
+  font-size: clamp(36px, min(4.9vw, 7.7vh), 74px);
+  line-height: 1.04;
+}
+
 /* ─── Eyebrow (partner-unique) ────────────────────────────────────── */
 .partners-root .eyebrow {
   display: inline-flex;
