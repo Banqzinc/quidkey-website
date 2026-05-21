@@ -265,9 +265,11 @@ function TmRule() {
   )
 }
 
+type TreasuryViewEvent = 'homepage_treasury_view' | 'partners_treasury_view'
+
 export default function TreasuryMockup({
   eventName = 'homepage_treasury_view',
-}: { eventName?: string } = {}) {
+}: { eventName?: TreasuryViewEvent } = {}) {
   useEffect(() => {
     track({ name: eventName })
   }, [eventName])
