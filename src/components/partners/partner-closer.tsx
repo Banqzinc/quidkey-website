@@ -54,7 +54,6 @@ export function PartnerCloser() {
           </a>
         </div>
         <div className="closer__meta">
-          <span>SOC 2 type II</span>
           <span>US · UK · EU · AU</span>
           <span>Live in days</span>
         </div>

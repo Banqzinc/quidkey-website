@@ -3,6 +3,7 @@
 
 import { Suspense, lazy, type ReactNode } from 'react'
 
+import { HeroAudienceToggle } from '@/components/homepage/audience-toggle'
 import { useAudience, type Audience } from '@/context/audience'
 import { track } from '@/lib/track'
 import { DEMO_BOOKING_URL, MERCHANTS_LOGIN_URL, MERCHANTS_SIGNUP_URL } from '@/lib/urls'
@@ -115,6 +116,7 @@ export function HeroSection() {
       <div className="container">
         <div className={isMerchants ? 'hero__split' : ''}>
           <div className="hero__copy">
+            <HeroAudienceToggle source="hero" />
             <h1 className="hero__title">{c.title}</h1>
             <p className="hero__sub">{c.sub}</p>
             <div className="hero__ctas">

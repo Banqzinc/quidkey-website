@@ -57,16 +57,24 @@ export function AudienceToggle({ size = 'sm', variant = 'pill', source = 'nav' }
   )
 }
 
-export function HeroAudienceToggle() {
+type HeroAudienceToggleProps = {
+  source?: ToggleSource
+}
+
+export function HeroAudienceToggle({ source = 'nav' }: HeroAudienceToggleProps = {}) {
   const { audience, setAudience } = useAudience()
   const router = useRouter()
   const pathname = useRouterState({ select: (s) => s.location.pathname })
 
   const handleClick = (next: Audience) => {
-    if (next === audience) return
-    track({ name: 'homepage_audience_toggle', from: audience, to: next, source: 'hero' })
-    setAudience(next)
+    // Always navigate when the target path differs (even if `audience` already
+    // matches `next`) — landing on `/` with audience='fintechs' from a prior
+    // session would otherwise leave clicks dead.
     const target = audienceTarget(next)
+    if (next !== audience) {
+      track({ name: 'homepage_audience_toggle', from: audience, to: next, source })
+      setAudience(next)
+    }
     if (pathname !== target) {
       router.navigate({ to: target })
     }

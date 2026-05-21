@@ -2,18 +2,25 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useEffect, useRef } from 'react'
 
 import { HomepageFooter } from '@/components/layout/homepage-footer'
+import { HomepageNav } from '@/components/layout/homepage-nav'
+import { Logos } from '@/components/sections/logos'
 import { PartnerArchitecture } from '@/components/partners/partner-architecture'
 import { PartnerCapabilities } from '@/components/partners/partner-capabilities'
 import { PartnerCloser } from '@/components/partners/partner-closer'
 import { PartnerHero } from '@/components/partners/partner-hero'
-import { PartnerNav } from '@/components/partners/partner-nav'
 import { PartnerOnboarding } from '@/components/partners/partner-onboarding'
 import { PartnerUSFocus } from '@/components/partners/partner-us-focus'
 import { AudienceProvider, useAudience } from '@/context/audience'
 import { buildSeo } from '@/lib/seo'
 
-// Homepage base.css supplies the `.hp .ft__*` rules the site footer needs.
+// Share the homepage's chrome (nav, footer, typography, container, buttons,
+// pills) so /partners doesn't look like a different site. partners.css loads
+// last so its section-specific rules win at equal specificity.
 import '@/styles/homepage/base.css'
+import '@/styles/homepage/headings.css'
+import '@/styles/homepage/section-padding.css'
+import '@/styles/homepage/mobile.css'
+import '@/styles/homepage/overrides.css'
 import '@/components/partners/partners.css'
 
 export const Route = createFileRoute('/partners')({
@@ -63,19 +70,18 @@ function PartnersPageContent() {
   }, [audience, setAudience])
 
   return (
-    <div className="partners-root">
-      <PartnerNav />
+    <div className="hp partners-root">
+      <HomepageNav />
       <main id="main">
         <PartnerHero />
+        <Logos />
         <PartnerCapabilities />
         <PartnerUSFocus />
         <PartnerOnboarding />
         <PartnerArchitecture />
         <PartnerCloser />
       </main>
-      <div className="hp">
-        <HomepageFooter />
-      </div>
+      <HomepageFooter />
     </div>
   )
 }
