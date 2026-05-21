@@ -9,7 +9,7 @@ export function PartnerOnboarding() {
           <h2 className="onb__title">Two ways to onboard your merchants.</h2>
           <p className="onb__sub">
             Control everything end-to-end through the Partner API, or start with a white-labeled
-            portal. No integration required.
+            console. No integration required.
           </p>
         </div>
 
@@ -67,13 +67,13 @@ export function PartnerOnboarding() {
             <div className="onb__card-h">
               <div className="onb__card-h-l">
                 <span className="pill pill--ink">B</span>
-                <span className="onb__card-h-title">White-label portal</span>
+                <span className="onb__card-h-title">White-labeled console</span>
               </div>
               <span className="onb__card-h-meta">ZERO INTEGRATION · LIVE IN A DAY</span>
             </div>
             <div className="onb__card-body">
               <p className="onb__card-lead">
-                Your domain, your brand. We host the checkout and merchant console underneath.
+                Your domain, your brand. We host the merchant console underneath.
               </p>
 
               <div className="onb__browser">
@@ -81,74 +81,83 @@ export function PartnerOnboarding() {
                   <i />
                   <i />
                   <i />
-                  <span className="onb__browser-url">pay.yourbrand.com</span>
+                  <span className="onb__browser-url">console.yourbrand.com</span>
                 </div>
-                <div className="onb__checkout">
-                  <div className="onb__checkout-row onb__checkout-row--on">
-                    <span
-                      className="onb__checkout-radio onb__checkout-radio--on"
-                      aria-hidden="true"
-                    />
-                    <span
-                      className="onb__checkout-mark onb__checkout-mark--chase"
-                      aria-hidden="true"
-                    >
-                      C
-                    </span>
-                    <span className="onb__checkout-label">Pay with Chase</span>
-                    <span className="onb__checkout-badge">Save $4.32</span>
+                <div className="onb__console">
+                  <div className="onb__console-top">
+                    <div className="onb__console-brand">
+                      <span className="onb__console-brand-mark" aria-hidden="true" />
+                      <span className="onb__console-brand-name">your brand</span>
+                    </div>
+                    <span className="onb__console-avatar" aria-hidden="true">YB</span>
                   </div>
-                  <div className="onb__checkout-row">
-                    <span className="onb__checkout-radio" aria-hidden="true" />
-                    <span
-                      className="onb__checkout-mark onb__checkout-mark--bank"
-                      aria-hidden="true"
-                    >
+
+                  <div className="onb__console-form-head">
+                    <span className="onb__console-form-title">Onboard a merchant</span>
+                    <span className="onb__console-form-step">Step 1 of 2</span>
+                  </div>
+
+                  <div className="onb__console-form">
+                    <label className="onb__console-field">
+                      <span className="onb__console-field-label">Brand name</span>
+                      <span className="onb__console-field-input">Example Brand</span>
+                    </label>
+                    <label className="onb__console-field">
+                      <span className="onb__console-field-label">Website</span>
+                      <span className="onb__console-field-input">example-merchant.com</span>
+                    </label>
+                    <div className="onb__console-field-row">
+                      <label className="onb__console-field">
+                        <span className="onb__console-field-label">MCC</span>
+                        <span className="onb__console-field-input">4816</span>
+                      </label>
+                      <label className="onb__console-field">
+                        <span className="onb__console-field-label">Country</span>
+                        <span className="onb__console-field-input onb__console-field-input--select">
+                          AU
+                          <svg
+                            viewBox="0 0 16 16"
+                            width="12"
+                            height="12"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="1.6"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            aria-hidden="true"
+                          >
+                            <path d="M4 6l4 4 4-4" />
+                          </svg>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="onb__console-cta">
+                    <span className="onb__console-cta-btn">
+                      Create merchant
                       <svg
                         viewBox="0 0 16 16"
-                        width="14"
-                        height="14"
+                        width="13"
+                        height="13"
                         fill="none"
                         stroke="currentColor"
-                        strokeWidth="1.4"
+                        strokeWidth="1.8"
                         strokeLinecap="round"
                         strokeLinejoin="round"
+                        aria-hidden="true"
                       >
-                        <path d="M2 6.5 L8 2.5 L14 6.5" />
-                        <path d="M3.2 7v5" />
-                        <path d="M6.6 7v5" />
-                        <path d="M9.4 7v5" />
-                        <path d="M12.8 7v5" />
-                        <path d="M2 13h12" />
+                        <path d="M3.5 8h9" />
+                        <path d="M8.5 4l4 4-4 4" />
                       </svg>
                     </span>
-                    <span className="onb__checkout-label">Select bank</span>
-                    <span className="onb__checkout-chips" aria-hidden="true">
-                      <span className="onb__checkout-chip onb__checkout-chip--a">B</span>
-                      <span className="onb__checkout-chip onb__checkout-chip--b">W</span>
-                      <span className="onb__checkout-chip onb__checkout-chip--c">C</span>
-                      <span className="onb__checkout-chip onb__checkout-chip--plus">+</span>
-                    </span>
-                    <svg
-                      className="onb__checkout-chev"
-                      viewBox="0 0 16 16"
-                      width="14"
-                      height="14"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.6"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M4 6l4 4 4-4" />
-                    </svg>
                   </div>
                 </div>
               </div>
 
               <ul className="onb__card-bullets">
                 <li>Your domain · logo · colors</li>
-                <li>Branded checkout + merchant console</li>
+                <li>Branded merchant console</li>
                 <li>Live in a day, no integration</li>
               </ul>
             </div>
