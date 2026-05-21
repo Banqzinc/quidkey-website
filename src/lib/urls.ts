@@ -9,6 +9,10 @@ export const DEMO_BOOKING_URL = 'https://cal.com/quidkey/demo'
 /** Contact */
 export const CONTACT_EMAIL = 'support@quidkey.com'
 export const PRESS_EMAIL = 'jenny@quidkey.com'
+export const PARTNERS_EMAIL = 'partners@quidkey.com'
+
+/** Internal route paths used by navigation primitives. */
+export const PARTNERS_PATH = '/partners'
 
 /** Email mailto helpers */
 export const buildMailto = (subject: string, email = CONTACT_EMAIL) =>

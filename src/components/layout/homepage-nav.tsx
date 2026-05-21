@@ -1,14 +1,23 @@
-import { Link } from '@tanstack/react-router'
+import { Link, useRouterState } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 
 import { useAudience } from '@/context/audience'
 import { track } from '@/lib/track'
-import { MERCHANTS_LOGIN_URL, MERCHANTS_SIGNUP_URL } from '@/lib/urls'
+import { DEMO_BOOKING_URL, MERCHANTS_LOGIN_URL, MERCHANTS_SIGNUP_URL } from '@/lib/urls'
 
 const DEVELOPERS_URL = 'https://quidkey.dev'
 
+const PARTNER_LINKS = [
+  { href: '#capabilities', label: 'Capabilities' },
+  { href: '#us', label: 'US focus' },
+  { href: '#onboarding', label: 'Onboarding' },
+  { href: '#architecture', label: 'Architecture' },
+] as const
+
 export function HomepageNav() {
   const { audience } = useAudience()
+  const path = useRouterState({ select: (s) => s.location.pathname })
+  const isPartners = path.startsWith('/partners')
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
 
@@ -54,6 +63,9 @@ export function HomepageNav() {
   const trackDevelopers = () => {
     track({ name: 'homepage_outbound_click', href: DEVELOPERS_URL, label: 'developers_nav' })
   }
+  const trackBook = () => {
+    track({ name: 'homepage_cta_click', location: 'nav', label: 'demo', audience: 'fintechs' })
+  }
 
   return (
     <nav className={`nav ${scrolled ? 'is-scrolled' : ''} ${mobileOpen ? 'nav--menu-open' : ''}`}>
@@ -63,52 +75,76 @@ export function HomepageNav() {
         </Link>
         <div className="nav__right">
           <div className="nav__links">
-            <Link to="/" hash="why">Why Quidkey</Link>
-            <Link to="/" hash="integrations">Integrations</Link>
-            <Link to="/" hash="pricing">Pricing</Link>
-            <Link to="/" hash="treasury">Treasury</Link>
-            <a
-              href={DEVELOPERS_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="nav__link-ext"
-              onClick={trackDevelopers}
-            >
-              Developers
-              <svg
-                className="nav__link-ext-icon"
-                viewBox="0 0 10 10"
-                width="9"
-                height="9"
-                aria-hidden="true"
-              >
-                <path
-                  d="M2.5 2.5h5v5M7.5 2.5l-5 5"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.4"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </a>
-            <Link to="/blog">Blog</Link>
+            {isPartners ? (
+              PARTNER_LINKS.map((link) => (
+                <a key={link.href} href={link.href}>
+                  {link.label}
+                </a>
+              ))
+            ) : (
+              <>
+                <Link to="/" hash="why">Why Quidkey</Link>
+                <Link to="/" hash="integrations">Integrations</Link>
+                <Link to="/" hash="pricing">Pricing</Link>
+                <Link to="/" hash="treasury">Treasury</Link>
+                <a
+                  href={DEVELOPERS_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="nav__link-ext"
+                  onClick={trackDevelopers}
+                >
+                  Developers
+                  <svg
+                    className="nav__link-ext-icon"
+                    viewBox="0 0 10 10"
+                    width="9"
+                    height="9"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M2.5 2.5h5v5M7.5 2.5l-5 5"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.4"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </a>
+                <Link to="/blog">Blog</Link>
+              </>
+            )}
           </div>
           <div className="nav__ctas">
-            <a
-              href={MERCHANTS_LOGIN_URL}
-              className="btn btn--text nav__signin-desktop"
-              onClick={trackSignIn}
-              aria-label="Sign in to merchant dashboard"
-            >
-              Sign in
-            </a>
-            <a
-              href={MERCHANTS_SIGNUP_URL}
-              className="btn btn--ink btn--pill nav__cta-primary"
-              onClick={trackGetStarted}
-            >
-              Get started
-            </a>
+            {isPartners ? (
+              <a
+                href={DEMO_BOOKING_URL}
+                className="btn btn--ink btn--pill nav__cta-primary"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={trackBook}
+              >
+                Book a call
+              </a>
+            ) : (
+              <>
+                <a
+                  href={MERCHANTS_LOGIN_URL}
+                  className="btn btn--text nav__signin-desktop"
+                  onClick={trackSignIn}
+                  aria-label="Sign in to merchant dashboard"
+                >
+                  Sign in
+                </a>
+                <a
+                  href={MERCHANTS_SIGNUP_URL}
+                  className="btn btn--ink btn--pill nav__cta-primary"
+                  onClick={trackGetStarted}
+                >
+                  Get started
+                </a>
+              </>
+            )}
             <button
               type="button"
               className="nav__burger"
@@ -134,70 +170,98 @@ export function HomepageNav() {
       >
         <div className="nav__mobile-inner">
           <div className="nav__mobile-links">
-            <Link to="/" hash="why" onClick={closeMenu}>
-              Why Quidkey
-            </Link>
-            <Link to="/" hash="integrations" onClick={closeMenu}>
-              Integrations
-            </Link>
-            <Link to="/" hash="pricing" onClick={closeMenu}>
-              Pricing
-            </Link>
-            <Link to="/" hash="treasury" onClick={closeMenu}>
-              Treasury
-            </Link>
-            <a
-              href={DEVELOPERS_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => {
-                trackDevelopers()
-                closeMenu()
-              }}
-            >
-              Developers
-              <svg
-                viewBox="0 0 10 10"
-                width="11"
-                height="11"
-                aria-hidden="true"
-                style={{ marginLeft: 6, opacity: 0.55 }}
-              >
-                <path
-                  d="M2.5 2.5h5v5M7.5 2.5l-5 5"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.4"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </a>
-            <Link to="/blog" onClick={closeMenu}>
-              Blog
-            </Link>
+            {isPartners ? (
+              PARTNER_LINKS.map((link) => (
+                <a key={link.href} href={link.href} onClick={closeMenu}>
+                  {link.label}
+                </a>
+              ))
+            ) : (
+              <>
+                <Link to="/" hash="why" onClick={closeMenu}>
+                  Why Quidkey
+                </Link>
+                <Link to="/" hash="integrations" onClick={closeMenu}>
+                  Integrations
+                </Link>
+                <Link to="/" hash="pricing" onClick={closeMenu}>
+                  Pricing
+                </Link>
+                <Link to="/" hash="treasury" onClick={closeMenu}>
+                  Treasury
+                </Link>
+                <a
+                  href={DEVELOPERS_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => {
+                    trackDevelopers()
+                    closeMenu()
+                  }}
+                >
+                  Developers
+                  <svg
+                    viewBox="0 0 10 10"
+                    width="11"
+                    height="11"
+                    aria-hidden="true"
+                    style={{ marginLeft: 6, opacity: 0.55 }}
+                  >
+                    <path
+                      d="M2.5 2.5h5v5M7.5 2.5l-5 5"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.4"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </a>
+                <Link to="/blog" onClick={closeMenu}>
+                  Blog
+                </Link>
+              </>
+            )}
           </div>
           <div className="nav__mobile-ctas">
-            <a
-              href={MERCHANTS_LOGIN_URL}
-              className="btn btn--ghost btn--pill"
-              onClick={() => {
-                trackSignIn()
-                closeMenu()
-              }}
-              aria-label="Sign in to merchant dashboard"
-            >
-              Sign in
-            </a>
-            <a
-              href={MERCHANTS_SIGNUP_URL}
-              className="btn btn--ink btn--pill"
-              onClick={() => {
-                trackGetStarted()
-                closeMenu()
-              }}
-            >
-              Get started
-            </a>
+            {isPartners ? (
+              <a
+                href={DEMO_BOOKING_URL}
+                className="btn btn--ink btn--pill"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => {
+                  trackBook()
+                  closeMenu()
+                }}
+                style={{ gridColumn: '1 / -1' }}
+              >
+                Book a call
+              </a>
+            ) : (
+              <>
+                <a
+                  href={MERCHANTS_LOGIN_URL}
+                  className="btn btn--ghost btn--pill"
+                  onClick={() => {
+                    trackSignIn()
+                    closeMenu()
+                  }}
+                  aria-label="Sign in to merchant dashboard"
+                >
+                  Sign in
+                </a>
+                <a
+                  href={MERCHANTS_SIGNUP_URL}
+                  className="btn btn--ink btn--pill"
+                  onClick={() => {
+                    trackGetStarted()
+                    closeMenu()
+                  }}
+                >
+                  Get started
+                </a>
+              </>
+            )}
           </div>
         </div>
       </div>

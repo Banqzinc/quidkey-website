@@ -11,7 +11,7 @@ declare global {
   }
 }
 
-export type CtaLabel = 'get_started' | 'sign_in' | 'demo' | 'docs' | 'developers' | 'contact'
+export type CtaLabel = 'get_started' | 'sign_in' | 'demo' | 'docs' | 'developers' | 'contact' | 'anchor'
 export type CtaLocation = 'nav' | 'hero' | 'closer' | 'pricing' | 'footer'
 export type FlowKind = 'merchant' | 'fintech'
 export type ToggleSource = 'nav' | 'hero'

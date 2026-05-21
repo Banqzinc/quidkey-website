@@ -1,11 +1,11 @@
-// Homepage Hero. Audience-aware copy + CTAs + the interactive merchant
-// payment-flow demo (or a fintech placeholder, see below).
+// Homepage Hero — merchants only. Fintechs land on /partners via the
+// audience toggle, so this page no longer renders a fintech variant.
 
-import { Suspense, lazy, type ReactNode } from 'react'
+import { Suspense, lazy } from 'react'
 
-import { useAudience, type Audience } from '@/context/audience'
+import { HeroAudienceToggle } from '@/components/homepage/audience-toggle'
 import { track } from '@/lib/track'
-import { DEMO_BOOKING_URL, MERCHANTS_LOGIN_URL, MERCHANTS_SIGNUP_URL } from '@/lib/urls'
+import { DEMO_BOOKING_URL, MERCHANTS_SIGNUP_URL } from '@/lib/urls'
 
 // Lazy-imported so the hero's HTML/text content paints first; the
 // interactive demo (~600 lines + multiple inline SVGs) hydrates a beat
@@ -13,48 +13,6 @@ import { DEMO_BOOKING_URL, MERCHANTS_LOGIN_URL, MERCHANTS_SIGNUP_URL } from '@/l
 const MerchantHeroViz = lazy(() =>
   import('@/components/homepage/merchant-hero-viz').then((m) => ({ default: m.MerchantHeroViz }))
 )
-
-type HeroCta = {
-  label: string
-  href: string
-  cta: 'get_started' | 'demo' | 'docs'
-  /** Open in a new tab. Used for off-site CTAs like demo booking. */
-  external?: boolean
-}
-
-type HeroCopy = {
-  eyebrow: string
-  title: ReactNode
-  sub: string
-  primary: HeroCta
-  secondary: HeroCta
-}
-
-const HERO_COPY: Record<Audience, HeroCopy> = {
-  merchants: {
-    eyebrow: 'For merchants',
-    title: (
-      <>
-        Increase checkout conversion. <em>Lower payment fees.</em>
-      </>
-    ),
-    sub:
-      'Quidkey adds Pay by Bank to your checkout so customers can pay directly from their bank account, globally',
-    primary: { label: 'Add Pay by Bank to your checkout', href: MERCHANTS_SIGNUP_URL, cta: 'get_started' },
-    secondary: { label: 'Book a demo', href: DEMO_BOOKING_URL, cta: 'demo', external: true },
-  },
-  fintechs: {
-    eyebrow: 'For fintechs',
-    title: (
-      <>
-        Pay by Bank, <em>under your brand.</em>
-      </>
-    ),
-    sub: 'White-label rails, accounts and treasury. Live in days.',
-    primary: { label: 'Become a partner', href: MERCHANTS_LOGIN_URL, cta: 'get_started' },
-    secondary: { label: 'Read partner docs', href: '#', cta: 'docs' },
-  },
-}
 
 const RocketArrow = (
   <span className="btn__arrow" aria-hidden="true">
@@ -85,64 +43,50 @@ function HeroVizSkeleton() {
   )
 }
 
-function FintechHeroPlaceholder() {
-  return (
-    <div className="hero__viz-placeholder" aria-hidden="true">
-      <div className="hero__viz-placeholder-card">
-        <span className="hero__viz-placeholder-eyebrow">Fintech flow</span>
-        <span className="hero__viz-placeholder-body">
-          Interactive demo lands in a follow-up commit.
-        </span>
-      </div>
-    </div>
-  )
-}
-
 export function HeroSection() {
-  const { audience } = useAudience()
-  const c = HERO_COPY[audience]
-  const isMerchants = audience === 'merchants'
-
   const trackPrimary = () => {
-    track({ name: 'homepage_cta_click', location: 'hero', label: c.primary.cta, audience })
+    track({ name: 'homepage_cta_click', location: 'hero', label: 'get_started', audience: 'merchants' })
   }
   const trackSecondary = () => {
-    track({ name: 'homepage_cta_click', location: 'hero', label: c.secondary.cta, audience })
+    track({ name: 'homepage_cta_click', location: 'hero', label: 'demo', audience: 'merchants' })
   }
 
   return (
-    <section className={`hero ${isMerchants ? 'hero--split' : ''}`}>
+    <section className="hero hero--split">
       <div className="container">
-        <div className={isMerchants ? 'hero__split' : ''}>
+        <div className="hero__split">
           <div className="hero__copy">
-            <h1 className="hero__title">{c.title}</h1>
-            <p className="hero__sub">{c.sub}</p>
+            <HeroAudienceToggle source="hero" />
+            <h1 className="hero__title">
+              Increase checkout conversion. <em>Lower payment fees.</em>
+            </h1>
+            <p className="hero__sub">
+              Quidkey adds Pay by Bank to your checkout so customers can pay directly from their
+              bank account, globally
+            </p>
             <div className="hero__ctas">
               <a
-                href={c.primary.href}
+                href={MERCHANTS_SIGNUP_URL}
                 className="btn btn--xl btn--ink"
                 onClick={trackPrimary}
-                {...(c.primary.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
               >
-                {c.primary.label}
+                Add Pay by Bank to your checkout
                 {RocketArrow}
               </a>
               <a
-                href={c.secondary.href}
+                href={DEMO_BOOKING_URL}
                 className="btn btn--xl btn--ghost"
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={trackSecondary}
-                {...(c.secondary.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
               >
-                {c.secondary.label}
+                Book a demo
               </a>
             </div>
-            {!isMerchants && <FintechHeroPlaceholder />}
           </div>
-          {isMerchants && (
-            <Suspense fallback={<HeroVizSkeleton />}>
-              <MerchantHeroViz />
-            </Suspense>
-          )}
+          <Suspense fallback={<HeroVizSkeleton />}>
+            <MerchantHeroViz />
+          </Suspense>
         </div>
       </div>
     </section>
