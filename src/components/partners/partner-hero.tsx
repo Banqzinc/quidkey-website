@@ -5,7 +5,7 @@ import { DEMO_BOOKING_URL } from '@/lib/urls'
 const PROOF = [
   { strong: 'White-labeled', rest: 'under your brand' },
   { strong: 'US, UK, EU, AU', rest: 'market access' },
-  { strong: 'API first', rest: ', portal optional' },
+  { strong: 'API first,', rest: 'portal optional' },
   { strong: 'SOC 2 Type II', rest: 'audited' },
 ]
 

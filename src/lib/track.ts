@@ -24,6 +24,7 @@ export type HomepageEvent =
   | { name: 'homepage_faq_open'; question: string }
   | { name: 'homepage_pricing_cta_click'; tier: string; audience: Audience }
   | { name: 'homepage_treasury_view' }
+  | { name: 'partners_treasury_view' }
   | { name: 'homepage_newsletter_submit'; outcome: 'success' | 'error'; reason?: string }
   | { name: 'homepage_outbound_click'; href: string; label: string }
   | { name: 'article_share_click'; slug: string; channel: ShareChannel }

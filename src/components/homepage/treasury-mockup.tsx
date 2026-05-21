@@ -265,10 +265,14 @@ function TmRule() {
   )
 }
 
-export default function TreasuryMockup() {
+type TreasuryViewEvent = 'homepage_treasury_view' | 'partners_treasury_view'
+
+export default function TreasuryMockup({
+  eventName = 'homepage_treasury_view',
+}: { eventName?: TreasuryViewEvent } = {}) {
   useEffect(() => {
-    track({ name: 'homepage_treasury_view' })
-  }, [])
+    track({ name: eventName })
+  }, [eventName])
 
   const total = '£491,269.55'
   return (
