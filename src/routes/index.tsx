@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { useEffect, useRef } from 'react'
 
-import { AudienceProvider } from '@/context/audience'
+import { AudienceProvider, useAudience } from '@/context/audience'
 import { HomepageNav } from '@/components/layout/homepage-nav'
 import { HomepageFooter } from '@/components/layout/homepage-footer'
 import { HeroSection } from '@/components/sections/hero'
@@ -55,22 +56,49 @@ export const Route = createFileRoute('/')({
 function HomePage() {
   return (
     <AudienceProvider>
-      <div className="hp">
-        <HomepageNav />
-        <main id="main">
-          <HeroSection />
-          <Logos />
-          <WhatIsPayByBank />
-          <WhyQuidkey />
-          <CrossBorderProof />
-          <Developer />
-          <PricingSection />
-          <Products />
-          <Faq />
-          <Closer />
-        </main>
-        <HomepageFooter />
-      </div>
+      <HomePageContent />
     </AudienceProvider>
+  )
+}
+
+function HomePageContent() {
+  const { audience, setAudience } = useAudience()
+  // Claim 'merchants' once after localStorage has hydrated. We can't read
+  // the value synchronously on mount because AudienceProvider's hydration
+  // effect runs *after* the first render — so a ref-guarded same-tick check
+  // would lock in before the real audience arrives. Deferring via
+  // setTimeout(0) yields one event-loop tick, by which point any stored
+  // 'fintechs' has been applied and we can correct it. We read through a
+  // ref so the deferred callback sees the latest audience, not the stale
+  // closure value from mount.
+  const audienceRef = useRef(audience)
+  audienceRef.current = audience
+
+  useEffect(() => {
+    const t = setTimeout(() => {
+      if (audienceRef.current !== 'merchants') {
+        setAudience('merchants')
+      }
+    }, 0)
+    return () => clearTimeout(t)
+  }, [setAudience])
+
+  return (
+    <div className="hp">
+      <HomepageNav />
+      <main id="main">
+        <HeroSection />
+        <Logos />
+        <WhatIsPayByBank />
+        <WhyQuidkey />
+        <CrossBorderProof />
+        <Developer />
+        <PricingSection />
+        <Products />
+        <Faq />
+        <Closer />
+      </main>
+      <HomepageFooter />
+    </div>
   )
 }
