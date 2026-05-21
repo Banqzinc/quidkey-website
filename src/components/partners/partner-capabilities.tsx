@@ -31,9 +31,9 @@ const CARDS = [
   },
   {
     num: '06',
-    title: 'Merchant console & ledger',
-    desc: 'Tools to send payment links, manage accounts, view transactions, and handle FX, splits, refunds, payouts, and reconciliation.',
-    tags: ['Ledger', 'FX', 'Splits', 'Recon'],
+    title: 'Audit-ready ledger',
+    desc: 'Event log, reconciliation, and webhook stream for every move the console makes. Wire into your accounting, dispute, or risk stack.',
+    tags: ['Event log', 'Recon', 'Webhooks'],
   },
 ]
 
