@@ -19,13 +19,13 @@ export function PartnerTreasury() {
       <div className="container">
         <div className="ptreasury__head">
           <span className="eyebrow">
-            <span className="eyebrow__dot" /> PARTNER OFFERING · MERCHANT CONSOLE
+            <span className="eyebrow__dot" /> TREASURY INFRASTRUCTURE · POST PAYMENT WORKFLOWS
           </span>
-          <h2 className="ptreasury__title">The console behind your brand.</h2>
+          <h2 className="ptreasury__title">The treasury layer behind your payments offering.</h2>
           <p className="ptreasury__sub">
-            Merchants connect Stripe, Shopify, and bank feeds. You ship the
-            post-payment surface without building it: splits, FX, reserves,
-            payouts.
+            Give your merchants one place to manage money after payment, across Shop Pay, Amazon,
+            card settlements, and Pay by Bank. Automate tax reserves, FX, payouts, and other
+            workflows.
           </p>
         </div>
         <div className="ptreasury__mockup-wrap">
