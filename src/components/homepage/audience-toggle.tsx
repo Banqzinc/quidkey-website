@@ -1,24 +1,37 @@
+import { useRouter, useRouterState } from '@tanstack/react-router'
+
 import { useAudience, type Audience } from '@/context/audience'
-import { track } from '@/lib/track'
+import { track, type ToggleSource } from '@/lib/track'
+import { PARTNERS_PATH } from '@/lib/urls'
 
 const AUDIENCES: Array<{ id: Audience; label: string }> = [
   { id: 'merchants', label: 'Merchants' },
   { id: 'fintechs', label: 'Fintechs' },
 ]
 
+function audienceTarget(next: Audience): string {
+  return next === 'fintechs' ? PARTNERS_PATH : '/'
+}
+
 type AudienceToggleProps = {
   size?: 'sm' | 'md' | 'lg' | 'dark'
   variant?: 'pill' | 'box'
-  source?: 'nav' | 'hero'
+  source?: ToggleSource
 }
 
 export function AudienceToggle({ size = 'sm', variant = 'pill', source = 'nav' }: AudienceToggleProps) {
   const { audience, setAudience } = useAudience()
+  const router = useRouter()
+  const pathname = useRouterState({ select: (s) => s.location.pathname })
 
   const handleClick = (next: Audience) => {
     if (next === audience) return
     track({ name: 'homepage_audience_toggle', from: audience, to: next, source })
     setAudience(next)
+    const target = audienceTarget(next)
+    if (pathname !== target) {
+      router.navigate({ to: target })
+    }
   }
 
   return (
@@ -46,11 +59,17 @@ export function AudienceToggle({ size = 'sm', variant = 'pill', source = 'nav' }
 
 export function HeroAudienceToggle() {
   const { audience, setAudience } = useAudience()
+  const router = useRouter()
+  const pathname = useRouterState({ select: (s) => s.location.pathname })
 
   const handleClick = (next: Audience) => {
     if (next === audience) return
     track({ name: 'homepage_audience_toggle', from: audience, to: next, source: 'hero' })
     setAudience(next)
+    const target = audienceTarget(next)
+    if (pathname !== target) {
+      router.navigate({ to: target })
+    }
   }
 
   return (

@@ -315,13 +315,13 @@
 
 [[redirects]]
   from = "/solutions/fintechs"
-  to = "/"
+  to = "/partners"
   status = 301
   force = true
 
 [[redirects]]
   from = "/solutions/fintechs/"
-  to = "/"
+  to = "/partners"
   status = 301
   force = true
 
