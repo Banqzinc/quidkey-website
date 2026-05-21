@@ -1,10 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useEffect, useRef } from 'react'
 
+import { HomepageFooter } from '@/components/layout/homepage-footer'
 import { PartnerArchitecture } from '@/components/partners/partner-architecture'
 import { PartnerCapabilities } from '@/components/partners/partner-capabilities'
 import { PartnerCloser } from '@/components/partners/partner-closer'
-import { PartnerFooter } from '@/components/partners/partner-footer'
 import { PartnerHero } from '@/components/partners/partner-hero'
 import { PartnerNav } from '@/components/partners/partner-nav'
 import { PartnerOnboarding } from '@/components/partners/partner-onboarding'
@@ -12,6 +12,8 @@ import { PartnerUSFocus } from '@/components/partners/partner-us-focus'
 import { AudienceProvider, useAudience } from '@/context/audience'
 import { buildSeo } from '@/lib/seo'
 
+// Homepage base.css supplies the `.hp .ft__*` rules the site footer needs.
+import '@/styles/homepage/base.css'
 import '@/components/partners/partners.css'
 
 export const Route = createFileRoute('/partners')({
@@ -71,7 +73,9 @@ function PartnersPageContent() {
         <PartnerArchitecture />
         <PartnerCloser />
       </main>
-      <PartnerFooter />
+      <div className="hp">
+        <HomepageFooter />
+      </div>
     </div>
   )
 }
