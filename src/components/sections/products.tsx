@@ -9,6 +9,7 @@ import { Link } from '@tanstack/react-router'
 import { Suspense, lazy, type ReactNode } from 'react'
 
 import { VizFor } from '@/components/homepage/product-minis'
+import { TreasuryMockupSkeleton } from '@/components/homepage/treasury-mockup-skeleton'
 import { useAudience, type Audience } from '@/context/audience'
 
 const TreasuryMockup = lazy(() => import('@/components/homepage/treasury-mockup'))
@@ -128,22 +129,6 @@ const PRODUCT_COPY: Record<Audience, ProductCopy> = {
       },
     ],
   },
-}
-
-function TreasuryMockupSkeleton() {
-  return (
-    <div className="tm2 tm2--loading" aria-busy="true">
-      <div className="tm2__chrome">
-        <div className="tm2__chrome-l">
-          <span className="tm2__chrome-dot" />
-          <span className="tm2__chrome-dot" />
-          <span className="tm2__chrome-dot" />
-        </div>
-        <div className="tm2__chrome-path">treasury · acme studios</div>
-      </div>
-      <div className="tm2__body" />
-    </div>
-  )
 }
 
 export function Products() {
