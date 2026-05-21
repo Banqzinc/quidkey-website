@@ -9,6 +9,7 @@ import { PartnerCapabilities } from '@/components/partners/partner-capabilities'
 import { PartnerCloser } from '@/components/partners/partner-closer'
 import { PartnerHero } from '@/components/partners/partner-hero'
 import { PartnerOnboarding } from '@/components/partners/partner-onboarding'
+import { PartnerTreasury } from '@/components/partners/partner-treasury'
 import { PartnerUSFocus } from '@/components/partners/partner-us-focus'
 import { AudienceProvider, useAudience } from '@/context/audience'
 import { buildSeo } from '@/lib/seo'
@@ -77,6 +78,7 @@ function PartnersPageContent() {
         <Logos />
         <PartnerCapabilities />
         <PartnerUSFocus />
+        <PartnerTreasury />
         <PartnerOnboarding />
         <PartnerArchitecture />
         <PartnerCloser />
