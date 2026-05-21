@@ -284,6 +284,50 @@
   border-top: 1px solid rgba(255,255,255,0.12);
 }
 
+/* ─── Partner Treasury (merchant console mockup) ─────────────────
+   Lives between US focus (dark) and Onboarding (white). Reuses the
+   homepage `.tm2` mockup component verbatim — only the surrounding
+   section chrome is partner-specific. */
+.partners-root .ptreasury {
+  padding: 88px 0;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+.partners-root .ptreasury__head {
+  max-width: 700px;
+  margin-bottom: 48px;
+}
+.partners-root .ptreasury__title {
+  font-size: clamp(36px, 4.5vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+  margin: 12px 0;
+  max-width: 22ch;
+  text-wrap: balance;
+}
+.partners-root .ptreasury__sub {
+  font-size: 19px;
+  line-height: 1.55;
+  color: var(--muted);
+  margin: 0;
+  max-width: 60ch;
+  text-wrap: pretty;
+}
+@media (max-width: 899px) {
+  .partners-root .ptreasury__title {
+    font-size: clamp(28px, 7.6vw, 40px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    max-width: 100%;
+  }
+  .partners-root .ptreasury__sub { font-size: 16.5px; max-width: 100%; }
+}
+.partners-root .ptreasury__mockup-wrap {
+  border-radius: 18px;
+  overflow: hidden;
+}
+
 /* ─── Onboarding two-up (API vs Portal) ──────────────────────────── */
 .partners-root .onb {
   padding: 88px 0;
@@ -724,6 +768,7 @@
 /* ─── Print ──────────────────────────────────────────────────────── */
 @media print {
   .partners-root .feat,
+  .partners-root .ptreasury,
   .partners-root .onb,
   .partners-root .arch,
   .partners-root .closer,
