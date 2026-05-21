@@ -1,28 +1,28 @@
 const POINTS = [
   {
     num: '01',
-    title: 'White-labeled US Pay by Bank',
-    body: 'Your brand at checkout. ACH and instant Pay by Bank under the hood.',
+    title: 'White labelled US Pay by Bank',
+    body: 'Offer Pay by Bank to your merchants under your brand.',
   },
   {
     num: '02',
-    title: 'Real-time risk on every payment',
-    body: 'Sub-second risk decision at the moment of authorization. Only low-risk payers admitted. Chargeback exposure cut across the 60-day ACH window.',
+    title: 'Risk checked before every payment',
+    body: 'Only approved, low risk payers are allowed through.',
   },
   {
     num: '03',
-    title: 'One-click after the first payment',
-    body: 'Second payment onwards is one click. No bank app, no redirect. Just a 2FA code. Customers stay inside checkout.',
+    title: 'One click repeat payments',
+    body: 'Returning customers pay faster with a simple verification step.',
   },
   {
     num: '04',
-    title: 'For US and non-US merchants',
-    body: 'US merchants get local USD collection, settlement, and refund accounts. Eligible non-US merchants collect from US customers with no US legal entity, UBOs, or filing required.',
+    title: 'Built for US and non US merchants',
+    body: 'Merchants can collect from US customers without needing a US entity.',
   },
   {
     num: '05',
-    title: 'US local account access',
-    body: 'Local USD accounts for collection, settlement, refunds, and payouts. ACH return handling included.',
+    title: 'Local USD accounts included',
+    body: 'Collection, settlement, refunds, and payouts handled through local USD accounts.',
   },
 ]
 
@@ -47,12 +47,13 @@ export function PartnerUSFocus() {
             <span className="eyebrow__dot" /> US PAY BY BANK · DEDICATED FOCUS
           </span>
           <h2 className="us__title">
-            Built around the US. For US and <em>non-US merchants.</em>
+            Help your merchants sell into the US.<br />
+            <em>Without the US setup.</em>
           </h2>
           <p className="us__lead">
-            Most partner questions are about the US, the world&rsquo;s biggest market. We get
-            eligible merchants live there in weeks, with no US entity or money transmitter license
-            required.
+            Give your merchants access to US Pay by Bank, USD collection accounts, settlement,
+            refunds, and risk controls. Fast to launch, white labelled, and no US entity or money
+            transmitter license required.
           </p>
         </div>
 
@@ -73,7 +74,7 @@ export function PartnerUSFocus() {
 
           <aside className="us__card">
             <div className="us__card-h">
-              <span className="us__card-h-lbl">Eligibility · Non-US merchant</span>
+              <span className="us__card-h-lbl">US Access · For US and Non US Merchants</span>
               <span className="pill pill--green">
                 <span className="eyebrow__dot" style={{ background: '#10B981' }} />
                 Supported
