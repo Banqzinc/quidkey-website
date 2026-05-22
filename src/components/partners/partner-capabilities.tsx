@@ -1,72 +1,59 @@
-const CARDS = [
+import { Flag, Globe, ShoppingBag, Wallet } from 'lucide-react'
+import type { ReactNode } from 'react'
+
+type Card = {
+  icon: ReactNode
+  title: string
+  desc: string
+}
+
+const CARDS: Card[] = [
   {
-    num: '01',
+    icon: <ShoppingBag size={38} strokeWidth={1.5} aria-hidden="true" />,
     title: 'Shopify access',
-    desc: 'Offer your merchants a white-labeled Shopify payment app for Pay by Bank at checkout.',
-    tags: ['Shopify', 'Checkout app', 'White-label'],
+    desc: 'Offer your merchants a white-labeled Shopify payment app for Pay by Bank at checkout — a channel Shopify Payments locks others out of.',
   },
   {
-    num: '02',
+    icon: <Wallet size={38} strokeWidth={1.5} aria-hidden="true" />,
     title: 'Settlement & refund accounts',
-    desc: 'Give merchants access to local collection, settlement, and refund accounts in the US, UK, EU, and AU.',
-    tags: ['USD', 'GBP', 'EUR', 'AUD'],
+    desc: 'Give merchants local collection, settlement, and refund accounts in the US, UK, EU, and AU.',
   },
   {
-    num: '03',
+    icon: <Globe size={38} strokeWidth={1.5} aria-hidden="true" />,
     title: 'Extended Pay by Bank coverage',
     desc: 'Use your own rails where you have coverage. Use Quidkey, white-labeled, in the markets you do not support yet.',
-    tags: ['Coverage', 'White-label', 'Failover'],
   },
   {
-    num: '04',
+    icon: <Flag size={38} strokeWidth={1.5} aria-hidden="true" />,
     title: 'US Pay by Bank for non-US merchants',
     desc: 'Help eligible non-US merchants collect from US customers with Pay by Bank and local US accounts. No US legal entity or US UBOs required.',
-    tags: ['US', 'No US entity', 'No US UBO'],
-  },
-  {
-    num: '05',
-    title: 'Partner API or zero-integration portal',
-    desc: 'Use our Partner API to keep the full flow inside your product, or start with a white-labeled portal that requires no integration.',
-    tags: ['API', 'Portal', 'Webhooks'],
-  },
-  {
-    num: '06',
-    title: 'Audit-ready ledger',
-    desc: 'Event log, reconciliation, and webhook stream for every move the console makes. Wire into your accounting, dispute, or risk stack.',
-    tags: ['Event log', 'Recon', 'Webhooks'],
   },
 ]
 
 export function PartnerCapabilities() {
   return (
-    <section className="feat" id="capabilities">
+    <section className="section why" id="capabilities">
       <div className="container">
-        <div className="feat__head">
-          <div>
-            <span className="eyebrow">
-              <span className="eyebrow__dot" /> PARTNER OFFERING
-            </span>
-            <h2 className="feat__title">Pick what your stack is missing.</h2>
-          </div>
-          <p className="feat__sub">
-            Six building blocks. Take one or all six, white-labeled under your brand.
+        <div className="why__head">
+          <span className="section__eyebrow why__eyebrow">
+            <span className="section__eyebrow-dot" aria-hidden="true" />
+            Partner offering
+          </span>
+          <h2 className="why__h">Pick what your stack is missing.</h2>
+          <p className="why__lede">
+            Four building blocks. Take one or all four, white-labeled under your brand.
           </p>
         </div>
 
-        <div className="feat__grid">
+        <div className="why__grid why__grid--three why__grid--four" role="list">
           {CARDS.map((card) => (
-            <article key={card.num} className="feat__card">
-              <span className="feat__card-num">{card.num}</span>
-              <h3 className="feat__card-title">{card.title}</h3>
-              <p className="feat__card-desc">{card.desc}</p>
-              <ul className="feat__card-tags">
-                {card.tags.map((tag) => (
-                  <li key={tag} className="feat__card-tag">
-                    {tag}
-                  </li>
-                ))}
-              </ul>
-            </article>
+            <div key={card.title} className="why__cardx" role="listitem">
+              <span className="why__cardx-icon" aria-hidden="true">
+                {card.icon}
+              </span>
+              <h3 className="why__cardx-t">{card.title}</h3>
+              <p className="why__cardx-b">{card.desc}</p>
+            </div>
           ))}
         </div>
       </div>

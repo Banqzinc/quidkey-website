@@ -48,104 +48,12 @@
 .partners-root .eyebrow .eyebrow__dot { display: none; }
 .partners-root .eyebrow--ink { color: var(--ink); }
 
-/* ─── Capabilities feature grid ──────────────────────────────────── */
-.partners-root .feat {
-  padding: 88px 0;
-  background: var(--bg-soft);
-  border-bottom: 1px solid var(--line);
-}
-.partners-root .feat__head {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 24px;
-  align-items: end;
-  margin-bottom: 48px;
-}
-@media (min-width: 880px) {
-  .partners-root .feat__head { grid-template-columns: 1fr auto; }
-}
-.partners-root .feat__title {
-  font-size: clamp(36px, 4.5vw, 56px);
-  line-height: 1.05;
-  letter-spacing: -0.025em;
-  font-weight: 600;
-  margin: 12px 0 0;
-  max-width: 22ch;
-  text-wrap: balance;
-}
-.partners-root .feat__sub {
-  font-size: 19px;
-  line-height: 1.55;
-  color: var(--muted);
-  max-width: 60ch;
-  margin: 0;
-  text-wrap: pretty;
-}
-@media (max-width: 899px) {
-  .partners-root .feat__title {
-    font-size: clamp(28px, 7.6vw, 40px);
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    max-width: 100%;
-  }
-  .partners-root .feat__sub { font-size: 16.5px; max-width: 100%; }
-}
-.partners-root .feat__grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1px;
-  background: var(--line);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  overflow: hidden;
-}
-@media (min-width: 720px) { .partners-root .feat__grid { grid-template-columns: 1fr 1fr; } }
-@media (min-width: 1080px) { .partners-root .feat__grid { grid-template-columns: repeat(3, 1fr); } }
-.partners-root .feat__card {
-  background: var(--bg);
-  padding: 32px 28px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  min-height: 260px;
-}
-.partners-root .feat__card-num {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  color: var(--faint);
-}
-.partners-root .feat__card-title {
-  font-size: 20px;
-  line-height: 1.2;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  margin: 0;
-}
-.partners-root .feat__card-desc {
-  font-size: 14.5px;
-  color: var(--muted);
-  line-height: 1.5;
-  margin: 0;
-  text-wrap: pretty;
-}
-.partners-root .feat__card-tags {
-  list-style: none;
-  margin: auto 0 0;
-  padding: 12px 0 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-.partners-root .feat__card-tag {
-  font-family: var(--mono);
-  font-size: 10.5px;
-  letter-spacing: 0.04em;
-  padding: 3px 7px;
-  border-radius: 4px;
-  background: var(--bg-mute);
-  color: var(--ink-soft);
-}
+/* ─── Capabilities ────────────────────────────────────────────────
+   Reuses the homepage's `.why` / `.why__cardx*` rhythm so the icon-led
+   4-up grid matches "Why Quidkey". The only partner-specific tweak is
+   a separator border between this section and the dark US block below
+   to mirror the visual seams used between other partner sections. */
+.partners-root .why { border-bottom: 1px solid var(--line); }
 
 /* ─── US focus (dark section) ────────────────────────────────────── */
 .partners-root .us {
