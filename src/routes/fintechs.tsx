@@ -4,7 +4,6 @@ import { useEffect, useRef } from 'react'
 import { HomepageFooter } from '@/components/layout/homepage-footer'
 import { HomepageNav } from '@/components/layout/homepage-nav'
 import { Logos } from '@/components/sections/logos'
-import { PartnerArchitecture } from '@/components/partners/partner-architecture'
 import { PartnerCapabilities } from '@/components/partners/partner-capabilities'
 import { PartnerCloser } from '@/components/partners/partner-closer'
 import { PartnerHero } from '@/components/partners/partner-hero'
@@ -15,7 +14,7 @@ import { AudienceProvider, useAudience } from '@/context/audience'
 import { buildSeo } from '@/lib/seo'
 
 // Share the homepage's chrome (nav, footer, typography, container, buttons,
-// pills) so /partners doesn't look like a different site. partners.css loads
+// pills) so /fintechs doesn't look like a different site. partners.css loads
 // last so its section-specific rules win at equal specificity.
 import '@/styles/homepage/base.css'
 import '@/styles/homepage/headings.css'
@@ -24,15 +23,15 @@ import '@/styles/homepage/mobile.css'
 import '@/styles/homepage/overrides.css'
 import '@/components/partners/partners.css'
 
-export const Route = createFileRoute('/partners')({
+export const Route = createFileRoute('/fintechs')({
   component: PartnersPage,
   head: () =>
     buildSeo({
-      title: 'Partner program · Quidkey',
+      title: 'Pay by Bank for fintechs · Quidkey',
       description:
         'Pay by Bank for PSPs and fintechs. White-labeled rails, accounts, and merchant tooling across the US, UK, EU, and AU.',
       keywords: [
-        'partner program',
+        'Pay by Bank for fintechs',
         'Pay by Bank',
         'PSP',
         'fintech',
@@ -42,7 +41,7 @@ export const Route = createFileRoute('/partners')({
         'SEPA Instant',
         'PayTo',
       ],
-      path: '/partners',
+      path: '/fintechs',
     }),
 })
 
@@ -56,7 +55,7 @@ function PartnersPage() {
 
 function PartnersPageContent() {
   const { audience, setAudience } = useAudience()
-  // Mount-only auto-set: claim 'fintechs' once when the user lands on /partners.
+  // Mount-only auto-set: claim 'fintechs' once when the user lands on /fintechs.
   // Without the ref guard, the effect would re-run after the user toggles to
   // 'merchants' (which navigates away) and undo their choice before navigation
   // completes.
@@ -80,7 +79,6 @@ function PartnersPageContent() {
         <PartnerUSFocus />
         <PartnerTreasury />
         <PartnerOnboarding />
-        <PartnerArchitecture />
         <PartnerCloser />
       </main>
       <HomepageFooter />

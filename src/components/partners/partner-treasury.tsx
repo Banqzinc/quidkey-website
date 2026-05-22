@@ -1,7 +1,7 @@
 // Partner-framed Treasury section. Reuses the homepage TreasuryMockup
 // verbatim — only the surrounding chrome (eyebrow, headline, sub, padding,
 // background) is partner-specific. Visual rhythm matches PartnerCapabilities,
-// PartnerUSFocus, PartnerOnboarding, PartnerArchitecture.
+// PartnerUSFocus, PartnerOnboarding.
 //
 // Lazy-imports the mockup so the chunk only loads when this section enters
 // the page. Fires `partners_treasury_view` once on mount via the shared

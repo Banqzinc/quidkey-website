@@ -1,63 +1,31 @@
-// Final CTA before the footer. The merchant headline is intentionally split into
-// two lines per chat50.md — the explicit <br /> + spans + the .closer__h-break
-// CSS rule (preserved through the prefix pass) keep it on two lines on desktop
+// Final CTA before the footer. The headline is intentionally split into two
+// lines per chat50.md — the explicit <br /> + spans + the .closer__h-break CSS
+// rule (preserved through the prefix pass) keep it on two lines on desktop
 // while collapsing to a natural wrap on mobile.
 
-import type { ReactNode } from 'react'
-
 import { AudienceToggle } from '@/components/homepage/audience-toggle'
-import { useAudience, type Audience } from '@/context/audience'
 import { track } from '@/lib/track'
-import { DEMO_BOOKING_URL, MERCHANTS_LOGIN_URL, DOCS_URL } from '@/lib/urls'
+import { DEMO_BOOKING_URL, DOCS_URL } from '@/lib/urls'
 
-type CloserCta<C extends 'get_started' | 'demo' | 'docs'> = {
-  label: string
-  href: string
-  cta: C
-  /** Open in a new tab. Used for off-site CTAs like demo booking. */
-  external?: boolean
-}
-
-type CloserCopy = {
-  h: ReactNode
-  sub?: string
-  primary: CloserCta<'get_started' | 'demo' | 'docs'>
-  secondary: CloserCta<'demo' | 'docs'>
-}
-
-const CLOSER_COPY: Record<Audience, CloserCopy> = {
-  merchants: {
-    h: (
-      <>
-        Add a payment option that helps you
-        <br className="closer__h-break" />
-        <span className="closer__h-mute">convert more customers</span>
-      </>
-    ),
-    sub:
-      'Add Pay by Bank to your checkout in minutes. Lower fees, higher conversion, zero chargebacks.',
-    primary: { label: 'Book a demo', href: DEMO_BOOKING_URL, cta: 'demo', external: true },
-    secondary: { label: 'Read the docs', href: DOCS_URL, cta: 'docs' },
-  },
-  fintechs: {
-    h: (
-      <>
-        Launch a Pay by Bank
-        <br />
-        programme. <span className="closer__h-mute">This quarter.</span>
-      </>
-    ),
-    primary: { label: 'Become a partner', href: MERCHANTS_LOGIN_URL, cta: 'get_started' },
-    secondary: { label: 'Read partner docs', href: DOCS_URL, cta: 'docs' },
-  },
+const CLOSER_COPY = {
+  h: (
+    <>
+      Add a payment option that helps you
+      <br className="closer__h-break" />
+      <span className="closer__h-mute">convert more customers</span>
+    </>
+  ),
+  sub:
+    'Add Pay by Bank to your checkout in minutes. Lower fees, higher conversion, zero chargebacks.',
+  primary: { label: 'Book a demo', href: DEMO_BOOKING_URL, cta: 'demo' as const, external: true },
+  secondary: { label: 'Read the docs', href: DOCS_URL, cta: 'docs' as const },
 }
 
 export function Closer() {
-  const { audience } = useAudience()
-  const c = CLOSER_COPY[audience]
+  const c = CLOSER_COPY
 
   const trackCta = (label: 'get_started' | 'demo' | 'docs') => () => {
-    track({ name: 'homepage_cta_click', location: 'closer', label, audience })
+    track({ name: 'homepage_cta_click', location: 'closer', label, audience: 'merchants' })
   }
 
   return (
@@ -79,7 +47,6 @@ export function Closer() {
               href={c.secondary.href}
               className="closer__cta closer__cta--secondary"
               onClick={trackCta(c.secondary.cta)}
-              {...(c.secondary.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
             >
               {c.secondary.label}
             </a>

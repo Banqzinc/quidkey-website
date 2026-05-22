@@ -12,7 +12,7 @@ export const PRESS_EMAIL = 'jenny@quidkey.com'
 export const PARTNERS_EMAIL = 'partners@quidkey.com'
 
 /** Internal route paths used by navigation primitives. */
-export const PARTNERS_PATH = '/partners'
+export const FINTECHS_PATH = '/fintechs'
 
 /** Email mailto helpers */
 export const buildMailto = (subject: string, email = CONTACT_EMAIL) =>

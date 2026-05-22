@@ -11,13 +11,12 @@ const PARTNER_LINKS = [
   { href: '#capabilities', label: 'Capabilities' },
   { href: '#us', label: 'US focus' },
   { href: '#onboarding', label: 'Onboarding' },
-  { href: '#architecture', label: 'Architecture' },
 ] as const
 
 export function HomepageNav() {
   const { audience } = useAudience()
   const path = useRouterState({ select: (s) => s.location.pathname })
-  const isPartners = path.startsWith('/partners')
+  const isPartners = path.startsWith('/fintechs')
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
 
@@ -76,11 +75,14 @@ export function HomepageNav() {
         <div className="nav__right">
           <div className="nav__links">
             {isPartners ? (
-              PARTNER_LINKS.map((link) => (
-                <a key={link.href} href={link.href}>
-                  {link.label}
-                </a>
-              ))
+              <>
+                {PARTNER_LINKS.map((link) => (
+                  <a key={link.href} href={link.href}>
+                    {link.label}
+                  </a>
+                ))}
+                <Link to="/blog">Blog</Link>
+              </>
             ) : (
               <>
                 <Link to="/" hash="why">Why Quidkey</Link>
@@ -171,11 +173,16 @@ export function HomepageNav() {
         <div className="nav__mobile-inner">
           <div className="nav__mobile-links">
             {isPartners ? (
-              PARTNER_LINKS.map((link) => (
-                <a key={link.href} href={link.href} onClick={closeMenu}>
-                  {link.label}
-                </a>
-              ))
+              <>
+                {PARTNER_LINKS.map((link) => (
+                  <a key={link.href} href={link.href} onClick={closeMenu}>
+                    {link.label}
+                  </a>
+                ))}
+                <Link to="/blog" onClick={closeMenu}>
+                  Blog
+                </Link>
+              </>
             ) : (
               <>
                 <Link to="/" hash="why" onClick={closeMenu}>
