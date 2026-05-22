@@ -75,11 +75,14 @@ export function HomepageNav() {
         <div className="nav__right">
           <div className="nav__links">
             {isPartners ? (
-              PARTNER_LINKS.map((link) => (
-                <a key={link.href} href={link.href}>
-                  {link.label}
-                </a>
-              ))
+              <>
+                {PARTNER_LINKS.map((link) => (
+                  <a key={link.href} href={link.href}>
+                    {link.label}
+                  </a>
+                ))}
+                <Link to="/blog">Blog</Link>
+              </>
             ) : (
               <>
                 <Link to="/" hash="why">Why Quidkey</Link>
@@ -170,11 +173,16 @@ export function HomepageNav() {
         <div className="nav__mobile-inner">
           <div className="nav__mobile-links">
             {isPartners ? (
-              PARTNER_LINKS.map((link) => (
-                <a key={link.href} href={link.href} onClick={closeMenu}>
-                  {link.label}
-                </a>
-              ))
+              <>
+                {PARTNER_LINKS.map((link) => (
+                  <a key={link.href} href={link.href} onClick={closeMenu}>
+                    {link.label}
+                  </a>
+                ))}
+                <Link to="/blog" onClick={closeMenu}>
+                  Blog
+                </Link>
+              </>
             ) : (
               <>
                 <Link to="/" hash="why" onClick={closeMenu}>
