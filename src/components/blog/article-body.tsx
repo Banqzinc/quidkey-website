@@ -36,7 +36,6 @@ export function ArticleBody({ post }: { post: BlogPost }) {
           const section = sections[h2Cursor++]
           return (
             <h2 key={idx} id={section?.id}>
-              {section ? <span className="aprose__hnum">{section.num}</span> : null}
               {block.text}
             </h2>
           )
