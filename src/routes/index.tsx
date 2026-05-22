@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 
-import { AudienceProvider, useAudience } from '@/context/audience'
+import { AudienceProvider, readStoredAudience, useAudience } from '@/context/audience'
 import { HomepageNav } from '@/components/layout/homepage-nav'
 import { HomepageFooter } from '@/components/layout/homepage-footer'
 import { HeroSection } from '@/components/sections/hero'
@@ -62,25 +62,21 @@ function HomePage() {
 }
 
 function HomePageContent() {
-  const { audience, setAudience } = useAudience()
-  // Claim 'merchants' once after localStorage has hydrated. We can't read
-  // the value synchronously on mount because AudienceProvider's hydration
-  // effect runs *after* the first render — so a ref-guarded same-tick check
-  // would lock in before the real audience arrives. Deferring via
-  // setTimeout(0) yields one event-loop tick, by which point any stored
-  // 'fintechs' has been applied and we can correct it. We read through a
-  // ref so the deferred callback sees the latest audience, not the stale
-  // closure value from mount.
-  const audienceRef = useRef(audience)
-  audienceRef.current = audience
-
+  const { setAudience } = useAudience()
+  // The homepage always renders the merchant variant. If a prior /fintechs
+  // visit left 'fintechs' in localStorage, claim merchants so the audience-
+  // driven toggle thumb matches the page. Read localStorage directly rather
+  // than the React state: HomePageContent's effect fires before the parent
+  // AudienceProvider's hydration effect (child effects run first), and even
+  // a setTimeout(0) deferral isn't reliable — React 18's scheduler can fire
+  // the timer before flushing the state update from hydration, leaving a
+  // ref-based check seeing stale 'merchants'.
   useEffect(() => {
-    const t = setTimeout(() => {
-      if (audienceRef.current !== 'merchants') {
-        setAudience('merchants')
-      }
-    }, 0)
-    return () => clearTimeout(t)
+    if (typeof window === 'undefined') return
+    const stored = readStoredAudience(window.localStorage)
+    if (stored !== 'merchants') {
+      setAudience('merchants')
+    }
   }, [setAudience])
 
   return (
