@@ -1,26 +1,21 @@
 const POINTS = [
   {
     num: '01',
-    title: 'White labelled US Pay by Bank',
-    body: 'Offer Pay by Bank to your merchants under your brand.',
-  },
-  {
-    num: '02',
     title: 'Risk checked before every payment',
     body: 'Only approved, low risk payers are allowed through.',
   },
   {
-    num: '03',
+    num: '02',
     title: 'One click repeat payments',
     body: 'Returning customers pay faster with a simple verification step.',
   },
   {
-    num: '04',
+    num: '03',
     title: 'Built for US and non US merchants',
     body: 'Merchants can collect from US customers without needing a US entity.',
   },
   {
-    num: '05',
+    num: '04',
     title: 'Local USD accounts included',
     body: 'Collection, settlement, refunds, and payouts handled through local USD accounts.',
   },
@@ -30,7 +25,6 @@ const ELIGIBILITY_ROWS = [
   ['US legal entity', 'Not required'],
   ['US UBOs', 'Not required'],
   ['US-based EIN', 'Not required'],
-  ['US tax filing', 'Not required'],
   ['Local USD account', 'Provided'],
   ['Refunds in USD', 'Supported'],
   ['Real-time risk check', 'At T+0'],
@@ -52,8 +46,7 @@ export function PartnerUSFocus() {
           </h2>
           <p className="us__lead">
             Give your merchants access to US Pay by Bank, USD collection accounts, settlement,
-            refunds, and risk controls. Fast to launch, white labelled, and no US entity or money
-            transmitter license required.
+            refunds, and risk controls. Fast to launch and white labelled.
           </p>
         </div>
 
