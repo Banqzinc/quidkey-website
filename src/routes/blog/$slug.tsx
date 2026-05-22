@@ -170,7 +170,9 @@ function BlogPostPage() {
           <ArticleHeroFigure post={post} />
           <section className="abody">
             <div className="container">
-              <div className="abody__grid">
+              <div
+                className={`abody__grid${sections.length < 2 ? ' abody__grid--notoc' : ''}`}
+              >
                 <ArticleTOC slug={post.slug} sections={sections} />
                 <main id="main">
                   <ArticleBody post={post} />
