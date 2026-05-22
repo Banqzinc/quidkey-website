@@ -11,7 +11,6 @@ const PARTNER_LINKS = [
   { href: '#capabilities', label: 'Capabilities' },
   { href: '#us', label: 'US focus' },
   { href: '#onboarding', label: 'Onboarding' },
-  { href: '#architecture', label: 'Architecture' },
 ] as const
 
 export function HomepageNav() {

@@ -4,7 +4,6 @@ import { useEffect, useRef } from 'react'
 import { HomepageFooter } from '@/components/layout/homepage-footer'
 import { HomepageNav } from '@/components/layout/homepage-nav'
 import { Logos } from '@/components/sections/logos'
-import { PartnerArchitecture } from '@/components/partners/partner-architecture'
 import { PartnerCapabilities } from '@/components/partners/partner-capabilities'
 import { PartnerCloser } from '@/components/partners/partner-closer'
 import { PartnerHero } from '@/components/partners/partner-hero'
@@ -80,7 +79,6 @@ function PartnersPageContent() {
         <PartnerUSFocus />
         <PartnerTreasury />
         <PartnerOnboarding />
-        <PartnerArchitecture />
         <PartnerCloser />
       </main>
       <HomepageFooter />
