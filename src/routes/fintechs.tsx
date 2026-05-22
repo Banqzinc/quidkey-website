@@ -23,10 +23,16 @@ import '@/styles/homepage/mobile.css'
 import '@/styles/homepage/overrides.css'
 import '@/components/partners/partners.css'
 
+// Mirrors the homepage's font bundle. The hero now embeds MerchantHeroViz,
+// whose ScribbleHint callout uses Caveat — without this stylesheet it falls
+// back to the system cursive and looks visibly different from /.
+const FONT_HREF =
+  'https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Caveat:wght@500;600;700&family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap'
+
 export const Route = createFileRoute('/fintechs')({
   component: PartnersPage,
-  head: () =>
-    buildSeo({
+  head: () => {
+    const seo = buildSeo({
       title: 'Pay by Bank for fintechs · Quidkey',
       description:
         'Pay by Bank for PSPs and fintechs. White-labeled rails, accounts, and merchant tooling across the US, UK, EU, and AU.',
@@ -42,7 +48,17 @@ export const Route = createFileRoute('/fintechs')({
         'PayTo',
       ],
       path: '/fintechs',
-    }),
+    })
+    return {
+      ...seo,
+      links: [
+        ...(seo.links ?? []),
+        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' },
+        { rel: 'stylesheet', href: FONT_HREF },
+      ],
+    }
+  },
 })
 
 function PartnersPage() {
