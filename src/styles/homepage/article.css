@@ -177,6 +177,10 @@
     grid-template-columns: 220px minmax(0, 1fr);
     gap: 56px;
   }
+  .hp .abody__grid--notoc{
+    grid-template-columns: minmax(0, 880px);
+    justify-content: center;
+  }
 }
 
 /* TOC */
