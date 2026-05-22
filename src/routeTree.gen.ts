@@ -11,7 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as PrivacyRouteImport } from './routes/privacy'
-import { Route as PartnersRouteImport } from './routes/partners'
+import { Route as FintechsRouteImport } from './routes/fintechs'
 import { Route as EndUserPrivacyRouteImport } from './routes/end-user-privacy'
 import { Route as ComplaintsRouteImport } from './routes/complaints'
 import { Route as IndexRouteImport } from './routes/index'
@@ -28,9 +28,9 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PartnersRoute = PartnersRouteImport.update({
-  id: '/partners',
-  path: '/partners',
+const FintechsRoute = FintechsRouteImport.update({
+  id: '/fintechs',
+  path: '/fintechs',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EndUserPrivacyRoute = EndUserPrivacyRouteImport.update({
@@ -63,7 +63,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/complaints': typeof ComplaintsRoute
   '/end-user-privacy': typeof EndUserPrivacyRoute
-  '/partners': typeof PartnersRoute
+  '/fintechs': typeof FintechsRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -73,7 +73,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/complaints': typeof ComplaintsRoute
   '/end-user-privacy': typeof EndUserPrivacyRoute
-  '/partners': typeof PartnersRoute
+  '/fintechs': typeof FintechsRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -84,7 +84,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/complaints': typeof ComplaintsRoute
   '/end-user-privacy': typeof EndUserPrivacyRoute
-  '/partners': typeof PartnersRoute
+  '/fintechs': typeof FintechsRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -96,7 +96,7 @@ export interface FileRouteTypes {
     | '/'
     | '/complaints'
     | '/end-user-privacy'
-    | '/partners'
+    | '/fintechs'
     | '/privacy'
     | '/terms'
     | '/blog/$slug'
@@ -106,7 +106,7 @@ export interface FileRouteTypes {
     | '/'
     | '/complaints'
     | '/end-user-privacy'
-    | '/partners'
+    | '/fintechs'
     | '/privacy'
     | '/terms'
     | '/blog/$slug'
@@ -116,7 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/complaints'
     | '/end-user-privacy'
-    | '/partners'
+    | '/fintechs'
     | '/privacy'
     | '/terms'
     | '/blog/$slug'
@@ -127,7 +127,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ComplaintsRoute: typeof ComplaintsRoute
   EndUserPrivacyRoute: typeof EndUserPrivacyRoute
-  PartnersRoute: typeof PartnersRoute
+  FintechsRoute: typeof FintechsRoute
   PrivacyRoute: typeof PrivacyRoute
   TermsRoute: typeof TermsRoute
   BlogSlugRoute: typeof BlogSlugRoute
@@ -150,11 +150,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/partners': {
-      id: '/partners'
-      path: '/partners'
-      fullPath: '/partners'
-      preLoaderRoute: typeof PartnersRouteImport
+    '/fintechs': {
+      id: '/fintechs'
+      path: '/fintechs'
+      fullPath: '/fintechs'
+      preLoaderRoute: typeof FintechsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/end-user-privacy': {
@@ -199,7 +199,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ComplaintsRoute: ComplaintsRoute,
   EndUserPrivacyRoute: EndUserPrivacyRoute,
-  PartnersRoute: PartnersRoute,
+  FintechsRoute: FintechsRoute,
   PrivacyRoute: PrivacyRoute,
   TermsRoute: TermsRoute,
   BlogSlugRoute: BlogSlugRoute,

@@ -16,7 +16,7 @@ const PARTNER_LINKS = [
 export function HomepageNav() {
   const { audience } = useAudience()
   const path = useRouterState({ select: (s) => s.location.pathname })
-  const isPartners = path.startsWith('/partners')
+  const isPartners = path.startsWith('/fintechs')
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
 

@@ -315,13 +315,26 @@
 
 [[redirects]]
   from = "/solutions/fintechs"
-  to = "/partners"
+  to = "/fintechs"
   status = 301
   force = true
 
 [[redirects]]
   from = "/solutions/fintechs/"
-  to = "/partners"
+  to = "/fintechs"
+  status = 301
+  force = true
+
+# /partners → /fintechs — page renamed to align with the audience toggle label.
+[[redirects]]
+  from = "/partners"
+  to = "/fintechs"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/partners/"
+  to = "/fintechs"
   status = 301
   force = true
 

@@ -2,7 +2,7 @@ import { useRouter, useRouterState } from '@tanstack/react-router'
 
 import { useAudience, type Audience } from '@/context/audience'
 import { track, type ToggleSource } from '@/lib/track'
-import { PARTNERS_PATH } from '@/lib/urls'
+import { FINTECHS_PATH } from '@/lib/urls'
 
 const AUDIENCES: Array<{ id: Audience; label: string }> = [
   { id: 'merchants', label: 'Merchants' },
@@ -10,7 +10,7 @@ const AUDIENCES: Array<{ id: Audience; label: string }> = [
 ]
 
 function audienceTarget(next: Audience): string {
-  return next === 'fintechs' ? PARTNERS_PATH : '/'
+  return next === 'fintechs' ? FINTECHS_PATH : '/'
 }
 
 type AudienceToggleProps = {
