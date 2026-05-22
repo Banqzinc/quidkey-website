@@ -44,6 +44,176 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'australia-card-surcharge-ban-october-2026',
+    date: 'May 22, 2026',
+    dateISO: '2026-05-22',
+    title:
+      'Australia Is Banning Card Surcharges from October 2026. Here Is What Every Australian Merchant Needs to Know.',
+    seoTitle: 'Australia Card Surcharge Ban 2026: Merchant Guide | Quidkey',
+    description:
+      "From 1 October 2026, Australian merchants can no longer surcharge Visa, Mastercard or eftpos. Here's what changes, what it costs, and how to prepare.",
+    keyword: 'Australia card surcharge ban',
+    author: 'Quidkey Team',
+    image: '/images/blog/australia-surcharge-ban.webp',
+    imageWidth: 1600,
+    imageHeight: 900,
+    featured: true,
+    relatedSlugs: ['payto-explained-australian-merchants-guide', 'quidkey-is-live-on-shopify'],
+    blocks: [
+      {
+        type: 'p',
+        text: 'In March 2026, the Reserve Bank of Australia published one of the most significant reforms to the Australian payments system in years.',
+      },
+      {
+        type: 'p',
+        text: 'From 1 October 2026, merchants across Australia will no longer be permitted to add a surcharge when customers pay by Visa, Mastercard or eftpos. The ability to pass card fees directly to customers, a practice that has been part of Australian retail for over two decades, is coming to an end.',
+      },
+      {
+        type: 'p',
+        text: 'This matters for every merchant that accepts card payments.',
+      },
+      { type: 'h2', text: 'What actually changes on 1 October' },
+      {
+        type: 'p',
+        text: 'The surcharging regime was introduced in 2003 with a specific purpose: to give merchants a tool to steer customers toward cheaper payment methods by making the true cost of card transactions visible. The idea was that customers would avoid surcharges and reach for lower-cost alternatives.',
+      },
+      {
+        type: 'p',
+        text: 'In practice, the system stopped working as intended. Most businesses surcharge all cards at the same flat rate regardless of the actual cost. Surcharges are inconsistently disclosed and widely resented by customers. The RBA concluded the framework "is no longer achieving its intended purpose."',
+      },
+      { type: 'p', text: 'From 1 October, the ban applies to:' },
+      {
+        type: 'ul',
+        items: [
+          'Visa debit and credit cards',
+          'Mastercard debit and credit cards',
+          'Eftpos cards',
+        ],
+      },
+      {
+        type: 'p',
+        text: 'American Express is not covered by this change at this stage.',
+      },
+      {
+        type: 'p',
+        text: 'From that date, if a customer pays by any of the above cards, you absorb the cost. No surcharge. No recovery. The fee sits on your business.',
+      },
+      { type: 'h2', text: 'The other side of the announcement' },
+      {
+        type: 'p',
+        text: 'The surcharging ban does not arrive alone. The RBA is also reducing the caps on interchange fees that businesses pay on domestic card transactions, effective the same date. The logic is clear: remove the ability to surcharge, and also reduce the underlying fees that were generating the surcharges in the first place.',
+      },
+      {
+        type: 'p',
+        text: 'For large merchants who negotiate their processing rates directly with banks, the cap reductions may flow through quickly. For small and medium businesses, the picture is more complicated. The RBA has specifically noted that small businesses tend to pay fees closer to the existing caps, meaning they stand to benefit most from the reduction. But the actual movement in fees will vary significantly depending on your payment service provider and how your current contract is structured.',
+      },
+      {
+        type: 'p',
+        text: 'The RBA estimates the full package of reforms could save consumers and businesses up to $1.8 billion per year across the economy. At the individual merchant level, the impact depends entirely on your current fee structure and how large a gap exists between what you pay and what you currently recover through surcharges.',
+      },
+      {
+        type: 'p',
+        text: 'The net result for many merchants: you will likely pay a little less per card transaction than you do today, but you will no longer be able to offset any of that cost against customers.',
+      },
+      { type: 'h2', text: 'The maths most Australian merchants have not done' },
+      {
+        type: 'p',
+        text: 'Here is the question worth sitting with before October arrives.',
+      },
+      {
+        type: 'p',
+        text: 'If your business turns over $500,000 per year and the bulk of that comes through card payments, you are currently paying somewhere between $10,000 and $15,000 per year in card processing fees at a typical rate of 2 to 3 percent. Some or all of that cost is recovered today through surcharges. After 1 October, it cannot be.',
+      },
+      {
+        type: 'p',
+        text: 'Scale that up. A $2 million turnover business paying 2 percent in card fees is carrying $40,000 in annual processing costs. A business at $5 million is carrying $100,000 or more. The interchange cap reductions will reduce these numbers to a degree, but they will not eliminate them.',
+      },
+      {
+        type: 'p',
+        text: 'Every Australian merchant should be doing two things right now.',
+      },
+      {
+        type: 'p',
+        text: 'First, find out what you are actually paying in card processing fees. Many businesses do not have a clear number. Your payment provider or acquirer can give you a breakdown. You need this number before October.',
+      },
+      {
+        type: 'p',
+        text: 'Second, start thinking about whether your existing payment mix is the right one to carry into the new environment. The surcharging ban changes the incentive structure for how you think about payment methods. Options that reduce your processing cost become more valuable when you can no longer pass costs to customers.',
+      },
+      { type: 'h2', text: 'What the Australian market is already telling you' },
+      {
+        type: 'p',
+        text: 'The timing of the surcharging ban sits inside a broader shift that is already well underway.',
+      },
+      {
+        type: 'p',
+        text: "PayTo, Australia's new bank payment standard built on the New Payments Platform, is gaining real traction. Zepto's inaugural PayTo Index showed $612 million in real-time payments already processed through PayTo, with online retail PayTo transactions surging 301 percent. Settlement times averaged under five seconds. Payment conversion rates hit 99.03 percent.",
+      },
+      {
+        type: 'p',
+        text: "In May 2026, NAB, Australia's biggest business bank, acquired Banked, a global Pay by Bank platform. Their stated reason was direct: Pay by Bank offers \"a faster and lower-cost way for merchants to get paid.\" Citi and Ant International have both gone live on PayTo. The infrastructure question in Australia has been answered.",
+      },
+      {
+        type: 'p',
+        text: 'And yet 90 percent of Australian retail account-to-account payments still run on BECS, the legacy bulk clearing system that is scheduled for decommissioning by 2030. The transition to real-time bank payments is happening at scale. The October deadline gives merchants a concrete reason to move sooner.',
+      },
+      { type: 'h2', text: 'Why October changes the calculation' },
+      {
+        type: 'p',
+        text: "Before the RBA's announcement, the standard response to the cost of card payments was to surcharge. Pass it on. Not your problem.",
+      },
+      {
+        type: 'p',
+        text: 'After October, it is your problem. The cost of every Visa, Mastercard and eftpos transaction lands on your P&L, with or without the partial relief of lower interchange caps.',
+      },
+      {
+        type: 'p',
+        text: 'Pay by Bank works differently. When a customer pays directly from their bank account, the payment processes through the New Payments Platform. There is no card network involved. No interchange fee. No chargeback risk. Settlement happens in seconds, not days.',
+      },
+      {
+        type: 'p',
+        text: 'The cost to process a bank payment is significantly lower than a card payment. For merchants on Shopify, adding Pay by Bank requires no engineering work, and it sits alongside existing payment methods at checkout rather than replacing them. Customers who prefer cards continue to use cards. But the customers who pay by bank cost you substantially less.',
+      },
+      {
+        type: 'p',
+        text: 'For a merchant processing $1 million in annual revenue, shifting even 20 percent of transactions from card to bank payments can represent meaningful savings. At scale, the difference is significant. With surcharging gone, the incentive to optimise your payment mix has never been clearer.',
+      },
+      { type: 'h2', text: 'What to do before 1 October' },
+      {
+        type: 'p',
+        text: 'The first step is understanding your current position. Pull your card processing data for the last 12 months, identify your effective rate, and calculate what your fee exposure looks like after October with and without surcharging.',
+      },
+      {
+        type: 'p',
+        text: 'The second step is reviewing your checkout options. If you are on Shopify, Pay by Bank can be live in minutes. If you operate a custom checkout, integration via API or iFrame is straightforward. There is no requirement to replace your existing payment stack. Bank payments sit alongside cards, and customers choose the option they prefer.',
+      },
+      {
+        type: 'p',
+        text: 'The third step is watching the market. The RBA has signalled it will consult on further reforms covering buy-now-pay-later, mobile wallets, and e-commerce platforms. October is not the end of this process. It is the beginning of a sustained period of change in how Australians pay and how merchants get paid.',
+      },
+      {
+        type: 'p',
+        text: 'The merchants who are best positioned on 1 October will be the ones who used the months before it to genuinely rethink their payment mix, rather than simply waiting to see how the fee reductions land.',
+      },
+      {
+        type: 'p',
+        text: "Australia's payments landscape is changing faster than at any point in the last two decades. The infrastructure is built. The data shows adoption is real. And the country's biggest bank has just put its balance sheet behind the direction of travel.",
+      },
+      {
+        type: 'p',
+        text: 'The question is not whether bank payments become a standard part of the Australian checkout experience. The question is when your business gets there.',
+      },
+      {
+        type: 'html',
+        html: '<em>Quidkey is a Pay by Bank solution for Australian merchants. Add Pay by Bank to your Shopify checkout today at <a href="https://apps.shopify.com/quidkey-checkout">apps.shopify.com/quidkey-checkout</a>, or get in touch to discuss API and iFrame integration.</em>',
+      },
+      {
+        type: 'html',
+        html: '<strong>Source:</strong> <a href="https://www.rba.gov.au/media-releases/2026/mr-26-10.html">RBA Review of Merchant Card Payment Costs and Surcharging</a>',
+      },
+    ],
+  },
+  {
     slug: 'payto-explained-australian-merchants-guide',
     date: 'May 13, 2026',
     dateISO: '2026-05-13',
