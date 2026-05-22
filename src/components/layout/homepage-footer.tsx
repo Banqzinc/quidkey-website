@@ -1,7 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { type FormEvent, useState } from 'react'
 
-import { useAudience } from '@/context/audience'
 import { openCookiebotPreferences } from '@/lib/cookiebot'
 import { track } from '@/lib/track'
 import { CONTACT_EMAIL, DOCS_URL } from '@/lib/urls'
@@ -54,7 +53,6 @@ function FooterColumn({ heading, links }: { heading: string; links: FooterLink[]
 }
 
 export function HomepageFooter({ variant = 'home' }: { variant?: 'home' | 'legal' } = {}) {
-  const { audience } = useAudience()
   const [newsletterSent, setNewsletterSent] = useState(false)
 
   const handleNewsletterSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -80,26 +78,7 @@ export function HomepageFooter({ variant = 'home' }: { variant?: 'home' | 'legal
   // Per design feedback (Claude design chat, May 2026): drop Shopify app from
   // Products, drop About/Careers/Press from Company, drop Changelog from
   // Developers, and use the same condensed column set on home and legal pages.
-  // The fintech audience still gets a different Products column ("Partner
-  // stack") since the home audience toggle remains.
-  const homeProductLinks: FooterLink[] = audience === 'fintechs'
-    ? [
-        { label: 'Rails', href: '#' },
-        { label: 'Embedded accounts', href: '#' },
-        { label: 'Workflows', href: '#' },
-      ]
-    : [
-        { label: 'Checkout', href: '/', hash: 'integrations' },
-        { label: 'Treasury', href: '/', hash: 'treasury' },
-        {
-          label: 'API',
-          href: DEVELOPERS_URL,
-          external: true,
-          onClick: trackOutbound(DEVELOPERS_URL, 'footer_api'),
-        },
-      ]
-
-  const legalProductLinks: FooterLink[] = [
+  const productLinks: FooterLink[] = [
     { label: 'Checkout', href: '/', hash: 'integrations' },
     { label: 'Treasury', href: '/', hash: 'treasury' },
     {
@@ -109,8 +88,6 @@ export function HomepageFooter({ variant = 'home' }: { variant?: 'home' | 'legal
       onClick: trackOutbound(DEVELOPERS_URL, 'footer_api'),
     },
   ]
-
-  const productLinks = variant === 'legal' ? legalProductLinks : homeProductLinks
 
   const companyLinks: FooterLink[] = [
     { label: 'Blog', href: '/blog' },
@@ -158,7 +135,6 @@ export function HomepageFooter({ variant = 'home' }: { variant?: 'home' | 'legal
   ]
 
   const showNewsletter = variant !== 'legal'
-  const productsHeading = variant === 'home' && audience === 'fintechs' ? 'Partner stack' : 'Products'
 
   return (
     <footer className="ft">
@@ -210,7 +186,7 @@ export function HomepageFooter({ variant = 'home' }: { variant?: 'home' | 'legal
             )}
           </div>
           <div className="ft__cols">
-            <FooterColumn heading={productsHeading} links={productLinks} />
+            <FooterColumn heading="Products" links={productLinks} />
             <FooterColumn heading="Company" links={companyLinks} />
             <FooterColumn heading="Developers" links={developerLinks} />
             <FooterColumn heading="Legal" links={legalLinks} />

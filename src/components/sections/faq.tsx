@@ -1,65 +1,36 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
-import { useAudience, type Audience } from '@/context/audience'
 import { track } from '@/lib/track'
 
 type FaqItem = { q: string; a: string }
 
-const FAQS: Record<Audience, FaqItem[]> = {
-  merchants: [
-    {
-      q: 'What is Pay by Bank?',
-      a: 'Pay by Bank lets customers pay you directly from their bank account, no card in the middle. They pick their bank at checkout, approve in their banking app with biometrics, and funds move on instant rails (FedNow, RTP, FPS, SEPA Instant) in seconds.',
-    },
-    { q: 'Do I need to replace card payments?', a: 'No. Quidkey works alongside your existing payment methods.' },
-    {
-      q: 'Is it difficult to set up?',
-      a: 'No. If you’re on Shopify, it’s an app install. For custom checkouts, it’s a short API integration. Our team helps either way.',
-    },
-    {
-      q: 'Will customers understand how to use it?',
-      a: 'Yes. They choose their bank, approve the payment securely, and complete checkout in a clear, simple flow.',
-    },
-    {
-      q: 'Is it secure?',
-      a: 'Yes. Payments are authenticated through the customer’s bank. No card numbers are stored or transmitted.',
-    },
-    {
-      q: 'Where is Quidkey available?',
-      a: 'We onboard businesses from 100+ countries selling into the US, UK, EU, and Australia. If your customers are in those markets, we can almost certainly support you, wherever your business is incorporated.',
-    },
-    {
-      q: 'Is Quidkey only for large merchants?',
-      a: 'No. Quidkey works for growing ecommerce businesses as well as larger merchants.',
-    },
-  ],
-  fintechs: [
-    {
-      q: 'How white-label is "white-label"?',
-      a: 'Fully. Your domain, your logo, your colors. Quidkey is transparent, your merchants only see your brand.',
-    },
-    {
-      q: "What's the minimum integration?",
-      a: 'Start with one piece: rails, accounts, or workflows. Add modules as you grow.',
-    },
-    {
-      q: 'Which countries can you open accounts in?',
-      a: 'EU, UK, US, AU, SG, CA today. APAC and LATAM coming through 2026.',
-    },
-    {
-      q: 'How does KYB work?',
-      a: 'Automated for low-risk profiles, manual for the rest. Median time-to-live is ~24 hours. You set the thresholds.',
-    },
-    {
-      q: 'What about compliance and licensing?',
-      a: 'Quidkey holds the relevant payments and e-money licences in each region. Your merchants are sub-merchants under our regulatory umbrella.',
-    },
-    {
-      q: 'How is partner pricing structured?',
-      a: 'Volume-tiered with revenue share above an agreed monthly threshold. No per-seat fees, no platform fees.',
-    },
-  ],
-}
+const FAQS: FaqItem[] = [
+  {
+    q: 'What is Pay by Bank?',
+    a: 'Pay by Bank lets customers pay you directly from their bank account, no card in the middle. They pick their bank at checkout, approve in their banking app with biometrics, and funds move on instant rails (FedNow, RTP, FPS, SEPA Instant) in seconds.',
+  },
+  { q: 'Do I need to replace card payments?', a: 'No. Quidkey works alongside your existing payment methods.' },
+  {
+    q: 'Is it difficult to set up?',
+    a: 'No. If you’re on Shopify, it’s an app install. For custom checkouts, it’s a short API integration. Our team helps either way.',
+  },
+  {
+    q: 'Will customers understand how to use it?',
+    a: 'Yes. They choose their bank, approve the payment securely, and complete checkout in a clear, simple flow.',
+  },
+  {
+    q: 'Is it secure?',
+    a: 'Yes. Payments are authenticated through the customer’s bank. No card numbers are stored or transmitted.',
+  },
+  {
+    q: 'Where is Quidkey available?',
+    a: 'We onboard businesses from 100+ countries selling into the US, UK, EU, and Australia. If your customers are in those markets, we can almost certainly support you, wherever your business is incorporated.',
+  },
+  {
+    q: 'Is Quidkey only for large merchants?',
+    a: 'No. Quidkey works for growing ecommerce businesses as well as larger merchants.',
+  },
+]
 
 const PlusIcon = (
   <svg
@@ -96,15 +67,8 @@ const CloseIcon = (
 )
 
 export function Faq() {
-  const { audience } = useAudience()
-  const items = FAQS[audience]
+  const items = FAQS
   const [open, setOpen] = useState<number>(0)
-
-  // Reset to the first item whenever the audience changes so we don't stay open
-  // out-of-bounds.
-  useEffect(() => {
-    setOpen(0)
-  }, [audience])
 
   const toggle = (index: number) => {
     const closing = open === index

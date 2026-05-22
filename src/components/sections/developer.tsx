@@ -1,8 +1,5 @@
-// Developer / Integrations section. Maps to Developer + FintechDeveloper at
-// app.jsx:3790-3989. Audience-aware:
-//   merchants -> 6 integration cards (Shopify, Payment Link, iFrame, Hosted,
-//                iOS, Android) with a dynamic preview panel
-//   fintechs  -> simpler 2-tab API code editor
+// Developer / Integrations section. 6 integration cards (Shopify, Payment
+// Link, iFrame, Hosted, iOS, Android) with a dynamic preview panel.
 
 import { Fragment, useEffect, useState, type ReactNode } from 'react'
 
@@ -10,7 +7,6 @@ import { CodePreview, type CodeTab } from '@/components/homepage/code-preview'
 import { IntegrationIcon } from '@/components/homepage/integration-icon'
 import { PaymentLinkMock } from '@/components/homepage/payment-link-mock'
 import { ShopifyInstallMock } from '@/components/homepage/shopify-install-mock'
-import { useAudience } from '@/context/audience'
 import { track } from '@/lib/track'
 import { DOCS_URL } from '@/lib/urls'
 
@@ -222,54 +218,6 @@ fun CheckoutScreen(amountCents: Int) {
   },
 ]
 
-type FintechCopy = {
-  h: ReactNode
-  links: string[]
-  tabs: Array<{ id: string; name: string; code: string }>
-}
-
-const FINTECH_COPY: FintechCopy = {
-  h: 'One API. Onboard a merchant in 24 hours.',
-  links: ['Partner API reference', 'Webhook reference', 'White-label guide', 'Sandbox keys'],
-  tabs: [
-    {
-      id: 'create',
-      name: 'partners/merchants.create',
-      code: `// Onboard a merchant from your partner backend
-import { Quidkey } from '@quidkey/partners';
-
-const merchant = await Quidkey.merchants.create({
-  partner: 'northwest_pay',
-  business: { name: 'Cobalt Coffee', country: 'US' },
-  contact:  { email: 'ops@cobalt.coffee' },
-  accounts: ['USD', 'EUR'],
-  workflows: ['split.tax.us', 'payout.daily'],
-});`,
-    },
-    {
-      id: 'webhook',
-      name: 'merchant.live.json',
-      code: `{
-  "id": "evt_82a1_mch_8af2",
-  "type": "merchant.live",
-  "partner": "northwest_pay",
-  "created": "2026-04-24T09:14:25.402Z",
-  "data": {
-    "merchant_id": "mch_8af2",
-    "business":   { "name": "Cobalt Coffee", "country": "US" },
-    "accounts":   [
-      { "id": "acc_a1", "currency": "USD", "iban": null,
-        "routing": "•• 4421" },
-      { "id": "acc_a2", "currency": "EUR",
-        "iban": "DE89•• 7890" }
-    ],
-    "workflows":  ["split.tax.us", "payout.daily"]
-  }
-}`,
-    },
-  ],
-}
-
 const MERCHANT_HEADING: ReactNode = <>Add Pay by Bank to any checkout.</>
 
 const MERCHANT_SUB =
@@ -317,7 +265,7 @@ function PreviewFor({ preview }: { preview: Preview }) {
   return <CodePreview tabs={preview.tabs} />
 }
 
-function MerchantDeveloper() {
+export function Developer() {
   // Mobile users can collapse all panels (activeId = null); desktop always
   // keeps one open. Matches the prototype's behavior at app.jsx:3811.
   const [activeId, setActiveId] = useState<IntegrationOption['id'] | null>('shopify')
@@ -521,48 +469,3 @@ function MerchantDeveloper() {
   )
 }
 
-function FintechDeveloper() {
-  const [tabId, setTabId] = useState(FINTECH_COPY.tabs[0].id)
-  const tab = FINTECH_COPY.tabs.find((t) => t.id === tabId) ?? FINTECH_COPY.tabs[0]
-
-  return (
-    <section id="integrations" className="section">
-      <div className="container dev__grid">
-        <div>
-          <div className="section__eyebrow">
-            <span className="section__eyebrow-dot" />
-            Integrations
-          </div>
-          <h2 className="section__h">{FINTECH_COPY.h}</h2>
-          <div className="dev__links">
-            {FINTECH_COPY.links.map((l) => (
-              <DeveloperLink key={l} label={l} />
-            ))}
-          </div>
-        </div>
-        <div className="dev__editor">
-          <div className="dev__tabs">
-            {FINTECH_COPY.tabs.map((t) => (
-              <button
-                key={t.id}
-                type="button"
-                className={`dev__tab ${tabId === t.id ? 'is-on' : ''}`}
-                onClick={() => setTabId(t.id)}
-              >
-                {t.name}
-              </button>
-            ))}
-          </div>
-          <pre className="dev__code">
-            <code>{tab.code}</code>
-          </pre>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-export function Developer() {
-  const { audience } = useAudience()
-  return audience === 'fintechs' ? <FintechDeveloper /> : <MerchantDeveloper />
-}
