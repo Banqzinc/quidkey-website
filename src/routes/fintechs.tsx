@@ -27,11 +27,11 @@ export const Route = createFileRoute('/fintechs')({
   component: PartnersPage,
   head: () =>
     buildSeo({
-      title: 'Partner program · Quidkey',
+      title: 'Pay by Bank for fintechs · Quidkey',
       description:
         'Pay by Bank for PSPs and fintechs. White-labeled rails, accounts, and merchant tooling across the US, UK, EU, and AU.',
       keywords: [
-        'partner program',
+        'Pay by Bank for fintechs',
         'Pay by Bank',
         'PSP',
         'fintech',
