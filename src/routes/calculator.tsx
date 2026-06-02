@@ -1,7 +1,12 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, stripSearchParams } from '@tanstack/react-router'
 import { useEffect, useRef } from 'react'
 
 import { FeeCalculator } from '@/components/calculator/fee-calculator'
+import {
+  DEFAULTS,
+  parseSearch,
+  type CalculatorSearch,
+} from '@/components/calculator/calculator-params'
 import { HomepageFooter } from '@/components/layout/homepage-footer'
 import { HomepageNav } from '@/components/layout/homepage-nav'
 import { AudienceProvider } from '@/context/audience'
@@ -20,6 +25,13 @@ import '@/components/calculator/calculator.css'
 
 export const Route = createFileRoute('/calculator')({
   component: CalculatorPage,
+  // Inputs live in the URL so a link reproduces the exact view. Missing or
+  // invalid params fall back to defaults (see calculator-params.ts).
+  validateSearch: (search: Record<string, unknown>): CalculatorSearch => parseSearch(search),
+  // Keep the URL clean: strip params equal to the defaults, so bare /calculator
+  // (and the footer link) stays bare and shared links carry only the changed
+  // inputs. useSearch() still returns the full validated object.
+  search: { middlewares: [stripSearchParams(DEFAULTS)] },
   head: () =>
     buildSeo({
       title: 'Shopify Fee Calculator · Quidkey',
@@ -46,13 +58,20 @@ function CalculatorPage() {
     track({ name: 'calculator_view' })
   }, [])
 
+  // URL is the source of truth for the inputs; mirror every change back with
+  // replace so adjusting inputs doesn't pile up browser-history entries.
+  const search = Route.useSearch()
+  const navigate = Route.useNavigate()
+  const update = (patch: Partial<CalculatorSearch>) =>
+    navigate({ search: (prev) => ({ ...prev, ...patch }), replace: true })
+
   // AudienceProvider is required because HomepageNav reads useAudience().
   return (
     <AudienceProvider>
       <div className="hp">
         <HomepageNav />
         <main id="main" className="fee-calc">
-          <FeeCalculator />
+          <FeeCalculator state={search} onChange={update} />
         </main>
         <HomepageFooter />
       </div>
