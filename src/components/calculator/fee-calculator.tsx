@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 
 import {
   COUNTRIES,
@@ -10,6 +10,7 @@ import {
   type Currency,
   type PlanId,
 } from './fees'
+import type { CalculatorSearch } from './calculator-params'
 
 // Currency-aware money formatter, derived per render from the selected base.
 // The original artifact mutated a module-level `CUR` global during render,
@@ -140,15 +141,17 @@ function FeeRow({
   )
 }
 
-export function FeeCalculator() {
-  const [country, setCountry] = useState<CountryId>('AU')
-  const [domestic, setDomestic] = useState(50000)
-  const [crossBorder, setCrossBorder] = useState(20000)
-  const [aov, setAov] = useState(100)
-  const [plan, setPlan] = useState<PlanId>('plus')
-  const [thirdParty, setThirdParty] = useState(false)
+export function FeeCalculator({
+  state,
+  onChange,
+}: {
+  state: CalculatorSearch
+  onChange: (patch: Partial<CalculatorSearch>) => void
+}) {
+  // Controlled by the route's URL search params (state) — no local input state.
+  const { region, domestic, intl, aov, plan, thirdParty } = state
 
-  const cur = COUNTRIES[country]
+  const cur = COUNTRIES[region]
   const money = useMemo(() => makeMoney(cur), [cur])
   const orders = (n: number) => Math.round(n).toLocaleString(cur.locale)
 
@@ -156,13 +159,13 @@ export function FeeCalculator() {
     () =>
       compute({
         domesticVolume: domestic,
-        crossBorderVolume: crossBorder,
+        crossBorderVolume: intl,
         averageOrderValue: aov,
         plan,
         // Plus never pays Shopify's third-party transaction fee.
         includeThirdPartyFee: plan === 'plus' ? false : thirdParty,
       }),
-    [domestic, crossBorder, aov, plan, thirdParty]
+    [domestic, intl, aov, plan, thirdParty]
   )
 
   const savingsPctOfShopify = c.shopifyTotal > 0 ? (c.monthlySavings / c.shopifyTotal) * 100 : 0
@@ -175,7 +178,7 @@ export function FeeCalculator() {
           <p className="head__sub">
             Compare your estimated Shopify card fees against Quidkey Pay by Bank in seconds.
           </p>
-          <GeoSelector country={country} onChange={setCountry} />
+          <GeoSelector country={region} onChange={(id) => onChange({ region: id })} />
         </div>
       </header>
 
@@ -194,24 +197,24 @@ export function FeeCalculator() {
                   label="Domestic sales volume"
                   hint="per month"
                   value={domestic}
-                  onChange={setDomestic}
+                  onChange={(v) => onChange({ domestic: v })}
                   cur={cur}
                 />
                 <CurrencyField
                   label="International sales volume"
                   hint="per month"
-                  value={crossBorder}
-                  onChange={setCrossBorder}
+                  value={intl}
+                  onChange={(v) => onChange({ intl: v })}
                   cur={cur}
                 />
                 <CurrencyField
                   label="Average order value"
                   hint="per order"
                   value={aov}
-                  onChange={setAov}
+                  onChange={(v) => onChange({ aov: v })}
                   cur={cur}
                 />
-                <PlanSelector plan={plan} onChange={setPlan} />
+                <PlanSelector plan={plan} onChange={(id) => onChange({ plan: id })} />
 
                 {plan !== 'plus' ? (
                   <div className="toggle-row">
@@ -224,7 +227,7 @@ export function FeeCalculator() {
                         role="switch"
                         aria-checked={thirdParty}
                         className={`toggle ${thirdParty ? 'is-on' : ''}`}
-                        onClick={() => setThirdParty((v) => !v)}
+                        onClick={() => onChange({ thirdParty: !thirdParty })}
                       >
                         <span className="toggle__knob" />
                       </button>
