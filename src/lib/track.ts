@@ -27,6 +27,7 @@ export type HomepageEvent =
   | { name: 'partners_treasury_view' }
   | { name: 'homepage_newsletter_submit'; outcome: 'success' | 'error'; reason?: string }
   | { name: 'homepage_outbound_click'; href: string; label: string }
+  | { name: 'calculator_view' }
   | { name: 'article_share_click'; slug: string; channel: ShareChannel }
   | { name: 'article_toc_click'; slug: string; section_id: string }
   | { name: 'article_related_click'; from_slug: string; to_slug: string }
