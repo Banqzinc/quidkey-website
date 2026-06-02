@@ -87,6 +87,7 @@ export function HomepageFooter({ variant = 'home' }: { variant?: 'home' | 'legal
       external: true,
       onClick: trackOutbound(DEVELOPERS_URL, 'footer_api'),
     },
+    { label: 'Calculator', href: '/calculator' },
   ]
 
   const companyLinks: FooterLink[] = [
