@@ -16,7 +16,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import { ScribbleHint, type ScribbleStage } from '@/components/homepage/scribble-hint'
 import { DEMO_LOCALES, type Bank, type DemoLocale } from '@/components/homepage/demo-locales'
-import { useDemoRegion } from '@/lib/use-demo-region'
+import { useDemoRegion } from '@/context/demo-region'
 import { track } from '@/lib/track'
 
 const LOGO_DEV_TOKEN = 'pk_DsNHFndhT3yo-85c5vdKKg'
