@@ -15,33 +15,16 @@
 import { useEffect, useRef, useState } from 'react'
 
 import { ScribbleHint, type ScribbleStage } from '@/components/homepage/scribble-hint'
+import { DEMO_LOCALES, type Bank, type DemoLocale } from '@/components/homepage/demo-locales'
+import { useDemoRegion } from '@/lib/use-demo-region'
 import { track } from '@/lib/track'
 
 const LOGO_DEV_TOKEN = 'pk_DsNHFndhT3yo-85c5vdKKg'
 
-const BANKS = [
-  { name: 'Chase', domain: 'chase.com' },
-  { name: 'Bank of America', domain: 'bankofamerica.com' },
-  { name: 'Wells Fargo', domain: 'wellsfargo.com' },
-  { name: 'Citi', domain: 'citi.com' },
-  { name: 'Capital One', domain: 'capitalone.com' },
-  { name: 'U.S. Bank', domain: 'usbank.com' },
-] as const
-
-type Bank = (typeof BANKS)[number]
-
-const BANK_BRAND_COLORS: Record<string, string> = {
-  Chase: '#0A2A66',
-  'Bank of America': '#9C1B2E',
-  'Wells Fargo': '#A8181E',
-  Citi: '#003A6E',
-  'Capital One': '#0E3A5F',
-  'U.S. Bank': '#0E2A66',
-}
-
+// Brand color now travels on each Bank in the locale pack (demo-locales.ts);
+// this wrapper preserves the original call sites: bankBrandColor(activeBank).
 function bankBrandColor(bank: Bank | null | undefined): string {
-  if (!bank) return '#0A2A66'
-  return BANK_BRAND_COLORS[bank.name] ?? '#0A2A66'
+  return bank?.brandColor ?? '#0A2A66'
 }
 
 type FlowStep =
@@ -159,6 +142,11 @@ export function MerchantHeroViz() {
   const hintSuppressed = userClicks >= 3
   const [scribbleIdx, setScribbleIdx] = useState(0)
 
+  // Region drives which bank set / currency / receipt copy the demo shows.
+  const { region } = useDemoRegion()
+  const locale = DEMO_LOCALES[region]
+  const banks = locale.banks
+
   const flowTimers = useRef<ReturnType<typeof setTimeout>[]>([])
   const queue = (fn: () => void, ms: number) => {
     const id = setTimeout(fn, ms)
@@ -176,8 +164,11 @@ export function MerchantHeroViz() {
       flow: 'merchant',
       stage: STAGE_INDEX[flowStep],
       stageName: STAGE_NAMES[flowStep],
+      region,
     })
-  }, [flowStep])
+    // The step guard above means a later region flip (geo lookup resolving)
+    // won't re-fire; the event captures whatever region was set at first fire.
+  }, [flowStep, region])
 
   const resetFlow = () => {
     flowTimers.current.forEach(clearTimeout)
@@ -189,9 +180,9 @@ export function MerchantHeroViz() {
 
   const isPredicted = paymentMethod === 'predicted'
   const isSelectMode = paymentMethod === 'select'
-  const pickedBank: Bank | null = pickedIdx != null ? BANKS[pickedIdx] : null
-  const activeBank: Bank = paymentMethod === 'select' && pickedBank ? pickedBank : BANKS[0]
-  const miniBanks = BANKS.slice(1, 4)
+  const pickedBank: Bank | null = pickedIdx != null ? banks[pickedIdx] : null
+  const activeBank: Bank = paymentMethod === 'select' && pickedBank ? pickedBank : banks[0]
+  const miniBanks = banks.slice(1, 4)
 
   const selectBank = (i: number) => {
     noteUserAction()
@@ -213,7 +204,7 @@ export function MerchantHeroViz() {
 
   const ctaLabel =
     paymentMethod === 'predicted'
-      ? `Pay with ${BANKS[0].name}`
+      ? `Pay with ${banks[0].name}`
       : paymentMethod === 'select'
       ? pickedBank
         ? `Pay with ${pickedBank.name}`
@@ -424,7 +415,9 @@ export function MerchantHeroViz() {
               expanded={expanded}
               pickedIdx={pickedIdx}
               ctaLabel={ctaLabel}
+              banks={banks}
               miniBanks={miniBanks}
+              locale={locale}
               onTapPredicted={onTapPredicted}
               tapSelectBank={tapSelectBank}
               selectBank={selectBank}
@@ -441,15 +434,18 @@ export function MerchantHeroViz() {
           {flowStep === 'bank' && (
             <BankAppScreen
               activeBank={activeBank}
+              locale={locale}
               bankAccountIdx={bankAccountIdx}
               setBankAccountIdx={setBankAccountIdx}
               onCancel={resetFlow}
               onPay={handleBankPay}
             />
           )}
-          {flowStep === 'processing' && <ProcessingScreen />}
+          {flowStep === 'processing' && <ProcessingScreen locale={locale} />}
           {flowStep === 'app-launch-safari' && <SafariLaunchScreen />}
-          {flowStep === 'success' && <SuccessScreen activeBank={activeBank} onReplay={resetFlow} />}
+          {flowStep === 'success' && (
+            <SuccessScreen activeBank={activeBank} locale={locale} onReplay={resetFlow} />
+          )}
         </div>
       </div>
       <ScribbleHint
@@ -473,7 +469,9 @@ type CheckoutScreenProps = {
   expanded: boolean
   pickedIdx: number | null
   ctaLabel: string
+  banks: ReadonlyArray<Bank>
   miniBanks: ReadonlyArray<Bank>
+  locale: DemoLocale
   onTapPredicted: () => void
   tapSelectBank: () => void
   selectBank: (i: number) => void
@@ -488,14 +486,16 @@ function CheckoutScreen({
   expanded,
   pickedIdx,
   ctaLabel,
+  banks,
   miniBanks,
+  locale,
   onTapPredicted,
   tapSelectBank,
   selectBank,
   pickNonBank,
   handleCheckoutCta,
 }: CheckoutScreenProps) {
-  const pickedBank = pickedIdx != null ? BANKS[pickedIdx] : null
+  const pickedBank = pickedIdx != null ? banks[pickedIdx] : null
   return (
     <>
       <div className="phone__urlbar">
@@ -525,7 +525,7 @@ function CheckoutScreen({
             <div className="mck__product-brand">NORTHGATE GOODS</div>
             <div className="mck__product-title">Court Runner, Blue</div>
             <div className="mck__product-meta">Size 10 · Qty 1 · Free returns</div>
-            <div className="mck__product-price num">$149.00</div>
+            <div className="mck__product-price num">{locale.price}</div>
           </div>
         </div>
 
@@ -546,14 +546,14 @@ function CheckoutScreen({
               <span />
             </span>
             <div className="mck__opt-logo">
-              <img src={`https://img.logo.dev/${BANKS[0].domain}?token=${LOGO_DEV_TOKEN}`} alt={`${BANKS[0].name} logo`} width="38" height="38" />
+              <img src={`https://img.logo.dev/${banks[0].domain}?token=${LOGO_DEV_TOKEN}`} alt={`${banks[0].name} logo`} width="38" height="38" />
             </div>
             <div className="mck__opt-info">
               <div className="mck__opt-title">
-                <span style={{ whiteSpace: 'nowrap' }}>Pay with {BANKS[0].name}</span>
+                <span style={{ whiteSpace: 'nowrap' }}>Pay with {banks[0].name}</span>
               </div>
             </div>
-            <span className="mck__save">Save $4.32</span>
+            <span className="mck__save">Save {locale.save}</span>
           </div>
         </button>
 
@@ -614,7 +614,7 @@ function CheckoutScreen({
                 <span>Search</span>
               </div>
               <div className="mck__select-grid">
-                {BANKS.map((b, i) => (
+                {banks.map((b, i) => (
                   <button
                     type="button"
                     key={b.name}
@@ -868,20 +868,16 @@ function LoginScreen({
   )
 }
 
-const BANK_ACCOUNTS = [
-  { id: 'current', name: 'Current Account', sub: '••3082', bal: '$8,412.59' },
-  { id: 'savings', name: 'Savings', sub: '••7714', bal: '$24,930.10' },
-  { id: 'checking', name: 'Everyday Checking', sub: '••0461', bal: '$1,206.84' },
-]
-
 function BankAppScreen({
   activeBank,
+  locale,
   bankAccountIdx,
   setBankAccountIdx,
   onCancel,
   onPay,
 }: {
   activeBank: Bank
+  locale: DemoLocale
   bankAccountIdx: number
   setBankAccountIdx: (i: number) => void
   onCancel: () => void
@@ -915,32 +911,49 @@ function BankAppScreen({
       <div className="bnk__screen">
         <div className="bnk__pay-head">
           <div className="bnk__pay-eyebrow">Authorise payment</div>
-          <div className="bnk__pay-amt num">$149.00</div>
+          <div className="bnk__pay-amt num">{locale.price}</div>
           <div className="bnk__pay-to">
             to <strong>Northgate Goods</strong> · via Quidkey
           </div>
         </div>
 
-        <div className="bnk__sec-h">Pay from</div>
-        <div className="bnk__accts">
-          {BANK_ACCOUNTS.map((a, i) => (
-            <button
-              type="button"
-              key={a.id}
-              className={`bnk__acct ${i === bankAccountIdx ? 'is-on' : ''}`}
-              onClick={() => setBankAccountIdx(i)}
-            >
-              <span className={`bnk__radio ${i === bankAccountIdx ? 'is-on' : ''}`}>
-                <span />
-              </span>
-              <span className="bnk__acct-info">
-                <span className="bnk__acct-name">{a.name}</span>
-                <span className="bnk__acct-sub num">{a.sub}</span>
-              </span>
-              <span className="bnk__acct-bal num">{a.bal}</span>
-            </button>
-          ))}
-        </div>
+        {locale.payId ? (
+          // AU / Osko: the official PayID confirmation pattern — the PayID mark,
+          // who the PayID resolves to (the merchant), and the handle. The bank
+          // (CommBank) stays in the top bar.
+          <>
+            <div className="bnk__sec-h">PayID</div>
+            <div className="bnk__payid">
+              <img className="bnk__payid-logo" src="/homepage/payid-logo.png" alt="PayID" width="63" height="30" />
+              <span className="bnk__payid-label">This PayID is registered to</span>
+              <span className="bnk__payid-name">Northgate Goods</span>
+              <span className="bnk__payid-handle">{locale.payId}</span>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="bnk__sec-h">Pay from</div>
+            <div className="bnk__accts">
+              {locale.accounts?.map((a, i) => (
+                <button
+                  type="button"
+                  key={a.id}
+                  className={`bnk__acct ${i === bankAccountIdx ? 'is-on' : ''}`}
+                  onClick={() => setBankAccountIdx(i)}
+                >
+                  <span className={`bnk__radio ${i === bankAccountIdx ? 'is-on' : ''}`}>
+                    <span />
+                  </span>
+                  <span className="bnk__acct-info">
+                    <span className="bnk__acct-name">{a.name}</span>
+                    <span className="bnk__acct-sub num">{a.sub}</span>
+                  </span>
+                  <span className="bnk__acct-bal num">{a.bal}</span>
+                </button>
+              ))}
+            </div>
+          </>
+        )}
 
         <div className="bnk__detail">
           <div className="bnk__detail-row">
@@ -961,19 +974,19 @@ function BankAppScreen({
           onClick={onPay}
           style={{ background: bankBrandColor(activeBank) }}
         >
-          <span>Pay $149.00</span>
+          <span>Pay {locale.price}</span>
         </button>
       </div>
     </>
   )
 }
 
-function ProcessingScreen() {
+function ProcessingScreen({ locale }: { locale: DemoLocale }) {
   return (
     <div className="bnk__splash">
       <div className="bnk__spinner" aria-hidden="true" />
       <div className="bnk__splash-title">Authorising payment…</div>
-      <div className="bnk__splash-sub">Sending $149.00 to Northgate Goods</div>
+      <div className="bnk__splash-sub">Sending {locale.price} to Northgate Goods</div>
     </div>
   )
 }
@@ -988,7 +1001,15 @@ function SafariLaunchScreen() {
   )
 }
 
-function SuccessScreen({ activeBank, onReplay }: { activeBank: Bank; onReplay: () => void }) {
+function SuccessScreen({
+  activeBank,
+  locale,
+  onReplay,
+}: {
+  activeBank: Bank
+  locale: DemoLocale
+  onReplay: () => void
+}) {
   return (
     <>
       <div className="phone__urlbar">
@@ -1017,7 +1038,7 @@ function SuccessScreen({ activeBank, onReplay }: { activeBank: Bank; onReplay: (
           </svg>
         </div>
         <div className="msuccess__title">Payment successful</div>
-        <div className="msuccess__sub">$149.00 paid from your {activeBank.name} account</div>
+        <div className="msuccess__sub">{locale.price} paid from your {activeBank.name} account</div>
 
         <div className="msuccess__rcpt">
           <div className="msuccess__rcpt-row">
@@ -1030,16 +1051,18 @@ function SuccessScreen({ activeBank, onReplay }: { activeBank: Bank; onReplay: (
           </div>
           <div className="msuccess__rcpt-row">
             <span>Saved</span>
-            <span className="msuccess__saved">$4.32 vs card</span>
+            <span className="msuccess__saved">{locale.save} vs card</span>
           </div>
           <div className="msuccess__rcpt-row">
             <span>Shipping to</span>
-            <span>Alex Marchetti · 02118</span>
+            <span>
+              {locale.customer.name} · {locale.customer.postcode}
+            </span>
           </div>
         </div>
 
         <div className="msuccess__hint">
-          A receipt has been sent to alex@…
+          A receipt has been sent to {locale.customer.email}
           <br />
           Estimated arrival Tue, May 12.
         </div>
