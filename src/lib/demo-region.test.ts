@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest'
 
-import { isDemoRegion, normalizeCountryToRegion, parseRegionOverride } from './demo-region'
+import {
+  isDemoRegion,
+  normalizeCountryToRegion,
+  parseRegionOverride,
+  regionFromHeaders,
+} from './demo-region'
 
 describe('normalizeCountryToRegion', () => {
   it('maps AU (any case / surrounding whitespace) to AU', () => {
@@ -41,5 +46,44 @@ describe('isDemoRegion', () => {
     expect(isDemoRegion('FR')).toBe(false)
     expect(isDemoRegion(null)).toBe(false)
     expect(isDemoRegion(undefined)).toBe(false)
+  })
+})
+
+describe('regionFromHeaders', () => {
+  const fromMap =
+    (map: Record<string, string>) =>
+    (name: string): string | null =>
+      map[name] ?? null
+
+  it('reads cf-ipcountry first (Cloudflare / production)', () => {
+    expect(regionFromHeaders(fromMap({ 'cf-ipcountry': 'AU' }))).toEqual({ region: 'AU', source: 'header' })
+    expect(regionFromHeaders(fromMap({ 'cf-ipcountry': 'US' }))).toEqual({ region: 'US', source: 'header' })
+  })
+
+  it('ignores cf-ipcountry placeholders (XX unknown, T1 Tor)', () => {
+    expect(regionFromHeaders(fromMap({ 'cf-ipcountry': 'XX' }))).toEqual({ region: 'US', source: 'default' })
+    expect(regionFromHeaders(fromMap({ 'cf-ipcountry': 'T1' }))).toEqual({ region: 'US', source: 'default' })
+  })
+
+  it('falls back to Netlify x-nf-geo (base64 JSON)', () => {
+    const geo = btoa(JSON.stringify({ country: { code: 'AU' } }))
+    expect(regionFromHeaders(fromMap({ 'x-nf-geo': geo }))).toEqual({ region: 'AU', source: 'header' })
+  })
+
+  it('falls back to x-country', () => {
+    expect(regionFromHeaders(fromMap({ 'x-country': 'au' }))).toEqual({ region: 'AU', source: 'header' })
+  })
+
+  it('prefers cf-ipcountry over Netlify headers', () => {
+    const geo = btoa(JSON.stringify({ country: { code: 'US' } }))
+    expect(regionFromHeaders(fromMap({ 'cf-ipcountry': 'AU', 'x-nf-geo': geo }))).toEqual({
+      region: 'AU',
+      source: 'header',
+    })
+  })
+
+  it('returns the US default when no usable header is present', () => {
+    expect(regionFromHeaders(fromMap({}))).toEqual({ region: 'US', source: 'default' })
+    expect(regionFromHeaders(fromMap({ 'x-nf-geo': 'not-base64!!' }))).toEqual({ region: 'US', source: 'default' })
   })
 })

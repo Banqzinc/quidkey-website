@@ -11,6 +11,8 @@ import { PartnerOnboarding } from '@/components/partners/partner-onboarding'
 import { PartnerTreasury } from '@/components/partners/partner-treasury'
 import { PartnerUSFocus } from '@/components/partners/partner-us-focus'
 import { AudienceProvider, useAudience } from '@/context/audience'
+import { DemoRegionProvider } from '@/context/demo-region'
+import { getDemoRegion } from '@/lib/get-demo-region'
 import { buildSeo } from '@/lib/seo'
 
 // Share the homepage's chrome (nav, footer, typography, container, buttons,
@@ -31,6 +33,8 @@ const FONT_HREF =
 
 export const Route = createFileRoute('/fintechs')({
   component: PartnersPage,
+  // Edge-header geo (SSR) so the embedded hero demo localizes on first paint.
+  loader: () => getDemoRegion(),
   head: () => {
     const seo = buildSeo({
       title: 'Pay by Bank for fintechs · Quidkey',
@@ -62,10 +66,13 @@ export const Route = createFileRoute('/fintechs')({
 })
 
 function PartnersPage() {
+  const initialRegion = Route.useLoaderData()
   return (
-    <AudienceProvider>
-      <PartnersPageContent />
-    </AudienceProvider>
+    <DemoRegionProvider initial={initialRegion}>
+      <AudienceProvider>
+        <PartnersPageContent />
+      </AudienceProvider>
+    </DemoRegionProvider>
   )
 }
 
