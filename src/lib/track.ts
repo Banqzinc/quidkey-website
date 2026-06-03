@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 
 import type { Audience } from '@/context/audience'
+import type { DemoRegion } from '@/lib/demo-region'
 
 // The globals for gtag, lintrk, and Snitcher are already declared by their
 // respective lib/* modules (google-analytics.ts, linkedin.ts, snitcher.ts).
@@ -20,7 +21,7 @@ export type ShareChannel = 'x' | 'linkedin' | 'email' | 'copy_link'
 export type HomepageEvent =
   | { name: 'homepage_cta_click'; location: CtaLocation; label: CtaLabel; audience: Audience }
   | { name: 'homepage_audience_toggle'; from: Audience; to: Audience; source: ToggleSource }
-  | { name: 'homepage_hero_viz_stage'; flow: FlowKind; stage: number; stageName: string }
+  | { name: 'homepage_hero_viz_stage'; flow: FlowKind; stage: number; stageName: string; region: DemoRegion }
   | { name: 'homepage_faq_open'; question: string }
   | { name: 'homepage_pricing_cta_click'; tier: string; audience: Audience }
   | { name: 'homepage_treasury_view' }
