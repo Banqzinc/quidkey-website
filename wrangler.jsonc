@@ -9,7 +9,14 @@
   // nodejs_compat is required: TanStack Start's server runtime uses
   // node:async_hooks (AsyncLocalStorage) for its per-request context.
   "compatibility_flags": ["nodejs_compat"],
-  "observability": { "enabled": true }
-  // Static assets (client build) are wired automatically by @cloudflare/vite-plugin.
-  // An explicit "assets" block is added in Phase 6 only if the build output needs it.
+  "observability": { "enabled": true },
+  // Static assets (the client build) are wired automatically to dist/client by
+  // @cloudflare/vite-plugin — no explicit "assets" block needed.
+
+  // Production custom domains, bound to this worker (the apex + www records are
+  // Cloudflare-managed). Deploying is idempotent once these exist.
+  "routes": [
+    { "pattern": "quidkey.com", "custom_domain": true },
+    { "pattern": "www.quidkey.com", "custom_domain": true }
+  ]
 }
