@@ -1,7 +1,7 @@
 import { createMiddleware, createStart } from '@tanstack/react-start'
 import { setResponseHeader } from '@tanstack/react-start/server'
 
-import { resolveCacheControl, resolveRedirect } from '@/lib/redirects'
+import { appendSearch, resolveCacheControl, resolveRedirect } from '@/lib/redirects'
 
 // Global request middleware — runs for every HTTP request before routing
 // (createStartHandler executes startInstance.requestMiddleware ahead of the route
@@ -13,16 +13,20 @@ import { resolveCacheControl, resolveRedirect } from '@/lib/redirects'
 // add_security_headers Managed Transform), which sit in front of this Worker and
 // are unchanged by the migration.
 const edgeMiddleware = createMiddleware({ type: 'request' }).server(async ({ request, next }) => {
-  const { pathname } = new URL(request.url)
+  const url = new URL(request.url)
 
-  // 301 redirects short-circuit before any SSR work.
-  const target = resolveRedirect(pathname)
+  // 301 redirects short-circuit before any SSR work. Preserve the original query
+  // string (e.g. UTM params) across the hop, matching Netlify's redirect behavior.
+  const target = resolveRedirect(url.pathname)
   if (target) {
-    return new Response(null, { status: 301, headers: { Location: target } })
+    return new Response(null, {
+      status: 301,
+      headers: { Location: appendSearch(target, url.search) },
+    })
   }
 
   // Cache-Control for the SSR HTML response (asset caching lives in public/_headers).
-  setResponseHeader('Cache-Control', resolveCacheControl(pathname))
+  setResponseHeader('Cache-Control', resolveCacheControl(url.pathname))
 
   return next()
 })

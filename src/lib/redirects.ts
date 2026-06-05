@@ -63,6 +63,19 @@ export function resolveRedirect(pathname: string): string | null {
   return null
 }
 
+// Append the original request query string to a redirect target so query params
+// (e.g. UTM attribution) survive the 301 — matching Netlify's redirect behavior.
+// The query is inserted before any hash fragment in the target (e.g. "/#pricing"
+// -> "/?utm=x#pricing").
+export function appendSearch(target: string, search: string): string {
+  const query = search.startsWith('?') ? search.slice(1) : search
+  if (!query) return target
+  const hashIdx = target.indexOf('#')
+  const base = hashIdx === -1 ? target : target.slice(0, hashIdx)
+  const hash = hashIdx === -1 ? '' : target.slice(hashIdx)
+  return `${base}${base.includes('?') ? '&' : '?'}${query}${hash}`
+}
+
 // Cache-Control for SSR-rendered HTML responses only (static assets are handled
 // by public/_headers). Blog pages get a short edge cache + long
 // stale-while-revalidate (the old netlify.toml /blog rule); everything else is

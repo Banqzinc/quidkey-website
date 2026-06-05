@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { normalizePath, resolveCacheControl, resolveRedirect } from './redirects'
+import { appendSearch, normalizePath, resolveCacheControl, resolveRedirect } from './redirects'
 
 describe('normalizePath', () => {
   it('strips a trailing slash except for root', () => {
@@ -69,5 +69,19 @@ describe('resolveCacheControl', () => {
     expect(resolveCacheControl('/')).toBe('public, max-age=0, must-revalidate')
     expect(resolveCacheControl('/fintechs')).toBe('public, max-age=0, must-revalidate')
     expect(resolveCacheControl('/calculator')).toBe('public, max-age=0, must-revalidate')
+  })
+})
+
+describe('appendSearch', () => {
+  it('returns the target unchanged when there is no query', () => {
+    expect(appendSearch('/', '')).toBe('/')
+    expect(appendSearch('/fintechs', '')).toBe('/fintechs')
+    expect(appendSearch('/#pricing', '')).toBe('/#pricing')
+  })
+
+  it('preserves the query string, inserted before any hash fragment', () => {
+    expect(appendSearch('/fintechs', '?ref=abc')).toBe('/fintechs?ref=abc')
+    expect(appendSearch('/#pricing', '?utm_source=x&y=1')).toBe('/?utm_source=x&y=1#pricing')
+    expect(appendSearch('/', '?utm=x')).toBe('/?utm=x')
   })
 })
