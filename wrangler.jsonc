@@ -1,6 +1,9 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "quidkey-website",
+  // Account ID is not sensitive (it's in every dashboard URL); hardcoding it here
+  // means CI only needs the CLOUDFLARE_API_TOKEN secret.
+  "account_id": "c9f9214a657cd857ffff4b9b2e9292e2",
   "main": "@tanstack/react-start/server-entry",
   "compatibility_date": "2026-06-05",
   // nodejs_compat is required: TanStack Start's server runtime uses
