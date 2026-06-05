@@ -28,9 +28,11 @@ let started = false
 
 function isPreviewHost() {
   // Allow the widget in local/dev + preview deploys, even if Cookiebot isn't configured
-  // for that host yet (common for Netlify preview domains).
+  // for that host yet (Cloudflare workers.dev URLs and the web-preview subdomain).
   const host = window.location.hostname
-  return host === 'localhost' || host.endsWith('.netlify.app')
+  return (
+    host === 'localhost' || host.endsWith('.workers.dev') || host === 'web-preview.quidkey.com'
+  )
 }
 
 function readCookiebotConsent() {

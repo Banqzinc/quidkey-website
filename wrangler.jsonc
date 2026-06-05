@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "quidkey-website",
+  "main": "@tanstack/react-start/server-entry",
+  "compatibility_date": "2026-06-05",
+  // nodejs_compat is required: TanStack Start's server runtime uses
+  // node:async_hooks (AsyncLocalStorage) for its per-request context.
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true }
+  // Static assets (client build) are wired automatically by @cloudflare/vite-plugin.
+  // An explicit "assets" block is added in Phase 6 only if the build output needs it.
+}

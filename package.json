@@ -10,6 +10,7 @@
     "generate:agent-skills": "node ./scripts/generate-agent-skills-index.mjs",
     "build": "npm run optimize:images && npm run generate:seo && npm run generate:agent-skills && vite build",
     "preview": "vite preview",
+    "deploy": "npm run build && wrangler deploy",
     "test": "vitest run"
   },
   "dependencies": {
@@ -32,7 +33,7 @@
     "vite-tsconfig-paths": "^6.0.2"
   },
   "devDependencies": {
-    "@netlify/vite-plugin-tanstack-start": "^1.2.8",
+    "@cloudflare/vite-plugin": "^1.40.0",
     "@tanstack/devtools-vite": "^0.3.11",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.2.0",
@@ -45,6 +46,7 @@
     "typescript": "^5.7.2",
     "vite": "^7.1.7",
     "vitest": "^3.0.5",
-    "web-vitals": "^5.1.0"
+    "web-vitals": "^5.1.0",
+    "wrangler": "^4.98.0"
   }
 }
