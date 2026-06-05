@@ -1,0 +1,29 @@
+# Static-asset response headers for Cloudflare Workers Static Assets.
+# Ported from netlify.toml [[headers]]. These apply to files served from the
+# assets directory (dist/client) — NOT to Worker/SSR HTML responses, which set
+# Cache-Control in src/start.ts. CSP and security headers come from Cloudflare
+# zone rules (Transform Rule + Managed Transforms), not from here.
+
+# Discovery files — force the correct Content-Type (these have no/!matching
+# extension) and a short cache.
+/.well-known/api-catalog
+  Content-Type: application/linkset+json
+  Cache-Control: public, max-age=300
+
+/.well-known/agent-skills/index.json
+  Content-Type: application/json
+  Cache-Control: public, max-age=300
+
+/.well-known/agent-skills/*/SKILL.md
+  Content-Type: text/markdown; charset=utf-8
+  Cache-Control: public, max-age=300
+
+# Fingerprinted / long-lived static assets — immutable for a year.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/images/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.svg
+  Cache-Control: public, max-age=31536000, immutable

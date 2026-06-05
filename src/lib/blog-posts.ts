@@ -1085,7 +1085,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         type: 'p',
-        text: 'The stack itself is modern and lightweight: TanStack Start with React, Tailwind for styling, Vite for builds, deployed to Netlify. There\'s no CMS, no database, and no moving parts to break, which makes it fast, really fast, SEO friendly, and easy to maintain.',
+        text: 'The stack itself is modern and lightweight: TanStack Start with React, Tailwind for styling, Vite for builds, deployed on Cloudflare Workers. There\'s no CMS, no database, and no moving parts to break, which makes it fast, really fast, SEO friendly, and easy to maintain.',
       },
       {
         type: 'p',

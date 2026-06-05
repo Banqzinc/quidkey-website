@@ -60,9 +60,12 @@ const RADAR_SCRIPT_ID = '__radar__'
 let started = false
 
 function isPreviewHost() {
-  // Allow in local/dev + preview deploys where Cookiebot may not be configured.
+  // Allow in local/dev + preview deploys where Cookiebot may not be configured
+  // (Cloudflare workers.dev URLs and the web-preview subdomain).
   const host = window.location.hostname
-  return host === 'localhost' || host.endsWith('.netlify.app')
+  return (
+    host === 'localhost' || host.endsWith('.workers.dev') || host === 'web-preview.quidkey.com'
+  )
 }
 
 function readCookiebotConsent() {
