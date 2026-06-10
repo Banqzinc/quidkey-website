@@ -2,11 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://quidkey.com/</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-10</lastmod>
   </url>
   <url>
     <loc>https://quidkey.com/blog</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-10</lastmod>
   </url>
   <url>
     <loc>https://quidkey.com/blog/a2a-payments-cut-merchant-fees</loc>
@@ -77,31 +77,35 @@
     <lastmod>2026-04-15</lastmod>
   </url>
   <url>
+    <loc>https://quidkey.com/blog/the-real-cost-of-card-processing-for-shopify-merchants</loc>
+    <lastmod>2026-06-10</lastmod>
+  </url>
+  <url>
     <loc>https://quidkey.com/blog/we-launched-a-new-website-in-a-day</loc>
     <lastmod>2026-03-04</lastmod>
   </url>
   <url>
     <loc>https://quidkey.com/calculator</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-10</lastmod>
   </url>
   <url>
     <loc>https://quidkey.com/complaints</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-10</lastmod>
   </url>
   <url>
     <loc>https://quidkey.com/end-user-privacy</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-10</lastmod>
   </url>
   <url>
     <loc>https://quidkey.com/fintechs</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-10</lastmod>
   </url>
   <url>
     <loc>https://quidkey.com/privacy</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-10</lastmod>
   </url>
   <url>
     <loc>https://quidkey.com/terms</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-10</lastmod>
   </url>
 </urlset>

@@ -477,7 +477,7 @@
   font-size: 14.5px;
   color: var(--ink-soft);
 }
-.hp .adata__rows > *:nth-child(-n+3){ border-top: 0; background: var(--bg-mute); font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint); padding-top: 14px; padding-bottom: 14px; }
+.hp .adata__hcell{ border-top: 0; background: var(--bg-mute); font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint); padding-top: 14px; padding-bottom: 14px; padding-left: 22px; padding-right: 22px; }
 .hp .adata__cell--num{
   font-variant-numeric: tabular-nums;
   font-weight: 500;
