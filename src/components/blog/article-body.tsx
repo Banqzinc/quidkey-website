@@ -93,7 +93,9 @@ export function ArticleBody({ post }: { post: BlogPost }) {
                 }}
               >
                 {block.headers.map((h, i) => (
-                  <div key={`h-${i}`}>{h}</div>
+                  <div key={`h-${i}`} className="adata__hcell">
+                    {h}
+                  </div>
                 ))}
                 {block.rows.flatMap((row, rIdx) =>
                   row.map((cell, cIdx) => (

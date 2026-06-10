@@ -14,6 +14,7 @@ export type BlogCategory = 'Engineering' | 'Product' | 'Leadership'
 export const BLOG_CATEGORIES: BlogCategory[] = ['Engineering', 'Product', 'Leadership']
 
 const SLUG_TO_CATEGORY: Record<string, BlogCategory> = {
+  'the-real-cost-of-card-processing-for-shopify-merchants': 'Product',
   'the-missing-primitive-in-the-agent-economy': 'Leadership',
   'payment-links-are-live-get-paid-instantly-with-just-a-link': 'Product',
   'open-finance-in-the-us-part-3-building-a-pay-by-bank-in-the-us': 'Engineering',

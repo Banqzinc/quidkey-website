@@ -44,6 +44,138 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'the-real-cost-of-card-processing-for-shopify-merchants',
+    date: 'June 10, 2026',
+    dateISO: '2026-06-10',
+    title: 'The real cost of card processing for Shopify merchants',
+    seoTitle: 'Shopify Card Processing Fees: The Real Cost | Quidkey',
+    description:
+      'See what card processing really costs Shopify merchants — domestic and international — and how much Quidkey Pay by Bank can save at A$50k to A$500k a month.',
+    keyword: 'Shopify card processing fees',
+    author: 'Quidkey Team',
+    image: '/images/blog/quidkey-shopify-pay-by-bank.webp',
+    imageWidth: 1024,
+    imageHeight: 774,
+    featured: true,
+    relatedSlugs: [
+      'quidkey-is-live-on-shopify',
+      'australia-card-surcharge-ban-october-2026',
+    ],
+    blocks: [
+      {
+        type: 'p',
+        text: 'Most merchants know card processing fees exist. Few have sat down and calculated what they add up to across a year.',
+      },
+      {
+        type: 'p',
+        text: 'The number is usually larger than expected. And for Shopify Plus merchants selling internationally, it\'s often significantly larger.',
+      },
+      {
+        type: 'html',
+        html: 'We built the <a href="https://quidkey.com/calculator">Quidkey Shopify Fee Calculator</a> so you can see your exact number in 30 seconds. But before you do, here\'s what the maths looks like at different sales volumes — and why Pay by Bank makes such a difference for high-volume stores.',
+      },
+      { type: 'h2', text: 'The card processing rates for Shopify Plus in Australia' },
+      {
+        type: 'p',
+        text: 'For Shopify Plus merchants in Australia, card processing costs are:',
+      },
+      {
+        type: 'table',
+        headers: ['Transaction type', 'Rate'],
+        rows: [
+          ['Domestic', '1.2% + A$0.30 per order'],
+          [
+            'International (all-in, including 2% FX conversion)',
+            '5.0% + A$0.30 per order',
+          ],
+        ],
+      },
+      {
+        type: 'p',
+        text: 'With Quidkey Pay by Bank on Shopify, those rates can become:',
+      },
+      {
+        type: 'table',
+        headers: ['Transaction type', 'Rate'],
+        rows: [
+          ['Domestic', '0.5% + A$0.30 per order'],
+          ['International', '2.0% + A$0.30 per order'],
+        ],
+      },
+      {
+        type: 'p',
+        text: 'As an approved Shopify payment partner, Quidkey integrates directly into your existing checkout. Pay by Bank sits alongside cards, and customers who want to pay by card still can.',
+      },
+      { type: 'h2', text: 'What the numbers look like in practice' },
+      { type: 'h3', text: 'Example 1: A$50,000/month in domestic sales' },
+      {
+        type: 'p',
+        text: 'A store with A$50,000 in monthly domestic sales and an average order value of A$100 (500 orders/month):',
+      },
+      {
+        type: 'table',
+        headers: ['', 'Monthly fees', 'Annual fees'],
+        rows: [
+          ['Card processing', 'A$750', 'A$9,000'],
+          ['Quidkey Pay by Bank', 'A$400', 'A$4,800'],
+          ['Saving', 'A$350', 'A$4,200'],
+        ],
+      },
+      { type: 'h3', text: 'Example 2: A$200,000/month in domestic sales' },
+      {
+        type: 'p',
+        text: 'A store with A$200,000 in monthly domestic sales and an average order value of A$150 (approx. 1,333 orders/month):',
+      },
+      {
+        type: 'table',
+        headers: ['', 'Monthly fees', 'Annual fees'],
+        rows: [
+          ['Card processing', 'A$2,800', 'A$33,600'],
+          ['Quidkey Pay by Bank', 'A$1,400', 'A$16,800'],
+          ['Saving', 'A$1,400', 'A$16,800'],
+        ],
+      },
+      {
+        type: 'h3',
+        text: 'Example 3: A$400,000 domestic + A$100,000 international/month',
+      },
+      {
+        type: 'p',
+        text: 'A store with A$500,000 in total monthly sales, split A$400k domestic (2,000 orders) and A$100k international (500 orders), at an average order value of A$200:',
+      },
+      {
+        type: 'table',
+        headers: ['', 'Monthly fees', 'Annual fees'],
+        rows: [
+          ['Card processing', 'A$10,550', 'A$126,600'],
+          ['Quidkey Pay by Bank', 'A$4,750', 'A$57,000'],
+          ['Saving', 'A$5,800', 'A$69,600'],
+        ],
+      },
+      {
+        type: 'p',
+        text: 'The international volume is where the gap really widens. At 5% all-in versus 2%, switching even a portion of international orders to Pay by Bank has an outsized impact.',
+      },
+      { type: 'h2', text: 'See your exact number' },
+      {
+        type: 'p',
+        text: 'The examples above are based on Shopify Plus, where Quidkey delivers the strongest savings. For merchants on other Shopify plans, additional third-party transaction fees apply and the comparison differs — the calculator accounts for this automatically.',
+      },
+      {
+        type: 'p',
+        text: 'Enter your Shopify plan, monthly sales volume, international split, and average order value. It takes about 30 seconds and requires no signup.',
+      },
+      {
+        type: 'html',
+        html: '<strong><a href="https://quidkey.com/calculator">Try the Quidkey Shopify Fee Calculator</a></strong>',
+      },
+      {
+        type: 'html',
+        html: '<em>Estimates are based on publicly available Shopify Australia pricing as of 2026 and Quidkey\'s standard example pricing. Actual fees vary by plan, card mix, volume, negotiated rates, and other factors.</em>',
+      },
+    ],
+  },
+  {
     slug: 'australia-card-surcharge-ban-october-2026',
     date: 'May 22, 2026',
     dateISO: '2026-05-22',
