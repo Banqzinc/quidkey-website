@@ -1,0 +1,382 @@
+/* ─────────────────────────────────────────────────────────────────────
+   Quidkey homepage — UI refresh layer (hand-written).
+
+   Loaded LAST from src/routes/index.tsx, after every generated base file
+   and overrides.css. Same specificity pattern as overrides.css: rules are
+   scoped to .hp and use !important only where earlier generated layers
+   (headings.css, section-padding.css, mobile.css) also use it.
+
+   Goals: clean, slick, simple.
+   • One calm white canvas; gray bands removed, hairline separators instead
+   • Generous, perfectly consistent section rhythm
+   • Clearer hero: what the product IS, one proof row, no scribble clutter
+   • Fewer nested boxes, softer borders, bigger radii
+   ───────────────────────────────────────────────────────────────────── */
+
+/* ── 1. Canvas & tokens ────────────────────────────────────────────── */
+.hp {
+  --line: #E9E9EC;
+  --line-strong: #D8D8DD;
+  --bg-soft: #FAFAFB;
+  --bg-mute: #F3F3F5;
+  background: #fff;
+}
+
+/* ── 2. Unified section rhythm ───────────────────────────────────────
+   One vertical rhythm everywhere; sections separated by a single
+   hairline instead of alternating gray bands. */
+.hp .section,
+.hp .products,
+.hp .pbb,
+.hp .why.why,
+.hp .xbproof,
+.hp .closer,
+.hp .section--dev-fit,
+.hp .section--pricing-fit,
+.hp .products--fit,
+.hp .faq-section,
+.hp .logos.trust-strip {
+  padding-top: 112px !important;
+  padding-bottom: 112px !important;
+}
+@media (max-width: 899px) {
+  .hp .section,
+  .hp .products,
+  .hp .pbb,
+  .hp .why.why,
+  .hp .xbproof,
+  .hp .closer,
+  .hp .section--dev-fit,
+  .hp .section--pricing-fit,
+  .hp .products--fit,
+  .hp .faq-section,
+  .hp .logos.trust-strip {
+    padding-top: 72px !important;
+    padding-bottom: 72px !important;
+  }
+}
+
+/* Kill the viewport-height fitting that left dead air between sections. */
+.hp .section--dev-fit,
+.hp .section--pricing-fit,
+.hp .products--fit {
+  min-height: 0 !important;
+}
+
+/* Flatten the gray band: soft sections now share the white canvas and
+   get a hairline separator instead. */
+.hp .section--soft {
+  background: #fff !important;
+}
+.hp .pbb,
+.hp .why.why,
+.hp .xbproof,
+.hp .section--dev-fit,
+.hp .section--pricing-fit,
+.hp .products--fit,
+.hp .faq-section {
+  border-top: 1px solid var(--line);
+}
+
+/* Section heads: consistent spacing between eyebrow → heading → lede. */
+.hp .section__eyebrow {
+  margin-bottom: 22px !important;
+  font-size: 12px !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  color: var(--muted) !important;
+}
+.hp .pbb__head,
+.hp .why__head,
+.hp .products__head,
+.hp .intg__head {
+  margin-bottom: clamp(40px, 5vw, 64px) !important;
+}
+
+/* ── 3. Nav — calmer pill ──────────────────────────────────────────── */
+.hp .nav {
+  background: rgba(255, 255, 255, 0.72);
+  border-color: var(--line);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05), 0 16px 40px -24px rgba(15, 23, 42, 0.25);
+}
+.hp .nav.is-scrolled {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+/* ── 4. Hero ───────────────────────────────────────────────────────── */
+.hp .hero {
+  border-bottom: 0;
+}
+.hp .hero--split {
+  min-height: 0 !important;
+  padding: clamp(48px, 8vh, 96px) 0 clamp(64px, 10vh, 120px) !important;
+}
+/* Headline: slightly tighter, calmer measure so it reads as one thought. */
+.hp .hero--split .hero__title {
+  font-size: clamp(40px, min(5.4vw, 8.5vh), 80px) !important;
+  line-height: 1.02 !important;
+  letter-spacing: -0.04em !important;
+  max-width: 15ch;
+}
+.hp .hero--split .hero__sub {
+  font-size: clamp(17px, min(1.4vw, 2.2vh), 20px) !important;
+  line-height: 1.55 !important;
+  max-width: 46ch;
+  margin-bottom: 40px !important;
+}
+/* Proof row under the CTAs — quiet, one line per item. */
+.hp .hero--split .hero__proof {
+  margin: 36px 0 0 !important;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 12px 32px !important;
+}
+.hp .hero--split .hero__proof-item {
+  font-size: 14.5px !important;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.hp .hero--split .hero__proof-item strong {
+  color: var(--ink);
+}
+.hp .hero--split .hero__proof-check {
+  color: var(--ink);
+}
+
+/* The audience toggle line gets a touch more breathing room. */
+.hp .hero__aud {
+  margin-bottom: 32px !important;
+}
+
+/* Buttons: slicker primary — softer radius, arrow chip without rocket. */
+.hp .btn {
+  border-radius: 10px !important;
+}
+.hp .btn--xl {
+  height: 56px !important;
+  border-radius: 12px !important;
+}
+.hp .btn__arrow {
+  border-radius: 7px !important;
+}
+.hp .btn__arrow svg {
+  width: 15px !important;
+  height: 15px !important;
+}
+.hp .btn--xl .btn__arrow {
+  width: 36px !important;
+  height: 36px !important;
+}
+.hp .btn--xl.btn--ink,
+.hp .btn--xl.btn--blue {
+  padding-right: 10px !important;
+}
+.hp .btn--ink,
+.hp .btn--blue {
+  transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+.hp .btn--ink:hover {
+  background: #26262a !important;
+}
+
+/* ── 5. Logo strip — quieter ───────────────────────────────────────── */
+.hp .logos.trust-strip {
+  padding-top: 40px !important;
+  padding-bottom: 40px !important;
+  border-top: 1px solid var(--line);
+}
+.hp .trust__lead {
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: var(--muted) !important;
+  letter-spacing: 0.01em;
+}
+.hp .marquee__row {
+  gap: 56px !important;
+}
+.hp .logos__item--customer,
+.hp .logos__item--svg,
+.hp .logos__item--imgurl {
+  filter: grayscale(1);
+  opacity: 0.55;
+  transition: filter 0.25s, opacity 0.25s;
+}
+.hp .logos__item--customer:hover,
+.hp .logos__item--svg:hover,
+.hp .logos__item--imgurl:hover {
+  filter: grayscale(0);
+  opacity: 1;
+}
+
+/* ── 6. Why Quidkey — real cards ───────────────────────────────────── */
+.hp .why__grid--four > .why__cardx {
+  background: #fff !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 16px !important;
+  padding: 28px !important;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+.hp .why__grid--four > .why__cardx:hover {
+  border-color: var(--line-strong) !important;
+  box-shadow: 0 12px 32px -16px rgba(10, 10, 10, 0.12);
+  transform: translateY(-2px);
+}
+.hp .why__grid--four {
+  gap: 16px !important;
+}
+.hp .why__cardx-icon {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 10px;
+  background: var(--bg-mute);
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--ink) !important;
+  margin-bottom: 20px !important;
+}
+.hp .why__cardx-icon svg {
+  width: 20px !important;
+  height: 20px !important;
+}
+.hp .why__cardx-t {
+  color: var(--ink) !important;
+  font-size: 19px !important;
+}
+.hp .why__cardx-b {
+  color: var(--muted) !important;
+  max-width: none !important;
+}
+
+/* ── 7. Pay-by-Bank step cards — softer mocks ──────────────────────── */
+.hp .pbb__card {
+  border-radius: 16px !important;
+}
+.hp .pbb__card-mock {
+  background: var(--bg-soft) !important;
+}
+
+/* ── 8. Cross-border stat — cleaner panel ──────────────────────────── */
+.hp .xbproof__stat {
+  border-radius: 16px !important;
+}
+
+/* ── 9. Pricing — focused main card ────────────────────────────────── */
+.hp .pricing__card {
+  border-radius: 16px !important;
+  padding: 36px !important;
+}
+.hp .pricing__card--main {
+  background: #0b0b0c !important;
+  border-color: #0b0b0c !important;
+  color: #fff;
+  box-shadow: 0 24px 48px -24px rgba(10, 10, 10, 0.35);
+}
+.hp .pricing__card--main .pricing__card-badge {
+  color: #fff !important;
+}
+.hp .pricing__card--main .pricing__card-lbl,
+.hp .pricing__card--main .pricing__card-lbl-rest {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+.hp .pricing__card--main .pricing__card-lbl--rate {
+  border-bottom-color: rgba(255, 255, 255, 0.14) !important;
+}
+.hp .pricing__card--main .pricing__rate-pct,
+.hp .pricing__card--main .pricing__rate-plus {
+  color: #fff !important;
+}
+.hp .pricing__card--main .pricing__rate-fixed,
+.hp .pricing__card--main .pricing__rate-sym {
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+.hp .pricing__card--main .pricing__card-sub {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+.hp .pricing__card--main .pricing__list li {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+.hp .pricing__card--main .pricing__list li::before {
+  background: #fff !important;
+}
+/* Currency tabs — match the button language. */
+.hp .pricing__cur-tab.is-on {
+  border-radius: 8px !important;
+}
+
+/* High-volume banner: quieter. */
+.hp .pricing__highvol {
+  border-radius: 16px !important;
+}
+
+/* ── 10. FAQ — lighter ─────────────────────────────────────────────── */
+.hp .faq__q {
+  font-size: 17px !important;
+  font-weight: 550 !important;
+  padding: 22px 0 !important;
+}
+.hp .faq__q-ico {
+  background: transparent !important;
+  border: 0 !important;
+  color: var(--muted);
+  width: 24px !important;
+  height: 24px !important;
+}
+.hp .faq__item--open .faq__q-ico {
+  background: transparent !important;
+  color: var(--ink) !important;
+}
+.hp .faq__a-i {
+  font-size: 15.5px !important;
+  max-width: 68ch !important;
+  padding-bottom: 26px !important;
+}
+
+/* ── 11. Closer — one clear ask ────────────────────────────────────── */
+.hp .closer {
+  border-top: 1px solid var(--line);
+}
+.hp .closer__cta {
+  border-radius: 10px !important;
+  padding: 14px 26px !important;
+  font-size: 15px !important;
+}
+.hp .closer__switch {
+  opacity: 0.85;
+}
+
+/* ── 12. Treasury mock frame — softer shadow ───────────────────────── */
+.hp .tm2 {
+  border-radius: 16px !important;
+}
+
+/* ── 13. Integrations — calmer option rail ─────────────────────────── */
+.hp .intg__opt {
+  border-radius: 12px !important;
+}
+
+/* ── 14. Footer — match ink, slightly airier ───────────────────────── */
+.hp .ft {
+  padding-top: 72px !important;
+  padding-bottom: 36px !important;
+}
+.hp .ft__col h4 {
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 11.5px !important;
+}
+
+/* ── 15. Mobile tightening ─────────────────────────────────────────── */
+@media (max-width: 899px) {
+  .hp .hero--split .hero__title {
+    max-width: 100%;
+  }
+  .hp .hero--split .hero__proof {
+    gap: 10px 20px !important;
+  }
+  .hp .pricing__card {
+    padding: 28px !important;
+  }
+}

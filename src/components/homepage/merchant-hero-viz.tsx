@@ -14,7 +14,6 @@
 
 import { useEffect, useRef, useState } from 'react'
 
-import { ScribbleHint, type ScribbleStage } from '@/components/homepage/scribble-hint'
 import { DEMO_LOCALES, type Bank, type DemoLocale } from '@/components/homepage/demo-locales'
 import { useDemoRegion } from '@/context/demo-region'
 import { track } from '@/lib/track'
@@ -106,28 +105,6 @@ const STAGE_INDEX: Record<FlowStep, number> = {
   success: 9,
 }
 
-// Scribble guide stages — hand-drawn callouts overlaid on the hero viz.
-// Each stage has a `screen` (matches FlowStep) and an `id` (matches the
-// data-hint-id on the target element inside the phone).
-const SCRIBBLE_STAGES: ScribbleStage[] = [
-  { screen: 'checkout', id: 'predicted-bank', label: "Customer's predicted bank" },
-  { screen: 'checkout', id: 'select-bank', label: 'They can still pick any other bank' },
-  { screen: 'checkout', id: 'checkout-cta', label: 'One tap to pay' },
-  {
-    screen: 'login',
-    id: 'face-id',
-    label: (
-      <>
-        Authorise with
-        <br />
-        Face ID
-      </>
-    ),
-  },
-  { screen: 'bank', id: 'bank-pay', label: 'Confirm in the bank app' },
-  { screen: 'success', id: 'replay', label: 'Done, replay?' },
-]
-
 export function MerchantHeroViz() {
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('predicted')
   const [pickedIdx, setPickedIdx] = useState<number | null>(null)
@@ -135,12 +112,6 @@ export function MerchantHeroViz() {
   const [flowStep, setFlowStep] = useState<FlowStep>('checkout')
   const [faceIdState, setFaceIdState] = useState<FaceIdState>('idle')
   const [bankAccountIdx, setBankAccountIdx] = useState(0)
-  const [userClicks, setUserClicks] = useState(0)
-  const noteUserAction = () => setUserClicks((n) => n + 1)
-  // After 3 deliberate clicks the engagement-based suppression kicks in,
-  // matching the prototype's behavior so we don't backseat-drive engaged users.
-  const hintSuppressed = userClicks >= 3
-  const [scribbleIdx, setScribbleIdx] = useState(0)
 
   // Region drives which bank set / currency / receipt copy the demo shows.
   const { region } = useDemoRegion()
@@ -185,19 +156,16 @@ export function MerchantHeroViz() {
   const miniBanks = banks.slice(1, 4)
 
   const selectBank = (i: number) => {
-    noteUserAction()
     setPickedIdx(i)
     setPaymentMethod('select')
   }
 
   const pickNonBank = (m: 'apple' | 'card' | 'paypal') => {
-    noteUserAction()
     setPaymentMethod(m)
     setExpanded(false)
   }
 
   const tapSelectBank = () => {
-    noteUserAction()
     setPaymentMethod('select')
     setExpanded(true)
   }
@@ -218,14 +186,12 @@ export function MerchantHeroViz() {
   const handleCheckoutCta = () => {
     if (paymentMethod !== 'predicted' && paymentMethod !== 'select') return
     if (paymentMethod === 'select' && !pickedBank) return
-    noteUserAction()
     setFlowStep('redirect')
     queue(() => setFlowStep('launch'), 800)
     queue(() => setFlowStep('login'), 1900)
   }
 
   const handleFaceIdComplete = () => {
-    noteUserAction()
     setFaceIdState('scanning')
     queue(() => setFaceIdState('approved'), 1000)
     queue(() => {
@@ -235,123 +201,18 @@ export function MerchantHeroViz() {
   }
 
   const handleBankPay = () => {
-    noteUserAction()
     setFlowStep('processing')
     queue(() => setFlowStep('app-launch-safari'), 1500)
     queue(() => setFlowStep('success'), 2500)
   }
 
-  // ─── Scribble stage orchestration ─────────────────────────────────
-  // Each scribble stage configures the demo's visual state so the label
-  // always matches what the user is looking at on the phone screen.
-  // Maps to app.jsx:1521-1551.
-  useEffect(() => {
-    const stage = SCRIBBLE_STAGES[scribbleIdx]
-    if (!stage || stage.screen !== 'checkout') return
-    if (flowStep !== 'checkout') resetFlow()
-
-    if (scribbleIdx === 0) {
-      setPaymentMethod('predicted')
-      setExpanded(false)
-      setPickedIdx(null)
-    } else if (scribbleIdx === 1) {
-      setPaymentMethod('select')
-      setExpanded(true)
-      setPickedIdx(null)
-      const t = setTimeout(() => setPickedIdx(1), 600)
-      return () => clearTimeout(t)
-    } else if (scribbleIdx === 2) {
-      setPaymentMethod('predicted')
-      setExpanded(false)
-      setPickedIdx(null)
-    }
-    // Intentional: only re-run when scribbleIdx changes. Including
-    // flowStep would re-trigger the setup whenever the demo advances.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [scribbleIdx])
-
-  // When the demo advances to a new screen (e.g. user manually clicks the
-  // CTA, or a setTimeout chain advances flowStep), follow it. Use a
-  // functional updater so we don't need scribbleIdx in the deps and
-  // therefore don't fight manual prev/next clicks within the same screen.
-  // Maps to app.jsx:1500-1510.
-  useEffect(() => {
-    setScribbleIdx((idx) => {
-      const cur = SCRIBBLE_STAGES[idx]
-      if (cur && cur.screen === flowStep) return idx
-      const next = SCRIBBLE_STAGES.findIndex((s) => s.screen === flowStep)
-      return next >= 0 ? next : idx
-    })
-  }, [flowStep])
-
-  // Clicking Next on the scribble can also advance the DEMO when the user
-  // is on a stage that maps to a flow action. Maps to runStageNextAction
-  // at app.jsx:1554-1575.
-  //
-  // Importantly: we inline setFlowStep + queue() here rather than calling
-  // handleCheckoutCta / handleFaceIdComplete / handleBankPay — those
-  // helpers all call noteUserAction(), and counting scribble navigation
-  // as user clicks would suppress the hint after 3 Next presses (which
-  // is exactly enough to drive the demo to the success screen). The
-  // prototype handles this the same way.
-  const scribbleNext = () => {
-    const fromIdx = scribbleIdx
-    if (fromIdx === 2 && flowStep === 'checkout') {
-      setFlowStep('redirect')
-      queue(() => setFlowStep('launch'), 800)
-      queue(() => setFlowStep('login'), 1900)
-      return
-    }
-    if (fromIdx === 3 && flowStep === 'login') {
-      setFaceIdState('scanning')
-      queue(() => setFaceIdState('approved'), 1000)
-      queue(() => {
-        setFlowStep('bank')
-        setFaceIdState('idle')
-      }, 1900)
-      return
-    }
-    if (fromIdx === 4 && flowStep === 'bank') {
-      setFlowStep('processing')
-      queue(() => setFlowStep('app-launch-safari'), 1500)
-      queue(() => setFlowStep('success'), 2500)
-      return
-    }
-    if (fromIdx === 5) {
-      // Replay — reset the demo and start over from stage 0.
-      resetFlow()
-      setScribbleIdx(0)
-      return
-    }
-    setScribbleIdx((i) => Math.min(i + 1, SCRIBBLE_STAGES.length - 1))
-  }
-
-  const scribblePrev = () => {
-    const newIdx = Math.max(scribbleIdx - 1, 0)
-    const target = SCRIBBLE_STAGES[newIdx]
-    // If we're crossing into a different screen, rewind the phone there
-    // so the user actually sees what the new stage's label points at.
-    // This is more aggressive than the prototype (which just hides the
-    // scribble until the demo flowStep happens to match) but produces
-    // expected UX for back navigation.
-    if (target && target.screen !== flowStep) {
-      flowTimers.current.forEach(clearTimeout)
-      flowTimers.current = []
-      setFaceIdState('idle')
-      setBankAccountIdx(0)
-      setFlowStep(target.screen as FlowStep)
-    }
-    setScribbleIdx(newIdx)
-  }
-
   const onTapPredicted = () => {
-    noteUserAction()
     setPaymentMethod('predicted')
     setExpanded(false)
   }
 
   return (
-    <div className="hero__viz hero__viz--mobile hero__viz--scribble">
+    <div className="hero__viz hero__viz--mobile">
       <div className="phone-wrap">
         <div className={`phone phone--step-${flowStep}`}>
           <div className="phone__notch" aria-hidden="true" />
@@ -448,14 +309,6 @@ export function MerchantHeroViz() {
           )}
         </div>
       </div>
-      <ScribbleHint
-        stages={SCRIBBLE_STAGES}
-        currentIdx={scribbleIdx}
-        flowStep={flowStep}
-        suppressed={hintSuppressed}
-        onPrev={scribblePrev}
-        onNext={scribbleNext}
-      />
     </div>
   )
 }
@@ -536,7 +389,6 @@ function CheckoutScreen({
 
         <button
           type="button"
-          data-hint-id="predicted-bank"
           className={`mck__opt mck__opt--bank ${isPredicted ? 'mck__opt--active' : ''}`}
           onClick={onTapPredicted}
           style={{ height: '96px' }}
@@ -560,7 +412,6 @@ function CheckoutScreen({
         <div className={`mck__opt mck__select ${expanded ? 'is-open' : ''} ${isSelectMode ? 'mck__select--on' : ''}`}>
           <button
             type="button"
-            data-hint-id="select-bank"
             className="mck__select-head"
             onClick={tapSelectBank}
             aria-expanded={expanded}
@@ -682,7 +533,6 @@ function CheckoutScreen({
       <div className="phone__action">
         <button
           type="button"
-          data-hint-id="checkout-cta"
           className="phone__action-cta"
           disabled={paymentMethod === 'select' && !pickedBank}
           onClick={handleCheckoutCta}
@@ -782,7 +632,7 @@ function LoginScreen({
         <div className="bnk__login-or">
           <span>or</span>
         </div>
-        <button type="button" data-hint-id="face-id" className="bnk__login-faceid" onClick={onSignIn}>
+        <button type="button" className="bnk__login-faceid" onClick={onSignIn}>
           <svg
             viewBox="0 0 48 48"
             width="22"
@@ -969,7 +819,6 @@ function BankAppScreen({
       <div className="phone__action">
         <button
           type="button"
-          data-hint-id="bank-pay"
           className="phone__action-cta phone__action-cta--bank"
           onClick={onPay}
           style={{ background: bankBrandColor(activeBank) }}
@@ -1070,7 +919,6 @@ function SuccessScreen({
       <div className="phone__action">
         <button
           type="button"
-          data-hint-id="replay"
           className="phone__action-cta phone__action-cta--ghost"
           onClick={onReplay}
         >

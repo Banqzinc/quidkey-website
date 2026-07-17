@@ -26,9 +26,10 @@ import '@/styles/homepage/treasury-head.css'
 import '@/styles/homepage/mobile.css'
 import '@/styles/homepage/section-padding.css'
 import '@/styles/homepage/overrides.css'
+import '@/styles/homepage/refresh.css'
 
 const FONT_HREF =
-  'https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Caveat:wght@500;600;700&family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap'
+  'https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap'
 
 export const Route = createFileRoute('/')({
   component: HomePage,
@@ -47,7 +48,7 @@ export const Route = createFileRoute('/')({
       ...seo,
       links: [
         ...(seo.links ?? []),
-        // Homepage uses Outfit / Caveat / Inter Tight. The site-wide fonts
+        // Homepage uses Outfit / Inter Tight. The site-wide fonts
         // (Space Grotesk, DM Sans, JetBrains Mono) loaded by __root.tsx still
         // load — they're just unused on this page.
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },

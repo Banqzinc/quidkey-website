@@ -25,11 +25,9 @@ import '@/styles/homepage/mobile.css'
 import '@/styles/homepage/overrides.css'
 import '@/components/partners/partners.css'
 
-// Mirrors the homepage's font bundle. The hero now embeds MerchantHeroViz,
-// whose ScribbleHint callout uses Caveat — without this stylesheet it falls
-// back to the system cursive and looks visibly different from /.
+// Mirrors the homepage's font bundle (Outfit + Inter Tight).
 const FONT_HREF =
-  'https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Caveat:wght@500;600;700&family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap'
+  'https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap'
 
 export const Route = createFileRoute('/fintechs')({
   component: PartnersPage,
