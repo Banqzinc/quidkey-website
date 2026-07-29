@@ -42,6 +42,12 @@ export const REDIRECTS: Record<string, string> = {
   '/solutions/professional-services': '/',
   '/solutions/saas': '/',
   '/solutions/travel': '/',
+  // Legal pages moved off-site into the console legal center; these are
+  // absolute URLs (the only ones in this map) rather than site-relative paths.
+  '/privacy': 'https://console.quidkey.com/legal/website-privacy',
+  '/end-user-privacy': 'https://console.quidkey.com/legal/end-user-privacy',
+  '/terms': 'https://console.quidkey.com/legal/end-user-terms',
+  '/complaints': 'https://console.quidkey.com/legal/complaints',
 }
 
 // Drop a trailing slash (except the root "/") so "/about" and "/about/" resolve
@@ -66,7 +72,10 @@ export function resolveRedirect(pathname: string): string | null {
 // Append the original request query string to a redirect target so query params
 // (e.g. UTM attribution) survive the 301 — matching Netlify's redirect behavior.
 // The query is inserted before any hash fragment in the target (e.g. "/#pricing"
-// -> "/?utm=x#pricing").
+// -> "/?utm=x#pricing"). Pure string manipulation, so this works unchanged for
+// absolute targets too (e.g. the console legal-center URLs above) — the result
+// is passed straight through to the Location header in src/start.ts, and an
+// absolute Location is valid HTTP.
 export function appendSearch(target: string, search: string): string {
   const query = search.startsWith('?') ? search.slice(1) : search
   if (!query) return target

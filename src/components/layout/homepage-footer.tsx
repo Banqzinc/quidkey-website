@@ -52,7 +52,7 @@ function FooterColumn({ heading, links }: { heading: string; links: FooterLink[]
   )
 }
 
-export function HomepageFooter({ variant = 'home' }: { variant?: 'home' | 'legal' } = {}) {
+export function HomepageFooter() {
   const [newsletterSent, setNewsletterSent] = useState(false)
 
   const handleNewsletterSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -117,12 +117,30 @@ export function HomepageFooter({ variant = 'home' }: { variant?: 'home' | 'legal
   ]
 
   // Cookies opens the Cookiebot consent banner rather than navigating to a
-  // dedicated page (there isn't one). Same behaviour on home and legal
-  // variants — matches the legacy footer on main.
+  // dedicated page (there isn't one).
+  //
+  // Privacy/Terms/Complaints now live in the console legal center rather than
+  // on this site, so they're external links (the on-site pages 301 to the
+  // same URLs for anyone hitting the old paths directly).
   const legalLinks: FooterLink[] = [
-    { label: 'Privacy Notice', href: '/privacy' },
-    { label: 'End-User Privacy', href: '/end-user-privacy' },
-    { label: 'Terms of Use', href: '/terms' },
+    {
+      label: 'Privacy Notice',
+      href: 'https://console.quidkey.com/legal/website-privacy',
+      external: true,
+      onClick: trackOutbound('https://console.quidkey.com/legal/website-privacy', 'footer_privacy'),
+    },
+    {
+      label: 'End-User Privacy',
+      href: 'https://console.quidkey.com/legal/end-user-privacy',
+      external: true,
+      onClick: trackOutbound('https://console.quidkey.com/legal/end-user-privacy', 'footer_end_user_privacy'),
+    },
+    {
+      label: 'Terms of Use',
+      href: 'https://console.quidkey.com/legal/end-user-terms',
+      external: true,
+      onClick: trackOutbound('https://console.quidkey.com/legal/end-user-terms', 'footer_terms'),
+    },
     {
       label: 'Cookies',
       href: '#cookiebot',
@@ -132,10 +150,13 @@ export function HomepageFooter({ variant = 'home' }: { variant?: 'home' | 'legal
         openCookiebotPreferences()
       },
     },
-    { label: 'Complaints Procedure', href: '/complaints' },
+    {
+      label: 'Complaints Procedure',
+      href: 'https://console.quidkey.com/legal/complaints',
+      external: true,
+      onClick: trackOutbound('https://console.quidkey.com/legal/complaints', 'footer_complaints'),
+    },
   ]
-
-  const showNewsletter = variant !== 'legal'
 
   return (
     <footer className="ft">
@@ -146,45 +167,43 @@ export function HomepageFooter({ variant = 'home' }: { variant?: 'home' | 'legal
             <p className="ft__tag">
               Pay by Bank checkout and programmable treasury, on one ledger.
             </p>
-            {showNewsletter && (
-              <form
-                className={`ft__news${newsletterSent ? ' is-sent' : ''}`}
-                onSubmit={handleNewsletterSubmit}
-                noValidate
-              >
-                <label className="ft__news-lbl" htmlFor="ft-news-email">
-                  Get product updates
-                </label>
-                <div className="ft__news-row">
-                  <input
-                    id="ft-news-email"
-                    className="ft__news-input"
-                    type="email"
-                    required
-                    placeholder="you@company.com"
-                    autoComplete="email"
-                  />
-                  <button type="submit" className="ft__news-btn" aria-label="Subscribe">
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      aria-hidden="true"
-                    >
-                      <path d="M5 12h14" />
-                      <path d="M13 5l7 7-7 7" />
-                    </svg>
-                  </button>
-                </div>
-                <span className="ft__news-hint">Only product updates. No spam.</span>
-                <span className="ft__news-ok">Thanks, you're on the list.</span>
-              </form>
-            )}
+            <form
+              className={`ft__news${newsletterSent ? ' is-sent' : ''}`}
+              onSubmit={handleNewsletterSubmit}
+              noValidate
+            >
+              <label className="ft__news-lbl" htmlFor="ft-news-email">
+                Get product updates
+              </label>
+              <div className="ft__news-row">
+                <input
+                  id="ft-news-email"
+                  className="ft__news-input"
+                  type="email"
+                  required
+                  placeholder="you@company.com"
+                  autoComplete="email"
+                />
+                <button type="submit" className="ft__news-btn" aria-label="Subscribe">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M5 12h14" />
+                    <path d="M13 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
+              <span className="ft__news-hint">Only product updates. No spam.</span>
+              <span className="ft__news-ok">Thanks, you're on the list.</span>
+            </form>
           </div>
           <div className="ft__cols">
             <FooterColumn heading="Products" links={productLinks} />
