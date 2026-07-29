@@ -8,9 +8,9 @@ declare global {
 }
 
 // Opens the Cookiebot consent banner. Used by the "Cookies" link in the
-// footer and legal-shell tab strip. The site has no dedicated cookies page
-// any more — if the script can't surface the banner, the click is a no-op
-// (logged in dev) rather than navigating somewhere broken.
+// footer. The site has no dedicated cookies page any more — if the script
+// can't surface the banner, the click is a no-op (logged in dev) rather
+// than navigating somewhere broken.
 export function openCookiebotPreferences(options?: { fallbackUrl?: string }) {
   if (typeof window === 'undefined') return false
 

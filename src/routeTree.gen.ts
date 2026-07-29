@@ -9,39 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as TermsRouteImport } from './routes/terms'
-import { Route as PrivacyRouteImport } from './routes/privacy'
-import { Route as FintechsRouteImport } from './routes/fintechs'
-import { Route as EndUserPrivacyRouteImport } from './routes/end-user-privacy'
-import { Route as ComplaintsRouteImport } from './routes/complaints'
-import { Route as CalculatorRouteImport } from './routes/calculator'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CalculatorRouteImport } from './routes/calculator'
+import { Route as FintechsRouteImport } from './routes/fintechs'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 
-const TermsRoute = TermsRouteImport.update({
-  id: '/terms',
-  path: '/terms',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PrivacyRoute = PrivacyRouteImport.update({
-  id: '/privacy',
-  path: '/privacy',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FintechsRoute = FintechsRouteImport.update({
-  id: '/fintechs',
-  path: '/fintechs',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EndUserPrivacyRoute = EndUserPrivacyRouteImport.update({
-  id: '/end-user-privacy',
-  path: '/end-user-privacy',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ComplaintsRoute = ComplaintsRouteImport.update({
-  id: '/complaints',
-  path: '/complaints',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CalculatorRoute = CalculatorRouteImport.update({
@@ -49,9 +25,9 @@ const CalculatorRoute = CalculatorRouteImport.update({
   path: '/calculator',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const FintechsRoute = FintechsRouteImport.update({
+  id: '/fintechs',
+  path: '/fintechs',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
@@ -68,22 +44,14 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/calculator': typeof CalculatorRoute
-  '/complaints': typeof ComplaintsRoute
-  '/end-user-privacy': typeof EndUserPrivacyRoute
   '/fintechs': typeof FintechsRoute
-  '/privacy': typeof PrivacyRoute
-  '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/calculator': typeof CalculatorRoute
-  '/complaints': typeof ComplaintsRoute
-  '/end-user-privacy': typeof EndUserPrivacyRoute
   '/fintechs': typeof FintechsRoute
-  '/privacy': typeof PrivacyRoute
-  '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog': typeof BlogIndexRoute
 }
@@ -91,97 +59,33 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/calculator': typeof CalculatorRoute
-  '/complaints': typeof ComplaintsRoute
-  '/end-user-privacy': typeof EndUserPrivacyRoute
   '/fintechs': typeof FintechsRoute
-  '/privacy': typeof PrivacyRoute
-  '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/calculator'
-    | '/complaints'
-    | '/end-user-privacy'
-    | '/fintechs'
-    | '/privacy'
-    | '/terms'
-    | '/blog/$slug'
-    | '/blog/'
+  fullPaths: '/' | '/calculator' | '/fintechs' | '/blog/$slug' | '/blog/'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/calculator'
-    | '/complaints'
-    | '/end-user-privacy'
-    | '/fintechs'
-    | '/privacy'
-    | '/terms'
-    | '/blog/$slug'
-    | '/blog'
-  id:
-    | '__root__'
-    | '/'
-    | '/calculator'
-    | '/complaints'
-    | '/end-user-privacy'
-    | '/fintechs'
-    | '/privacy'
-    | '/terms'
-    | '/blog/$slug'
-    | '/blog/'
+  to: '/' | '/calculator' | '/fintechs' | '/blog/$slug' | '/blog'
+  id: '__root__' | '/' | '/calculator' | '/fintechs' | '/blog/$slug' | '/blog/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CalculatorRoute: typeof CalculatorRoute
-  ComplaintsRoute: typeof ComplaintsRoute
-  EndUserPrivacyRoute: typeof EndUserPrivacyRoute
   FintechsRoute: typeof FintechsRoute
-  PrivacyRoute: typeof PrivacyRoute
-  TermsRoute: typeof TermsRoute
   BlogSlugRoute: typeof BlogSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/terms': {
-      id: '/terms'
-      path: '/terms'
-      fullPath: '/terms'
-      preLoaderRoute: typeof TermsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/privacy': {
-      id: '/privacy'
-      path: '/privacy'
-      fullPath: '/privacy'
-      preLoaderRoute: typeof PrivacyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/fintechs': {
-      id: '/fintechs'
-      path: '/fintechs'
-      fullPath: '/fintechs'
-      preLoaderRoute: typeof FintechsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/end-user-privacy': {
-      id: '/end-user-privacy'
-      path: '/end-user-privacy'
-      fullPath: '/end-user-privacy'
-      preLoaderRoute: typeof EndUserPrivacyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/complaints': {
-      id: '/complaints'
-      path: '/complaints'
-      fullPath: '/complaints'
-      preLoaderRoute: typeof ComplaintsRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/calculator': {
@@ -191,11 +95,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CalculatorRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/fintechs': {
+      id: '/fintechs'
+      path: '/fintechs'
+      fullPath: '/fintechs'
+      preLoaderRoute: typeof FintechsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog/': {
@@ -218,11 +122,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CalculatorRoute: CalculatorRoute,
-  ComplaintsRoute: ComplaintsRoute,
-  EndUserPrivacyRoute: EndUserPrivacyRoute,
   FintechsRoute: FintechsRoute,
-  PrivacyRoute: PrivacyRoute,
-  TermsRoute: TermsRoute,
   BlogSlugRoute: BlogSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
 }

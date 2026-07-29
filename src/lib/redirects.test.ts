@@ -51,9 +51,22 @@ describe('resolveRedirect', () => {
     expect(resolveRedirect('/blog')).toBeNull()
     expect(resolveRedirect('/fintechs')).toBeNull()
     expect(resolveRedirect('/calculator')).toBeNull()
-    expect(resolveRedirect('/privacy')).toBeNull()
     // A redirect *target* must not itself be treated as a redirect source.
     expect(resolveRedirect('/blog/pay-by-bank-the-future-of-payments')).toBeNull()
+  })
+
+  it('redirects retired legal pages to the console legal center', () => {
+    expect(resolveRedirect('/privacy')).toBe('https://console.quidkey.com/legal/website-privacy')
+    expect(resolveRedirect('/end-user-privacy')).toBe('https://console.quidkey.com/legal/end-user-privacy')
+    expect(resolveRedirect('/terms')).toBe('https://console.quidkey.com/legal/end-user-terms')
+    expect(resolveRedirect('/complaints')).toBe('https://console.quidkey.com/legal/complaints')
+  })
+
+  it('is trailing-slash insensitive for legal page redirects', () => {
+    expect(resolveRedirect('/privacy/')).toBe('https://console.quidkey.com/legal/website-privacy')
+    expect(resolveRedirect('/end-user-privacy/')).toBe('https://console.quidkey.com/legal/end-user-privacy')
+    expect(resolveRedirect('/terms/')).toBe('https://console.quidkey.com/legal/end-user-terms')
+    expect(resolveRedirect('/complaints/')).toBe('https://console.quidkey.com/legal/complaints')
   })
 })
 
@@ -83,5 +96,14 @@ describe('appendSearch', () => {
     expect(appendSearch('/fintechs', '?ref=abc')).toBe('/fintechs?ref=abc')
     expect(appendSearch('/#pricing', '?utm_source=x&y=1')).toBe('/?utm_source=x&y=1#pricing')
     expect(appendSearch('/', '?utm=x')).toBe('/?utm=x')
+  })
+
+  it('preserves the query string onto an absolute redirect target', () => {
+    expect(appendSearch('https://console.quidkey.com/legal/website-privacy', '?ref=abc')).toBe(
+      'https://console.quidkey.com/legal/website-privacy?ref=abc',
+    )
+    expect(appendSearch('https://console.quidkey.com/legal/end-user-terms', '')).toBe(
+      'https://console.quidkey.com/legal/end-user-terms',
+    )
   })
 })

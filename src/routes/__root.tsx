@@ -78,9 +78,9 @@ export const Route = createRootRoute({
 })
 
 function NotFoundPage() {
-  // Minimal 404 — no nav, no footer. The new-design pages (homepage, blog,
-  // legal) all use the .hp-scoped HomepageNav/HomepageFooter which require
-  // their own CSS bundle that isn't loaded at the root level. A standalone
+  // Minimal 404 — no nav, no footer. The new-design pages (homepage, blog)
+  // all use the .hp-scoped HomepageNav/HomepageFooter which require their
+  // own CSS bundle that isn't loaded at the root level. A standalone
   // centered card keeps the 404 visually clean without dragging that
   // bundle onto every request.
   const quickLinks = [
