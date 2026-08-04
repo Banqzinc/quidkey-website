@@ -37,6 +37,9 @@ All calculator inputs live in the URL query string (shareable links), validated 
 | `amex`     | Amex rate, %                              | 2.2     | 0–10           |
 | `foreign`  | Foreign-issued card all-in rate, %        | 5.5     | 0–15           |
 | `steer`    | Share of domestic volume steered to PayTo | 30      | 0–100          |
+| `mix`      | Card mix %, CSV in card-type order        | 40,35,10,8,7 | each 0–100 |
+
+`mix` is one CSV param rather than five separate ones so shared links stay readable. A malformed value falls back to the whole default mix, never a partly-applied one.
 
 Invalid, missing, or out-of-range values fall back to the default.
 
@@ -57,31 +60,35 @@ Below it, the gate: a blurred, non-interactive preview of the gated section with
 ## Gate
 
 - Form: **email only** + hidden honeypot (`website` text input, visually hidden and `aria-hidden`, `tabIndex={-1}`, `autoComplete="off"`) + an **optional marketing-consent checkbox**.
-- Submit button: "See my full breakdown". No emailed-PDF promise — the payoff is on-page; follow-up emails are a HubSpot workflow, not code.
+- Submit button: "Open the advanced calculator". No emailed-PDF promise — the payoff is on-page; follow-up emails are a HubSpot workflow, not code.
 - **Marketing consent is unticked by default and never required.** The breakdown unlocks whether or not it is ticked, and the boolean rides along to HubSpot as a `marketing_consent` field. Rationale: the Australian Spam Act would accept a conspicuous notice as inferred consent, but consent bundled into a form a visitor must submit to see their own result is not freely given under GDPR, so gating the unlock on the tick would be invalid for any EU/UK visitor. Microcopy states plainly that the box is optional.
 - Follow-up option (not in v1): swapping the flat `marketing_consent` field for HubSpot's native `legalConsentOptions` gives a timestamped consent record, but needs a subscription type ID from the HubSpot account.
 - Success → set localStorage flag, reveal gated content, `track surcharge_lead_submit {outcome: 'success'}`.
 - Failure → inline error "Something went wrong — please try again.", stay locked, `track {outcome: 'error'}`. A failed HubSpot forward must **not** unlock (no silent lead loss).
 
-## Gated view ("Detailed estimate")
+## Gated view ("Advanced calculator")
 
-### Cost breakdown by card type — direct computation, no scaling
+Named an **advanced calculator**, not a "breakdown". A breakdown implies its total equals the quick estimate above, and it deliberately does not: the quick estimate applies one blended rate to all volume, while this builds up per card type from figures the visitor sets. Those are two independent models, and forcing them to agree would fight the visitor's own input. A footnote states the difference plainly.
 
-Card mix by value is a **fixed constant** in v1 (shown in the assumptions copy, not editable):
+### The table is the input
 
-| Type                     | Mix | Rate default | Rate editable? | Fixed/txn |
-| ------------------------ | --- | ------------ | -------------- | --------- |
-| Domestic debit           | 40% | 0.5%         | **No**         | $0.30     |
-| Domestic consumer credit | 35% | 1.4%         | Yes            | $0.30     |
-| Business credit          | 10% | 1.8%         | Yes            | $0.30     |
-| Amex                     | 8%  | 2.2%         | Yes            | —         |
-| Foreign-issued           | 7%  | 5.5% all-in  | Yes            | —         |
+Every rate and every share is edited **in the table row it belongs to** — there is no duplicate row of rate fields above it. Only average order value sits outside the table, since it isn't per-card-type.
 
-Foreign 5.5% is presented as "3.5% card + 2% FX" in helper text. Editable fields edit the % component only; the $0.30 fixed components are constants.
+| Type                     | Default share | Default rate | Share editable? | Rate editable? | Fixed/txn |
+| ------------------------ | ------------- | ------------ | --------------- | -------------- | --------- |
+| Domestic debit           | 40%           | 0.5%         | Yes             | **No**         | $0.30     |
+| Domestic consumer credit | 35%           | 1.4%         | Yes             | Yes            | $0.30     |
+| Business credit          | 10%           | 1.8%         | Yes             | Yes            | $0.30     |
+| Amex                     | 8%            | 2.2%         | Yes             | Yes            | —         |
+| Foreign-issued           | 7%            | 5.5% all-in  | Yes             | Yes            | —         |
 
-Math (annual): `vol_i = turnover × 12 × mix_i`; `orders_i = vol_i / aov`; `line_i = vol_i × rate_i + orders_i × fixed_i`. Detailed total = `Σ line_i`; effective blended rate = total ÷ annual volume.
+Debit's rate stays fixed as the cheapest reference point — the rail the page argues you should steer toward. Its share is editable like the rest.
 
-The table shows per-type share, rate, and annual cost, with callouts on business credit and Amex (no interchange relief on 1 Oct) and foreign cards (no cap until 1 April 2027). The detailed total is labeled **"Detailed estimate"** and may legitimately differ from the quick estimate above — both stay visible, clearly labeled as two models (user's blended rate vs. per-type build-up).
+No per-row regulatory annotations (no "no interchange cut", "no cap until 2027"): the article already covers which card types get no relief, and repeating it in the table crowded the numbers.
+
+Math (annual): `vol_i = turnover × 12 × share_i`; `orders_i = vol_i / aov`; `line_i = vol_i × rate_i + orders_i × fixed_i`. Total = `Σ line_i`; blended rate = total ÷ allocated volume.
+
+**Shares are not forced to 100%.** Volume follows the shares exactly as entered, so an under-allocated mix produces a smaller total rather than being silently normalised. The total row shows the share sum in amber when it isn't 100%, and a note states how much of the turnover is actually covered. Normalising behind the visitor's back would make the numbers untraceable to what they typed.
 
 ### PayTo savings scenario
 
@@ -153,7 +160,6 @@ src/lib/redirects.test.ts                      (edit) cache header case for the 
 - Turnstile (upgrade path if spam appears; requires a Cloudflare CSP edit, so it's a deliberate follow-up)
 - Transactional/result emails (HubSpot workflow handles follow-up)
 - Region switcher / non-AU currencies
-- Editable card mix (fixed constants v1)
 - Wiring the footer newsletter (the new pipe is reusable for it later)
 
 ## Delivery

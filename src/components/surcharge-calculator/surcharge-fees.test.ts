@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import {
+  DEFAULT_CARD_MIX,
   computeDetailed,
   computeQuick,
   computeSavings,
@@ -57,6 +58,7 @@ describe('computeDetailed', () => {
   const input = {
     monthlyTurnover: 500_000,
     averageOrderValue: 100,
+    mix: DEFAULT_CARD_MIX,
     creditPercent: 1.4,
     businessPercent: 1.8,
     amexPercent: 2.2,
@@ -104,10 +106,32 @@ describe('computeDetailed', () => {
     expect(debit.annualCost).toBeCloseTo(732_000, 6)
   })
 
-  it('keeps the mix shares summing to 1', () => {
-    const r = computeDetailed(input)
-    const total = r.lines.reduce((sum, l) => sum + l.mixShare, 0)
-    expect(total).toBeCloseTo(1, 10)
+  it('reports a fully allocated default mix as 100%', () => {
+    expect(computeDetailed(input).mixTotalPercent).toBeCloseTo(100, 8)
+  })
+
+  it('honours a custom mix instead of the default', () => {
+    // All volume on consumer credit: 6,000,000 at 1.4% + 60,000 txns x $0.30
+    const r = computeDetailed({
+      ...input,
+      mix: { debit: 0, credit: 1, business: 0, amex: 0, foreign: 0 },
+    })
+    expect(r.annualCost).toBeCloseTo(84_000 + 18_000, 6)
+    expect(r.mixTotalPercent).toBeCloseTo(100, 8)
+    expect(r.lines.find((l) => l.id === 'debit')!.annualCost).toBe(0)
+  })
+
+  it('under-allocates rather than silently scaling a mix that misses 100%', () => {
+    // Half the volume assigned: totals should halve, not be normalised back up.
+    const r = computeDetailed({
+      ...input,
+      mix: { debit: 0.2, credit: 0.175, business: 0.05, amex: 0.04, foreign: 0.035 },
+    })
+    expect(r.mixTotalPercent).toBeCloseTo(50, 8)
+    expect(r.annualVolume).toBeCloseTo(3_000_000, 6)
+    expect(r.annualCost).toBeCloseTo(101_160 / 2, 6)
+    // The blended rate is unaffected, since both parts halved.
+    expect(r.effectiveRatePercent).toBeCloseTo(1.686, 6)
   })
 })
 
@@ -115,6 +139,7 @@ describe('computeSavings', () => {
   const input = {
     monthlyTurnover: 500_000,
     averageOrderValue: 100,
+    mix: DEFAULT_CARD_MIX,
     creditPercent: 1.4,
     businessPercent: 1.8,
     amexPercent: 2.2,

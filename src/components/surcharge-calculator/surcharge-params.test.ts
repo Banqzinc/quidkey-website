@@ -1,6 +1,41 @@
 import { describe, expect, it } from 'vitest'
 
-import { DEFAULTS, parseSearch } from './surcharge-params'
+import { DEFAULT_CARD_MIX } from './surcharge-fees'
+import { DEFAULTS, formatMix, parseMix, parseSearch } from './surcharge-params'
+
+describe('parseMix / formatMix', () => {
+  it('round-trips the default mix', () => {
+    expect(formatMix(DEFAULT_CARD_MIX)).toBe('40,35,10,8,7')
+    expect(parseMix('40,35,10,8,7')).toEqual(DEFAULT_CARD_MIX)
+  })
+
+  it('accepts a mix that does not add to 100', () => {
+    // Under-allocation is a legitimate in-progress state while editing.
+    expect(parseMix('10,10,10,10,10')).toEqual({
+      debit: 0.1,
+      credit: 0.1,
+      business: 0.1,
+      amex: 0.1,
+      foreign: 0.1,
+    })
+  })
+
+  it('falls back to the whole default mix for malformed input', () => {
+    expect(parseMix('40,35,10,8')).toEqual(DEFAULT_CARD_MIX) // too few
+    expect(parseMix('40,35,10,8,7,1')).toEqual(DEFAULT_CARD_MIX) // too many
+    expect(parseMix('40,abc,10,8,7')).toEqual(DEFAULT_CARD_MIX) // not a number
+    expect(parseMix('40,-5,10,8,7')).toEqual(DEFAULT_CARD_MIX) // negative
+    expect(parseMix('40,150,10,8,7')).toEqual(DEFAULT_CARD_MIX) // above 100
+    expect(parseMix(undefined)).toEqual(DEFAULT_CARD_MIX)
+    expect(parseMix(42)).toEqual(DEFAULT_CARD_MIX)
+  })
+
+  it('formats fractional shares without floating-point noise', () => {
+    expect(formatMix({ debit: 0.335, credit: 0.335, business: 0.11, amex: 0.11, foreign: 0.11 })).toBe(
+      '33.5,33.5,11,11,11',
+    )
+  })
+})
 
 describe('parseSearch', () => {
   it('returns the defaults for an empty query', () => {
@@ -17,6 +52,7 @@ describe('parseSearch', () => {
       amex: 2.2,
       foreign: 5.5,
       steer: 30,
+      mix: '40,35,10,8,7',
     })
   })
 
@@ -62,7 +98,7 @@ describe('parseSearch', () => {
     const r = parseSearch({ turnover: 100, nonsense: 'x' })
     expect(r).toEqual({ ...DEFAULTS, turnover: 100 })
     expect(Object.keys(r).sort()).toEqual(
-      ['amex', 'aov', 'business', 'credit', 'foreign', 'rate', 'steer', 'turnover'].sort(),
+      ['amex', 'aov', 'business', 'credit', 'foreign', 'mix', 'rate', 'steer', 'turnover'].sort(),
     )
   })
 })

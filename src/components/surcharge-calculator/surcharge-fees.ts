@@ -17,9 +17,11 @@ export const MONTHS_PER_YEAR = 12
 // rounded. Used only for the "that's ~N salaries" comparator the article makes.
 export const ABS_MEDIAN_FULL_TIME_SALARY = 88_400
 
-// Share of card volume by value. Fixed in v1 (surfaced in the assumptions copy
-// rather than made editable) so the breakdown stays defensible.
-export const CARD_MIX: Record<CardTypeId, number> = {
+export type CardMix = Record<CardTypeId, number>
+
+// Starting share of card volume by value, as fractions. Editable in the table,
+// so this is only the default a visitor sees before adjusting it.
+export const DEFAULT_CARD_MIX: CardMix = {
   debit: 0.4,
   credit: 0.35,
   business: 0.1,
@@ -116,6 +118,8 @@ export type CardLine = {
 export type DetailedInput = {
   monthlyTurnover: number
   averageOrderValue: number
+  /** Share of card volume by value per card type, as fractions. */
+  mix: CardMix
   creditPercent: number
   businessPercent: number
   amexPercent: number
@@ -124,9 +128,13 @@ export type DetailedInput = {
 
 export type DetailedResult = {
   lines: CardLine[]
+  /** Volume actually allocated across the mix — less than turnover if the
+   *  shares don't add to 100%, which the UI surfaces rather than hides. */
   annualVolume: number
   annualCost: number
   effectiveRatePercent: number
+  /** Sum of the entered shares, as a percentage. 100 when fully allocated. */
+  mixTotalPercent: number
 }
 
 function ratesFor(input: DetailedInput): Record<CardTypeId, number> {
@@ -148,13 +156,13 @@ const FIXED_FOR: Record<CardTypeId, number> = {
 }
 
 export function computeDetailed(input: DetailedInput): DetailedResult {
-  const annualVolume = input.monthlyTurnover * MONTHS_PER_YEAR
+  const turnoverVolume = input.monthlyTurnover * MONTHS_PER_YEAR
   const aov = flooredAov(input.averageOrderValue)
   const rates = ratesFor(input)
 
   const lines: CardLine[] = CARD_TYPE_ORDER.map((id) => {
-    const mixShare = CARD_MIX[id]
-    const lineVolume = annualVolume * mixShare
+    const mixShare = input.mix[id] ?? 0
+    const lineVolume = turnoverVolume * mixShare
     const transactions = lineVolume / aov
     const fixedPerTransaction = FIXED_FOR[id]
     return {
@@ -170,12 +178,17 @@ export function computeDetailed(input: DetailedInput): DetailedResult {
   })
 
   const annualCost = lines.reduce((sum, line) => sum + line.annualCost, 0)
+  // Volume follows the shares as entered: under-allocating shows up as a
+  // smaller total rather than being silently scaled back to 100%.
+  const annualVolume = lines.reduce((sum, line) => sum + line.annualVolume, 0)
+  const mixTotalPercent = lines.reduce((sum, line) => sum + line.mixShare, 0) * 100
 
   return {
     lines,
     annualVolume,
     annualCost,
     effectiveRatePercent: annualVolume > 0 ? (annualCost / annualVolume) * 100 : 0,
+    mixTotalPercent,
   }
 }
 

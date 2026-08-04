@@ -471,27 +471,81 @@
 .sc-calc .sc-detail__card {
   padding: 26px;
 }
+/* Only average order value lives above the table now — every rate and share is
+   edited in the row it belongs to, so nothing is duplicated. */
 .sc-calc .sc-detail__inputs {
-  display: grid;
-  /* 150px lets all six rate fields sit on one row at desktop width; a label
-     that wraps to two lines must not shunt its own input downward, hence the
-     bottom-aligned inputs below. */
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 16px;
-  padding-bottom: 24px;
-  margin-bottom: 4px;
+  max-width: 260px;
+  padding-bottom: 22px;
   border-bottom: 1px solid var(--line);
 }
-.sc-calc .sc-detail__inputs .sc-field {
+
+/* ─── Editable table cells ─── */
+.sc-calc .sc-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  width: 84px;
+  height: 36px;
+  padding: 0 8px 0 10px;
+  background: var(--bg);
+  border: 1px solid var(--line-strong);
+  border-radius: 9px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.sc-calc .sc-cell:focus-within {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px rgba(10, 10, 10, 0.07);
+}
+.sc-calc .sc-cell input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: none;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  text-align: right;
+  padding: 0;
+}
+.sc-calc .sc-cell__unit {
+  flex: none;
+  font-size: 13px;
+  color: var(--faint);
+}
+/* Domestic debit's rate: visibly held, still column-aligned. */
+.sc-calc .sc-cell.is-locked {
+  background: var(--bg-mute);
+  border-color: var(--line);
+}
+.sc-calc .sc-cell.is-locked input {
+  color: var(--muted);
+}
+.sc-calc .sc-rate-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  justify-content: flex-end;
+}
+.sc-calc .sc-cell__plus {
+  font-size: 13px;
+  color: var(--faint);
+  white-space: nowrap;
+}
+.sc-calc .sc-table__warn {
+  color: var(--amber-ink);
+}
+.sc-calc .sc-detail__warn {
   display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-.sc-calc .sc-detail__inputs .sc-field__input {
-  margin-top: auto;
-}
-.sc-calc .sc-detail__inputs .sc-field--pct .sc-field__input {
-  max-width: none;
+  gap: 8px;
+  margin: 16px 0 0;
+  padding: 11px 14px;
+  border-radius: 10px;
+  background: var(--amber-bg);
+  color: var(--amber-ink);
+  font-size: 13px;
+  line-height: 1.5;
 }
 .sc-calc .sc-table {
   width: 100%;
@@ -519,7 +573,8 @@
   color: var(--faint);
   padding-bottom: 9px;
 }
-.sc-calc .sc-table__num {
+.sc-calc .sc-table th.sc-table__num,
+.sc-calc .sc-table td.sc-table__num {
   text-align: right;
 }
 .sc-calc .sc-table tbody th,
@@ -606,6 +661,15 @@
     border-top: 1px solid var(--line);
     font-size: 16px;
     color: var(--ink);
+  }
+  /* Editable cells need room to be tapped, so give them their own line rather
+     than squeezing against the label. */
+  .sc-calc .sc-table td:has(.sc-cell) {
+    padding: 5px 0;
+  }
+  .sc-calc .sc-cell {
+    width: 92px;
+    height: 40px;
   }
   .sc-calc .sc-table tfoot tr {
     border-bottom: 0;

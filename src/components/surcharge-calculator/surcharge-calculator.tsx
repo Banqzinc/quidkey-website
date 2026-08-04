@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
 
 import {
-  CARD_MIX,
   DEBIT_PERCENT,
   FIXED_PER_TRANSACTION,
   PAYTO_FIXED,
@@ -10,8 +9,9 @@ import {
   computeQuick,
   computeSavings,
   describeSalaryEquivalent,
+  type CardTypeId,
 } from './surcharge-fees'
-import type { SurchargeSearch } from './surcharge-params'
+import { formatMix, parseMix, type SurchargeSearch } from './surcharge-params'
 import { isValidEmail, normalizeEmail, submitLead } from '@/lib/submit-lead'
 import { track } from '@/lib/track'
 import { DEMO_BOOKING_URL, MERCHANTS_SIGNUP_URL } from '@/lib/urls'
@@ -226,8 +226,8 @@ function LeadGate({
     <form className="sc-gate__form" onSubmit={submit} noValidate>
       <h2 className="sc-gate__title">See where your fees actually go</h2>
       <p className="sc-gate__sub">
-        Get the breakdown by card type — including the three that get no fee relief on 1 October —
-        and what steering volume to Pay by Bank would save you.
+        Set your own card mix and the rate you pay on each card type, then see what steering
+        volume to Pay by Bank would save you.
       </p>
 
       <label className="sc-gate__label" htmlFor="sc-email">
@@ -251,7 +251,7 @@ function LeadGate({
           aria-describedby={message ? 'sc-gate-message' : 'sc-gate-privacy'}
         />
         <button className="sc-gate__btn" type="submit" disabled={status === 'sending'}>
-          {status === 'sending' ? 'Sending…' : 'See my full breakdown'}
+          {status === 'sending' ? 'Sending…' : 'Open the advanced calculator'}
         </button>
       </div>
 
@@ -285,8 +285,8 @@ function LeadGate({
         </p>
       ) : (
         <p className="sc-gate__privacy" id="sc-gate-privacy">
-          We store your email so our team can follow up. The box above is optional — your breakdown
-          appears either way.
+          We store your email so our team can follow up. The box above is optional — the calculator
+          opens either way.
         </p>
       )}
     </form>
@@ -308,14 +308,51 @@ function GatePreview() {
   )
 }
 
-// Card types the article calls out as getting no relief on 1 October.
-const NO_RELIEF: Partial<Record<string, string>> = {
-  business: 'No interchange cut on 1 October',
-  amex: 'No interchange cut, and no longer surchargeable',
-  foreign: 'No cap until 1 April 2027',
+// A compact percent input for a table cell. Percent fields need decimals, so
+// the raw text is held locally while the user types ("1." is not yet a number)
+// and only valid values propagate up; on blur the draft clears so the cell
+// snaps back to the canonical value.
+function CellPercent({
+  value,
+  max,
+  onChange,
+  label,
+  disabled,
+}: {
+  value: number
+  max: number
+  onChange: (value: number) => void
+  label: string
+  disabled?: boolean
+}) {
+  const [draft, setDraft] = useState<string | null>(null)
+  const shown = Number(value.toFixed(2))
+
+  return (
+    <span className={`sc-cell ${disabled ? 'is-locked' : ''}`}>
+      <input
+        type="text"
+        inputMode="decimal"
+        className="num"
+        aria-label={label}
+        disabled={disabled}
+        value={draft ?? String(shown)}
+        onChange={(e) => {
+          const raw = e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')
+          setDraft(raw)
+          const n = Number(raw)
+          if (raw !== '' && Number.isFinite(n) && n >= 0 && n <= max) onChange(n)
+        }}
+        onBlur={() => setDraft(null)}
+      />
+      <span className="sc-cell__unit" aria-hidden="true">
+        %
+      </span>
+    </span>
+  )
 }
 
-function Breakdown({
+function AdvancedCalculator({
   state,
   onChange,
   onTrackInput,
@@ -324,32 +361,53 @@ function Breakdown({
   onChange: (patch: Partial<SurchargeSearch>) => void
   onTrackInput: (field: string) => void
 }) {
-  const { turnover, aov, credit, business, amex, foreign, steer } = state
+  const { turnover, aov, credit, business, amex, foreign, steer, mix } = state
+  const cardMix = useMemo(() => parseMix(mix), [mix])
 
   const result = useMemo(
     () =>
       computeSavings({
         monthlyTurnover: turnover,
         averageOrderValue: aov,
+        mix: cardMix,
         creditPercent: credit,
         businessPercent: business,
         amexPercent: amex,
         foreignPercent: foreign,
         steerPercent: steer,
       }),
-    [turnover, aov, credit, business, amex, foreign, steer],
+    [turnover, aov, cardMix, credit, business, amex, foreign, steer],
   )
   const { detailed } = result
+
+  // Domestic debit's rate is deliberately not editable: it is the cheapest rail
+  // and the one the page argues you should steer toward, so it stays a fixed
+  // reference point. Every other rate, and every share, is the visitor's.
+  const rateField: Record<CardTypeId, { patch: keyof SurchargeSearch; max: number } | null> = {
+    debit: null,
+    credit: { patch: 'credit', max: 10 },
+    business: { patch: 'business', max: 10 },
+    amex: { patch: 'amex', max: 10 },
+    foreign: { patch: 'foreign', max: 15 },
+  }
+
+  const setShare = (id: CardTypeId, sharePercent: number) => {
+    onChange({ mix: formatMix({ ...cardMix, [id]: sharePercent / 100 }) })
+    onTrackInput('mix')
+  }
+
+  const mixTotal = detailed.mixTotalPercent
+  const mixIsOff = Math.abs(mixTotal - 100) > 0.5
 
   return (
     <>
       <section className="sc-detail">
         <div className="container">
           <div className="sc-section__head">
-            <h2 className="sc-section__title">Where your card fees go</h2>
+            <h2 className="sc-section__title">Advanced calculator</h2>
             <p className="sc-section__sub">
-              Built up from a typical Australian card mix. Adjust any rate to match your merchant
-              statement — domestic debit stays fixed as the cheapest reference point.
+              Set the share of your volume and the rate you pay on each card type. It starts from a
+              typical Australian card mix — every figure in the table is yours to change.
             </p>
           </div>
 
@@ -358,62 +416,12 @@ function Breakdown({
               <CurrencyField
                 id="sc-aov"
                 label="Average order value"
-                hint="per transaction"
+                hint="per order"
                 value={aov}
                 onChange={(v) => {
                   onChange({ aov: v })
                   onTrackInput('aov')
                 }}
-              />
-              <PercentField
-                id="sc-credit"
-                label="Consumer credit"
-                value={credit}
-                max={10}
-                onChange={(v) => {
-                  onChange({ credit: v })
-                  onTrackInput('credit')
-                }}
-              />
-              <PercentField
-                id="sc-business"
-                label="Business credit"
-                value={business}
-                max={10}
-                onChange={(v) => {
-                  onChange({ business: v })
-                  onTrackInput('business')
-                }}
-              />
-              <PercentField
-                id="sc-amex"
-                label="American Express"
-                value={amex}
-                max={10}
-                onChange={(v) => {
-                  onChange({ amex: v })
-                  onTrackInput('amex')
-                }}
-              />
-              <PercentField
-                id="sc-foreign"
-                label="Foreign cards"
-                hint="card + FX"
-                value={foreign}
-                max={15}
-                onChange={(v) => {
-                  onChange({ foreign: v })
-                  onTrackInput('foreign')
-                }}
-              />
-              <PercentField
-                id="sc-debit"
-                label="Domestic debit"
-                hint="fixed"
-                value={DEBIT_PERCENT}
-                max={10}
-                onChange={() => {}}
-                disabled
               />
             </div>
 
@@ -424,12 +432,8 @@ function Breakdown({
               <thead>
                 <tr>
                   <th scope="col">Card type</th>
-                  <th scope="col" className="sc-table__num">
-                    Share
-                  </th>
-                  <th scope="col" className="sc-table__num">
-                    Rate
-                  </th>
+                  <th scope="col">Share</th>
+                  <th scope="col">Rate</th>
                   <th scope="col" className="sc-table__num">
                     Annual volume
                   </th>
@@ -439,42 +443,59 @@ function Breakdown({
                 </tr>
               </thead>
               <tbody>
-                {detailed.lines.map((line) => (
-                  <tr key={line.id}>
-                    <th scope="row">
-                      <span className="sc-table__label">{line.label}</span>
-                      {NO_RELIEF[line.id] ? (
-                        <span className="sc-table__flag">{NO_RELIEF[line.id]}</span>
-                      ) : null}
-                    </th>
-                    <td className="sc-table__num num" data-label="Share">
-                      {Math.round(line.mixShare * 100)}%
-                    </td>
-                    <td className="sc-table__num num" data-label="Rate">
-                      {rateText(line.ratePercent)}
-                      {line.fixedPerTransaction > 0
-                        ? ` + $${line.fixedPerTransaction.toFixed(2)}`
-                        : ''}
-                    </td>
-                    <td className="sc-table__num num" data-label="Annual volume">
-                      {money(line.annualVolume)}
-                    </td>
-                    <td className="sc-table__num num sc-table__cost" data-label="Annual cost">
-                      {money(line.annualCost)}
-                    </td>
-                  </tr>
-                ))}
+                {detailed.lines.map((line) => {
+                  const field = rateField[line.id]
+                  return (
+                    <tr key={line.id}>
+                      <th scope="row">{line.label}</th>
+                      <td data-label="Share">
+                        <CellPercent
+                          value={line.mixShare * 100}
+                          max={100}
+                          label={`${line.label} share of card volume`}
+                          onChange={(v) => setShare(line.id, v)}
+                        />
+                      </td>
+                      <td data-label="Rate">
+                        <span className="sc-rate-cell">
+                          <CellPercent
+                            value={line.ratePercent}
+                            max={field?.max ?? 10}
+                            label={`${line.label} rate`}
+                            disabled={!field}
+                            onChange={(v) => {
+                              if (!field) return
+                              onChange({ [field.patch]: v } as Partial<SurchargeSearch>)
+                              onTrackInput(String(field.patch))
+                            }}
+                          />
+                          {line.fixedPerTransaction > 0 ? (
+                            <span className="sc-cell__plus num">
+                              + ${line.fixedPerTransaction.toFixed(2)}
+                            </span>
+                          ) : null}
+                        </span>
+                      </td>
+                      <td className="sc-table__num num" data-label="Annual volume">
+                        {money(line.annualVolume)}
+                      </td>
+                      <td className="sc-table__num num sc-table__cost" data-label="Annual cost">
+                        {money(line.annualCost)}
+                      </td>
+                    </tr>
+                  )
+                })}
               </tbody>
               <tfoot>
                 <tr>
                   <th scope="row">
-                    Total — detailed estimate
+                    Total
                     <span className="sc-table__flag">
                       Blended {rateText(detailed.effectiveRatePercent)} of card volume
                     </span>
                   </th>
-                  <td className="sc-table__num num" data-label="Share">
-                    100%
+                  <td className={`num ${mixIsOff ? 'sc-table__warn' : ''}`} data-label="Share">
+                    {Number(mixTotal.toFixed(1))}%
                   </td>
                   <td />
                   <td className="sc-table__num num" data-label="Annual volume">
@@ -486,9 +507,18 @@ function Breakdown({
                 </tr>
               </tfoot>
             </table>
+
+            {mixIsOff ? (
+              <p className="sc-detail__warn" role="status">
+                Your shares add up to {Number(mixTotal.toFixed(1))}%, so this covers{' '}
+                {money(detailed.annualVolume)} of your {money(turnover * 12)} annual card volume.
+                Adjust them to 100% to include all of it.
+              </p>
+            ) : null}
+
             <p className="sc-detail__foot">
-              This builds your fees up card type by card type, so it can differ from the quick
-              estimate above — that one applies a single blended rate you entered to all volume.
+              This builds your fees up card type by card type, so its total won't match the quick
+              estimate above — that one applies a single blended rate to all your volume.
             </p>
           </div>
         </div>
@@ -603,17 +633,15 @@ function Breakdown({
         <div className="container">
           <h2 className="sc-notes__title">Assumptions</h2>
           <p className="sc-notes__body">
-            <strong>Estimates only.</strong> Card mix by value is assumed to be{' '}
-            {Math.round(CARD_MIX.debit * 100)}% domestic debit,{' '}
-            {Math.round(CARD_MIX.credit * 100)}% domestic consumer credit,{' '}
-            {Math.round(CARD_MIX.business * 100)}% business credit,{' '}
-            {Math.round(CARD_MIX.amex * 100)}% American Express and{' '}
-            {Math.round(CARD_MIX.foreign * 100)}% foreign-issued. Domestic debit, consumer credit
-            and business credit include a ${FIXED_PER_TRANSACTION.toFixed(2)} per-transaction fee;
-            American Express and foreign cards are modelled as a percentage only. Quidkey Pay by
-            Bank is {rateText(PAYTO_PERCENT)} + ${PAYTO_FIXED.toFixed(2)} and Quidkey international
-            cards {rateText(QUIDKEY_FOREIGN_PERCENT)}. Your actual fees depend on your merchant
-            agreement, card mix, negotiated rates, refunds, chargebacks and FX.
+            <strong>Estimates only.</strong> The card mix and rates in the advanced calculator start
+            from typical Australian figures and are yours to edit. Domestic debit is held at{' '}
+            {rateText(DEBIT_PERCENT)} + ${FIXED_PER_TRANSACTION.toFixed(2)} as a reference point.
+            Domestic debit, consumer credit and business credit include a $
+            {FIXED_PER_TRANSACTION.toFixed(2)} per-transaction fee; American Express and
+            foreign-issued cards are modelled as a percentage only. Quidkey Pay by Bank is{' '}
+            {rateText(PAYTO_PERCENT)} + ${PAYTO_FIXED.toFixed(2)} and Quidkey international cards{' '}
+            {rateText(QUIDKEY_FOREIGN_PERCENT)}. Your actual fees depend on your merchant agreement,
+            card mix, negotiated rates, refunds, chargebacks and FX.
           </p>
           <p className="sc-notes__body">
             The 1 October 2026 changes and the RBA's consumer-switching figures come from the RBA's{' '}
@@ -719,7 +747,7 @@ export function SurchargeCalculator({
       </section>
 
       {unlocked ? (
-        <Breakdown state={state} onChange={onChange} onTrackInput={trackInput} />
+        <AdvancedCalculator state={state} onChange={onChange} onTrackInput={trackInput} />
       ) : (
         <section className="sc-gate">
           <div className="container">
