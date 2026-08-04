@@ -51,6 +51,7 @@ describe('resolveRedirect', () => {
     expect(resolveRedirect('/blog')).toBeNull()
     expect(resolveRedirect('/fintechs')).toBeNull()
     expect(resolveRedirect('/calculator')).toBeNull()
+    expect(resolveRedirect('/surcharge-calculator')).toBeNull()
     // A redirect *target* must not itself be treated as a redirect source.
     expect(resolveRedirect('/blog/pay-by-bank-the-future-of-payments')).toBeNull()
   })
@@ -82,6 +83,7 @@ describe('resolveCacheControl', () => {
     expect(resolveCacheControl('/')).toBe('public, max-age=0, must-revalidate')
     expect(resolveCacheControl('/fintechs')).toBe('public, max-age=0, must-revalidate')
     expect(resolveCacheControl('/calculator')).toBe('public, max-age=0, must-revalidate')
+    expect(resolveCacheControl('/surcharge-calculator')).toBe('public, max-age=0, must-revalidate')
   })
 })
 

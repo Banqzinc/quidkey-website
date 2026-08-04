@@ -26,8 +26,12 @@ export const getRouter = () => {
   // top of the new page — a visible "starts halfway, then scrolls up"
   // effect. Instant scroll makes the new page render at top with no
   // animation.
+  // Search-param-only updates are not navigations. The calculators mirror their
+  // inputs into the URL on every keystroke and slider step, so scrolling to top
+  // here would throw the visitor out of the section they are editing.
   router.subscribe('onResolved', (e) => {
     if (e.toLocation.hash) return
+    if (!e.pathChanged) return
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   })
 

@@ -15,6 +15,9 @@ todos.json
 # Local Netlify folder
 .netlify
 
+# Local Worker vars (wrangler dev). Copy .dev.vars.example to .dev.vars.
+.dev.vars
+
 # Playwright MCP test artifacts
 .playwright-mcp/
 *.png

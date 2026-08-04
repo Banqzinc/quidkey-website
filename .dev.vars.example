@@ -1,0 +1,4 @@
+# Copy to .dev.vars for local development (git-ignored).
+# Both values come from the HubSpot form's embed code and are not secrets.
+HUBSPOT_PORTAL_ID=
+HUBSPOT_FORM_GUID=

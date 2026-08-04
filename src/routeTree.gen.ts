@@ -9,15 +9,21 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as CalculatorRouteImport } from './routes/calculator'
+import { Route as SurchargeCalculatorRouteImport } from './routes/surcharge-calculator'
 import { Route as FintechsRouteImport } from './routes/fintechs'
+import { Route as CalculatorRouteImport } from './routes/calculator'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const SurchargeCalculatorRoute = SurchargeCalculatorRouteImport.update({
+  id: '/surcharge-calculator',
+  path: '/surcharge-calculator',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FintechsRoute = FintechsRouteImport.update({
+  id: '/fintechs',
+  path: '/fintechs',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CalculatorRoute = CalculatorRouteImport.update({
@@ -25,9 +31,9 @@ const CalculatorRoute = CalculatorRouteImport.update({
   path: '/calculator',
   getParentRoute: () => rootRouteImport,
 } as any)
-const FintechsRoute = FintechsRouteImport.update({
-  id: '/fintechs',
-  path: '/fintechs',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
@@ -45,6 +51,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/calculator': typeof CalculatorRoute
   '/fintechs': typeof FintechsRoute
+  '/surcharge-calculator': typeof SurchargeCalculatorRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/calculator': typeof CalculatorRoute
   '/fintechs': typeof FintechsRoute
+  '/surcharge-calculator': typeof SurchargeCalculatorRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog': typeof BlogIndexRoute
 }
@@ -60,32 +68,60 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/calculator': typeof CalculatorRoute
   '/fintechs': typeof FintechsRoute
+  '/surcharge-calculator': typeof SurchargeCalculatorRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/calculator' | '/fintechs' | '/blog/$slug' | '/blog/'
+  fullPaths:
+    | '/'
+    | '/calculator'
+    | '/fintechs'
+    | '/surcharge-calculator'
+    | '/blog/$slug'
+    | '/blog/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/calculator' | '/fintechs' | '/blog/$slug' | '/blog'
-  id: '__root__' | '/' | '/calculator' | '/fintechs' | '/blog/$slug' | '/blog/'
+  to:
+    | '/'
+    | '/calculator'
+    | '/fintechs'
+    | '/surcharge-calculator'
+    | '/blog/$slug'
+    | '/blog'
+  id:
+    | '__root__'
+    | '/'
+    | '/calculator'
+    | '/fintechs'
+    | '/surcharge-calculator'
+    | '/blog/$slug'
+    | '/blog/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CalculatorRoute: typeof CalculatorRoute
   FintechsRoute: typeof FintechsRoute
+  SurchargeCalculatorRoute: typeof SurchargeCalculatorRoute
   BlogSlugRoute: typeof BlogSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/surcharge-calculator': {
+      id: '/surcharge-calculator'
+      path: '/surcharge-calculator'
+      fullPath: '/surcharge-calculator'
+      preLoaderRoute: typeof SurchargeCalculatorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fintechs': {
+      id: '/fintechs'
+      path: '/fintechs'
+      fullPath: '/fintechs'
+      preLoaderRoute: typeof FintechsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/calculator': {
@@ -95,11 +131,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CalculatorRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/fintechs': {
-      id: '/fintechs'
-      path: '/fintechs'
-      fullPath: '/fintechs'
-      preLoaderRoute: typeof FintechsRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog/': {
@@ -123,6 +159,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CalculatorRoute: CalculatorRoute,
   FintechsRoute: FintechsRoute,
+  SurchargeCalculatorRoute: SurchargeCalculatorRoute,
   BlogSlugRoute: BlogSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
 }
