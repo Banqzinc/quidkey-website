@@ -29,6 +29,9 @@ export type HomepageEvent =
   | { name: 'homepage_newsletter_submit'; outcome: 'success' | 'error'; reason?: string }
   | { name: 'homepage_outbound_click'; href: string; label: string }
   | { name: 'calculator_view' }
+  | { name: 'surcharge_calculator_view' }
+  | { name: 'surcharge_calculator_input'; field: string }
+  | { name: 'surcharge_lead_submit'; outcome: 'success' | 'error' }
   | { name: 'article_share_click'; slug: string; channel: ShareChannel }
   | { name: 'article_toc_click'; slug: string; section_id: string }
   | { name: 'article_related_click'; from_slug: string; to_slug: string }
