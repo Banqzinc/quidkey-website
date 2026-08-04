@@ -61,7 +61,9 @@ Live outputs as the user types:
 - **Annual cost** = `turnover × 12 × rate + (turnover × 12 / aov) × fixed` (headline; $120,000 at the defaults)
 - Monthly cost, annual card volume
 - Comparator line derived from `annual / 88,400` (ABS median full-time salary, constant `ABS_MEDIAN_FULL_TIME_SALARY = 88_400`), phrased by `describeSalaryEquivalent()`: under 0.85 → "about N% of a median full-time salary"; 0.85–1.2 → "almost the cost of another full-time employee" (the article's own phrasing, because "about 1.0×" reads badly); 1.2–10 → "about N.N×"; above 10 → grouped integer ("about 1,900×"); below 0.15 → omitted.
-- **Save up to $X** — the same volume priced at Quidkey Pay by Bank (`PAYTO_PERCENT` + `PAYTO_FIXED`), clamped at zero. Labelled "up to" because it assumes every payment moves, which no merchant does. Savings sit in the hero panel because savings is the point of the page; the earlier per-lever detail stays out of it.
+- **Estimated saving** — the SAME `computeSavings()` result the savings card further down renders, built from a shared `savingsInput(state)` helper so the two figures agree by construction rather than by coincidence. Sub-line states the steer assumption ("moving 30% of your card volume to..."). Hidden entirely when the saving is zero rather than showing $0.
+
+The panel shows only the cost and the saving. An earlier per-month / annual-volume row and a "that's N× a median salary" comparator were both cut: with savings in the panel they diluted it, and the panel content is vertically centred so the two figures sit balanced.
 
 ### Defaults are Stripe's published Australian pricing
 
@@ -95,6 +97,8 @@ Every rate and every share is edited **in the table row it belongs to** — ther
 | Amex                     | 13%           | 2.2%         | —         |
 | Foreign-issued           | 12%           | 5.5% all-in  | —         |
 
+The foreign row carries a sub-label, "card rate and FX combined", because 5.5% bundles a ~3.5% card rate with a ~2% FX margin. Without it a visitor reads 5.5% as card-only and re-enters 3.5%, understating their cost.
+
 Every share and every rate is editable — no locked cells.
 
 **Domestic debit is excluded from the model.** It is already the cheapest card to accept, so it diluted the table without changing the argument. The four remaining shares are the old 35/10/8/7 rebalanced to total 100%. Steerable volume is now consumer credit + business credit.
@@ -111,11 +115,22 @@ One slider (`steer`, default 30%) and **one figure**: the estimated annual savin
 
 Primary CTA is **Book a demo**, with Get started secondary.
 
-### Enterprise hand-off above $10m/month
+### Enterprise hand-off above $20m a year
 
-When monthly card turnover exceeds **$10,000,000**, the scenario is replaced by a sales hand-off: "We typically cut card costs by **over 70%**", copy explaining that at that volume pricing and routing are built around the merchant's actual mix rather than a rate card, and Book a demo / Talk to sales. No slider, no computed saving.
+`isEnterpriseVolume(monthlyTurnover)` tests **annual** volume (`monthly × 12`) against `ENTERPRISE_ANNUAL_TURNOVER` = **$20,000,000**, pinned by a test because the annual-vs-monthly semantics is exactly the kind of thing that silently regresses. Above it:
 
-The reasoning: past that volume a self-serve percentage isn't a number the page can stand behind, and the lead is worth a conversation. Constants `ENTERPRISE_MONTHLY_TURNOVER` and `ENTERPRISE_SAVINGS_CLAIM_PERCENT` hold the threshold and the claim.
+- the hero saving becomes "Save up to **70%**" with a Talk to us link, not a dollar figure
+- the savings scenario is replaced by a sales hand-off: "We typically cut card costs by **over 70%**", copy explaining that at that volume pricing and routing are built around the merchant's actual mix rather than a rate card, and Book a demo / Talk to sales. No slider, no computed saving.
+
+The reasoning: past that volume a self-serve figure isn't a number the page can stand behind, and the lead is worth a conversation.
+
+### Scroll behaviour
+
+`src/router.tsx` has a site-wide `onResolved` subscriber that scrolls to top on navigation. It now skips when `!e.pathChanged`, because both calculators mirror inputs into the URL on every keystroke and slider step, and scrolling to top threw the visitor out of the section they were editing. `resetScroll: false` on `navigate()` does NOT fix this: the reset came from that custom subscriber, not the router's built-in restoration.
+
+### Touch targets
+
+Inputs stretch to fill their wrapper (`height: 100%`) and the range slider gets a 40px box, so every interactive element clears 36px on mobile. Without the stretch, the tappable area is only the text line height while the field *looks* 46px tall.
 
 ### Assumptions & disclaimer
 

@@ -6,7 +6,7 @@ import {
   computeDetailed,
   computeQuick,
   computeSavings,
-  describeSalaryEquivalent,
+  isEnterpriseVolume,
 } from './surcharge-fees'
 
 // Every expected value below is hand-computed from the spec's rate table so a
@@ -31,33 +31,12 @@ describe('computeQuick', () => {
     // 6,000,000 x 1.7% = 102,000, + 60,000 x $0.30 = 18,000
     expect(r.annualCost).toBeCloseTo(120_000, 6)
     expect(r.monthlyCost).toBeCloseTo(10_000, 6)
-    expect(r.salaryEquivalent).toBeCloseTo(120_000 / 88_400, 6)
   })
 
   it("reproduces the article's percentage-only figure", () => {
     // The blog post works through $6m at 1.4% = $84,000 with no fixed fee.
     const r = computeQuick({ ...input, ratePercent: 1.4, fixedPerTransaction: 0 })
     expect(r.annualCost).toBeCloseTo(84_000, 6)
-  })
-
-  it('prices the same volume on Pay by Bank and caps the saving at that gap', () => {
-    const r = computeQuick(input)
-    // 6,000,000 x 0.5% = 30,000 + 60,000 x $0.30 = 18,000
-    expect(r.payByBankCost).toBeCloseTo(48_000, 6)
-    expect(r.maxAnnualSaving).toBeCloseTo(120_000 - 48_000, 6)
-  })
-
-  it("keeps Quidkey's own fixed fee out of the merchant's editable one", () => {
-    // Halving the card fixed fee must not change Pay by Bank's $0.30.
-    const r = computeQuick({ ...input, fixedPerTransaction: 0.15 })
-    expect(r.payByBankCost).toBeCloseTo(48_000, 6)
-    expect(r.annualCost).toBeCloseTo(102_000 + 9_000, 6)
-  })
-
-  it('never reports a negative saving when cards already beat Pay by Bank', () => {
-    // A 0.2% card rate is cheaper than Quidkey's 0.5%.
-    const r = computeQuick({ ...input, ratePercent: 0.2 })
-    expect(r.maxAnnualSaving).toBe(0)
   })
 
   it('floors average transaction value to 1 rather than dividing by zero', () => {
@@ -71,42 +50,20 @@ describe('computeQuick', () => {
     expect(r.annualVolume).toBe(0)
     expect(r.annualCost).toBe(0)
     expect(r.monthlyCost).toBe(0)
-    expect(r.salaryEquivalent).toBe(0)
-    expect(r.maxAnnualSaving).toBe(0)
   })
 })
 
-describe('describeSalaryEquivalent', () => {
-  it('avoids the awkward "about 1.0x" phrasing near parity', () => {
-    // The default $84,000 case lands at 0.95 salaries.
-    const text = describeSalaryEquivalent(0.95)
-    expect(text).toContain('almost the cost of another full-time employee')
-    expect(text).not.toContain('1.0')
-  })
-
-  it('states a multiple once the bill is clearly more than one salary', () => {
-    expect(describeSalaryEquivalent(1.9)).toContain('1.9×')
-  })
-
-  it('uses no em dash in any phrasing', () => {
-    // Page copy avoids em dashes; this string is rendered verbatim.
-    for (const m of [0.4, 0.95, 1.9, 1900]) {
-      expect(describeSalaryEquivalent(m)).not.toContain('—')
-    }
-  })
-
-  it('states a percentage when the bill is well under one salary', () => {
-    expect(describeSalaryEquivalent(0.4)).toContain('40%')
-  })
-
-  it('drops the decimal and groups digits for very large multiples', () => {
-    // A billion a month in card volume lands here; "1900.0x" reads badly.
-    expect(describeSalaryEquivalent(1900)).toContain('1,900×')
-  })
-
-  it('says nothing at all for trivially small amounts', () => {
-    expect(describeSalaryEquivalent(0.05)).toBeNull()
-    expect(describeSalaryEquivalent(0)).toBeNull()
+describe('isEnterpriseVolume', () => {
+  it('measures the $20m threshold against ANNUAL volume, not monthly', () => {
+    // $1,666,667/month is $20,000,004 a year, so it just clears the line.
+    expect(isEnterpriseVolume(1_666_667)).toBe(true)
+    // $1,666,666/month is $19,999,992 a year, so it does not.
+    expect(isEnterpriseVolume(1_666_666)).toBe(false)
+    // The default $500,000/month ($6m a year) stays self-serve.
+    expect(isEnterpriseVolume(500_000)).toBe(false)
+    expect(isEnterpriseVolume(1_500_000)).toBe(false)
+    expect(isEnterpriseVolume(1_000_000_000)).toBe(true)
+    expect(isEnterpriseVolume(0)).toBe(false)
   })
 })
 

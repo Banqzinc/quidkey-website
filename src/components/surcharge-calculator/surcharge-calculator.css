@@ -165,16 +165,23 @@
 }
 .sc-calc .sc-quick__note {
   font-size: 13px;
-  line-height: 1.5;
-  color: var(--faint);
+  line-height: 1.55;
+  color: var(--muted);
   margin: 0;
 }
+/* The rate is pre-filled from a named third party, so say whose it is in a
+   weight that actually reads rather than burying it in grey. */
+.sc-calc .sc-quick__note strong {
+  font-weight: 600;
+  color: var(--ink-soft);
+}
 .sc-calc .sc-quick__result {
-  padding: 28px;
+  padding: 32px 28px;
   background: var(--ink);
   color: #fff;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 4px;
 }
 .sc-calc .sc-quick__eyebrow {
@@ -195,38 +202,15 @@
   font-size: 14px;
   color: rgba(255, 255, 255, 0.62);
 }
-.sc-calc .sc-quick__meta {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  margin: 20px 0 0;
-  padding-top: 18px;
-  border-top: 1px solid rgba(255, 255, 255, 0.14);
-}
-.sc-calc .sc-quick__meta dt {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.56);
-  margin-bottom: 3px;
-}
-.sc-calc .sc-quick__meta dd {
-  margin: 0;
-  font-size: 19px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-.sc-calc .sc-quick__compare {
-  font-size: 13.5px;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.72);
-  margin: 16px 0 0;
-}
-.sc-calc .sc-quick__compare b {
-  color: #fff;
-}
 .sc-calc .sc-quick__save {
-  margin-top: 20px;
-  padding-top: 18px;
+  margin-top: 26px;
+  padding-top: 24px;
   border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+.sc-calc .sc-quick__save-sub a {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 .sc-calc .sc-quick__save-lbl {
   font-size: 12.5px;
@@ -244,11 +228,11 @@
   color: #fff;
 }
 .sc-calc .sc-quick__save-sub {
-  margin-top: 5px;
+  margin-top: 6px;
   font-size: 12.5px;
-  line-height: 1.5;
+  line-height: 1.55;
   color: rgba(255, 255, 255, 0.62);
-  max-width: 40ch;
+  max-width: 44ch;
 }
 
 /* ─── Fields ─── */
@@ -291,6 +275,7 @@
 }
 .sc-calc .sc-field__input input {
   flex: 1;
+  height: 100%;
   min-width: 0;
   border: 0;
   outline: 0;
@@ -520,6 +505,7 @@
 }
 .sc-calc .sc-cell input {
   width: 100%;
+  height: 100%;
   min-width: 0;
   border: 0;
   outline: 0;
@@ -597,6 +583,13 @@
 }
 .sc-calc .sc-table__label {
   display: block;
+}
+.sc-calc .sc-table__hint {
+  display: block;
+  margin-top: 3px;
+  font-size: 11.5px;
+  font-weight: 400;
+  color: var(--faint);
 }
 .sc-calc .sc-table__flag {
   display: block;
@@ -705,7 +698,9 @@
   flex: 1;
   min-width: 0;
   accent-color: var(--green);
-  height: 24px;
+  /* The track draws thin and centred, so a taller box is purely a bigger drag
+     target — it matters on touch, where 24px is awkward to grab. */
+  height: 40px;
 }
 .sc-calc .sc-save__pct {
   flex: none;

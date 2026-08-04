@@ -13,10 +13,6 @@ export type CardTypeId = 'credit' | 'business' | 'amex' | 'foreign'
 
 export const MONTHS_PER_YEAR = 12
 
-// ABS Average Weekly Earnings — median full-time adult ordinary time earnings,
-// rounded. Used only for the "that's ~N salaries" comparator the article makes.
-export const ABS_MEDIAN_FULL_TIME_SALARY = 88_400
-
 export type CardMix = Record<CardTypeId, number>
 
 // Starting share of card volume by value, as fractions — editable in the table,
@@ -45,6 +41,17 @@ export const CARD_LABELS: Record<CardTypeId, string> = {
 // credit and business credit only: Amex and foreign-issued cards are modelled
 // as percentage-only.
 export const DEFAULT_FIXED_PER_TRANSACTION = 0.3
+
+// Above this ANNUAL card volume the page stops quoting a self-serve saving:
+// pricing and routing get negotiated around the merchant's actual mix, so it
+// hands off to sales with a headline claim instead of a computed figure.
+export const ENTERPRISE_ANNUAL_TURNOVER = 20_000_000
+export const ENTERPRISE_SAVINGS_CLAIM_PERCENT = 70
+
+/** True when annual card volume clears the enterprise threshold. */
+export function isEnterpriseVolume(monthlyTurnover: number): boolean {
+  return monthlyTurnover * MONTHS_PER_YEAR > ENTERPRISE_ANNUAL_TURNOVER
+}
 
 // Stripe's published standard Australian pricing for domestic cards. Used as
 // the page's default because most AU merchants recognise it from their own
@@ -85,15 +92,6 @@ export type QuickResult = {
   annualTransactions: number
   annualCost: number
   monthlyCost: number
-  /** Annual cost expressed as a multiple of a median full-time salary. */
-  salaryEquivalent: number
-  /** Same volume priced at Quidkey Pay by Bank. */
-  payByBankCost: number
-  /**
-   * Difference if ALL of this volume moved to Pay by Bank. A ceiling, not a
-   * forecast, so the UI must label it "up to" — no merchant moves everything.
-   */
-  maxAnnualSaving: number
 }
 
 export function computeQuick({
@@ -105,34 +103,13 @@ export function computeQuick({
   const annualVolume = monthlyTurnover * MONTHS_PER_YEAR
   const annualTransactions = annualVolume / flooredAov(averageOrderValue)
   const annualCost = annualVolume * percent(ratePercent) + annualTransactions * fixedPerTransaction
-  const payByBankCost =
-    annualVolume * percent(PAYTO_PERCENT) + annualTransactions * PAYTO_FIXED
 
   return {
     annualVolume,
     annualTransactions,
     annualCost,
     monthlyCost: annualCost / MONTHS_PER_YEAR,
-    salaryEquivalent: annualCost / ABS_MEDIAN_FULL_TIME_SALARY,
-    payByBankCost,
-    maxAnnualSaving: Math.max(0, annualCost - payByBankCost),
   }
-}
-
-// The article's framing: an annual card-fee bill of roughly one median salary
-// is "almost the cost of another full-time employee". Stating a bare multiple
-// reads badly right around 1 ("about 1.0x a salary"), so describe it instead.
-export function describeSalaryEquivalent(multiple: number): string | null {
-  if (!Number.isFinite(multiple) || multiple < 0.15) return null
-  if (multiple < 0.85) {
-    return `That's about ${Math.round(multiple * 100)}% of a median full-time salary in Australia.`
-  }
-  if (multiple <= 1.2) {
-    return "That's almost the cost of another full-time employee on Australia's median salary, without getting the extra help."
-  }
-  const shown =
-    multiple < 10 ? multiple.toFixed(1) : Math.round(multiple).toLocaleString('en-AU')
-  return `That's about ${shown}× a median full-time salary in Australia, without getting the extra help.`
 }
 
 export type CardLine = {

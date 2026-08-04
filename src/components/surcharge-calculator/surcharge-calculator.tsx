@@ -1,13 +1,15 @@
 import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
 
 import {
+  ENTERPRISE_ANNUAL_TURNOVER,
+  ENTERPRISE_SAVINGS_CLAIM_PERCENT,
   PAYTO_FIXED,
   PAYTO_PERCENT,
   STRIPE_AU_STANDARD,
   QUIDKEY_FOREIGN_PERCENT,
   computeQuick,
   computeSavings,
-  describeSalaryEquivalent,
+  isEnterpriseVolume,
   type CardTypeId,
 } from './surcharge-fees'
 import { formatMix, parseMix, type SurchargeSearch } from './surcharge-params'
@@ -139,12 +141,6 @@ function PercentField({
   )
 }
 
-// Above this monthly card volume a self-serve slider stops being meaningful:
-// pricing and routing get negotiated around the merchant's actual mix, so the
-// page hands off to sales instead of quoting a number it can't stand behind.
-const ENTERPRISE_MONTHLY_TURNOVER = 10_000_000
-const ENTERPRISE_SAVINGS_CLAIM_PERCENT = 70
-
 // Money field that tolerates cents. CurrencyField reformats on every keystroke
 // via toLocaleString, which fights a decimal point mid-typing, so this one holds
 // the raw text until blur the way the percent fields do.
@@ -195,6 +191,22 @@ function DecimalMoneyField({
       </div>
     </div>
   )
+}
+
+// Both the hero and the savings card price the same scenario. Building the
+// input in one place is what guarantees the two figures agree.
+function savingsInput(state: SurchargeSearch) {
+  return {
+    monthlyTurnover: state.turnover,
+    averageOrderValue: state.aov,
+    mix: parseMix(state.mix),
+    fixedPerTransaction: state.fixed,
+    creditPercent: state.credit,
+    businessPercent: state.business,
+    amexPercent: state.amex,
+    foreignPercent: state.foreign,
+    steerPercent: state.steer,
+  }
 }
 
 const UNLOCK_KEY = 'qk_surcharge_unlocked'
@@ -403,6 +415,13 @@ function CellPercent({
   )
 }
 
+// Foreign-issued cards are modelled as one all-in rate, so the row has to say
+// that the FX margin is already inside it. Without this a visitor reads 5.5% as
+// a card rate and re-enters 3.5%, understating what they actually pay.
+const ROW_HINTS: Partial<Record<CardTypeId, string>> = {
+  foreign: 'card rate and FX combined',
+}
+
 function AdvancedCalculator({
   state,
   onChange,
@@ -412,24 +431,10 @@ function AdvancedCalculator({
   onChange: (patch: Partial<SurchargeSearch>) => void
   onTrackInput: (field: string) => void
 }) {
-  const { turnover, aov, fixed, credit, business, amex, foreign, steer, mix } = state
+  const { turnover, steer, mix } = state
   const cardMix = useMemo(() => parseMix(mix), [mix])
 
-  const result = useMemo(
-    () =>
-      computeSavings({
-        monthlyTurnover: turnover,
-        averageOrderValue: aov,
-        mix: cardMix,
-        fixedPerTransaction: fixed,
-        creditPercent: credit,
-        businessPercent: business,
-        amexPercent: amex,
-        foreignPercent: foreign,
-        steerPercent: steer,
-      }),
-    [turnover, aov, fixed, cardMix, credit, business, amex, foreign, steer],
-  )
+  const result = useMemo(() => computeSavings(savingsInput(state)), [state])
   const { detailed } = result
 
   // Every rate and every share in the table is the visitor's to set.
@@ -447,7 +452,7 @@ function AdvancedCalculator({
 
   const mixTotal = detailed.mixTotalPercent
   const mixIsOff = Math.abs(mixTotal - 100) > 0.5
-  const isEnterprise = turnover > ENTERPRISE_MONTHLY_TURNOVER
+  const isEnterprise = isEnterpriseVolume(turnover)
 
   return (
     <>
@@ -458,7 +463,6 @@ function AdvancedCalculator({
             <p className="sc-section__sub">
               Set the share of your volume and the rate you pay on each card type. It starts from a
               typical Australian card mix, and every figure in the table is yours to change.
-              Debit is left out, as it is already the cheapest card to accept.
             </p>
           </div>
 
@@ -485,7 +489,12 @@ function AdvancedCalculator({
                   const field = rateField[line.id]
                   return (
                     <tr key={line.id}>
-                      <th scope="row">{line.label}</th>
+                      <th scope="row">
+                        <span className="sc-table__label">{line.label}</span>
+                        {ROW_HINTS[line.id] ? (
+                          <span className="sc-table__hint">{ROW_HINTS[line.id]}</span>
+                        ) : null}
+                      </th>
                       <td data-label="Share">
                         <CellPercent
                           value={line.mixShare * 100}
@@ -577,9 +586,10 @@ function AdvancedCalculator({
                 We typically cut card costs by <b>over {ENTERPRISE_SAVINGS_CLAIM_PERCENT}%</b>
               </p>
               <p className="sc-ent__body">
-                Above {money(ENTERPRISE_MONTHLY_TURNOVER)} a month, pricing and payment routing get
-                built around your actual card mix rather than a rate card, so a slider won't tell
-                you anything useful. Talk to us and we'll model your real volume with you.
+                Above {money(ENTERPRISE_ANNUAL_TURNOVER)} a year in card volume, pricing and
+                payment routing get built around your actual card mix rather than a rate card, so a
+                slider won't tell you anything useful. Talk to us and we'll model your real volume
+                with you.
               </p>
               <div className="sc-outcome__btns">
                 <a
@@ -670,9 +680,9 @@ function AdvancedCalculator({
           <h2 className="sc-notes__title">Assumptions</h2>
           <p className="sc-notes__body">
             <strong>Estimates only.</strong> The card mix and rates in the advanced calculator start
-            from typical Australian figures and are yours to edit. Domestic debit is excluded, as
-            it is already the cheapest card to accept. Domestic consumer credit and business credit
-            include the ${fixed.toFixed(2)} per-transaction fee you entered; American Express and
+            from typical Australian figures and are yours to edit. Domestic consumer credit and
+            business credit include the ${state.fixed.toFixed(2)} per-transaction fee you entered;
+            American Express and
             foreign-issued cards are modelled as a percentage only. Quidkey Pay by Bank is{' '}
             {rateText(PAYTO_PERCENT)} + ${PAYTO_FIXED.toFixed(2)} and Quidkey international cards{' '}
             {rateText(QUIDKEY_FOREIGN_PERCENT)}. Your actual fees depend on your merchant agreement,
@@ -698,7 +708,7 @@ export function SurchargeCalculator({
   state: SurchargeSearch
   onChange: (patch: Partial<SurchargeSearch>) => void
 }) {
-  const { turnover, rate, aov, fixed } = state
+  const { turnover, rate, aov, fixed, steer } = state
   const trackInput = useTrackInput()
   const { unlocked, unlock } = useUnlocked()
 
@@ -712,11 +722,14 @@ export function SurchargeCalculator({
       }),
     [turnover, rate, aov, fixed],
   )
+  // Same call the savings card makes, from the same URL state, so the figure in
+  // the hero and the figure further down are the same number by construction.
+  const savings = useMemo(() => computeSavings(savingsInput(state)), [state])
   // Only claim these are Stripe's numbers while they actually are. Once the
   // visitor edits either field, attributing the figure to Stripe would be false.
   const isStripeStandard =
     rate === STRIPE_AU_STANDARD.ratePercent && fixed === STRIPE_AU_STANDARD.fixedPerTransaction
-  const salaryLine = describeSalaryEquivalent(quick.salaryEquivalent)
+  const isEnterprise = isEnterpriseVolume(turnover)
 
   return (
     <>
@@ -789,17 +802,21 @@ export function SurchargeCalculator({
                 />
               </div>
               <p className="sc-quick__note">
-                {isStripeStandard
-                  ? `These are Stripe's standard Australian rates for domestic cards (${rateText(
-                      STRIPE_AU_STANDARD.ratePercent,
-                    )} + $${STRIPE_AU_STANDARD.fixedPerTransaction.toFixed(
-                      2,
-                    )}). Change them to match your own merchant statement.`
-                  : `Not sure? Stripe's standard Australian pricing is ${rateText(
-                      STRIPE_AU_STANDARD.ratePercent,
-                    )} + $${STRIPE_AU_STANDARD.fixedPerTransaction.toFixed(
-                      2,
-                    )} on domestic cards, and most providers sit near that.`}
+                {isStripeStandard ? (
+                  <>
+                    Pre-filled with <strong>Stripe</strong>'s standard Australian rate,{' '}
+                    {rateText(STRIPE_AU_STANDARD.ratePercent)} + $
+                    {STRIPE_AU_STANDARD.fixedPerTransaction.toFixed(2)} on domestic cards. Change it
+                    to match your own merchant statement.
+                  </>
+                ) : (
+                  <>
+                    For reference, <strong>Stripe</strong> charges{' '}
+                    {rateText(STRIPE_AU_STANDARD.ratePercent)} + $
+                    {STRIPE_AU_STANDARD.fixedPerTransaction.toFixed(2)} on domestic cards in
+                    Australia, and most providers sit near that.
+                  </>
+                )}
               </p>
             </div>
 
@@ -807,26 +824,30 @@ export function SurchargeCalculator({
               <div className="sc-quick__eyebrow">Card fees you'll absorb</div>
               <div className="sc-quick__big num">{money(quick.annualCost)}</div>
               <div className="sc-quick__unit">per year</div>
-              <dl className="sc-quick__meta">
-                <div>
-                  <dt>Per month</dt>
-                  <dd className="num">{money(quick.monthlyCost)}</dd>
+              {isEnterprise ? (
+                <div className="sc-quick__save">
+                  <div className="sc-quick__save-lbl">Save up to</div>
+                  <div className="sc-quick__save-val num">
+                    {ENTERPRISE_SAVINGS_CLAIM_PERCENT}%
+                  </div>
+                  <div className="sc-quick__save-sub">
+                    of your card fees with Quidkey. At your volume we price around your actual card
+                    mix, so let's model it with you.{' '}
+                    <a href={DEMO_BOOKING_URL} target="_blank" rel="noreferrer">
+                      Talk to us
+                    </a>
+                  </div>
                 </div>
-                <div>
-                  <dt>On annual card volume</dt>
-                  <dd className="num">{money(quick.annualVolume)}</dd>
+              ) : savings.totalSavings > 0 ? (
+                <div className="sc-quick__save">
+                  <div className="sc-quick__save-lbl">Estimated saving</div>
+                  <div className="sc-quick__save-val num">{money(savings.totalSavings)}</div>
+                  <div className="sc-quick__save-sub">
+                    a year, moving {steer}% of your card volume to Quidkey Pay by Bank at{' '}
+                    {rateText(PAYTO_PERCENT)} + ${PAYTO_FIXED.toFixed(2)} a transaction
+                  </div>
                 </div>
-              </dl>
-              {salaryLine ? <p className="sc-quick__compare">{salaryLine}</p> : null}
-
-              <div className="sc-quick__save">
-                <div className="sc-quick__save-lbl">Save up to</div>
-                <div className="sc-quick__save-val num">{money(quick.maxAnnualSaving)}</div>
-                <div className="sc-quick__save-sub">
-                  a year on the same volume with Quidkey Pay by Bank, at{' '}
-                  {rateText(PAYTO_PERCENT)} + ${PAYTO_FIXED.toFixed(2)} a transaction
-                </div>
-              </div>
+              ) : null}
             </div>
           </div>
         </div>

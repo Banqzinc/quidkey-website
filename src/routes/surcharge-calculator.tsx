@@ -60,10 +60,17 @@ function SurchargeCalculatorPage() {
 
   // URL is the source of truth for the inputs; mirror every change back with
   // replace so adjusting inputs doesn't pile up browser-history entries.
+  // resetScroll: false is essential — without it the router scrolls to the top
+  // on every keystroke and slider step, throwing the visitor out of the section
+  // they are working in.
   const search = Route.useSearch()
   const navigate = Route.useNavigate()
   const update = (patch: Partial<SurchargeSearch>) =>
-    navigate({ search: (prev) => ({ ...prev, ...patch }), replace: true })
+    navigate({
+      search: (prev) => ({ ...prev, ...patch }),
+      replace: true,
+      resetScroll: false,
+    })
 
   // AudienceProvider is required because HomepageNav reads useAudience().
   return (
