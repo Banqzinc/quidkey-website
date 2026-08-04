@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import {
   DEFAULT_CARD_MIX,
+  DEFAULT_FIXED_PER_TRANSACTION,
   computeDetailed,
   computeQuick,
   computeSavings,
@@ -10,26 +11,68 @@ import {
 
 // Every expected value below is hand-computed from the spec's rate table so a
 // regression in the math shows up as a failing number, not a re-derived one.
-// Defaults: $500,000/month card turnover, 1.4% blended rate, $100 AOV.
+// Defaults mirror Stripe AU standard pricing: $500,000/month card turnover at
+// 1.7% + $0.30, $100 average transaction.
 // Annual volume = 500,000 x 12 = 6,000,000, split 58/17/13/12 across consumer
 // credit, business credit, Amex and foreign-issued cards.
 
 describe('computeQuick', () => {
-  it('matches the article worked example ($6m at 1.4% = $84,000/yr)', () => {
-    const r = computeQuick({ monthlyTurnover: 500_000, ratePercent: 1.4 })
+  const input = {
+    monthlyTurnover: 500_000,
+    ratePercent: 1.7,
+    averageOrderValue: 100,
+    fixedPerTransaction: DEFAULT_FIXED_PER_TRANSACTION,
+  }
+
+  it('adds the per-transaction fee to the percentage cost', () => {
+    const r = computeQuick(input)
     expect(r.annualVolume).toBe(6_000_000)
+    expect(r.annualTransactions).toBeCloseTo(60_000, 6)
+    // 6,000,000 x 1.7% = 102,000, + 60,000 x $0.30 = 18,000
+    expect(r.annualCost).toBeCloseTo(120_000, 6)
+    expect(r.monthlyCost).toBeCloseTo(10_000, 6)
+    expect(r.salaryEquivalent).toBeCloseTo(120_000 / 88_400, 6)
+  })
+
+  it("reproduces the article's percentage-only figure", () => {
+    // The blog post works through $6m at 1.4% = $84,000 with no fixed fee.
+    const r = computeQuick({ ...input, ratePercent: 1.4, fixedPerTransaction: 0 })
     expect(r.annualCost).toBeCloseTo(84_000, 6)
-    expect(r.monthlyCost).toBeCloseTo(7_000, 6)
-    // 84,000 / 88,400 median full-time salary
-    expect(r.salaryEquivalent).toBeCloseTo(0.950226, 5)
+  })
+
+  it('prices the same volume on Pay by Bank and caps the saving at that gap', () => {
+    const r = computeQuick(input)
+    // 6,000,000 x 0.5% = 30,000 + 60,000 x $0.30 = 18,000
+    expect(r.payByBankCost).toBeCloseTo(48_000, 6)
+    expect(r.maxAnnualSaving).toBeCloseTo(120_000 - 48_000, 6)
+  })
+
+  it("keeps Quidkey's own fixed fee out of the merchant's editable one", () => {
+    // Halving the card fixed fee must not change Pay by Bank's $0.30.
+    const r = computeQuick({ ...input, fixedPerTransaction: 0.15 })
+    expect(r.payByBankCost).toBeCloseTo(48_000, 6)
+    expect(r.annualCost).toBeCloseTo(102_000 + 9_000, 6)
+  })
+
+  it('never reports a negative saving when cards already beat Pay by Bank', () => {
+    // A 0.2% card rate is cheaper than Quidkey's 0.5%.
+    const r = computeQuick({ ...input, ratePercent: 0.2 })
+    expect(r.maxAnnualSaving).toBe(0)
+  })
+
+  it('floors average transaction value to 1 rather than dividing by zero', () => {
+    const r = computeQuick({ ...input, averageOrderValue: 0 })
+    expect(Number.isFinite(r.annualCost)).toBe(true)
+    expect(r.annualTransactions).toBeCloseTo(6_000_000, 6)
   })
 
   it('is all zeros at zero turnover', () => {
-    const r = computeQuick({ monthlyTurnover: 0, ratePercent: 1.4 })
+    const r = computeQuick({ ...input, monthlyTurnover: 0 })
     expect(r.annualVolume).toBe(0)
     expect(r.annualCost).toBe(0)
     expect(r.monthlyCost).toBe(0)
     expect(r.salaryEquivalent).toBe(0)
+    expect(r.maxAnnualSaving).toBe(0)
   })
 })
 
@@ -43,6 +86,13 @@ describe('describeSalaryEquivalent', () => {
 
   it('states a multiple once the bill is clearly more than one salary', () => {
     expect(describeSalaryEquivalent(1.9)).toContain('1.9×')
+  })
+
+  it('uses no em dash in any phrasing', () => {
+    // Page copy avoids em dashes; this string is rendered verbatim.
+    for (const m of [0.4, 0.95, 1.9, 1900]) {
+      expect(describeSalaryEquivalent(m)).not.toContain('—')
+    }
   })
 
   it('states a percentage when the bill is well under one salary', () => {
@@ -65,7 +115,8 @@ describe('computeDetailed', () => {
     monthlyTurnover: 500_000,
     averageOrderValue: 100,
     mix: DEFAULT_CARD_MIX,
-    creditPercent: 1.4,
+    fixedPerTransaction: DEFAULT_FIXED_PER_TRANSACTION,
+    creditPercent: 1.7,
     businessPercent: 1.8,
     amexPercent: 2.2,
     foreignPercent: 5.5,
@@ -75,10 +126,10 @@ describe('computeDetailed', () => {
     const r = computeDetailed(input)
     const byId = Object.fromEntries(r.lines.map((l) => [l.id, l]))
 
-    // credit: 3,480,000 vol / 34,800 txns -> 48,720 + 10,440
+    // credit: 3,480,000 vol / 34,800 txns -> 59,160 + 10,440
     expect(byId.credit.annualVolume).toBeCloseTo(3_480_000, 6)
     expect(byId.credit.annualTransactions).toBeCloseTo(34_800, 6)
-    expect(byId.credit.annualCost).toBeCloseTo(59_160, 6)
+    expect(byId.credit.annualCost).toBeCloseTo(69_600, 6)
 
     // business: 1,020,000 vol / 10,200 txns -> 18,360 + 3,060
     expect(byId.business.annualCost).toBeCloseTo(21_420, 6)
@@ -105,19 +156,19 @@ describe('computeDetailed', () => {
 
   it('totals the lines and derives the blended effective rate', () => {
     const r = computeDetailed(input)
-    // 59,160 + 21,420 + 17,160 + 39,600
-    expect(r.annualCost).toBeCloseTo(137_340, 6)
+    // 69,600 + 21,420 + 17,160 + 39,600
+    expect(r.annualCost).toBeCloseTo(147_780, 6)
     expect(r.annualVolume).toBeCloseTo(6_000_000, 6)
-    expect(r.effectiveRatePercent).toBeCloseTo(2.289, 6)
+    expect(r.effectiveRatePercent).toBeCloseTo(2.463, 6)
   })
 
   it('floors average order value to 1 so fixed fees never divide by zero', () => {
     const r = computeDetailed({ ...input, averageOrderValue: 0 })
     expect(Number.isFinite(r.annualCost)).toBe(true)
-    // credit: 3,480,000 txns x $0.30 = 1,044,000 + 48,720 percentage
+    // credit: 3,480,000 txns x $0.30 = 1,044,000 + 59,160 percentage
     const credit = r.lines.find((l) => l.id === 'credit')!
     expect(credit.annualTransactions).toBeCloseTo(3_480_000, 6)
-    expect(credit.annualCost).toBeCloseTo(1_092_720, 6)
+    expect(credit.annualCost).toBeCloseTo(1_103_160, 6)
   })
 
   it('reports a fully allocated default mix as 100%', () => {
@@ -125,12 +176,12 @@ describe('computeDetailed', () => {
   })
 
   it('honours a custom mix instead of the default', () => {
-    // All volume on consumer credit: 6,000,000 at 1.4% + 60,000 txns x $0.30
+    // All volume on consumer credit: 6,000,000 at 1.7% + 60,000 txns x $0.30
     const r = computeDetailed({
       ...input,
       mix: { credit: 1, business: 0, amex: 0, foreign: 0 },
     })
-    expect(r.annualCost).toBeCloseTo(84_000 + 18_000, 6)
+    expect(r.annualCost).toBeCloseTo(102_000 + 18_000, 6)
     expect(r.mixTotalPercent).toBeCloseTo(100, 8)
     expect(r.lines.find((l) => l.id === 'amex')!.annualCost).toBe(0)
   })
@@ -143,9 +194,9 @@ describe('computeDetailed', () => {
     })
     expect(r.mixTotalPercent).toBeCloseTo(50, 8)
     expect(r.annualVolume).toBeCloseTo(3_000_000, 6)
-    expect(r.annualCost).toBeCloseTo(137_340 / 2, 6)
+    expect(r.annualCost).toBeCloseTo(147_780 / 2, 6)
     // The blended rate is unaffected, since both parts halved.
-    expect(r.effectiveRatePercent).toBeCloseTo(2.289, 6)
+    expect(r.effectiveRatePercent).toBeCloseTo(2.463, 6)
   })
 })
 
@@ -154,7 +205,8 @@ describe('computeSavings', () => {
     monthlyTurnover: 500_000,
     averageOrderValue: 100,
     mix: DEFAULT_CARD_MIX,
-    creditPercent: 1.4,
+    fixedPerTransaction: DEFAULT_FIXED_PER_TRANSACTION,
+    creditPercent: 1.7,
     businessPercent: 1.8,
     amexPercent: 2.2,
     foreignPercent: 5.5,
@@ -167,16 +219,16 @@ describe('computeSavings', () => {
     // steerable (credit + business) volume = 3,480,000 + 1,020,000 = 4,500,000
     // steered = 30% -> 1,350,000
     expect(r.steeredVolume).toBeCloseTo(1_350_000, 6)
-    // steerable cost = 59,160 + 21,420 = 80,580; 30% -> 24,174
-    expect(r.currentSteeredCost).toBeCloseTo(24_174, 6)
+    // steerable cost = 69,600 + 21,420 = 91,020; 30% -> 27,306
+    expect(r.currentSteeredCost).toBeCloseTo(27_306, 6)
     // PayTo: 1,350,000 x 0.5% = 6,750 + 13,500 txns x $0.30 = 4,050
     expect(r.payToCost).toBeCloseTo(10_800, 6)
-    expect(r.steeringSavings).toBeCloseTo(13_374, 6)
+    expect(r.steeringSavings).toBeCloseTo(16_506, 6)
     // foreign: 39,600 today vs 720,000 x 2% = 14,400 with Quidkey
     expect(r.foreignCardSavings).toBeCloseTo(25_200, 6)
-    expect(r.totalSavings).toBeCloseTo(38_574, 6)
-    expect(r.newAnnualCost).toBeCloseTo(98_766, 6)
-    expect(r.savingsPercent).toBeCloseTo(28.0865, 3)
+    expect(r.totalSavings).toBeCloseTo(41_706, 6)
+    expect(r.newAnnualCost).toBeCloseTo(106_074, 6)
+    expect(r.savingsPercent).toBeCloseTo(28.2217, 3)
   })
 
   it('reports a raw negative foreign lever but never a negative total', () => {

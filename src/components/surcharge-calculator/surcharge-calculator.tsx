@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
 
 import {
-  FIXED_PER_TRANSACTION,
   PAYTO_FIXED,
   PAYTO_PERCENT,
+  STRIPE_AU_STANDARD,
   QUIDKEY_FOREIGN_PERCENT,
   computeQuick,
   computeSavings,
@@ -145,6 +145,58 @@ function PercentField({
 const ENTERPRISE_MONTHLY_TURNOVER = 10_000_000
 const ENTERPRISE_SAVINGS_CLAIM_PERCENT = 70
 
+// Money field that tolerates cents. CurrencyField reformats on every keystroke
+// via toLocaleString, which fights a decimal point mid-typing, so this one holds
+// the raw text until blur the way the percent fields do.
+function DecimalMoneyField({
+  id,
+  label,
+  hint,
+  value,
+  max,
+  onChange,
+}: {
+  id: string
+  label: string
+  hint?: string
+  value: number
+  max: number
+  onChange: (value: number) => void
+}) {
+  const [draft, setDraft] = useState<string | null>(null)
+
+  return (
+    <div className="sc-field">
+      <div className="sc-field__top">
+        <label className="sc-field__label" htmlFor={id}>
+          {label}
+        </label>
+        {hint ? <span className="sc-field__hint">{hint}</span> : null}
+      </div>
+      <div className="sc-field__input">
+        <span className="sc-field__prefix" aria-hidden="true">
+          $
+        </span>
+        <input
+          id={id}
+          type="text"
+          inputMode="decimal"
+          className="num"
+          // Cents shown while idle, raw text while typing, so "0.3" settles to "0.30".
+          value={draft ?? value.toFixed(2)}
+          onChange={(e) => {
+            const raw = e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')
+            setDraft(raw)
+            const n = Number(raw)
+            if (raw !== '' && Number.isFinite(n) && n >= 0 && n <= max) onChange(n)
+          }}
+          onBlur={() => setDraft(null)}
+        />
+      </div>
+    </div>
+  )
+}
+
 const UNLOCK_KEY = 'qk_surcharge_unlocked'
 
 // The gate stays locked through SSR and the first client render (same initial
@@ -219,9 +271,9 @@ function LeadGate({
 
   const message =
     status === 'invalid'
-      ? 'That email address doesn’t look right — please check it.'
+      ? 'That email address doesn’t look right. Please check it.'
       : status === 'error'
-        ? 'Something went wrong — please try again.'
+        ? 'Something went wrong. Please try again.'
         : null
 
   return (
@@ -287,8 +339,8 @@ function LeadGate({
         </p>
       ) : (
         <p className="sc-gate__privacy" id="sc-gate-privacy">
-          We store your email so our team can follow up. The box above is optional — the calculator
-          opens either way.
+          We store your email so our team can follow up. The box above is optional, and the
+          calculator opens either way.
         </p>
       )}
     </form>
@@ -360,7 +412,7 @@ function AdvancedCalculator({
   onChange: (patch: Partial<SurchargeSearch>) => void
   onTrackInput: (field: string) => void
 }) {
-  const { turnover, aov, credit, business, amex, foreign, steer, mix } = state
+  const { turnover, aov, fixed, credit, business, amex, foreign, steer, mix } = state
   const cardMix = useMemo(() => parseMix(mix), [mix])
 
   const result = useMemo(
@@ -369,13 +421,14 @@ function AdvancedCalculator({
         monthlyTurnover: turnover,
         averageOrderValue: aov,
         mix: cardMix,
+        fixedPerTransaction: fixed,
         creditPercent: credit,
         businessPercent: business,
         amexPercent: amex,
         foreignPercent: foreign,
         steerPercent: steer,
       }),
-    [turnover, aov, cardMix, credit, business, amex, foreign, steer],
+    [turnover, aov, fixed, cardMix, credit, business, amex, foreign, steer],
   )
   const { detailed } = result
 
@@ -404,25 +457,12 @@ function AdvancedCalculator({
             <h2 className="sc-section__title">Advanced calculator</h2>
             <p className="sc-section__sub">
               Set the share of your volume and the rate you pay on each card type. It starts from a
-              typical Australian card mix — every figure in the table is yours to change.
-              Debit is left out: it is already the cheapest card to accept.
+              typical Australian card mix, and every figure in the table is yours to change.
+              Debit is left out, as it is already the cheapest card to accept.
             </p>
           </div>
 
           <div className="sc-card sc-detail__card">
-            <div className="sc-detail__inputs">
-              <CurrencyField
-                id="sc-aov"
-                label="Average order value"
-                hint="per order"
-                value={aov}
-                onChange={(v) => {
-                  onChange({ aov: v })
-                  onTrackInput('aov')
-                }}
-              />
-            </div>
-
             <table className="sc-table">
               <caption className="sc-table__caption">
                 Estimated annual card fees by card type
@@ -514,7 +554,7 @@ function AdvancedCalculator({
 
             <p className="sc-detail__foot">
               This builds your fees up card type by card type, so its total won't match the quick
-              estimate above — that one applies a single blended rate to all your volume.
+              estimate above, which applies a single blended rate to all your volume.
             </p>
           </div>
         </div>
@@ -538,7 +578,7 @@ function AdvancedCalculator({
               </p>
               <p className="sc-ent__body">
                 Above {money(ENTERPRISE_MONTHLY_TURNOVER)} a month, pricing and payment routing get
-                built around your actual card mix rather than a rate card — so a slider won't tell
+                built around your actual card mix rather than a rate card, so a slider won't tell
                 you anything useful. Talk to us and we'll model your real volume with you.
               </p>
               <div className="sc-outcome__btns">
@@ -595,14 +635,14 @@ function AdvancedCalculator({
                     {money(result.totalSavings)}
                   </div>
                   <div className="sc-outcome__sub">
-                    {Math.round(result.savingsPercent)}% off your card fees — down to{' '}
+                    {Math.round(result.savingsPercent)}% off your card fees, down to{' '}
                     {money(result.newAnnualCost)} from {money(detailed.annualCost)}
                   </div>
                 </div>
                 <div className="sc-outcome__cell sc-outcome__cta">
                   <p className="sc-outcome__pitch">
                     Quidkey lets you offer discounts, loyalty points or other rewards so customers
-                    choose Pay by Bank — and share the saving instead of giving it to the card
+                    choose Pay by Bank, and share the saving instead of giving it to the card
                     networks.
                   </p>
                   <div className="sc-outcome__btns">
@@ -632,7 +672,7 @@ function AdvancedCalculator({
             <strong>Estimates only.</strong> The card mix and rates in the advanced calculator start
             from typical Australian figures and are yours to edit. Domestic debit is excluded, as
             it is already the cheapest card to accept. Domestic consumer credit and business credit
-            include a ${FIXED_PER_TRANSACTION.toFixed(2)} per-transaction fee; American Express and
+            include the ${fixed.toFixed(2)} per-transaction fee you entered; American Express and
             foreign-issued cards are modelled as a percentage only. Quidkey Pay by Bank is{' '}
             {rateText(PAYTO_PERCENT)} + ${PAYTO_FIXED.toFixed(2)} and Quidkey international cards{' '}
             {rateText(QUIDKEY_FOREIGN_PERCENT)}. Your actual fees depend on your merchant agreement,
@@ -640,9 +680,9 @@ function AdvancedCalculator({
           </p>
           <p className="sc-notes__body">
             The 1 October 2026 changes and the RBA's consumer-switching figures come from the RBA's{' '}
-            <em>Review of Merchant Card Payment Costs and Surcharging — Conclusions Paper</em>{' '}
+            <em>Review of Merchant Card Payment Costs and Surcharging: Conclusions Paper</em>{' '}
             (March 2026) and the RBA Consumer Payments Survey 2025. This is general information, not
-            financial or legal advice — check your own merchant agreements and get advice on how you
+            financial or legal advice. Check your own merchant agreements and get advice on how you
             structure any discount.
           </p>
         </div>
@@ -658,14 +698,24 @@ export function SurchargeCalculator({
   state: SurchargeSearch
   onChange: (patch: Partial<SurchargeSearch>) => void
 }) {
-  const { turnover, rate } = state
+  const { turnover, rate, aov, fixed } = state
   const trackInput = useTrackInput()
   const { unlocked, unlock } = useUnlocked()
 
   const quick = useMemo(
-    () => computeQuick({ monthlyTurnover: turnover, ratePercent: rate }),
-    [turnover, rate],
+    () =>
+      computeQuick({
+        monthlyTurnover: turnover,
+        ratePercent: rate,
+        averageOrderValue: aov,
+        fixedPerTransaction: fixed,
+      }),
+    [turnover, rate, aov, fixed],
   )
+  // Only claim these are Stripe's numbers while they actually are. Once the
+  // visitor edits either field, attributing the figure to Stripe would be false.
+  const isStripeStandard =
+    rate === STRIPE_AU_STANDARD.ratePercent && fixed === STRIPE_AU_STANDARD.fixedPerTransaction
   const salaryLine = describeSalaryEquivalent(quick.salaryEquivalent)
 
   return (
@@ -715,9 +765,41 @@ export function SurchargeCalculator({
                   trackInput('rate')
                 }}
               />
+              <div className="sc-quick__pair">
+                <DecimalMoneyField
+                  id="sc-fixed"
+                  label="Fixed fee"
+                  hint="per transaction"
+                  value={fixed}
+                  max={5}
+                  onChange={(v) => {
+                    onChange({ fixed: v })
+                    trackInput('fixed')
+                  }}
+                />
+                <CurrencyField
+                  id="sc-aov"
+                  label="Average transaction"
+                  hint="per payment"
+                  value={aov}
+                  onChange={(v) => {
+                    onChange({ aov: v })
+                    trackInput('aov')
+                  }}
+                />
+              </div>
               <p className="sc-quick__note">
-                Not sure? Most Australian businesses land between 1.2% and 1.8% once every card type
-                is averaged out.
+                {isStripeStandard
+                  ? `These are Stripe's standard Australian rates for domestic cards (${rateText(
+                      STRIPE_AU_STANDARD.ratePercent,
+                    )} + $${STRIPE_AU_STANDARD.fixedPerTransaction.toFixed(
+                      2,
+                    )}). Change them to match your own merchant statement.`
+                  : `Not sure? Stripe's standard Australian pricing is ${rateText(
+                      STRIPE_AU_STANDARD.ratePercent,
+                    )} + $${STRIPE_AU_STANDARD.fixedPerTransaction.toFixed(
+                      2,
+                    )} on domestic cards, and most providers sit near that.`}
               </p>
             </div>
 
@@ -736,6 +818,15 @@ export function SurchargeCalculator({
                 </div>
               </dl>
               {salaryLine ? <p className="sc-quick__compare">{salaryLine}</p> : null}
+
+              <div className="sc-quick__save">
+                <div className="sc-quick__save-lbl">Save up to</div>
+                <div className="sc-quick__save-val num">{money(quick.maxAnnualSaving)}</div>
+                <div className="sc-quick__save-sub">
+                  a year on the same volume with Quidkey Pay by Bank, at{' '}
+                  {rateText(PAYTO_PERCENT)} + ${PAYTO_FIXED.toFixed(2)} a transaction
+                </div>
+              </div>
             </div>
           </div>
         </div>

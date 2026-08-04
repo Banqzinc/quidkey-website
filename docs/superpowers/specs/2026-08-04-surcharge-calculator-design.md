@@ -30,9 +30,10 @@ All calculator inputs live in the URL query string (shareable links), validated 
 | Param      | Meaning                                   | Default | Accepted range |
 | ---------- | ----------------------------------------- | ------- | -------------- |
 | `turnover` | Monthly card turnover, AUD                | 500000  | 0–100,000,000  |
-| `rate`     | Average card fee rate, %                  | 1.4     | 0–10           |
-| `aov`      | Average order value, AUD                  | 100     | 1–1,000,000    |
-| `credit`   | Domestic consumer credit rate, %          | 1.4     | 0–10           |
+| `rate`     | Average card fee rate, %                  | 1.7     | 0–10           |
+| `aov`      | Average transaction value, AUD            | 100     | 1–1,000,000    |
+| `fixed`    | Card fixed fee per transaction, AUD       | 0.30    | 0–5            |
+| `credit`   | Domestic consumer credit rate, %          | 1.7     | 0–10           |
 | `business` | Business credit rate, %                   | 1.8     | 0–10           |
 | `amex`     | Amex rate, %                              | 2.2     | 0–10           |
 | `foreign`  | Foreign-issued card all-in rate, %        | 5.5     | 0–15           |
@@ -51,11 +52,22 @@ Invalid, missing, or out-of-range values fall back to the default.
 
 A tracked-caps typographic eyebrow ("SURCHARGE BAN / 1 OCTOBER 2026") sits above the headline — deliberately not a tinted pill with a leading dot, which is the one shape every generated landing page reaches for.
 
-Inputs: `turnover`, `rate`. Live outputs as the user types:
+**No em dashes in any user-visible copy on this page.** Comments and this spec still use them; rendered strings do not, including the ones built in `surcharge-fees.ts`.
 
-- **Annual cost** = `turnover × 12 × rate` (headline, e.g. $84,000 at defaults)
-- Monthly cost = annual / 12
-- Comparator line derived from `annual / 88,400` (ABS median full-time salary, constant `ABS_MEDIAN_FULL_TIME_SALARY = 88_400` with source comment), phrased by `describeSalaryEquivalent()`: under 0.85 → "about N% of a median full-time salary"; 0.85–1.2 → "almost the cost of another full-time employee" (the article's own phrasing, because "about 1.0×" reads badly); above 1.2 → "about N.N×"; below 0.15 → omitted.
+Inputs: `turnover`, `rate`, `fixed` (card fixed fee per transaction) and `aov` (average transaction value). The fixed fee is a **card** cost, not a Quidkey one, and the same two values feed the advanced calculator, so neither is duplicated further down the page.
+
+Live outputs as the user types:
+
+- **Annual cost** = `turnover × 12 × rate + (turnover × 12 / aov) × fixed` (headline; $120,000 at the defaults)
+- Monthly cost, annual card volume
+- Comparator line derived from `annual / 88,400` (ABS median full-time salary, constant `ABS_MEDIAN_FULL_TIME_SALARY = 88_400`), phrased by `describeSalaryEquivalent()`: under 0.85 → "about N% of a median full-time salary"; 0.85–1.2 → "almost the cost of another full-time employee" (the article's own phrasing, because "about 1.0×" reads badly); 1.2–10 → "about N.N×"; above 10 → grouped integer ("about 1,900×"); below 0.15 → omitted.
+- **Save up to $X** — the same volume priced at Quidkey Pay by Bank (`PAYTO_PERCENT` + `PAYTO_FIXED`), clamped at zero. Labelled "up to" because it assumes every payment moves, which no merchant does. Savings sit in the hero panel because savings is the point of the page; the earlier per-lever detail stays out of it.
+
+### Defaults are Stripe's published Australian pricing
+
+`rate` 1.7% and `fixed` $0.30 are Stripe's standard AU domestic rates, held in `STRIPE_AU_STANDARD` and pinned to the defaults by a test so the two can't drift.
+
+**Attribution is conditional.** The page names Stripe only while the inputs still equal those numbers ("These are Stripe's standard Australian rates..."); once either is edited it falls back to a neutral reference ("Not sure? Stripe's standard Australian pricing is..."). Naming a competitor alongside a price is comparative advertising, so the figure attributed to them must never be one the visitor typed.
 
 Below it, the gate: a blurred, non-interactive preview of the gated section with the email form overlaid.
 
@@ -78,8 +90,8 @@ Every rate and every share is edited **in the table row it belongs to** — ther
 
 | Type                     | Default share | Default rate | Fixed/txn |
 | ------------------------ | ------------- | ------------ | --------- |
-| Domestic consumer credit | 58%           | 1.4%         | $0.30     |
-| Business credit          | 17%           | 1.8%         | $0.30     |
+| Domestic consumer credit | 58%           | 1.7%         | `fixed`   |
+| Business credit          | 17%           | 1.8%         | `fixed`   |
 | Amex                     | 13%           | 2.2%         | —         |
 | Foreign-issued           | 12%           | 5.5% all-in  | —         |
 

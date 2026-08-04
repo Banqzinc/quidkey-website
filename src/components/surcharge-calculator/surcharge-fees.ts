@@ -39,9 +39,21 @@ export const CARD_LABELS: Record<CardTypeId, string> = {
   foreign: 'Foreign-issued cards',
 }
 
-// Per-transaction component, applied to domestic credit and business credit
-// only. Amex and foreign-issued cards are modelled as percentage-only.
-export const FIXED_PER_TRANSACTION = 0.3
+// Default per-transaction component: the fixed side of a card fee, not a
+// Quidkey charge. Stripe's standard Australian pricing is 1.7% + $0.30, which
+// is where the rate defaults come from too. Editable, and applied to domestic
+// credit and business credit only: Amex and foreign-issued cards are modelled
+// as percentage-only.
+export const DEFAULT_FIXED_PER_TRANSACTION = 0.3
+
+// Stripe's published standard Australian pricing for domestic cards. Used as
+// the page's default because most AU merchants recognise it from their own
+// statement. Attribution is only shown while the inputs still match these
+// numbers, so an edited rate is never labelled as Stripe's.
+export const STRIPE_AU_STANDARD = {
+  ratePercent: 1.7,
+  fixedPerTransaction: 0.3,
+}
 
 // Quidkey Pay by Bank (PayTo) pricing.
 export const PAYTO_PERCENT = 0.5
@@ -64,24 +76,46 @@ const flooredAov = (aov: number) => (Number.isFinite(aov) && aov > 0 ? aov : 1)
 export type QuickInput = {
   monthlyTurnover: number
   ratePercent: number
+  averageOrderValue: number
+  fixedPerTransaction: number
 }
 
 export type QuickResult = {
   annualVolume: number
+  annualTransactions: number
   annualCost: number
   monthlyCost: number
   /** Annual cost expressed as a multiple of a median full-time salary. */
   salaryEquivalent: number
+  /** Same volume priced at Quidkey Pay by Bank. */
+  payByBankCost: number
+  /**
+   * Difference if ALL of this volume moved to Pay by Bank. A ceiling, not a
+   * forecast, so the UI must label it "up to" — no merchant moves everything.
+   */
+  maxAnnualSaving: number
 }
 
-export function computeQuick({ monthlyTurnover, ratePercent }: QuickInput): QuickResult {
+export function computeQuick({
+  monthlyTurnover,
+  ratePercent,
+  averageOrderValue,
+  fixedPerTransaction,
+}: QuickInput): QuickResult {
   const annualVolume = monthlyTurnover * MONTHS_PER_YEAR
-  const annualCost = annualVolume * percent(ratePercent)
+  const annualTransactions = annualVolume / flooredAov(averageOrderValue)
+  const annualCost = annualVolume * percent(ratePercent) + annualTransactions * fixedPerTransaction
+  const payByBankCost =
+    annualVolume * percent(PAYTO_PERCENT) + annualTransactions * PAYTO_FIXED
+
   return {
     annualVolume,
+    annualTransactions,
     annualCost,
     monthlyCost: annualCost / MONTHS_PER_YEAR,
     salaryEquivalent: annualCost / ABS_MEDIAN_FULL_TIME_SALARY,
+    payByBankCost,
+    maxAnnualSaving: Math.max(0, annualCost - payByBankCost),
   }
 }
 
@@ -94,11 +128,11 @@ export function describeSalaryEquivalent(multiple: number): string | null {
     return `That's about ${Math.round(multiple * 100)}% of a median full-time salary in Australia.`
   }
   if (multiple <= 1.2) {
-    return "That's almost the cost of another full-time employee on Australia's median salary — without getting the extra help."
+    return "That's almost the cost of another full-time employee on Australia's median salary, without getting the extra help."
   }
   const shown =
     multiple < 10 ? multiple.toFixed(1) : Math.round(multiple).toLocaleString('en-AU')
-  return `That's about ${shown}× a median full-time salary in Australia — without getting the extra help.`
+  return `That's about ${shown}× a median full-time salary in Australia, without getting the extra help.`
 }
 
 export type CardLine = {
@@ -118,6 +152,8 @@ export type DetailedInput = {
   averageOrderValue: number
   /** Share of card volume by value per card type, as fractions. */
   mix: CardMix
+  /** Per-transaction fee on domestic credit and business credit. */
+  fixedPerTransaction: number
   creditPercent: number
   businessPercent: number
   amexPercent: number
@@ -144,23 +180,26 @@ function ratesFor(input: DetailedInput): Record<CardTypeId, number> {
   }
 }
 
-const FIXED_FOR: Record<CardTypeId, number> = {
-  credit: FIXED_PER_TRANSACTION,
-  business: FIXED_PER_TRANSACTION,
-  amex: 0,
-  foreign: 0,
+function fixedFor(input: DetailedInput): Record<CardTypeId, number> {
+  return {
+    credit: input.fixedPerTransaction,
+    business: input.fixedPerTransaction,
+    amex: 0,
+    foreign: 0,
+  }
 }
 
 export function computeDetailed(input: DetailedInput): DetailedResult {
   const turnoverVolume = input.monthlyTurnover * MONTHS_PER_YEAR
   const aov = flooredAov(input.averageOrderValue)
   const rates = ratesFor(input)
+  const fixed = fixedFor(input)
 
   const lines: CardLine[] = CARD_TYPE_ORDER.map((id) => {
     const mixShare = input.mix[id] ?? 0
     const lineVolume = turnoverVolume * mixShare
     const transactions = lineVolume / aov
-    const fixedPerTransaction = FIXED_FOR[id]
+    const fixedPerTransaction = fixed[id]
     return {
       id,
       label: CARD_LABELS[id],

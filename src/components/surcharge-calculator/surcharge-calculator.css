@@ -153,6 +153,16 @@
   letter-spacing: -0.02em;
   margin: 0;
 }
+.sc-calc .sc-quick__pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+@media (max-width: 420px) {
+  .sc-calc .sc-quick__pair {
+    grid-template-columns: 1fr;
+  }
+}
 .sc-calc .sc-quick__note {
   font-size: 13px;
   line-height: 1.5;
@@ -212,6 +222,33 @@
 }
 .sc-calc .sc-quick__compare b {
   color: #fff;
+}
+.sc-calc .sc-quick__save {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+.sc-calc .sc-quick__save-lbl {
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--green);
+}
+.sc-calc .sc-quick__save-val {
+  margin-top: 4px;
+  font-size: clamp(28px, 3.8vw, 38px);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  font-weight: 600;
+  color: #fff;
+}
+.sc-calc .sc-quick__save-sub {
+  margin-top: 5px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.62);
+  max-width: 40ch;
 }
 
 /* ─── Fields ─── */
@@ -464,14 +501,6 @@
 .sc-calc .sc-detail__card {
   padding: 26px;
 }
-/* Only average order value lives above the table now — every rate and share is
-   edited in the row it belongs to, so nothing is duplicated. */
-.sc-calc .sc-detail__inputs {
-  max-width: 260px;
-  padding-bottom: 22px;
-  border-bottom: 1px solid var(--line);
-}
-
 /* ─── Editable table cells ─── */
 .sc-calc .sc-cell {
   display: inline-flex;
@@ -541,7 +570,7 @@
   text-align: left;
   font-size: 13px;
   color: var(--faint);
-  padding: 18px 0 10px;
+  padding: 0 0 12px;
 }
 .sc-calc .sc-table th,
 .sc-calc .sc-table td {

@@ -6,15 +6,22 @@
 // back to its default when missing, blank, non-numeric, or out of range, so
 // junk links degrade safely instead of rendering NaN.
 
-import { CARD_TYPE_ORDER, DEFAULT_CARD_MIX, type CardMix } from './surcharge-fees'
+import {
+  CARD_TYPE_ORDER,
+  DEFAULT_CARD_MIX,
+  DEFAULT_FIXED_PER_TRANSACTION,
+  type CardMix,
+} from './surcharge-fees'
 
 export type SurchargeSearch = {
   /** Monthly card turnover, AUD. */
   turnover: number
   /** Blended card fee rate, %. */
   rate: number
-  /** Average order value, AUD. */
+  /** Average transaction value, AUD. */
   aov: number
+  /** Per-transaction fee on domestic credit and business credit, AUD. */
+  fixed: number
   /** Domestic consumer credit rate, %. */
   credit: number
   /** Business credit rate, %. */
@@ -39,9 +46,10 @@ export function formatMix(mix: CardMix): string {
 
 export const DEFAULTS: SurchargeSearch = {
   turnover: 500_000,
-  rate: 1.4,
+  rate: 1.7,
   aov: 100,
-  credit: 1.4,
+  fixed: DEFAULT_FIXED_PER_TRANSACTION,
+  credit: 1.7,
   business: 1.8,
   amex: 2.2,
   foreign: 5.5,
@@ -78,6 +86,7 @@ const RANGES: Record<Exclude<keyof SurchargeSearch, 'mix'>, { min: number; max: 
   turnover: { min: 0, max: 9_999_999_999 },
   rate: { min: 0, max: 10 },
   aov: { min: 1, max: 1_000_000 },
+  fixed: { min: 0, max: 5 },
   credit: { min: 0, max: 10 },
   business: { min: 0, max: 10 },
   amex: { min: 0, max: 10 },
@@ -100,6 +109,7 @@ export function parseSearch(raw: Record<string, unknown>): SurchargeSearch {
     turnover: num(raw.turnover, 'turnover'),
     rate: num(raw.rate, 'rate'),
     aov: num(raw.aov, 'aov'),
+    fixed: num(raw.fixed, 'fixed'),
     credit: num(raw.credit, 'credit'),
     business: num(raw.business, 'business'),
     amex: num(raw.amex, 'amex'),

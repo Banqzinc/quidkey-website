@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { DEFAULT_CARD_MIX } from './surcharge-fees'
+import { DEFAULT_CARD_MIX, STRIPE_AU_STANDARD } from './surcharge-fees'
 import { DEFAULTS, formatMix, parseMix, parseSearch } from './surcharge-params'
 
 describe('parseMix / formatMix', () => {
@@ -44,9 +44,10 @@ describe('parseSearch', () => {
   it('has the defaults from the spec', () => {
     expect(DEFAULTS).toEqual({
       turnover: 500_000,
-      rate: 1.4,
+      rate: 1.7,
       aov: 100,
-      credit: 1.4,
+      fixed: 0.3,
+      credit: 1.7,
       business: 1.8,
       amex: 2.2,
       foreign: 5.5,
@@ -86,6 +87,19 @@ describe('parseSearch', () => {
     expect(r.steer).toBe(DEFAULTS.steer)
   })
 
+  it("defaults to Stripe's published Australian pricing", () => {
+    // The page attributes the default figure to Stripe by name, so the defaults
+    // and the quoted Stripe rate must never drift apart.
+    expect(DEFAULTS.rate).toBe(STRIPE_AU_STANDARD.ratePercent)
+    expect(DEFAULTS.fixed).toBe(STRIPE_AU_STANDARD.fixedPerTransaction)
+  })
+
+  it('takes a fixed fee in cents and rejects an implausible one', () => {
+    expect(parseSearch({ fixed: '0.25' }).fixed).toBe(0.25)
+    expect(parseSearch({ fixed: 0 }).fixed).toBe(0)
+    expect(parseSearch({ fixed: 50 }).fixed).toBe(DEFAULTS.fixed)
+  })
+
   it('accepts enterprise turnover up to ten digits', () => {
     // Merchants running over a billion a month are in scope, so the ceiling
     // must not reject their real figure.
@@ -105,7 +119,18 @@ describe('parseSearch', () => {
     const r = parseSearch({ turnover: 100, nonsense: 'x' })
     expect(r).toEqual({ ...DEFAULTS, turnover: 100 })
     expect(Object.keys(r).sort()).toEqual(
-      ['amex', 'aov', 'business', 'credit', 'foreign', 'mix', 'rate', 'steer', 'turnover'].sort(),
+      [
+        'amex',
+        'aov',
+        'business',
+        'credit',
+        'fixed',
+        'foreign',
+        'mix',
+        'rate',
+        'steer',
+        'turnover',
+      ].sort(),
     )
   })
 })
