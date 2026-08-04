@@ -1,6 +1,27 @@
 import { describe, expect, it } from 'vitest'
 
-import { buildHubspotPayload, isBot, isValidEmail, normalizeEmail } from './submit-lead'
+import {
+  buildHubspotPayload,
+  hubspotEndpoint,
+  isBot,
+  isValidEmail,
+  normalizeEmail,
+} from './submit-lead'
+
+describe('hubspotEndpoint', () => {
+  it('defaults to the EU forms host, because the Quidkey portal is EU-hosted', () => {
+    // A US-host submission from an EU portal is rejected, so this default matters.
+    expect(hubspotEndpoint('145375174', 'abc-123')).toBe(
+      'https://api-eu1.hsforms.com/submissions/v3/integration/submit/145375174/abc-123',
+    )
+  })
+
+  it('honours an explicit host override', () => {
+    expect(hubspotEndpoint('1', '2', 'api.hsforms.com')).toBe(
+      'https://api.hsforms.com/submissions/v3/integration/submit/1/2',
+    )
+  })
+})
 
 describe('normalizeEmail', () => {
   it('trims and lowercases', () => {

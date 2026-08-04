@@ -31,6 +31,11 @@ const HUBSPOT_TIMEOUT_MS = 5_000
 /** RFC-ish maximum length of an email address. */
 const MAX_EMAIL_LENGTH = 254
 
+// The Forms API is region-specific. Quidkey's portal is EU-hosted (its UI is on
+// app-eu1.hubspot.com), and EU portals must submit to api-eu1.hsforms.com — the
+// US host rejects them. Override HUBSPOT_FORMS_HOST if the portal ever moves.
+const DEFAULT_FORMS_HOST = 'api-eu1.hsforms.com'
+
 export function normalizeEmail(raw: unknown): string {
   return typeof raw === 'string' ? raw.trim().toLowerCase() : ''
 }
@@ -61,8 +66,8 @@ export function buildHubspotPayload(
   }
 }
 
-function hubspotEndpoint(portalId: string, formGuid: string): string {
-  return `https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formGuid}`
+export function hubspotEndpoint(portalId: string, formGuid: string, host = DEFAULT_FORMS_HOST) {
+  return `https://${host}/submissions/v3/integration/submit/${portalId}/${formGuid}`
 }
 
 export const submitLead = createServerFn({ method: 'POST' })
@@ -80,6 +85,20 @@ export const submitLead = createServerFn({ method: 'POST' })
     const portalId = process.env.HUBSPOT_PORTAL_ID
     const formGuid = process.env.HUBSPOT_FORM_GUID
     if (!portalId || !formGuid) {
+      // Local development without HubSpot credentials: log the lead and open the
+      // gate so the whole flow can be exercised. This branch is compiled out of
+      // the production bundle (import.meta.env.DEV is a build-time constant), so
+      // a missing var in production still fails closed rather than pretending a
+      // lead was captured.
+      if (import.meta.env.DEV) {
+        console.warn('[submit-lead] HubSpot not configured — accepting lead locally, not forwarding', {
+          email,
+          turnover: data.turnover,
+          rate: data.rate,
+          marketingConsent: data.marketingConsent === true,
+        })
+        return { ok: true }
+      }
       console.error('[submit-lead] HUBSPOT_PORTAL_ID / HUBSPOT_FORM_GUID are not configured')
       return { ok: false, error: 'server' }
     }
@@ -96,7 +115,7 @@ export const submitLead = createServerFn({ method: 'POST' })
     )
 
     try {
-      const response = await fetch(hubspotEndpoint(portalId, formGuid), {
+      const response = await fetch(hubspotEndpoint(portalId, formGuid, process.env.HUBSPOT_FORMS_HOST), {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify(payload),
