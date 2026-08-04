@@ -9,6 +9,7 @@ import {
   QUIDKEY_FOREIGN_PERCENT,
   computeQuick,
   computeSavings,
+  describeSalaryEquivalent,
 } from './surcharge-fees'
 import type { SurchargeSearch } from './surcharge-params'
 import { isValidEmail, normalizeEmail, submitLead } from '@/lib/submit-lead'
@@ -178,6 +179,9 @@ function LeadGate({
 }) {
   const [email, setEmail] = useState('')
   const [hp, setHp] = useState('')
+  // Unticked by default and never required: consent bundled into a form the
+  // visitor must submit to see their result would not be freely given.
+  const [marketingConsent, setMarketingConsent] = useState(false)
   const [status, setStatus] = useState<'idle' | 'sending' | 'invalid' | 'error'>('idle')
 
   const submit = async (e: FormEvent) => {
@@ -193,7 +197,9 @@ function LeadGate({
 
     setStatus('sending')
     try {
-      const result = await submitLead({ data: { email, hp, turnover, rate } })
+      const result = await submitLead({
+        data: { email, hp, turnover, rate, marketingConsent },
+      })
       if (result.ok) {
         track({ name: 'surcharge_lead_submit', outcome: 'success' })
         onUnlock()
@@ -261,13 +267,26 @@ function LeadGate({
         onChange={(e) => setHp(e.target.value)}
       />
 
+      <label className="sc-consent">
+        <input
+          type="checkbox"
+          checked={marketingConsent}
+          onChange={(e) => setMarketingConsent(e.target.checked)}
+        />
+        <span>
+          Email me occasional Quidkey updates on payments and the surcharge changes. Unsubscribe
+          anytime.
+        </span>
+      </label>
+
       {message ? (
         <p className="sc-gate__error" id="sc-gate-message" role="alert">
           {message}
         </p>
       ) : (
         <p className="sc-gate__privacy" id="sc-gate-privacy">
-          We'll also send occasional Quidkey updates. Unsubscribe anytime.
+          We store your email so our team can follow up. The box above is optional — your breakdown
+          appears either way.
         </p>
       )}
     </form>
@@ -428,15 +447,21 @@ function Breakdown({
                         <span className="sc-table__flag">{NO_RELIEF[line.id]}</span>
                       ) : null}
                     </th>
-                    <td className="sc-table__num num">{Math.round(line.mixShare * 100)}%</td>
-                    <td className="sc-table__num num">
+                    <td className="sc-table__num num" data-label="Share">
+                      {Math.round(line.mixShare * 100)}%
+                    </td>
+                    <td className="sc-table__num num" data-label="Rate">
                       {rateText(line.ratePercent)}
                       {line.fixedPerTransaction > 0
                         ? ` + $${line.fixedPerTransaction.toFixed(2)}`
                         : ''}
                     </td>
-                    <td className="sc-table__num num">{money(line.annualVolume)}</td>
-                    <td className="sc-table__num num sc-table__cost">{money(line.annualCost)}</td>
+                    <td className="sc-table__num num" data-label="Annual volume">
+                      {money(line.annualVolume)}
+                    </td>
+                    <td className="sc-table__num num sc-table__cost" data-label="Annual cost">
+                      {money(line.annualCost)}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -448,10 +473,16 @@ function Breakdown({
                       Blended {rateText(detailed.effectiveRatePercent)} of card volume
                     </span>
                   </th>
-                  <td className="sc-table__num num">100%</td>
+                  <td className="sc-table__num num" data-label="Share">
+                    100%
+                  </td>
                   <td />
-                  <td className="sc-table__num num">{money(detailed.annualVolume)}</td>
-                  <td className="sc-table__num num sc-table__cost">{money(detailed.annualCost)}</td>
+                  <td className="sc-table__num num" data-label="Annual volume">
+                    {money(detailed.annualVolume)}
+                  </td>
+                  <td className="sc-table__num num sc-table__cost" data-label="Annual cost">
+                    {money(detailed.annualCost)}
+                  </td>
                 </tr>
               </tfoot>
             </table>
@@ -612,15 +643,19 @@ export function SurchargeCalculator({
     () => computeQuick({ monthlyTurnover: turnover, ratePercent: rate }),
     [turnover, rate],
   )
+  const salaryLine = describeSalaryEquivalent(quick.salaryEquivalent)
 
   return (
     <>
       <header className="sc-head">
         <div className="container">
-          <span className="sc-chip">
-            <span className="sc-chip__dot" />
-            From 1 October 2026
-          </span>
+          <p className="sc-eyebrow">
+            Surcharge ban
+            <span className="sc-eyebrow__sep" aria-hidden="true">
+              /
+            </span>
+            <span className="sc-eyebrow__date">1 October 2026</span>
+          </p>
           <h1 className="sc-head__title">
             What will the surcharge ban <em>cost your business?</em>
           </h1>
@@ -677,12 +712,7 @@ export function SurchargeCalculator({
                   <dd className="num">{money(quick.annualVolume)}</dd>
                 </div>
               </dl>
-              {quick.salaryEquivalent >= 0.1 ? (
-                <p className="sc-quick__compare">
-                  That's about <b>{quick.salaryEquivalent.toFixed(1)}×</b> a median full-time salary
-                  in Australia — without getting the extra help.
-                </p>
-              ) : null}
+              {salaryLine ? <p className="sc-quick__compare">{salaryLine}</p> : null}
             </div>
           </div>
         </div>

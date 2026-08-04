@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest'
 
-import { computeDetailed, computeQuick, computeSavings } from './surcharge-fees'
+import {
+  computeDetailed,
+  computeQuick,
+  computeSavings,
+  describeSalaryEquivalent,
+} from './surcharge-fees'
 
 // Every expected value below is hand-computed from the spec's rate table so a
 // regression in the math shows up as a failing number, not a re-derived one.
@@ -23,6 +28,28 @@ describe('computeQuick', () => {
     expect(r.annualCost).toBe(0)
     expect(r.monthlyCost).toBe(0)
     expect(r.salaryEquivalent).toBe(0)
+  })
+})
+
+describe('describeSalaryEquivalent', () => {
+  it('avoids the awkward "about 1.0x" phrasing near parity', () => {
+    // The default $84,000 case lands at 0.95 salaries.
+    const text = describeSalaryEquivalent(0.95)
+    expect(text).toContain('almost the cost of another full-time employee')
+    expect(text).not.toContain('1.0')
+  })
+
+  it('states a multiple once the bill is clearly more than one salary', () => {
+    expect(describeSalaryEquivalent(1.9)).toContain('1.9×')
+  })
+
+  it('states a percentage when the bill is well under one salary', () => {
+    expect(describeSalaryEquivalent(0.4)).toContain('40%')
+  })
+
+  it('says nothing at all for trivially small amounts', () => {
+    expect(describeSalaryEquivalent(0.05)).toBeNull()
+    expect(describeSalaryEquivalent(0)).toBeNull()
   })
 })
 

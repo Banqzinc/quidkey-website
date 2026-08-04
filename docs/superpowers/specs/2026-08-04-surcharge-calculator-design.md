@@ -44,18 +44,22 @@ Invalid, missing, or out-of-range values fall back to the default.
 
 ## Ungated view ("Quick estimate")
 
+A tracked-caps typographic eyebrow ("SURCHARGE BAN / 1 OCTOBER 2026") sits above the headline — deliberately not a tinted pill with a leading dot, which is the one shape every generated landing page reaches for.
+
 Inputs: `turnover`, `rate`. Live outputs as the user types:
 
 - **Annual cost** = `turnover × 12 × rate` (headline, e.g. $84,000 at defaults)
 - Monthly cost = annual / 12
-- Comparator line: `annual / 88,400` (ABS median full-time salary, constant `ABS_MEDIAN_FULL_TIME_SALARY = 88_400` with source comment) → "≈ 0.9 full-time salaries", one decimal.
+- Comparator line derived from `annual / 88,400` (ABS median full-time salary, constant `ABS_MEDIAN_FULL_TIME_SALARY = 88_400` with source comment), phrased by `describeSalaryEquivalent()`: under 0.85 → "about N% of a median full-time salary"; 0.85–1.2 → "almost the cost of another full-time employee" (the article's own phrasing, because "about 1.0×" reads badly); above 1.2 → "about N.N×"; below 0.15 → omitted.
 
 Below it, the gate: a blurred, non-interactive preview of the gated section with the email form overlaid.
 
 ## Gate
 
-- Form: **email only** + hidden honeypot (`website` text input, visually hidden and `aria-hidden`, `tabIndex={-1}`, `autoComplete="off"`).
-- Submit button: "See my full breakdown". Microcopy: "We'll also send occasional Quidkey updates. Unsubscribe anytime." No emailed-PDF promise — the payoff is on-page; follow-up emails are a HubSpot workflow, not code.
+- Form: **email only** + hidden honeypot (`website` text input, visually hidden and `aria-hidden`, `tabIndex={-1}`, `autoComplete="off"`) + an **optional marketing-consent checkbox**.
+- Submit button: "See my full breakdown". No emailed-PDF promise — the payoff is on-page; follow-up emails are a HubSpot workflow, not code.
+- **Marketing consent is unticked by default and never required.** The breakdown unlocks whether or not it is ticked, and the boolean rides along to HubSpot as a `marketing_consent` field. Rationale: the Australian Spam Act would accept a conspicuous notice as inferred consent, but consent bundled into a form a visitor must submit to see their own result is not freely given under GDPR, so gating the unlock on the tick would be invalid for any EU/UK visitor. Microcopy states plainly that the box is optional.
+- Follow-up option (not in v1): swapping the flat `marketing_consent` field for HubSpot's native `legalConsentOptions` gives a timestamped consent record, but needs a subscription type ID from the HubSpot account.
 - Success → set localStorage flag, reveal gated content, `track surcharge_lead_submit {outcome: 'success'}`.
 - Failure → inline error "Something went wrong — please try again.", stay locked, `track {outcome: 'error'}`. A failed HubSpot forward must **not** unlock (no silent lead loss).
 

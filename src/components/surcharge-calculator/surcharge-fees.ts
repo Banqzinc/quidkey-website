@@ -87,6 +87,20 @@ export function computeQuick({ monthlyTurnover, ratePercent }: QuickInput): Quic
   }
 }
 
+// The article's framing: an annual card-fee bill of roughly one median salary
+// is "almost the cost of another full-time employee". Stating a bare multiple
+// reads badly right around 1 ("about 1.0x a salary"), so describe it instead.
+export function describeSalaryEquivalent(multiple: number): string | null {
+  if (!Number.isFinite(multiple) || multiple < 0.15) return null
+  if (multiple < 0.85) {
+    return `That's about ${Math.round(multiple * 100)}% of a median full-time salary in Australia.`
+  }
+  if (multiple <= 1.2) {
+    return "That's almost the cost of another full-time employee on Australia's median salary — without getting the extra help."
+  }
+  return `That's about ${multiple.toFixed(1)}× a median full-time salary in Australia — without getting the extra help.`
+}
+
 export type CardLine = {
   id: CardTypeId
   label: string

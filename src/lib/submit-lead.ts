@@ -16,6 +16,11 @@ export type LeadInput = {
   hp?: string
   turnover: number
   rate: number
+  /**
+   * Explicit opt-in to marketing email. Optional by design: the gate unlocks
+   * either way, because consent required to see a result is not freely given.
+   */
+  marketingConsent?: boolean
 }
 
 export type LeadResult = { ok: true } | { ok: false; error: 'invalid_email' | 'server' }
@@ -42,7 +47,7 @@ export function isBot(hp: unknown): boolean {
 }
 
 export function buildHubspotPayload(
-  input: Pick<LeadInput, 'email' | 'turnover' | 'rate'>,
+  input: Pick<LeadInput, 'email' | 'turnover' | 'rate' | 'marketingConsent'>,
   pageUri: string,
 ) {
   return {
@@ -50,6 +55,7 @@ export function buildHubspotPayload(
       { name: 'email', value: input.email },
       { name: 'monthly_card_turnover', value: String(input.turnover) },
       { name: 'average_card_fee_rate', value: String(input.rate) },
+      { name: 'marketing_consent', value: input.marketingConsent ? 'true' : 'false' },
     ],
     context: { pageUri, pageName: PAGE_NAME },
   }
@@ -80,7 +86,12 @@ export const submitLead = createServerFn({ method: 'POST' })
 
     const origin = new URL(getRequest().url).origin
     const payload = buildHubspotPayload(
-      { email, turnover: data.turnover, rate: data.rate },
+      {
+        email,
+        turnover: data.turnover,
+        rate: data.rate,
+        marketingConsent: data.marketingConsent === true,
+      },
       `${origin}${PAGE_PATH}`,
     )
 

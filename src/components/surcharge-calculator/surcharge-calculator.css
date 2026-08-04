@@ -74,25 +74,24 @@
     padding: 28px 0 20px;
   }
 }
-.sc-calc .sc-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  height: 26px;
-  padding: 0 12px;
-  margin-bottom: 18px;
-  border-radius: 999px;
-  background: var(--amber-bg);
-  color: var(--amber-ink);
-  font-size: 12px;
+/* Typographic eyebrow rather than a pill: this page is editorial, and a
+   tinted capsule with a leading dot is the one shape every generated
+   landing page reaches for. Tracked caps carry the same information. */
+.sc-calc .sc-eyebrow {
+  margin: 0 0 18px;
+  font-size: 11.5px;
   font-weight: 600;
-  letter-spacing: -0.005em;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--faint);
 }
-.sc-calc .sc-chip__dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 999px;
-  background: currentColor;
+.sc-calc .sc-eyebrow__sep {
+  margin: 0 0.5em;
+  color: var(--line-strong);
+  font-weight: 400;
+}
+.sc-calc .sc-eyebrow__date {
+  color: var(--amber-ink);
 }
 .sc-calc .sc-head__title {
   font-size: clamp(30px, 4.6vw, 48px);
@@ -398,6 +397,24 @@
   white-space: nowrap;
   border: 0;
 }
+.sc-calc .sc-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin-top: 14px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--muted);
+  cursor: pointer;
+}
+.sc-calc .sc-consent input {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin: 1px 0 0;
+  accent-color: var(--ink);
+  cursor: pointer;
+}
 .sc-calc .sc-gate__privacy,
 .sc-calc .sc-gate__error {
   font-size: 12.5px;
@@ -456,11 +473,25 @@
 }
 .sc-calc .sc-detail__inputs {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(168px, 1fr));
+  /* 150px lets all six rate fields sit on one row at desktop width; a label
+     that wraps to two lines must not shunt its own input downward, hence the
+     bottom-aligned inputs below. */
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 16px;
   padding-bottom: 24px;
   margin-bottom: 4px;
   border-bottom: 1px solid var(--line);
+}
+.sc-calc .sc-detail__inputs .sc-field {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.sc-calc .sc-detail__inputs .sc-field__input {
+  margin-top: auto;
+}
+.sc-calc .sc-detail__inputs .sc-field--pct .sc-field__input {
+  max-width: none;
 }
 .sc-calc .sc-table {
   width: 100%;
@@ -528,14 +559,15 @@
 /* Tables are the one thing that must never force the page to scroll
    sideways; below this width the layout stacks instead. */
 @media (max-width: 720px) {
+  /* Each row becomes a small definition list. The column headings are hidden,
+     so every value carries its own label via data-label — a bare stack of
+     percentages and dollar amounts is unreadable without them. */
   .sc-calc .sc-table thead {
     display: none;
   }
   .sc-calc .sc-table tr {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 2px 12px;
-    padding: 14px 0;
+    display: block;
+    padding: 16px 0;
     border-bottom: 1px solid var(--line);
   }
   .sc-calc .sc-table th,
@@ -545,15 +577,33 @@
   }
   .sc-calc .sc-table tbody th,
   .sc-calc .sc-table tfoot th {
-    grid-column: 1;
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
   }
   .sc-calc .sc-table td {
-    grid-column: 2;
-    text-align: right;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 3px 0;
     font-size: 13.5px;
     color: var(--muted);
   }
+  .sc-calc .sc-table td::before {
+    content: attr(data-label);
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--faint);
+  }
+  /* The total row has no rate to show. */
+  .sc-calc .sc-table td:empty {
+    display: none;
+  }
   .sc-calc .sc-table td.sc-table__cost {
+    margin-top: 5px;
+    padding-top: 7px;
+    border-top: 1px solid var(--line);
     font-size: 16px;
     color: var(--ink);
   }
