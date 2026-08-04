@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
 
 import {
-  DEBIT_PERCENT,
   FIXED_PER_TRANSACTION,
   PAYTO_FIXED,
   PAYTO_PERCENT,
@@ -14,7 +13,7 @@ import {
 import { formatMix, parseMix, type SurchargeSearch } from './surcharge-params'
 import { isValidEmail, normalizeEmail, submitLead } from '@/lib/submit-lead'
 import { track } from '@/lib/track'
-import { DEMO_BOOKING_URL, MERCHANTS_SIGNUP_URL } from '@/lib/urls'
+import { DEMO_BOOKING_URL, MERCHANTS_SIGNUP_URL, buildMailto } from '@/lib/urls'
 
 // AUD only — this page is about an Australian regulatory change, so there is no
 // region switcher and the currency is fixed.
@@ -98,7 +97,6 @@ function PercentField({
   value,
   onChange,
   max,
-  disabled,
 }: {
   id: string
   label: string
@@ -106,12 +104,11 @@ function PercentField({
   value: number
   onChange: (value: number) => void
   max: number
-  disabled?: boolean
 }) {
   const [draft, setDraft] = useState<string | null>(null)
 
   return (
-    <div className={`sc-field sc-field--pct ${disabled ? 'is-locked' : ''}`}>
+    <div className="sc-field sc-field--pct">
       <div className="sc-field__top">
         <label className="sc-field__label" htmlFor={id}>
           {label}
@@ -124,7 +121,6 @@ function PercentField({
           type="text"
           inputMode="decimal"
           className="num"
-          disabled={disabled}
           value={draft ?? String(value)}
           onChange={(e) => {
             // Keep digits and at most one decimal point.
@@ -142,6 +138,12 @@ function PercentField({
     </div>
   )
 }
+
+// Above this monthly card volume a self-serve slider stops being meaningful:
+// pricing and routing get negotiated around the merchant's actual mix, so the
+// page hands off to sales instead of quoting a number it can't stand behind.
+const ENTERPRISE_MONTHLY_TURNOVER = 10_000_000
+const ENTERPRISE_SAVINGS_CLAIM_PERCENT = 70
 
 const UNLOCK_KEY = 'qk_surcharge_unlocked'
 
@@ -317,25 +319,22 @@ function CellPercent({
   max,
   onChange,
   label,
-  disabled,
 }: {
   value: number
   max: number
   onChange: (value: number) => void
   label: string
-  disabled?: boolean
 }) {
   const [draft, setDraft] = useState<string | null>(null)
   const shown = Number(value.toFixed(2))
 
   return (
-    <span className={`sc-cell ${disabled ? 'is-locked' : ''}`}>
+    <span className="sc-cell">
       <input
         type="text"
         inputMode="decimal"
         className="num"
         aria-label={label}
-        disabled={disabled}
         value={draft ?? String(shown)}
         onChange={(e) => {
           const raw = e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')
@@ -380,11 +379,8 @@ function AdvancedCalculator({
   )
   const { detailed } = result
 
-  // Domestic debit's rate is deliberately not editable: it is the cheapest rail
-  // and the one the page argues you should steer toward, so it stays a fixed
-  // reference point. Every other rate, and every share, is the visitor's.
-  const rateField: Record<CardTypeId, { patch: keyof SurchargeSearch; max: number } | null> = {
-    debit: null,
+  // Every rate and every share in the table is the visitor's to set.
+  const rateField: Record<CardTypeId, { patch: keyof SurchargeSearch; max: number }> = {
     credit: { patch: 'credit', max: 10 },
     business: { patch: 'business', max: 10 },
     amex: { patch: 'amex', max: 10 },
@@ -398,6 +394,7 @@ function AdvancedCalculator({
 
   const mixTotal = detailed.mixTotalPercent
   const mixIsOff = Math.abs(mixTotal - 100) > 0.5
+  const isEnterprise = turnover > ENTERPRISE_MONTHLY_TURNOVER
 
   return (
     <>
@@ -408,6 +405,7 @@ function AdvancedCalculator({
             <p className="sc-section__sub">
               Set the share of your volume and the rate you pay on each card type. It starts from a
               typical Australian card mix — every figure in the table is yours to change.
+              Debit is left out: it is already the cheapest card to accept.
             </p>
           </div>
 
@@ -460,11 +458,9 @@ function AdvancedCalculator({
                         <span className="sc-rate-cell">
                           <CellPercent
                             value={line.ratePercent}
-                            max={field?.max ?? 10}
+                            max={field.max}
                             label={`${line.label} rate`}
-                            disabled={!field}
                             onChange={(v) => {
-                              if (!field) return
                               onChange({ [field.patch]: v } as Partial<SurchargeSearch>)
                               onTrackInput(String(field.patch))
                             }}
@@ -534,98 +530,98 @@ function AdvancedCalculator({
             </p>
           </div>
 
-          <div className="sc-card sc-save__card">
-            <div className="sc-save__control">
-              <label className="sc-field__label" htmlFor="sc-steer">
-                Card volume steered to Pay by Bank
-              </label>
-              <div className="sc-save__slider">
-                <input
-                  id="sc-steer"
-                  type="range"
-                  min={0}
-                  max={100}
-                  step={5}
-                  value={steer}
-                  onChange={(e) => {
-                    onChange({ steer: Number(e.target.value) })
-                    onTrackInput('steer')
-                  }}
-                />
-                <output className="sc-save__pct num" htmlFor="sc-steer">
-                  {steer}%
-                </output>
-              </div>
-              <p className="sc-save__hint">
-                The RBA's own survey found over half of card users would switch for a 1% discount.
-                Applies to domestic debit, consumer credit and business credit.
+          {isEnterprise ? (
+            <div className="sc-card sc-ent">
+              <p className="sc-ent__eyebrow">At your volume</p>
+              <p className="sc-ent__big">
+                We typically cut card costs by <b>over {ENTERPRISE_SAVINGS_CLAIM_PERCENT}%</b>
               </p>
+              <p className="sc-ent__body">
+                Above {money(ENTERPRISE_MONTHLY_TURNOVER)} a month, pricing and payment routing get
+                built around your actual card mix rather than a rate card — so a slider won't tell
+                you anything useful. Talk to us and we'll model your real volume with you.
+              </p>
+              <div className="sc-outcome__btns">
+                <a
+                  className="sc-btn sc-btn--primary"
+                  href={DEMO_BOOKING_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Book a demo
+                </a>
+                <a
+                  className="sc-btn sc-btn--ghost"
+                  href={buildMailto('Quidkey for high-volume card processing')}
+                >
+                  Talk to sales
+                </a>
+              </div>
             </div>
-
-            <ul className="sc-levers">
-              <li className="sc-lever">
-                <div className="sc-lever__label">
-                  Steering {money(result.steeredVolume)} to Pay by Bank
-                  <span className="sc-lever__rate">
-                    {rateText(PAYTO_PERCENT)} + ${PAYTO_FIXED.toFixed(2)} instead of card rates
-                  </span>
+          ) : (
+            <div className="sc-card sc-save__card">
+              <div className="sc-save__control">
+                <label className="sc-field__label" htmlFor="sc-steer">
+                  Card volume steered to Pay by Bank
+                </label>
+                <div className="sc-save__slider">
+                  <input
+                    id="sc-steer"
+                    type="range"
+                    min={0}
+                    max={100}
+                    step={5}
+                    value={steer}
+                    onChange={(e) => {
+                      onChange({ steer: Number(e.target.value) })
+                      onTrackInput('steer')
+                    }}
+                  />
+                  <output className="sc-save__pct num" htmlFor="sc-steer">
+                    {steer}%
+                  </output>
                 </div>
-                <div className="sc-lever__val num">
-                  {result.steeringSavings > 0 ? money(result.steeringSavings) : 'No saving'}
-                </div>
-              </li>
-              <li className="sc-lever">
-                <div className="sc-lever__label">
-                  Foreign cards through Quidkey
-                  <span className="sc-lever__rate">
-                    {rateText(QUIDKEY_FOREIGN_PERCENT)} instead of {rateText(foreign)} all-in
-                  </span>
-                </div>
-                <div className="sc-lever__val num">
-                  {result.foreignCardSavings > 0
-                    ? money(result.foreignCardSavings)
-                    : 'No additional saving'}
-                </div>
-              </li>
-            </ul>
-
-            <div className="sc-outcome">
-              <div className="sc-outcome__cell">
-                <div className="sc-outcome__lbl">Estimated annual saving</div>
-                <div className="sc-outcome__val num sc-outcome__val--green">
-                  {money(result.totalSavings)}
-                </div>
-                <div className="sc-outcome__sub">
-                  {Math.round(result.savingsPercent)}% off your card fees
-                </div>
-              </div>
-              <div className="sc-outcome__cell">
-                <div className="sc-outcome__lbl">New annual card cost</div>
-                <div className="sc-outcome__val num">{money(result.newAnnualCost)}</div>
-                <div className="sc-outcome__sub">down from {money(detailed.annualCost)}</div>
-              </div>
-              <div className="sc-outcome__cell sc-outcome__cta">
-                <p className="sc-outcome__pitch">
-                  Quidkey lets you offer discounts, loyalty points or other rewards so customers
-                  choose Pay by Bank — and share the saving instead of giving it to the card
-                  networks.
+                <p className="sc-save__hint">
+                  The RBA's own survey found over half of card users would switch for a 1% discount.
+                  Applies to your domestic consumer credit and business credit volume, plus foreign
+                  cards moving to Quidkey's {rateText(QUIDKEY_FOREIGN_PERCENT)}.
                 </p>
-                <div className="sc-outcome__btns">
-                  <a
-                    className="sc-btn sc-btn--primary"
-                    href={DEMO_BOOKING_URL}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Book a demo
-                  </a>
-                  <a className="sc-btn sc-btn--ghost" href={MERCHANTS_SIGNUP_URL}>
-                    Get started
-                  </a>
+              </div>
+
+              <div className="sc-outcome">
+                <div className="sc-outcome__cell">
+                  <div className="sc-outcome__lbl">Estimated annual saving</div>
+                  <div className="sc-outcome__val num sc-outcome__val--green">
+                    {money(result.totalSavings)}
+                  </div>
+                  <div className="sc-outcome__sub">
+                    {Math.round(result.savingsPercent)}% off your card fees — down to{' '}
+                    {money(result.newAnnualCost)} from {money(detailed.annualCost)}
+                  </div>
+                </div>
+                <div className="sc-outcome__cell sc-outcome__cta">
+                  <p className="sc-outcome__pitch">
+                    Quidkey lets you offer discounts, loyalty points or other rewards so customers
+                    choose Pay by Bank — and share the saving instead of giving it to the card
+                    networks.
+                  </p>
+                  <div className="sc-outcome__btns">
+                    <a
+                      className="sc-btn sc-btn--primary"
+                      href={DEMO_BOOKING_URL}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Book a demo
+                    </a>
+                    <a className="sc-btn sc-btn--ghost" href={MERCHANTS_SIGNUP_URL}>
+                      Get started
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
 
@@ -634,10 +630,9 @@ function AdvancedCalculator({
           <h2 className="sc-notes__title">Assumptions</h2>
           <p className="sc-notes__body">
             <strong>Estimates only.</strong> The card mix and rates in the advanced calculator start
-            from typical Australian figures and are yours to edit. Domestic debit is held at{' '}
-            {rateText(DEBIT_PERCENT)} + ${FIXED_PER_TRANSACTION.toFixed(2)} as a reference point.
-            Domestic debit, consumer credit and business credit include a $
-            {FIXED_PER_TRANSACTION.toFixed(2)} per-transaction fee; American Express and
+            from typical Australian figures and are yours to edit. Domestic debit is excluded, as
+            it is already the cheapest card to accept. Domestic consumer credit and business credit
+            include a ${FIXED_PER_TRANSACTION.toFixed(2)} per-transaction fee; American Express and
             foreign-issued cards are modelled as a percentage only. Quidkey Pay by Bank is{' '}
             {rateText(PAYTO_PERCENT)} + ${PAYTO_FIXED.toFixed(2)} and Quidkey international cards{' '}
             {rateText(QUIDKEY_FOREIGN_PERCENT)}. Your actual fees depend on your merchant agreement,

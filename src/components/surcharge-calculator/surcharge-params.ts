@@ -73,7 +73,9 @@ export function parseMix(raw: unknown): CardMix {
 // someone edited by hand) and replaced by the default rather than clamped, so
 // the URL and the rendered figure never disagree.
 const RANGES: Record<Exclude<keyof SurchargeSearch, 'mix'>, { min: number; max: number }> = {
-  turnover: { min: 0, max: 100_000_000 },
+  // Ten digits: enterprise merchants running over a billion a month exist, and
+  // a ceiling that rejects their real number is worse than a wide one.
+  turnover: { min: 0, max: 9_999_999_999 },
   rate: { min: 0, max: 10 },
   aov: { min: 1, max: 1_000_000 },
   credit: { min: 0, max: 10 },

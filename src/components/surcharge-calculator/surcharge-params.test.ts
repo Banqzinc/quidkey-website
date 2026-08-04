@@ -5,14 +5,13 @@ import { DEFAULTS, formatMix, parseMix, parseSearch } from './surcharge-params'
 
 describe('parseMix / formatMix', () => {
   it('round-trips the default mix', () => {
-    expect(formatMix(DEFAULT_CARD_MIX)).toBe('40,35,10,8,7')
-    expect(parseMix('40,35,10,8,7')).toEqual(DEFAULT_CARD_MIX)
+    expect(formatMix(DEFAULT_CARD_MIX)).toBe('58,17,13,12')
+    expect(parseMix('58,17,13,12')).toEqual(DEFAULT_CARD_MIX)
   })
 
   it('accepts a mix that does not add to 100', () => {
     // Under-allocation is a legitimate in-progress state while editing.
-    expect(parseMix('10,10,10,10,10')).toEqual({
-      debit: 0.1,
+    expect(parseMix('10,10,10,10')).toEqual({
       credit: 0.1,
       business: 0.1,
       amex: 0.1,
@@ -21,18 +20,18 @@ describe('parseMix / formatMix', () => {
   })
 
   it('falls back to the whole default mix for malformed input', () => {
-    expect(parseMix('40,35,10,8')).toEqual(DEFAULT_CARD_MIX) // too few
-    expect(parseMix('40,35,10,8,7,1')).toEqual(DEFAULT_CARD_MIX) // too many
-    expect(parseMix('40,abc,10,8,7')).toEqual(DEFAULT_CARD_MIX) // not a number
-    expect(parseMix('40,-5,10,8,7')).toEqual(DEFAULT_CARD_MIX) // negative
-    expect(parseMix('40,150,10,8,7')).toEqual(DEFAULT_CARD_MIX) // above 100
+    expect(parseMix('58,17,13')).toEqual(DEFAULT_CARD_MIX) // too few
+    expect(parseMix('58,17,13,12,1')).toEqual(DEFAULT_CARD_MIX) // too many
+    expect(parseMix('58,abc,13,12')).toEqual(DEFAULT_CARD_MIX) // not a number
+    expect(parseMix('58,-5,13,12')).toEqual(DEFAULT_CARD_MIX) // negative
+    expect(parseMix('58,150,13,12')).toEqual(DEFAULT_CARD_MIX) // above 100
     expect(parseMix(undefined)).toEqual(DEFAULT_CARD_MIX)
     expect(parseMix(42)).toEqual(DEFAULT_CARD_MIX)
   })
 
   it('formats fractional shares without floating-point noise', () => {
-    expect(formatMix({ debit: 0.335, credit: 0.335, business: 0.11, amex: 0.11, foreign: 0.11 })).toBe(
-      '33.5,33.5,11,11,11',
+    expect(formatMix({ credit: 0.335, business: 0.335, amex: 0.22, foreign: 0.11 })).toBe(
+      '33.5,33.5,22,11',
     )
   })
 })
@@ -52,7 +51,7 @@ describe('parseSearch', () => {
       amex: 2.2,
       foreign: 5.5,
       steer: 30,
-      mix: '40,35,10,8,7',
+      mix: '58,17,13,12',
     })
   })
 
@@ -85,6 +84,14 @@ describe('parseSearch', () => {
     expect(r.aov).toBe(DEFAULTS.aov)
     expect(r.foreign).toBe(DEFAULTS.foreign)
     expect(r.steer).toBe(DEFAULTS.steer)
+  })
+
+  it('accepts enterprise turnover up to ten digits', () => {
+    // Merchants running over a billion a month are in scope, so the ceiling
+    // must not reject their real figure.
+    expect(parseSearch({ turnover: 1_000_000_000 }).turnover).toBe(1_000_000_000)
+    expect(parseSearch({ turnover: 9_999_999_999 }).turnover).toBe(9_999_999_999)
+    expect(parseSearch({ turnover: 10_000_000_000 }).turnover).toBe(DEFAULTS.turnover)
   })
 
   it('honours an explicit zero where zero is meaningful', () => {

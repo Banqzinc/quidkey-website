@@ -9,7 +9,7 @@
 // Intentionally pure (no React) so the math is unit-testable and SSR-safe,
 // matching the Shopify calculator's fees.ts.
 
-export type CardTypeId = 'debit' | 'credit' | 'business' | 'amex' | 'foreign'
+export type CardTypeId = 'credit' | 'business' | 'amex' | 'foreign'
 
 export const MONTHS_PER_YEAR = 12
 
@@ -19,32 +19,28 @@ export const ABS_MEDIAN_FULL_TIME_SALARY = 88_400
 
 export type CardMix = Record<CardTypeId, number>
 
-// Starting share of card volume by value, as fractions. Editable in the table,
-// so this is only the default a visitor sees before adjusting it.
+// Starting share of card volume by value, as fractions — editable in the table,
+// so this is only what a visitor sees before adjusting it. These are the four
+// card types the surcharge ban actually makes expensive, rebalanced to total
+// 100% (they were 35/10/8/7 of a mix that also carried 40% domestic debit).
 export const DEFAULT_CARD_MIX: CardMix = {
-  debit: 0.4,
-  credit: 0.35,
-  business: 0.1,
-  amex: 0.08,
-  foreign: 0.07,
+  credit: 0.58,
+  business: 0.17,
+  amex: 0.13,
+  foreign: 0.12,
 }
 
-export const CARD_TYPE_ORDER: CardTypeId[] = ['debit', 'credit', 'business', 'amex', 'foreign']
+export const CARD_TYPE_ORDER: CardTypeId[] = ['credit', 'business', 'amex', 'foreign']
 
 export const CARD_LABELS: Record<CardTypeId, string> = {
-  debit: 'Domestic debit',
   credit: 'Domestic consumer credit',
   business: 'Business credit',
   amex: 'American Express',
   foreign: 'Foreign-issued cards',
 }
 
-// Domestic debit is not editable: it is the cheapest rail and the one the
-// article tells merchants to steer toward, so it stays a fixed reference point.
-export const DEBIT_PERCENT = 0.5
-
-// Per-transaction component, applied to domestic debit/credit/business only.
-// Amex and foreign-issued cards are modelled as percentage-only.
+// Per-transaction component, applied to domestic credit and business credit
+// only. Amex and foreign-issued cards are modelled as percentage-only.
 export const FIXED_PER_TRANSACTION = 0.3
 
 // Quidkey Pay by Bank (PayTo) pricing.
@@ -57,7 +53,7 @@ export const QUIDKEY_FOREIGN_PERCENT = 2.0
 
 // Card types that can be steered onto Pay by Bank. Amex and foreign-issued
 // cards are excluded: a domestic bank rail is not a substitute for them.
-const STEERABLE: CardTypeId[] = ['debit', 'credit', 'business']
+const STEERABLE: CardTypeId[] = ['credit', 'business']
 
 const percent = (n: number) => n / 100
 
@@ -100,7 +96,9 @@ export function describeSalaryEquivalent(multiple: number): string | null {
   if (multiple <= 1.2) {
     return "That's almost the cost of another full-time employee on Australia's median salary — without getting the extra help."
   }
-  return `That's about ${multiple.toFixed(1)}× a median full-time salary in Australia — without getting the extra help.`
+  const shown =
+    multiple < 10 ? multiple.toFixed(1) : Math.round(multiple).toLocaleString('en-AU')
+  return `That's about ${shown}× a median full-time salary in Australia — without getting the extra help.`
 }
 
 export type CardLine = {
@@ -139,7 +137,6 @@ export type DetailedResult = {
 
 function ratesFor(input: DetailedInput): Record<CardTypeId, number> {
   return {
-    debit: DEBIT_PERCENT,
     credit: input.creditPercent,
     business: input.businessPercent,
     amex: input.amexPercent,
@@ -148,7 +145,6 @@ function ratesFor(input: DetailedInput): Record<CardTypeId, number> {
 }
 
 const FIXED_FOR: Record<CardTypeId, number> = {
-  debit: FIXED_PER_TRANSACTION,
   credit: FIXED_PER_TRANSACTION,
   business: FIXED_PER_TRANSACTION,
   amex: 0,

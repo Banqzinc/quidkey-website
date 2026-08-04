@@ -37,7 +37,9 @@ All calculator inputs live in the URL query string (shareable links), validated 
 | `amex`     | Amex rate, %                              | 2.2     | 0–10           |
 | `foreign`  | Foreign-issued card all-in rate, %        | 5.5     | 0–15           |
 | `steer`    | Share of domestic volume steered to PayTo | 30      | 0–100          |
-| `mix`      | Card mix %, CSV in card-type order        | 40,35,10,8,7 | each 0–100 |
+| `mix`      | Card mix %, CSV in card-type order        | 58,17,13,12 | each 0–100 |
+
+`turnover` accepts up to ten digits ($9,999,999,999/month): enterprise merchants running over a billion a month are in scope, and a ceiling that rejects their real figure is worse than a wide one.
 
 `mix` is one CSV param rather than five separate ones so shared links stay readable. A malformed value falls back to the whole default mix, never a partly-applied one.
 
@@ -74,15 +76,16 @@ Named an **advanced calculator**, not a "breakdown". A breakdown implies its tot
 
 Every rate and every share is edited **in the table row it belongs to** — there is no duplicate row of rate fields above it. Only average order value sits outside the table, since it isn't per-card-type.
 
-| Type                     | Default share | Default rate | Share editable? | Rate editable? | Fixed/txn |
-| ------------------------ | ------------- | ------------ | --------------- | -------------- | --------- |
-| Domestic debit           | 40%           | 0.5%         | Yes             | **No**         | $0.30     |
-| Domestic consumer credit | 35%           | 1.4%         | Yes             | Yes            | $0.30     |
-| Business credit          | 10%           | 1.8%         | Yes             | Yes            | $0.30     |
-| Amex                     | 8%            | 2.2%         | Yes             | Yes            | —         |
-| Foreign-issued           | 7%            | 5.5% all-in  | Yes             | Yes            | —         |
+| Type                     | Default share | Default rate | Fixed/txn |
+| ------------------------ | ------------- | ------------ | --------- |
+| Domestic consumer credit | 58%           | 1.4%         | $0.30     |
+| Business credit          | 17%           | 1.8%         | $0.30     |
+| Amex                     | 13%           | 2.2%         | —         |
+| Foreign-issued           | 12%           | 5.5% all-in  | —         |
 
-Debit's rate stays fixed as the cheapest reference point — the rail the page argues you should steer toward. Its share is editable like the rest.
+Every share and every rate is editable — no locked cells.
+
+**Domestic debit is excluded from the model.** It is already the cheapest card to accept, so it diluted the table without changing the argument. The four remaining shares are the old 35/10/8/7 rebalanced to total 100%. Steerable volume is now consumer credit + business credit.
 
 No per-row regulatory annotations (no "no interchange cut", "no cap until 2027"): the article already covers which card types get no relief, and repeating it in the table crowded the numbers.
 
@@ -92,18 +95,15 @@ Math (annual): `vol_i = turnover × 12 × share_i`; `orders_i = vol_i / aov`; `l
 
 ### PayTo savings scenario
 
-Slider `steer` (default 30%): share of **domestic** card volume (debit + consumer credit + business credit) steered to Pay by Bank.
+One slider (`steer`, default 30%) and **one figure**: the estimated annual saving, with a supporting line giving the percentage and the before/after cost. The earlier per-lever breakdown (a row each for steering and foreign cards) was cut — it read as clutter, and its "No saving" / "No additional saving" states looked broken at low inputs. The savings math still combines both levers and still clamps each to zero independently.
 
-- `steeredVol = steer × (vol_debit + vol_credit + vol_business)`
-- `currentSteeredCost = steer × (line_debit + line_credit + line_business)`
-- `payToCost = steeredVol × 0.5% + (steeredVol / aov) × $0.30` (Quidkey PayTo: **0.5% + $0.30**)
-- `steeringSavings = currentSteeredCost − payToCost`
-- `foreignSavings = line_foreign − vol_foreign × 2.0%` (Quidkey international card rate: **2% flat**)
-- `totalSavings = max(0, steeringSavings) + max(0, foreignSavings)` — a component can be ≤ 0 (e.g. a user enters a foreign rate below 2%); the math module returns the raw per-component values *and* this clamped total. New annual cost = detailed total − totalSavings; savings also shown as %.
+Primary CTA is **Book a demo**, with Get started secondary.
 
-The two savings levers render as separate labeled lines (steering + international processing) for transparency; a non-positive component displays as "no additional saving". All displayed totals use the clamped `totalSavings`, so the numbers on screen always reconcile.
+### Enterprise hand-off above $10m/month
 
-CTAs after the scenario: **Book a demo** (`DEMO_BOOKING_URL`) and **Get started** (`MERCHANTS_SIGNUP_URL`) from `src/lib/urls.ts`.
+When monthly card turnover exceeds **$10,000,000**, the scenario is replaced by a sales hand-off: "We typically cut card costs by **over 70%**", copy explaining that at that volume pricing and routing are built around the merchant's actual mix rather than a rate card, and Book a demo / Talk to sales. No slider, no computed saving.
+
+The reasoning: past that volume a self-serve percentage isn't a number the page can stand behind, and the lead is worth a conversation. Constants `ENTERPRISE_MONTHLY_TURNOVER` and `ENTERPRISE_SAVINGS_CLAIM_PERCENT` hold the threshold and the claim.
 
 ### Assumptions & disclaimer
 
