@@ -10,6 +10,15 @@
   // node:async_hooks (AsyncLocalStorage) for its per-request context.
   "compatibility_flags": ["nodejs_compat"],
   "observability": { "enabled": true },
+
+  // HubSpot Forms API target for the surcharge calculator's lead gate. Neither
+  // value is a secret (both are public in any HubSpot embed snippet), so they
+  // live here rather than in `wrangler secret`. The gate reports an error and
+  // stays locked until these are filled in.
+  "vars": {
+    "HUBSPOT_PORTAL_ID": "",
+    "HUBSPOT_FORM_GUID": ""
+  },
   // Static assets (the client build) are wired automatically to dist/client by
   // @cloudflare/vite-plugin — no explicit "assets" block needed.
 
