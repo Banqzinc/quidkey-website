@@ -44,6 +44,200 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'card-surcharge-ban-what-it-costs-your-business',
+    date: 'August 6, 2026',
+    dateISO: '2026-08-06',
+    title:
+      "On 1 October, the card fee stops being your customer's problem and becomes yours",
+    seoTitle: 'Card Surcharge Ban: What It Costs Your Business | Quidkey',
+    description:
+      'From 1 October, card fees shift from your customers to you. What the surcharge ban actually costs an Australian business, and what you can still legally do.',
+    keyword: 'card surcharge ban cost to business',
+    author: 'Quidkey Team',
+    image: '/images/blog/australia-surcharge-ban.webp',
+    imageWidth: 1600,
+    imageHeight: 900,
+    featured: true,
+    relatedSlugs: [
+      'australia-card-surcharge-ban-october-2026',
+      'payto-explained-australian-merchants-guide',
+    ],
+    blocks: [
+      {
+        type: 'html',
+        html: "<strong>From October 1st, payment processing fees stop being your customer’s problem and become yours. For every $1 million you take on card, you’ll start paying about $14,000 a year.</strong>",
+      },
+      {
+        type: 'p',
+        text: "We’ve read a lot of takes on the Reserve Bank of Australia's surcharge decision. Almost all are written for consumers. Almost none answer the question every business owner actually has: what does this cost me?",
+      },
+      { type: 'p', text: "So let's work through it." },
+      { type: 'h2', text: 'What actually changes on 1 October' },
+      {
+        type: 'p',
+        text: 'The usual description of this is wrong in a way that matters.',
+      },
+      {
+        type: 'p',
+        text: 'There is no new law. The RBA has removed the rule that stopped the card networks from banning surcharges. From 1 October, you can no longer pass your card processing fees onto your customers. You pay them instead.',
+      },
+      {
+        type: 'p',
+        text: "After 1 October, your payment provider can prohibit surcharges and make you remove them. If you don’t comply, they can fine you or even block you from accepting card payments.",
+      },
+      {
+        type: 'p',
+        text: 'Visa, Mastercard and eftpos decide exactly which cards are covered, not the RBA. Until your payment provider tells you otherwise, assume it applies to debit, prepaid and credit cards, everywhere you accept payments.',
+      },
+      {
+        type: 'p',
+        text: 'There are also some positive changes going into effect at the same time:',
+      },
+      {
+        type: 'html',
+        html: "<ul><li><strong>Interchange on Australian consumer credit cards:</strong> the fee your payment provider pays to the cardholder’s bank drops from 0.8% to 0.3%.</li><li><strong>Debit and prepaid fees:</strong> down from 0.2% or 10c to 0.16% or 8c.</li></ul>",
+      },
+      {
+        type: 'p',
+        text: 'That should reduce your card processing fees, although not every payment provider passes the savings on.',
+      },
+      {
+        type: 'p',
+        text: "Unfortunately however, if you take a lot of overseas cards, don’t expect them to get cheaper in October. The cap on foreign-issued cards doesn’t start until 1 April 2027, so they will remain some of your most expensive card payments until then.",
+      },
+      {
+        type: 'p',
+        text: "Business credit cards stay the same. They don’t get the interchange cut, which means they’ll remain some of your most expensive card payments once you’re paying the fees instead of your customers.",
+      },
+      {
+        type: 'p',
+        text: "And what about American Express? Amex will actually be the most expensive of them all. Most of the market expected merchants would still be able to surcharge Amex, but from 1 October you’ll be absorbing those costs too.",
+      },
+      { type: 'h2', text: 'What this costs businesses' },
+      {
+        type: 'p',
+        text: "The RBA estimates businesses will stop collecting around $1.8 billion from customer surcharges. That’s money businesses were previously recovering from customers and will now need to absorb themselves.",
+      },
+      {
+        type: 'p',
+        text: "Most businesses know what they charge customers in surcharges. Far less know what they’ll actually be paying themselves from October.",
+      },
+      { type: 'h3', text: 'A simple example' },
+      {
+        type: 'html',
+        html: "<strong>A business turning over $500k a month ($6 million a year) and paying Stripe’s standard 1.7% card processing fee:</strong>",
+      },
+      {
+        type: 'table',
+        headers: ['', 'A year'],
+        rows: [
+          ['Card processing fees (at 1.7%)', '$102,000'],
+          ['Paid by customers today', '$102,000'],
+          ['Paid by you from 2 October', '$102,000 every year'],
+        ],
+      },
+      {
+        type: 'p',
+        text: "For context, that’s more than the cost of another full-time employee on Australia’s median salary.",
+      },
+      {
+        type: 'h2',
+        text: '"Just increase prices and pass it on" is the worst option on the table',
+      },
+      {
+        type: 'p',
+        text: "It’s also what most businesses will default to, because it requires little thought.",
+      },
+      {
+        type: 'p',
+        text: "The problem is that a price increase hits everyone. Your cash customers, your bank transfer customers, your best repeat customers who never cost you 1.7%: they all start paying for everyone else’s card fees.",
+      },
+      {
+        type: 'p',
+        text: 'Once you do that, your customers will have no incentive to choose cheaper payment methods. More customers will pay with cards, causing a vicious feedback loop that ultimately increases your overall payment costs.',
+      },
+      { type: 'h2', text: 'What you can still legally do' },
+      {
+        type: 'p',
+        text: "The RBA was explicit, and it's the most useful sentence in the whole paper for anyone running a business:",
+      },
+      {
+        type: 'html',
+        html: '<blockquote class="apullquote">Merchants would retain the ability to steer consumers towards paying with cheaper payment methods by offering discounts.<cite class="apullquote__cite">RBA, Review of Merchant Card Payment Costs and Surcharging</cite></blockquote>',
+      },
+      {
+        type: 'p',
+        text: "You can't charge more for a card. You can charge less for a bank payment. That's the option the RBA deliberately left open, because moving volume onto cheaper rails is the whole point of the policy.",
+      },
+      {
+        type: 'p',
+        text: "And it works. The RBA's own survey found over half of card users would switch to cash for a 1% discount on a $50 transaction, and over two-thirds at 4%. People move for small discounts on small amounts. If people switch payment methods to save 50 cents on a coffee, they’ll certainly notice a meaningful saving on a $6,400 booking.",
+      },
+      {
+        type: 'p',
+        text: "Quidkey makes this simple. Businesses can offer discounts, loyalty points or other rewards to encourage customers to choose Pay by Bank over cards. Across Quidkey merchants, we’ve found that once a customer has paid with it twice, they almost always choose it again for future purchases. That’s why the first transaction matters most. Once customers become familiar with paying directly from their bank account, they rarely need convincing again.",
+      },
+      { type: 'h2', text: 'What is PayTo and why are businesses looking into it?' },
+      {
+        type: 'html',
+        html: "PayTo is Australia’s account-to-account payment system, built on the New Payments Platform by NPP Australia in collaboration with the RBA. It was introduced to modernise bank payments, giving businesses and consumers a real-time alternative to cards and direct debits. Instead of paying with a card, customers approve a payment directly from their bank account using their banking app. (<a href=\"https://payto.com.au/wp-content/uploads/2022/06/PayTo-Service-Overview-Nov-2021-2.0-2.pdf\">Australian Payments Plus</a>)",
+      },
+      {
+        type: 'p',
+        text: "For businesses, the biggest advantage is cost. Because the payment doesn’t go through the card networks, there are no interchange or card scheme fees underneath every transaction. That makes PayTo significantly cheaper to accept than cards.",
+      },
+      {
+        type: 'p',
+        text: 'Payments also settle in real time, including weekends and public holidays, so you receive your money faster.',
+      },
+      {
+        type: 'p',
+        text: 'But for many businesses, the bigger benefit is avoiding chargebacks and disputes.',
+      },
+      {
+        type: 'p',
+        text: "A chargeback is when a customer disputes a card payment with their bank. The card network can pull the money straight out of your account, charge you a dispute fee, and leave you to prove the payment was legitimate. Even if you win, you’ve often spent hours gathering invoices, emails and other evidence to fight it.",
+      },
+      {
+        type: 'p',
+        text: "PayTo doesn’t have that. Because the customer authorises the payment through their own banking app, card networks can’t simply pull the money back out of your account. If a customer wants their money back, it becomes a conversation between you and the customer, and a business decision about whether to issue a refund.",
+      },
+      {
+        type: 'p',
+        text: "Disputes can still happen in exceptional circumstances, such as fraud, unauthorised payment initiations or payments made outside the agreed PayTo mandate. Quidkey helps minimise these scenarios by ensuring payments are initiated within the customer’s authorised agreement.",
+      },
+      {
+        type: 'p',
+        text: 'For ordinary customer issues, such as wanting to return an item or cancel a service, refunds remain a business decision rather than a card-network dispute.',
+      },
+      {
+        type: 'p',
+        text: 'Customers only approve a PayTo agreement once through their banking app. After that, future authorised payments can happen without asking them to enter their details again, making subscriptions and repeat purchases much simpler.',
+      },
+      {
+        type: 'p',
+        text: 'Like every payment method, there are trade-offs. Some customers value the rewards they earn on their credit cards. Quidkey solves that by letting businesses offer discounts, loyalty points or other rewards for paying with PayTo. Instead of giving all the saving to the card networks, you can share part of it with your customer.',
+      },
+      { type: 'h2', text: 'What to do before 1 October' },
+      {
+        type: 'html',
+        html: "<ol><li><strong>Work out what you actually pay.</strong> Card volume × your rate. That’s your 2 October problem, and most people are surprised by it.</li><li><strong>Call your provider this week.</strong> What’s my rate on 2 October, in writing? If they can’t tell you how the cut flows through, that’s your answer. Acquirers have to publish their fees from 30 October anyway, but ask now.</li><li><strong>Strip surcharge wording out of everything.</strong> Signage, menus, invoice templates, checkout copy, terms, the auto-reply on your booking email. This is a contract job, not a regulator job, which makes it more urgent, not less.</li><li><strong>Check your Amex agreement separately.</strong> Different contract, same date, no fee relief.</li><li><strong>Estimate what the surcharge ban will cost you.</strong> Our <a href=\"https://quidkey.com/surcharge-calculator\">free surcharge calculator</a> gives you the number in under a minute. If you’re looking to reduce those costs, Quidkey lets you accept PayTo and offer customer incentives such as discounts, loyalty points or other rewards.</li></ol>",
+      },
+      {
+        type: 'p',
+        text: 'By the end of October, businesses that surcharge today will have absorbed their first month of card fees. The ones that started moving customers to lower-cost payment methods in September will already be paying less.',
+      },
+      {
+        type: 'html',
+        html: '<em>This is general information, not financial or legal advice. Check your own merchant agreements and get advice on how you structure any discount.</em>',
+      },
+      {
+        type: 'html',
+        html: "<em>Sources: RBA, Review of Merchant Card Payment Costs and Surcharging, Conclusions Paper, March 2026 (Surcharging; Interchange Fees; Impact and Implementation) and its FAQs; RBA Consumer Payments Survey 2025; ACCC guidance on card surcharges; American Express merchant acceptance rules, updated June 2026.</em>",
+      },
+    ],
+  },
+  {
     slug: 'the-real-cost-of-card-processing-for-shopify-merchants',
     date: 'June 10, 2026',
     dateISO: '2026-06-10',
@@ -190,7 +384,10 @@ export const blogPosts: BlogPost[] = [
     imageWidth: 1600,
     imageHeight: 900,
     featured: true,
-    relatedSlugs: ['payto-explained-australian-merchants-guide', 'quidkey-is-live-on-shopify'],
+    relatedSlugs: [
+      'card-surcharge-ban-what-it-costs-your-business',
+      'payto-explained-australian-merchants-guide',
+    ],
     blocks: [
       {
         type: 'p',
