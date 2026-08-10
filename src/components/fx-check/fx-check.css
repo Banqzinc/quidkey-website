@@ -1,0 +1,229 @@
+/* /stripe-fx-check page-specific styles. Loaded after the shared homepage
+   bundle (base/headings/refresh) so these rules win at equal specificity —
+   same trick as calculator.css. Everything is namespaced fxc- and reuses the
+   homepage design tokens (--ink, --muted, --line, ...). */
+
+/* ─── Hero ─── */
+.hp .fxc-hero .hero__title {
+  font-size: clamp(40px, 5.6vw, 72px);
+  max-width: 15ch;
+}
+.hp .fxc-hero .hero__ctas {
+  margin-bottom: 40px;
+}
+
+/* ─── How it works ─── */
+.hp .fxc-how__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(24px, 3vw, 44px);
+  margin-top: 40px;
+}
+.hp .fxc-how__card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--bg);
+  padding: 28px 26px;
+}
+.hp .fxc-how__n {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--faint);
+  margin-bottom: 18px;
+}
+.hp .fxc-how__t {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 10px;
+}
+.hp .fxc-how__b {
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* ─── Savings teaser ─── */
+.hp .fxc-teaser__card {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: clamp(28px, 4vw, 56px);
+  margin-top: 40px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--bg-soft);
+  padding: clamp(24px, 3.4vw, 44px);
+}
+.hp .fxc-teaser__label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+}
+.hp .fxc-teaser__input {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  background: var(--bg);
+  padding: 0 14px;
+}
+.hp .fxc-teaser__input:focus-within {
+  border-color: var(--ink);
+}
+.hp .fxc-teaser__prefix {
+  color: var(--faint);
+  font-size: 18px;
+  margin-right: 6px;
+}
+.hp .fxc-teaser__input input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  padding: 14px 0;
+  color: var(--ink);
+}
+.hp .fxc-teaser__presets {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.hp .fxc-teaser__preset {
+  font: inherit;
+  font-size: 13.5px;
+  padding: 7px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--muted);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.hp .fxc-teaser__preset:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+.hp .fxc-teaser__preset.is-on {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--bg);
+}
+.hp .fxc-teaser__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 15px;
+}
+.hp .fxc-teaser__row-lbl {
+  color: var(--muted);
+}
+.hp .fxc-teaser__row-val {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.hp .fxc-teaser__row--strike .fxc-teaser__row-val {
+  text-decoration: line-through;
+  text-decoration-color: var(--faint);
+  color: var(--muted);
+  font-weight: 500;
+}
+.hp .fxc-teaser__delta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 18px 0 20px;
+}
+.hp .fxc-teaser__delta-lbl {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.hp .fxc-teaser__delta-val {
+  font-size: clamp(34px, 4vw, 46px);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+.hp .fxc-teaser__delta-per {
+  font-size: 0.45em;
+  font-weight: 500;
+  color: var(--muted);
+  margin-left: 4px;
+}
+.hp .fxc-teaser__delta-sub {
+  font-size: 14.5px;
+  color: var(--muted);
+}
+.hp .fxc-teaser__disclaimer {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--faint);
+  max-width: 70ch;
+  margin: 20px 0 0;
+}
+
+/* ─── Trust ─── */
+.hp .fxc-trust__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(24px, 3vw, 40px);
+  margin-top: 40px;
+}
+.hp .fxc-trust__card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--bg);
+  padding: 26px 26px 24px;
+}
+.hp .fxc-trust__icon {
+  display: inline-flex;
+  width: 22px;
+  height: 22px;
+  color: var(--ink-soft);
+  margin-bottom: 16px;
+}
+.hp .fxc-trust__icon svg {
+  width: 100%;
+  height: 100%;
+}
+.hp .fxc-trust__t {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 8px;
+}
+.hp .fxc-trust__b {
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 899px) {
+  .hp .fxc-how__grid {
+    grid-template-columns: 1fr;
+  }
+  .hp .fxc-teaser__card {
+    grid-template-columns: 1fr;
+  }
+  .hp .fxc-trust__grid {
+    grid-template-columns: 1fr;
+  }
+}

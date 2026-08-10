@@ -14,6 +14,7 @@ declare global {
 
 export type CtaLabel = 'get_started' | 'sign_in' | 'demo' | 'docs' | 'developers' | 'contact' | 'anchor'
 export type CtaLocation = 'nav' | 'hero' | 'closer' | 'pricing' | 'footer'
+export type FxCheckCtaLocation = 'hero' | 'teaser' | 'closer'
 export type FlowKind = 'merchant' | 'fintech'
 export type ToggleSource = 'nav' | 'hero'
 export type ShareChannel = 'x' | 'linkedin' | 'email' | 'copy_link'
@@ -33,6 +34,9 @@ export type HomepageEvent =
   | { name: 'surcharge_calculator_view' }
   | { name: 'surcharge_calculator_input'; field: string }
   | { name: 'surcharge_lead_submit'; outcome: 'success' | 'error' }
+  | { name: 'fx_check_view' }
+  | { name: 'fx_check_cta_click'; location: FxCheckCtaLocation }
+  | { name: 'fx_check_faq_open'; question: string }
   | { name: 'article_share_click'; slug: string; channel: ShareChannel }
   | { name: 'article_toc_click'; slug: string; section_id: string }
   | { name: 'article_related_click'; from_slug: string; to_slug: string }
