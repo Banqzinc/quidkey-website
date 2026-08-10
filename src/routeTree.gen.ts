@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as StripeFxCheckRouteImport } from './routes/stripe-fx-check'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as FintechsRouteImport } from './routes/fintechs'
 import { Route as EndUserPrivacyRouteImport } from './routes/end-user-privacy'
@@ -22,6 +23,11 @@ import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StripeFxCheckRoute = StripeFxCheckRouteImport.update({
+  id: '/stripe-fx-check',
+  path: '/stripe-fx-check',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacyRoute = PrivacyRouteImport.update({
@@ -72,6 +78,7 @@ export interface FileRoutesByFullPath {
   '/end-user-privacy': typeof EndUserPrivacyRoute
   '/fintechs': typeof FintechsRoute
   '/privacy': typeof PrivacyRoute
+  '/stripe-fx-check': typeof StripeFxCheckRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
@@ -83,6 +90,7 @@ export interface FileRoutesByTo {
   '/end-user-privacy': typeof EndUserPrivacyRoute
   '/fintechs': typeof FintechsRoute
   '/privacy': typeof PrivacyRoute
+  '/stripe-fx-check': typeof StripeFxCheckRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog': typeof BlogIndexRoute
@@ -95,6 +103,7 @@ export interface FileRoutesById {
   '/end-user-privacy': typeof EndUserPrivacyRoute
   '/fintechs': typeof FintechsRoute
   '/privacy': typeof PrivacyRoute
+  '/stripe-fx-check': typeof StripeFxCheckRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
@@ -108,6 +117,7 @@ export interface FileRouteTypes {
     | '/end-user-privacy'
     | '/fintechs'
     | '/privacy'
+    | '/stripe-fx-check'
     | '/terms'
     | '/blog/$slug'
     | '/blog/'
@@ -119,6 +129,7 @@ export interface FileRouteTypes {
     | '/end-user-privacy'
     | '/fintechs'
     | '/privacy'
+    | '/stripe-fx-check'
     | '/terms'
     | '/blog/$slug'
     | '/blog'
@@ -130,6 +141,7 @@ export interface FileRouteTypes {
     | '/end-user-privacy'
     | '/fintechs'
     | '/privacy'
+    | '/stripe-fx-check'
     | '/terms'
     | '/blog/$slug'
     | '/blog/'
@@ -142,6 +154,7 @@ export interface RootRouteChildren {
   EndUserPrivacyRoute: typeof EndUserPrivacyRoute
   FintechsRoute: typeof FintechsRoute
   PrivacyRoute: typeof PrivacyRoute
+  StripeFxCheckRoute: typeof StripeFxCheckRoute
   TermsRoute: typeof TermsRoute
   BlogSlugRoute: typeof BlogSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
@@ -154,6 +167,13 @@ declare module '@tanstack/react-router' {
       path: '/terms'
       fullPath: '/terms'
       preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/stripe-fx-check': {
+      id: '/stripe-fx-check'
+      path: '/stripe-fx-check'
+      fullPath: '/stripe-fx-check'
+      preLoaderRoute: typeof StripeFxCheckRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacy': {
@@ -222,6 +242,7 @@ const rootRouteChildren: RootRouteChildren = {
   EndUserPrivacyRoute: EndUserPrivacyRoute,
   FintechsRoute: FintechsRoute,
   PrivacyRoute: PrivacyRoute,
+  StripeFxCheckRoute: StripeFxCheckRoute,
   TermsRoute: TermsRoute,
   BlogSlugRoute: BlogSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
