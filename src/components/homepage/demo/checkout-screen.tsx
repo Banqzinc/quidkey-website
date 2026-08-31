@@ -85,17 +85,12 @@ export function CheckoutScreen({
               </span>
               <div className="mck__opt-info">
                 <div className="mck__opt-title">
-                  <span style={{ whiteSpace: 'nowrap' }}>Pay by Bank</span>
+                  <span style={{ whiteSpace: 'nowrap' }}>Pay with PayID</span>
                 </div>
               </div>
               <span className="mck__pbb-marks" aria-hidden="true">
-                {banks.slice(0, 2).map((b) => (
-                  <span key={b.name} className="mck__pbb-chip">
-                    <img src={bankLogoUrl(b.domain)} alt="" width="20" height="20" />
-                  </span>
-                ))}
+                <img className="mck__pbb-payto" src="/homepage/payid-symbol.webp" alt="PayID" width="26" height="26" />
                 <img className="mck__pbb-payto" src="/homepage/payto-symbol.webp" alt="PayTo" width="26" height="26" />
-                <span className="mck__pbb-chip mck__pbb-chip--plus">+{banks.length - 2}</span>
               </span>
               <span className="mck__save">Save {locale.save}</span>
             </div>
