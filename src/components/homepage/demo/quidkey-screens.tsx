@@ -29,11 +29,22 @@ function useLatest<T>(value: T) {
 
 // Mask all but the last few digits, keeping the local formatting recognisable.
 function maskPhone(phone: string): string {
-  const tail = phone.replace(/\D/g, '').slice(-3)
-  return `${phone.slice(0, 3)}•• ••• ${tail}`
+  const digits = phone.replace(/\D/g, '')
+  // US format: (415) 555-0620 → (•••) •••-0620
+  if (phone.startsWith('(')) return `(•••) •••-${digits.slice(-4)}`
+  return `${phone.slice(0, 3)}•• ••• ${digits.slice(-3)}`
 }
 
-function QkChrome({ payto = false, children }: { payto?: boolean; children: React.ReactNode }) {
+function QkChrome({
+  payto = false,
+  amount,
+  children,
+}: {
+  payto?: boolean
+  // Renders the prototype's "Amount due" strip under the bar (US screens).
+  amount?: string
+  children: React.ReactNode
+}) {
   return (
     <>
       <UrlBar host="pay.quidkey.com" path="/checkout" />
@@ -47,6 +58,12 @@ function QkChrome({ payto = false, children }: { payto?: boolean; children: Reac
           Secure
         </span>
       </div>
+      {amount && (
+        <div className="qk__due">
+          <span className="qk__due-lbl">Amount due</span>
+          <span className="qk__due-amt num">{amount}</span>
+        </div>
+      )}
       {payto && (
         <div className="qk__rails">
           <span>Pay by Bank with</span>
@@ -61,68 +78,6 @@ function QkChrome({ payto = false, children }: { payto?: boolean; children: Reac
           PayID and PayTo are registered trade marks of NPP Australia Ltd.
         </div>
       )}
-    </>
-  )
-}
-
-// Shared six-digit code step. The code arrives on its own after a beat so the
-// visitor never has to type — they just confirm.
-function QkOtp({
-  phone,
-  title,
-  blurb,
-  cta,
-  footnote,
-  onVerified,
-}: {
-  phone: string
-  title: string
-  blurb: string
-  cta: string
-  footnote?: string
-  onVerified: () => void
-}) {
-  const [code, setCode] = useState('')
-  const filled = useRef<ReturnType<typeof setTimeout> | null>(null)
-
-  useEffect(() => {
-    filled.current = setTimeout(() => setCode(OTP_CODE), 900)
-    return () => {
-      if (filled.current) clearTimeout(filled.current)
-    }
-  }, [])
-
-  const ready = code.length === OTP_CODE.length
-
-  return (
-    <>
-      <div className="phone__screen qk__screen">
-        <h2 className="qk__h">{title}</h2>
-        <p className="qk__p">{blurb}</p>
-
-        <div className="qk__phone-row">
-          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-            <rect x="6" y="2" width="12" height="20" rx="3" />
-            <path d="M11 18h2" />
-          </svg>
-          <span className="qk__phone-num num">{maskPhone(phone)}</span>
-        </div>
-
-        <div className="qk__otp" aria-label="Six digit code">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <span key={i} className={`qk__otp-cell num ${code[i] ? 'is-filled' : ''}`}>
-              {code[i] ?? ''}
-            </span>
-          ))}
-        </div>
-        <div className="qk__otp-note">{ready ? 'Code detected automatically' : 'Waiting for your code…'}</div>
-      </div>
-      <div className="phone__action">
-        <button type="button" className="phone__action-cta" disabled={!ready} onClick={onVerified}>
-          <span>{cta}</span>
-        </button>
-        {footnote && <p className="qk__footnote">{footnote}</p>}
-      </div>
     </>
   )
 }
@@ -167,9 +122,44 @@ function VerifiedBadge() {
   )
 }
 
-// AU code beat: the prototype's single wide code box that fills digit by
-// digit, with the resend countdown underneath and the CTA held disabled
-// until the code is in.
+// The demo types the SMS code by itself, digit by digit, after a beat —
+// starting only once the code beat is actually showing.
+function useAutoCode(active = true) {
+  const [code, setCode] = useState('')
+  useEffect(() => {
+    if (!active) return
+    let iv: ReturnType<typeof setInterval> | undefined
+    const start = setTimeout(() => {
+      iv = setInterval(() => {
+        setCode((c) => {
+          if (c.length >= OTP_CODE.length) {
+            clearInterval(iv)
+            return c
+          }
+          return OTP_CODE.slice(0, c.length + 1)
+        })
+      }, 120)
+    }, 900)
+    return () => {
+      clearTimeout(start)
+      if (iv) clearInterval(iv)
+    }
+  }, [active])
+  return { code, ready: code.length === OTP_CODE.length }
+}
+
+// The prototype's single wide code box, big spaced digits over grey zeros.
+function CodeBox({ code, ready }: { code: string; ready: boolean }) {
+  return (
+    <div className={`qk__code num ${ready ? 'is-filled' : ''}`} aria-label="Six digit code">
+      {code.padEnd(OTP_CODE.length, ' ').split('').map((ch, i) => (
+        <span key={i} className={ch === ' ' ? 'qk__code-ph' : ''}>{ch === ' ' ? '0' : ch}</span>
+      ))}
+    </div>
+  )
+}
+
+// AU code beat: code box, resend countdown, CTA held disabled until filled.
 function QkCode({
   phone,
   onVerified,
@@ -181,23 +171,8 @@ function QkCode({
   onBack: () => void
   onChange: () => void
 }) {
-  const [code, setCode] = useState('')
+  const { code, ready } = useAutoCode()
   const resend = useCountdown(30, true)
-  useEffect(() => {
-    const start = setTimeout(() => {
-      const iv = setInterval(() => {
-        setCode((c) => {
-          if (c.length >= OTP_CODE.length) {
-            clearInterval(iv)
-            return c
-          }
-          return OTP_CODE.slice(0, c.length + 1)
-        })
-      }, 120)
-    }, 900)
-    return () => clearTimeout(start)
-  }, [])
-  const ready = code.length === OTP_CODE.length
   const masked = maskPhone(phone)
 
   return (
@@ -225,11 +200,7 @@ function QkCode({
           </button>
         </div>
         <div className="qk__lbl">Enter the 6-digit code</div>
-        <div className={`qk__code num ${ready ? 'is-filled' : ''}`} aria-label="Six digit code">
-          {code.padEnd(OTP_CODE.length, ' ').split('').map((ch, i) => (
-            <span key={i} className={ch === ' ' ? 'qk__code-ph' : ''}>{ch === ' ' ? '0' : ch}</span>
-          ))}
-        </div>
+        <CodeBox code={code} ready={ready} />
         <div className="qk__code-note">
           <span>Code sent to {masked}</span>
           <span className="num">{resend > 0 ? `Resend in ${resend}s` : 'Resend'}</span>
@@ -518,70 +489,144 @@ export function QkPayToScreen({
 
 // ── US: verify the mobile before the bank redirect ───────────────────
 
+const US_PERKS = [
+  {
+    label: 'Connect in seconds',
+    icon: (
+      <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Future payments in one tap',
+    icon: (
+      <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M9 11V5.5a1.5 1.5 0 013 0V11" />
+        <path d="M12 11V9.5a1.5 1.5 0 013 0V11" />
+        <path d="M15 11.5v-1a1.5 1.5 0 013 0V15a6 6 0 01-6 6h-1a5 5 0 01-3.6-1.5L5 16.6a1.6 1.6 0 012.3-2.2L9 16" />
+        <path d="M3.5 4.5 2 3M7 2.6l.4-1.6M1.2 8.4l-1.1.3" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Encrypted & secure',
+    icon: (
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="4" y="11" width="16" height="10" rx="2" />
+        <path d="M8 11V7a4 4 0 018 0v4" />
+      </svg>
+    ),
+  },
+]
+
 export function QkVerifyScreen({
   locale,
   activeBank,
   onDone,
+  onCancel,
 }: {
   locale: DemoLocale
   activeBank: Bank
   onDone: () => void
+  onCancel: () => void
 }) {
   const [sent, setSent] = useState(false)
+  const { code, ready } = useAutoCode(sent)
+  const resend = useCountdown(30, sent)
+  const masked = maskPhone(locale.phone)
+
+  // The top block stays put across both beats, as in the prototype: the
+  // parties involved, the headline, then the verify section beneath.
+  const top = (
+    <>
+      <div className="qk__parties">
+        <img src="/quidkey-logo.svg" alt="Quidkey" width="76" height="18" />
+        <span className="qk__parties-sep" aria-hidden="true" />
+        <img
+          className="qk__parties-bank"
+          src={bankLogoUrl(activeBank.domain)}
+          alt={activeBank.name}
+          width="26"
+          height="26"
+          onError={(e) => {
+            e.currentTarget.style.display = 'none'
+          }}
+        />
+      </div>
+      <h2 className="qk__h">Pay {DEMO_MERCHANT.name} from your bank</h2>
+      <p className="qk__p">Quidkey processes this payment.</p>
+      <div className="qk__verify-head">
+        <div className="qk__lbl">Verify your mobile number</div>
+        {!sent && <p className="qk__p qk__p--tight">We'll text you a 6-digit code to confirm it's you.</p>}
+      </div>
+      <div className="qk__phone-row">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+          <rect x="6" y="2" width="12" height="20" rx="3" />
+          <path d="M11 18h2" />
+        </svg>
+        <span className="qk__phone-num num">{sent ? masked : locale.phone}</span>
+        <button type="button" className="qk__change" onClick={() => setSent(false)}>
+          Change
+        </button>
+      </div>
+    </>
+  )
+
+  const terms = (
+    <p className="qk__terms">
+      By continuing, you agree to Quidkey&rsquo;s <span className="qk__terms-link">Terms</span> and{' '}
+      <span className="qk__terms-link">Privacy Notice</span>.
+    </p>
+  )
 
   if (sent) {
     return (
-      <QkChrome>
-        <QkOtp
-          phone={locale.phone}
-          title="Verify your mobile number"
-          blurb={`We texted you a 6-digit code. Once it's confirmed we'll hand you to ${activeBank.name} to approve the payment.`}
-          cta={`Continue to ${activeBank.name}`}
-          onVerified={onDone}
-        />
+      <QkChrome amount={locale.price}>
+        <div className="phone__screen qk__screen">
+          {top}
+          <div className="qk__lbl">Enter the 6-digit code</div>
+          <CodeBox code={code} ready={ready} />
+          <div className="qk__code-note">
+            <span>Code sent to {masked}</span>
+            <span className="num">{resend > 0 ? `Resend in ${resend}s` : 'Resend'}</span>
+            <span aria-hidden="true">·</span>
+            <span className="qk__terms-link">Call me instead</span>
+          </div>
+        </div>
+        <div className="phone__action">
+          {terms}
+          <button type="button" className="phone__action-cta" disabled={!ready} onClick={onDone}>
+            <span>Verify and continue to {activeBank.name}</span>
+          </button>
+          <button type="button" className="qk__linkbtn" onClick={onCancel}>
+            Cancel and return to {DEMO_MERCHANT.name}
+          </button>
+        </div>
       </QkChrome>
     )
   }
 
   return (
-    <QkChrome>
+    <QkChrome amount={locale.price}>
       <div className="phone__screen qk__screen">
-        <div className="qk__parties">
-          <span className="qk__parties-lbl">Connecting to</span>
-          <img
-            className="qk__parties-bank"
-            src={bankLogoUrl(activeBank.domain)}
-            alt=""
-            width="24"
-            height="24"
-            onError={(e) => {
-              e.currentTarget.style.display = 'none'
-            }}
-          />
-          <span className="qk__parties-name">{activeBank.name}</span>
-        </div>
-
-        <h2 className="qk__h">Pay {DEMO_MERCHANT.name} from your bank</h2>
-        <p className="qk__p">
-          Quidkey processes this payment. You'll approve it in your {activeBank.name} app — your bank
-          details are never shared with {DEMO_MERCHANT.name}.
-        </p>
-
-        <div className="qk__sec-h">Verify your mobile number</div>
-        <div className="qk__field">
-          <span className="qk__field-lbl">Mobile number</span>
-          <span className="qk__field-val num">{locale.phone}</span>
-        </div>
-        <p className="qk__terms">We'll text you a 6-digit code to confirm it's you.</p>
-
-        <div className="qk__total">
-          <span className="qk__total-amt num">{locale.price}</span>
-          <span className="qk__total-to">to {DEMO_MERCHANT.name}</span>
+        {top}
+        <div className="qk__perks">
+          {US_PERKS.map((p) => (
+            <div key={p.label} className="qk__perk">
+              <span className="qk__perk-icon" aria-hidden="true">{p.icon}</span>
+              <span className="qk__perk-label">{p.label}</span>
+            </div>
+          ))}
         </div>
       </div>
       <div className="phone__action">
+        {terms}
         <button type="button" data-hint-id="qk-verify" className="phone__action-cta" onClick={() => setSent(true)}>
-          <span>Text me a code</span>
+          <span>Send verification code</span>
+        </button>
+        <button type="button" className="qk__linkbtn" onClick={onCancel}>
+          Cancel and return to {DEMO_MERCHANT.name}
         </button>
       </div>
     </QkChrome>
@@ -594,25 +639,30 @@ export function QkAccountsScreen({
   locale,
   activeBank,
   onDone,
+  onCancel,
 }: {
   locale: DemoLocale
   activeBank: Bank
   onDone: () => void
+  onCancel: () => void
 }) {
-  const accounts = locale.accounts ?? []
+  // Only the accounts the shopper just shared at the bank appear here.
+  const all = locale.accounts ?? []
+  const connected = all.filter((a) => a.connected)
+  const accounts = connected.length > 0 ? connected : all
   const [pickedIdx, setPickedIdx] = useState(0)
   const [paying, setPaying] = useState(false)
 
   const done = useLatest(onDone)
   useEffect(() => {
     if (!paying) return
-    const t = setTimeout(() => done.current(), 1200)
+    const t = setTimeout(() => done.current(), 1400)
     return () => clearTimeout(t)
   }, [paying, done])
 
   if (paying) {
     return (
-      <QkChrome>
+      <QkChrome amount={locale.price}>
         <div className="phone__screen qk__screen qk__screen--center">
           <span className="bnk__spinner" aria-hidden="true" />
           <div className="qk__paying">
@@ -627,7 +677,7 @@ export function QkAccountsScreen({
   const picked = accounts[pickedIdx] ?? accounts[0]
 
   return (
-    <QkChrome>
+    <QkChrome amount={locale.price}>
       <div className="phone__screen qk__screen">
         <h2 className="qk__h">Choose an account</h2>
         <p className="qk__p">You connected these at {activeBank.name}. Pick the one to pay from.</p>
@@ -655,9 +705,9 @@ export function QkAccountsScreen({
               </span>
               <span className="qk__acct-info">
                 <span className="qk__acct-name">
-                  {activeBank.name} {a.name}
+                  {activeBank.name} {a.short ?? a.name}
                 </span>
-                <span className="qk__acct-sub num">{a.sub}</span>
+                <span className="qk__acct-sub num">····{a.sub.replace(/\D/g, '')}</span>
               </span>
               <span className={`bnk__radio ${i === pickedIdx ? 'is-on' : ''}`}>
                 <span />
@@ -665,12 +715,17 @@ export function QkAccountsScreen({
             </button>
           ))}
         </div>
-
-        <p className="qk__terms">
-          By paying you authorise {DEMO_MERCHANT.name} to debit the account ending {picked?.sub ?? ''}.
-        </p>
+        <div className="qk__connect-more" aria-hidden="true">
+          <span>+</span> Connect another bank
+        </div>
       </div>
       <div className="phone__action">
+        <p className="qk__terms">
+          By clicking Pay, you agree to the <span className="qk__terms-link">Payment Terms</span> and
+          authorize {DEMO_MERCHANT.name} to debit your account ending in {picked?.sub.replace(/\D/g, '') ?? ''}.
+          <br />
+          Questions about this payment? Contact {DEMO_MERCHANT.name} or your bank.
+        </p>
         <button
           type="button"
           data-hint-id="qk-accounts"
@@ -678,6 +733,9 @@ export function QkAccountsScreen({
           onClick={() => setPaying(true)}
         >
           <span>Pay {locale.price}</span>
+        </button>
+        <button type="button" className="qk__linkbtn" onClick={onCancel}>
+          Cancel and return to {DEMO_MERCHANT.name}
         </button>
       </div>
     </QkChrome>

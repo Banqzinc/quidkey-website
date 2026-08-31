@@ -429,14 +429,116 @@ export function PayToAgreementScreen({
   )
 }
 
-export function ProcessingScreen({ locale }: { locale: DemoLocale }) {
-  const payto = locale.authorise === 'payto'
+export function ProcessingScreen({ locale, activeBank }: { locale: DemoLocale; activeBank: Bank }) {
+  // What the splash narrates depends on what the bank leg just did: AU
+  // authorised a PayTo agreement, the US connected accounts (no money has
+  // moved yet), UK/EU sent the payment itself.
+  const copy =
+    locale.authorise === 'payto'
+      ? { title: 'Authorising PayTo agreement…', sub: `Paying ${locale.price} to ${DEMO_MERCHANT.name}` }
+      : locale.authorise === 'connect'
+      ? { title: 'Connecting bank account…', sub: `Linking your ${activeBank.name} accounts` }
+      : { title: 'Authorising payment…', sub: `Sending ${locale.price} to ${DEMO_MERCHANT.name}` }
   return (
     <div className="bnk__splash">
       <div className="bnk__spinner" aria-hidden="true" />
-      <div className="bnk__splash-title">{payto ? 'Authorising PayTo agreement…' : 'Authorising payment…'}</div>
-      <div className="bnk__splash-sub">
-        {payto ? 'Paying' : 'Sending'} {locale.price} to {DEMO_MERCHANT.name}
+      <div className="bnk__splash-title">{copy.title}</div>
+      <div className="bnk__splash-sub">{copy.sub}</div>
+    </div>
+  )
+}
+
+// US only — the bank leg is an account-access consent, not a payment: the
+// shopper ticks which accounts to share (checkboxes, several allowed) and
+// authorises the connection. The payment happens afterwards, back on
+// Quidkey's account picker.
+export function BankConnectScreen({
+  activeBank,
+  locale,
+  onAuthorise,
+}: {
+  activeBank: Bank
+  locale: DemoLocale
+  onAuthorise: () => void
+}) {
+  const accounts = locale.accounts ?? []
+  const [shared, setShared] = useState<string[]>(accounts.filter((a) => a.connected).map((a) => a.id))
+  const toggle = (id: string) =>
+    setShared((list) => (list.includes(id) ? list.filter((x) => x !== id) : [...list, id]))
+  const brand = bankBrandColor(activeBank)
+
+  return (
+    <div className="bnk__connect" style={{ ['--bnk-brand' as string]: brand }}>
+      <div className="bnk__agree-bar">
+        <span className="bnk__agree-mark" style={{ background: brand }}>
+          <img
+            src={bankLogoUrl(activeBank.domain)}
+            alt={`${activeBank.name} logo`}
+            width="18"
+            height="18"
+            onError={(e) => {
+              e.currentTarget.style.display = 'none'
+            }}
+          />
+        </span>
+        <span className="bnk__agree-bank">{activeBank.name}</span>
+      </div>
+      <div className="bnk__connect-body">
+        <h2 className="bnk__agree-h">Authorise payment</h2>
+        <div className="bnk__agree-sub">Review and approve this bank transfer.</div>
+        <div className="bnk__pay-card">
+          <div className="bnk__pay-card-amt num">{locale.price}</div>
+          <div className="bnk__pay-card-rails">Instant payment · ACH</div>
+          <div className="bnk__pay-card-row bnk__pay-card-row--first">
+            <span>To</span>
+            <strong>{DEMO_MERCHANT.name.toUpperCase()}</strong>
+          </div>
+          <div className="bnk__pay-card-row">
+            <span>Reference</span>
+            <strong className="num">{DEMO_MERCHANT.reference}</strong>
+          </div>
+        </div>
+        <div className="bnk__connect-sec">Pay from</div>
+        <div className="bnk__connect-accts">
+          {accounts.map((a) => {
+            const on = shared.includes(a.id)
+            return (
+              <button
+                type="button"
+                key={a.id}
+                role="checkbox"
+                aria-checked={on}
+                className={`bnk__connect-acct ${on ? 'is-on' : ''}`}
+                onClick={() => toggle(a.id)}
+              >
+                <span className={`bnk__check ${on ? 'is-on' : ''}`} aria-hidden="true">
+                  {on && (
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#fff" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M5 13l4.5 4.5L19 7" />
+                    </svg>
+                  )}
+                </span>
+                <span className="bnk__acct-info">
+                  <span className="bnk__acct-name">{a.name}</span>
+                  <span className="bnk__acct-sub num">{a.sub}</span>
+                </span>
+                <span className="bnk__acct-bal num">{a.bal}</span>
+              </button>
+            )
+          })}
+        </div>
+      </div>
+      <div className="phone__action">
+        <button
+          type="button"
+          data-hint-id="bank-pay"
+          className="phone__action-cta phone__action-cta--bank"
+          disabled={shared.length === 0}
+          onClick={onAuthorise}
+          style={{ background: brand }}
+        >
+          <span>Authorise {locale.price}</span>
+        </button>
       </div>
     </div>
   )

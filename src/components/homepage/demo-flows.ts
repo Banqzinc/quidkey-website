@@ -37,7 +37,11 @@ export const FLOWS: Record<DemoRegion, readonly FlowStep[]> = {
   AU: ['checkout', 'qk-payto', 'redirect', 'faceid', 'bank', ...RETURN_TO_MERCHANT],
   UK: ['checkout', ...BANK_HANDOFF, ...RETURN_TO_MERCHANT],
   EU: ['checkout', ...BANK_HANDOFF, ...RETURN_TO_MERCHANT],
-  US: ['checkout', 'qk-verify', ...BANK_HANDOFF, 'qk-accounts', ...RETURN_TO_MERCHANT],
+  // The US bank leg CONNECTS accounts rather than paying: redirect lands on
+  // the login surface (no app-icon zoom) where Face ID runs on its own, the
+  // consent is authorised, the "connecting account" splash plays, and only
+  // then does Quidkey's picker take the actual payment.
+  US: ['checkout', 'qk-verify', 'redirect', 'login', 'bank', 'processing', 'qk-accounts', 'app-launch-safari', 'success'],
 }
 
 // Stable analytics names — these do NOT renumber when a market's flow changes,

@@ -31,15 +31,23 @@ export type Bank = {
 export type BankAccount = {
   id: string
   name: string
+  // Shorter label for Quidkey's account picker ("Chase Checking"), where the
+  // bank name is prefixed; defaults to `name`.
+  short?: string
   sub: string
   bal: string
+  // US only — pre-ticked on the bank's consent screen, and the only accounts
+  // Quidkey's picker offers afterwards.
+  connected?: boolean
 }
 
 // How the bank app authorises the payment:
 //  - 'payto'    AU. A standing PayTo agreement is reviewed and approved; there
 //               is no account picker because the agreement names the account.
-//  - 'accounts' US / UK / EU. A "Pay from" picker over connected accounts.
-export type AuthoriseMode = 'payto' | 'accounts'
+//  - 'accounts' UK / EU. A "Pay from" radio picker; the bank sends the payment.
+//  - 'connect'  US. The bank leg only CONNECTS accounts (checkbox consent);
+//               the payment itself happens later on Quidkey's picker.
+export type AuthoriseMode = 'payto' | 'accounts' | 'connect'
 
 export type DemoLocale = {
   region: DemoRegion
@@ -137,11 +145,11 @@ const US: DemoLocale = {
   currencyCode: 'USD',
   price: '$149.00',
   save: '$4.32',
-  authorise: 'accounts',
+  authorise: 'connect',
   accounts: [
-    { id: 'current', name: 'Current Account', sub: '••3082', bal: '$8,412.59' },
-    { id: 'savings', name: 'Savings', sub: '••7714', bal: '$24,930.10' },
-    { id: 'checking', name: 'Everyday Checking', sub: '••0461', bal: '$1,206.84' },
+    { id: 'checking', name: 'Checking Account', short: 'Checking', sub: '••4821', bal: '$6,240.18', connected: true },
+    { id: 'joint', name: 'Joint Checking', sub: '••7718', bal: '$11,905.72' },
+    { id: 'savings', name: 'Savings', sub: '••0461', bal: '$18,330.44', connected: true },
   ],
   phone: '(415) 555-0620',
   customer: { name: 'Alex Marchetti', postcode: '02118', email: 'alex@…' },

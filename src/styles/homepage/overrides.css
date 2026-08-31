@@ -503,14 +503,50 @@ html.nav-menu-open .nav__mobile {
 .hp .qk__acct-name{ display: block; font-size: 13px; font-weight: 600; color: var(--ink); }
 .hp .qk__acct-sub{ display: block; margin-top: 1px; font-size: 11px; color: var(--muted); }
 
-/* Destination-bank strip on the US verify screen. */
-.hp .qk__parties{ display: flex; align-items: center; gap: 8px; padding-bottom: 2px; }
-.hp .qk__parties-lbl{
-  font-size: 9.5px; letter-spacing: 0.07em; text-transform: uppercase;
-  color: var(--faint, #9a9a9a);
+/* "Amount due" strip under the bar on the US Quidkey pages. */
+.hp .qk__due{
+  display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+  padding: 12px 20px;
+  background: var(--bg-soft);
+  border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
 }
-.hp .qk__parties-bank{ height: 18px; width: 18px; object-fit: contain; }
-.hp .qk__parties-name{ font-size: 12px; font-weight: 600; color: var(--ink); }
+.hp .qk__due-lbl{
+  font-size: 12px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase;
+  color: var(--muted);
+}
+.hp .qk__due-amt{ font-size: 29px; font-weight: 800; letter-spacing: -0.01em; color: var(--ink); }
+
+/* The parties on the US verify screen: Quidkey · the destination bank. */
+.hp .qk__parties{ display: flex; align-items: center; gap: 14px; padding-bottom: 2px; }
+.hp .qk__parties > img:first-child{ height: 19px; width: auto; }
+.hp .qk__parties-sep{ width: 1px; height: 18px; background: var(--line-strong); }
+.hp .qk__parties-bank{ height: 26px; width: 26px; object-fit: contain; border-radius: 6px; }
+
+/* Verify-section header + the benefit bullets on the US intro beat. */
+.hp .qk__verify-head{ margin-top: 8px; }
+.hp .qk__verify-head .qk__lbl{ margin-top: 0; font-size: 16.5px; }
+.hp .qk__p--tight{ margin-top: 3px; font-size: 14px; }
+.hp .qk__perks{ display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
+.hp .qk__perk{ display: flex; align-items: center; gap: 13px; }
+.hp .qk__perk-icon{
+  flex-shrink: 0; width: 38px; height: 38px; border-radius: 999px;
+  background: var(--bg-soft);
+  display: grid; place-items: center; color: var(--ink);
+}
+.hp .qk__perk-label{ font-size: 15px; font-weight: 700; letter-spacing: -0.01em; color: var(--ink); }
+
+/* Dashed "connect another bank" row on the account picker. */
+.hp .qk__connect-more{
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 14px;
+  border: 1px dashed var(--line-strong); border-radius: 12px; background: #fff;
+  font-size: 15px; font-weight: 700; color: var(--ink);
+}
+.hp .qk__connect-more span{ font-size: 18px; line-height: 1; margin-top: -1px; }
+
+/* Terms placed above the CTA (US screens) need the gap below, not above. */
+.hp .phone__action .qk__terms:first-child{ margin: 0 0 11px; }
 
 /* "Pay by Bank with PayTo" strip + NPP attribution on the AU Quidkey pages. */
 .hp .qk__rails{
@@ -606,6 +642,10 @@ html.nav-menu-open .nav__mobile {
    on the AU row, so give the badge its own gap instead of auto margin. */
 .hp .mck__pbb-marks + .mck__save{ margin-left: 8px; }
 
+/* Save badge under the "Select bank" title (all bank-picking markets). */
+.hp .mck__select-titlebox{ display: flex; flex-direction: column; align-items: flex-start; gap: 5px; }
+.hp .mck__select-titlebox .mck__save--select{ margin: 0; }
+
 /* AU bank handoff: Face ID runs on its own over the bank splash — reuse the
    login screen's chrome but centre the hero since there is no form card. */
 .hp .bnk__login--auto .bnk__login-hero{ margin-top: auto; }
@@ -677,6 +717,61 @@ html.nav-menu-open .nav__mobile {
 }
 .hp .bnk__agree-approve:hover, .hp .bnk__agree-decline:hover{ opacity: 0.9; }
 .hp .bnk__agree-approve:active, .hp .bnk__agree-decline:active{ transform: scale(0.99); }
+
+/* US bank leg — the account-access consent (checkboxes, several allowed). */
+.hp .bnk__connect{
+  flex: 1; min-height: 0;
+  display: flex; flex-direction: column;
+  background: #fff;
+}
+.hp .bnk__connect-body{
+  flex: 1; min-height: 0; overflow: hidden;
+  display: flex; flex-direction: column;
+  padding: 10px 24px 0;
+}
+.hp .bnk__pay-card{
+  margin-top: 16px;
+  padding: 18px 17px;
+  background: var(--bg-soft); border: 1px solid var(--line); border-radius: 14px;
+}
+.hp .bnk__pay-card-amt{ font-size: 39px; font-weight: 800; letter-spacing: -0.01em; color: var(--ink); }
+.hp .bnk__pay-card-rails{ margin-top: 5px; font-size: 15px; color: var(--muted); }
+.hp .bnk__pay-card-row{
+  display: flex; justify-content: space-between; gap: 12px;
+  margin-top: 8px;
+  font-size: 15.5px;
+}
+.hp .bnk__pay-card-row--first{ margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+.hp .bnk__pay-card-row span{ color: var(--muted); }
+.hp .bnk__pay-card-row strong{ font-weight: 700; color: var(--ink); text-align: right; }
+.hp .bnk__connect-sec{ margin: 18px 0 10px; font-size: 17px; font-weight: 700; color: var(--ink); }
+.hp .bnk__connect-accts{ display: flex; flex-direction: column; gap: 10px; }
+.hp .bnk__connect-acct{
+  display: flex; align-items: center; gap: 13px;
+  padding: 15px 15px; cursor: pointer; text-align: left;
+  border: 1px solid var(--line-strong); border-radius: 12px; background: #fff;
+  font-family: inherit;
+  transition: border-color .15s, background .15s, box-shadow .15s;
+}
+.hp .bnk__connect-acct.is-on{
+  border-color: var(--bnk-brand, #0A2A66);
+  box-shadow: inset 0 0 0 1px var(--bnk-brand, #0A2A66);
+  background: var(--bg-soft);
+}
+.hp .bnk__connect-acct .bnk__acct-info{ flex: 1; min-width: 0; }
+.hp .bnk__connect-acct .bnk__acct-name{ font-size: 16.5px; font-weight: 700; }
+.hp .bnk__connect-acct .bnk__acct-sub{ font-size: 14px; }
+.hp .bnk__connect-acct .bnk__acct-bal{ font-size: 16px; font-weight: 700; }
+.hp .bnk__check{
+  flex-shrink: 0; width: 23px; height: 23px; border-radius: 6px;
+  border: 2px solid var(--line-strong); background: #fff;
+  display: grid; place-items: center;
+  transition: background .15s, border-color .15s;
+}
+.hp .bnk__check.is-on{
+  border-color: var(--bnk-brand, #0A2A66);
+  background: var(--bnk-brand, #0A2A66);
+}
 
 /* PayTo agreement detail rows (used by the AU agreement screen). */
 .hp .bnk__payto-rows{ margin: 0; display: flex; flex-direction: column; }

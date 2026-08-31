@@ -26,6 +26,7 @@ import { STAGE_NAMES, flowFor, nextStep, stageIndex, type FlowStep } from '@/com
 import { CheckoutScreen } from '@/components/homepage/demo/checkout-screen'
 import {
   BankAppScreen,
+  BankConnectScreen,
   FaceIdScreen,
   LaunchScreen,
   LoginScreen,
@@ -190,14 +191,15 @@ export function MerchantHeroViz() {
     setExpanded(true)
   }
 
+  // AU and the US label the CTA with the rail and the amount, as in the
+  // prototype; UK/EU still name the chosen bank.
+  const bankCta = locale.authorise === 'accounts' ? null : `Pay by Bank · ${locale.price}`
   const ctaLabel =
     paymentMethod === 'predicted'
-      ? locale.authorise === 'payto'
-        ? `Pay by Bank · ${locale.price}`
-        : `Pay with ${banks[0].name}`
+      ? bankCta ?? `Pay with ${banks[0].name}`
       : paymentMethod === 'select'
       ? pickedBank
-        ? `Pay with ${pickedBank.name}`
+        ? bankCta ?? `Pay with ${pickedBank.name}`
         : 'Choose a bank'
       : paymentMethod === 'apple'
       ? 'Pay with Apple Pay'
@@ -213,6 +215,9 @@ export function MerchantHeroViz() {
   }
 
   const runFaceId = () => {
+    // Guards the double-trigger when the US auto-run and a tap (or the
+    // scribble's Next) land on the same login screen.
+    if (faceIdState !== 'idle') return
     setFaceIdState('scanning')
     queue(() => setFaceIdState('approved'), 1000)
     queue(() => {
@@ -220,6 +225,16 @@ export function MerchantHeroViz() {
       setFaceIdState('idle')
     }, 1900)
   }
+
+  // US only: the prototype's login surface runs Face ID on its own — the
+  // shopper never types into the bank form.
+  useEffect(() => {
+    if (flowStep !== 'login' || locale.authorise !== 'connect') return
+    const t = setTimeout(() => runFaceId(), 700)
+    return () => clearTimeout(t)
+    // runFaceId is stable enough for this: it only reads refs and setters.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [flowStep, region])
 
   const handleFaceIdComplete = () => {
     noteUserAction()
@@ -411,7 +426,12 @@ export function MerchantHeroViz() {
             />
           )}
           {flowStep === 'qk-verify' && (
-            <QkVerifyScreen locale={locale} activeBank={activeBank} onDone={() => advance('qk-verify')} />
+            <QkVerifyScreen
+              locale={locale}
+              activeBank={activeBank}
+              onDone={() => advance('qk-verify')}
+              onCancel={resetFlow}
+            />
           )}
 
           {flowStep === 'redirect' && <RedirectScreen activeBank={activeBank} />}
@@ -430,6 +450,8 @@ export function MerchantHeroViz() {
                 onApprove={handleBankPay}
                 onDecline={resetFlow}
               />
+            ) : locale.authorise === 'connect' ? (
+              <BankConnectScreen activeBank={activeBank} locale={locale} onAuthorise={handleBankPay} />
             ) : (
               <BankAppScreen
                 activeBank={activeBank}
@@ -442,10 +464,15 @@ export function MerchantHeroViz() {
             ))}
 
           {flowStep === 'qk-accounts' && (
-            <QkAccountsScreen locale={locale} activeBank={activeBank} onDone={() => advance('qk-accounts')} />
+            <QkAccountsScreen
+              locale={locale}
+              activeBank={activeBank}
+              onDone={() => advance('qk-accounts')}
+              onCancel={resetFlow}
+            />
           )}
 
-          {flowStep === 'processing' && <ProcessingScreen locale={locale} />}
+          {flowStep === 'processing' && <ProcessingScreen locale={locale} activeBank={activeBank} />}
           {flowStep === 'app-launch-safari' && <SafariLaunchScreen />}
           {flowStep === 'success' && (
             <SuccessScreen activeBank={activeBank} locale={locale} onReplay={resetFlow} />

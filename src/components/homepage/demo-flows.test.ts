@@ -46,6 +46,17 @@ describe('FLOWS', () => {
     expect(FLOWS.US.indexOf('qk-verify')).toBeLessThan(FLOWS.US.indexOf('redirect'))
   })
 
+  it('puts the US bank-side splash between the consent and the account picker', () => {
+    // The US bank leg connects accounts; the "Connecting bank account…"
+    // splash plays on the way OUT of the bank, before Quidkey's picker.
+    expect(nextStep('US', 'bank')).toBe('processing')
+    expect(nextStep('US', 'processing')).toBe('qk-accounts')
+    // No app-icon zoom in the prototype's US handoff: redirect goes straight
+    // to the login surface, where Face ID runs on its own.
+    expect(FLOWS.US).not.toContain('launch')
+    expect(nextStep('US', 'redirect')).toBe('login')
+  })
+
   it('gives AU the push-notification handoff: auto Face ID, no app launch or login', () => {
     // PayTo arrives as a bank push notification — the shopper is already in
     // the app, so AU never shows the login form. Everyone else still does.
@@ -91,7 +102,7 @@ describe('nextStep', () => {
     expect(nextStep('AU', 'redirect')).toBe('faceid')
     expect(nextStep('AU', 'faceid')).toBe('bank')
     expect(nextStep('AU', 'bank')).toBe('processing')
-    expect(nextStep('US', 'bank')).toBe('qk-accounts')
+    expect(nextStep('US', 'processing')).toBe('qk-accounts')
   })
 })
 

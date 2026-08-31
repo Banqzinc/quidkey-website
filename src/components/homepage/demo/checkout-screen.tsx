@@ -157,7 +157,10 @@ export function CheckoutScreen({
               </svg>
             </span>
             <span className="mck__select-toggle">
-              <span className="mck__opt-title mck__select-title">Select bank</span>
+              <span className="mck__select-titlebox">
+                <span className="mck__opt-title mck__select-title">Select bank</span>
+                <span className="mck__save mck__save--select">Save {locale.save}</span>
+              </span>
               <span className="mck__select-mini" aria-hidden="true">
                 {miniBanks.map((b) => (
                   <span key={b.name} className="mck__select-mini-chip">
