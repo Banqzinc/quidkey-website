@@ -273,6 +273,20 @@ html.nav-menu-open .nav__mobile {
    no longer needs that top nudge. */
 .hp .demo-region ~ .phone-wrap{ margin-top: 0; }
 
+/* Scribble mode right-aligns the viz children and reserves the left strip for
+   the handwritten hints, so "centered in the column" lands left of the phone.
+   Pin the switcher to the phone's own width and right edge (matching
+   .phone-wrap's margin) so it centers over the bezel at every scale. */
+.hp .hero__viz--scribble .demo-region{
+  align-self: flex-end;
+  width: calc(var(--phone-w) * var(--phone-scale));
+  max-width: 100%;
+  margin-right: 8px;
+}
+@media (max-width: 1100px) {
+  .hp .hero__viz--scribble .demo-region{ margin-right: 0; }
+}
+
 /* ── Quidkey-hosted screens (pay.quidkey.com) ────────────────────────
    Sit between the merchant's checkout (.mck__*) and the bank app (.bnk__*)
    and reuse the same phone chrome: .phone__urlbar, .phone__screen,
