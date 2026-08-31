@@ -416,14 +416,14 @@ export function PayToAgreementScreen({
           ))}
         </dl>
         <div className="bnk__agree-due">Action required by {AGREEMENT_DATE}</div>
-      </div>
-      <div className="bnk__agree-actions">
-        <button type="button" className="bnk__agree-decline" onClick={onDecline}>
-          Decline
-        </button>
-        <button type="button" data-hint-id="bank-pay" className="bnk__agree-approve" onClick={onApprove}>
-          Approve
-        </button>
+        <div className="bnk__agree-actions">
+          <button type="button" className="bnk__agree-decline" onClick={onDecline}>
+            Decline
+          </button>
+          <button type="button" data-hint-id="bank-pay" className="bnk__agree-approve" onClick={onApprove}>
+            Approve
+          </button>
+        </div>
       </div>
     </div>
   )
