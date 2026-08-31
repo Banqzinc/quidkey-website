@@ -245,7 +245,6 @@ html.nav-menu-open .nav__mobile {
   white-space: nowrap;
   flex-wrap: nowrap;
 }
-.hp .demo-region__lbl{ color: var(--faint, #9a9a9a); }
 .hp .demo-region__item{ display: inline-flex; align-items: baseline; gap: 8px; }
 .hp .demo-region__sep{ color: var(--faint, #9a9a9a); opacity: .6; }
 .hp .demo-region__opt{

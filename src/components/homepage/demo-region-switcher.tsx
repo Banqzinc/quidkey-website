@@ -42,7 +42,6 @@ export function DemoRegionSwitcher() {
 
   return (
     <div className="demo-region" role="radiogroup" aria-label="Demo market">
-      <span className="demo-region__lbl">Showing</span>
       {KNOWN_REGIONS.map((r, i) => (
         <span className="demo-region__item" key={r}>
           {i > 0 && (
