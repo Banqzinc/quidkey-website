@@ -3,7 +3,6 @@ import { useEffect } from 'react'
 
 import { AudienceProvider, readStoredAudience, useAudience } from '@/context/audience'
 import { DemoRegionProvider } from '@/context/demo-region'
-import { getDemoRegion } from '@/lib/get-demo-region'
 import { HomepageNav } from '@/components/layout/homepage-nav'
 import { HomepageFooter } from '@/components/layout/homepage-footer'
 import { HeroSection } from '@/components/sections/hero'
@@ -32,9 +31,6 @@ const FONT_HREF =
 
 export const Route = createFileRoute('/')({
   component: HomePage,
-  // Resolve the demo region from the edge geo header during SSR so the hero
-  // demo shows the right bank set on first paint (no client-side geo fetch).
-  loader: () => getDemoRegion(),
   head: () => {
     const seo = buildSeo({
       title: 'Add Pay by Bank to your checkout | Quidkey',
@@ -59,9 +55,8 @@ export const Route = createFileRoute('/')({
 })
 
 function HomePage() {
-  const initialRegion = Route.useLoaderData()
   return (
-    <DemoRegionProvider initial={initialRegion}>
+    <DemoRegionProvider>
       <AudienceProvider>
         <HomePageContent />
       </AudienceProvider>

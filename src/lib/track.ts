@@ -22,6 +22,7 @@ export type HomepageEvent =
   | { name: 'homepage_cta_click'; location: CtaLocation; label: CtaLabel; audience: Audience }
   | { name: 'homepage_audience_toggle'; from: Audience; to: Audience; source: ToggleSource }
   | { name: 'homepage_hero_viz_stage'; flow: FlowKind; stage: number; stageName: string; region: DemoRegion }
+  | { name: 'homepage_demo_region_switch'; from: DemoRegion; to: DemoRegion }
   | { name: 'homepage_faq_open'; question: string }
   | { name: 'homepage_pricing_cta_click'; tier: string; audience: Audience }
   | { name: 'homepage_treasury_view' }
