@@ -69,29 +69,63 @@ export function CheckoutScreen({
           <span className="mck__sec-h-meta">Secured</span>
         </div>
 
-        <button
-          type="button"
-          data-hint-id="predicted-bank"
-          className={`mck__opt mck__opt--bank ${isPredicted ? 'mck__opt--active' : ''}`}
-          onClick={onTapPredicted}
-          style={{ height: '96px' }}
-        >
-          <div className="mck__opt-row">
-            <span className={`mck__radio ${isPredicted ? 'is-on' : ''}`}>
-              <span />
-            </span>
-            <div className="mck__opt-logo">
-              <img src={bankLogoUrl(banks[0].domain)} alt={`${banks[0].name} logo`} width="38" height="38" />
-            </div>
-            <div className="mck__opt-info">
-              <div className="mck__opt-title">
-                <span style={{ whiteSpace: 'nowrap' }}>Pay with {banks[0].name}</span>
+        {locale.authorise === 'payto' ? (
+          // AU / PayTo: the account is identified by PayID on the Quidkey step,
+          // so there is no bank to predict or pick — one Pay by Bank option.
+          <button
+            type="button"
+            data-hint-id="predicted-bank"
+            className={`mck__opt mck__opt--bank ${isPredicted ? 'mck__opt--active' : ''}`}
+            onClick={onTapPredicted}
+            style={{ height: '96px' }}
+          >
+            <div className="mck__opt-row">
+              <span className={`mck__radio ${isPredicted ? 'is-on' : ''}`}>
+                <span />
+              </span>
+              <div className="mck__opt-info">
+                <div className="mck__opt-title">
+                  <span style={{ whiteSpace: 'nowrap' }}>Pay by Bank</span>
+                </div>
               </div>
+              <span className="mck__pbb-marks" aria-hidden="true">
+                {banks.slice(0, 2).map((b) => (
+                  <span key={b.name} className="mck__pbb-chip">
+                    <img src={bankLogoUrl(b.domain)} alt="" width="20" height="20" />
+                  </span>
+                ))}
+                <img className="mck__pbb-payto" src="/homepage/payto-symbol.webp" alt="PayTo" width="26" height="26" />
+                <span className="mck__pbb-chip mck__pbb-chip--plus">+{banks.length - 2}</span>
+              </span>
+              <span className="mck__save">Save {locale.save}</span>
             </div>
-            <span className="mck__save">Save {locale.save}</span>
-          </div>
-        </button>
+          </button>
+        ) : (
+          <button
+            type="button"
+            data-hint-id="predicted-bank"
+            className={`mck__opt mck__opt--bank ${isPredicted ? 'mck__opt--active' : ''}`}
+            onClick={onTapPredicted}
+            style={{ height: '96px' }}
+          >
+            <div className="mck__opt-row">
+              <span className={`mck__radio ${isPredicted ? 'is-on' : ''}`}>
+                <span />
+              </span>
+              <div className="mck__opt-logo">
+                <img src={bankLogoUrl(banks[0].domain)} alt={`${banks[0].name} logo`} width="38" height="38" />
+              </div>
+              <div className="mck__opt-info">
+                <div className="mck__opt-title">
+                  <span style={{ whiteSpace: 'nowrap' }}>Pay with {banks[0].name}</span>
+                </div>
+              </div>
+              <span className="mck__save">Save {locale.save}</span>
+            </div>
+          </button>
+        )}
 
+        {locale.authorise !== 'payto' && (
         <div className={`mck__opt mck__select ${expanded ? 'is-open' : ''} ${isSelectMode ? 'mck__select--on' : ''}`}>
           <button
             type="button"
@@ -164,6 +198,7 @@ export function CheckoutScreen({
             </div>
           )}
         </div>
+        )}
 
         <button
           type="button"

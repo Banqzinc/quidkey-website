@@ -33,7 +33,7 @@ function maskPhone(phone: string): string {
   return `${phone.slice(0, 3)}•• ••• ${tail}`
 }
 
-function QkChrome({ children }: { children: React.ReactNode }) {
+function QkChrome({ payto = false, children }: { payto?: boolean; children: React.ReactNode }) {
   return (
     <>
       <UrlBar host="pay.quidkey.com" path="/checkout" />
@@ -47,7 +47,20 @@ function QkChrome({ children }: { children: React.ReactNode }) {
           Secure
         </span>
       </div>
+      {payto && (
+        <div className="qk__rails">
+          <span>Pay by Bank with</span>
+          <img src="/homepage/payto-logo.webp" alt="PayTo" width="43" height="18" />
+        </div>
+      )}
       {children}
+      {payto && (
+        <div className="qk__npp">
+          Payments initiated by <strong>Quidkey</strong>, {DEMO_MERCHANT.name}&rsquo; payment partner.
+          <br />
+          PayID and PayTo are registered trade marks of NPP Australia Ltd.
+        </div>
+      )}
     </>
   )
 }
@@ -59,12 +72,14 @@ function QkOtp({
   title,
   blurb,
   cta,
+  footnote,
   onVerified,
 }: {
   phone: string
   title: string
   blurb: string
   cta: string
+  footnote?: string
   onVerified: () => void
 }) {
   const [code, setCode] = useState('')
@@ -106,59 +121,180 @@ function QkOtp({
         <button type="button" className="phone__action-cta" disabled={!ready} onClick={onVerified}>
           <span>{cta}</span>
         </button>
+        {footnote && <p className="qk__footnote">{footnote}</p>}
       </div>
     </>
   )
 }
 
 // ── AU: set up the PayTo agreement ───────────────────────────────────
+//
+// entry → (learn) → verify → code → waiting → notify. The last two are the
+// handoff: in production the bank pushes a PayTo request and the shopper
+// leaves for their banking app. Here the push banner drops in on its own and
+// the demo follows it.
 
-type PayToPhase = 'entry' | 'verify' | 'waiting'
+type PayToPhase = 'entry' | 'learn' | 'verify' | 'code' | 'waiting' | 'notify'
 
 const PAYTO_STEPS = ['Add PayID details', 'Review in your bank', 'Confirm payment'] as const
 
-export function QkPayToScreen({ locale, onDone }: { locale: DemoLocale; onDone: () => void }) {
+// The waiting screen's authorisation window, live so the screen feels real.
+function useCountdown(from: number, running: boolean) {
+  const [remain, setRemain] = useState(from)
+  useEffect(() => {
+    if (!running) return
+    const iv = setInterval(() => setRemain((r) => Math.max(0, r - 1)), 1000)
+    return () => clearInterval(iv)
+  }, [running])
+  return `${Math.floor(remain / 60)}:${String(remain % 60).padStart(2, '0')}`
+}
+
+export function QkPayToScreen({
+  locale,
+  activeBank,
+  onDone,
+  onCancel,
+}: {
+  locale: DemoLocale
+  activeBank: Bank
+  onDone: () => void
+  onCancel: () => void
+}) {
   const [phase, setPhase] = useState<PayToPhase>('entry')
   const [idKind, setIdKind] = useState<'payid' | 'bsb'>('payid')
+  const clock = useCountdown(30 * 60, phase === 'waiting' || phase === 'notify')
 
-  // The waiting screen is the handoff: in production the bank pushes a PayTo
-  // request and the shopper leaves for their banking app. Here the demo does
-  // that for them after a beat.
+  // waiting: after a beat the bank's push notification lands (notify), then
+  // the shopper "follows" it into the banking app.
   const done = useLatest(onDone)
   useEffect(() => {
-    if (phase !== 'waiting') return
-    const t = setTimeout(() => done.current(), 2600)
-    return () => clearTimeout(t)
+    if (phase === 'waiting') {
+      const t = setTimeout(() => setPhase('notify'), 1000)
+      return () => clearTimeout(t)
+    }
+    if (phase === 'notify') {
+      const t = setTimeout(() => done.current(), 2000)
+      return () => clearTimeout(t)
+    }
   }, [phase, done])
+
+  if (phase === 'learn') {
+    return (
+      <QkChrome payto>
+        <div className="phone__screen qk__screen">
+          <h2 className="qk__h">How PayTo® works</h2>
+          <p className="qk__p">Set up a PayTo agreement using your PayID, or BSB and account number.</p>
+          <p className="qk__p">
+            You'll need to authorise your PayTo agreement in your banking app before any money comes
+            out of your account.
+          </p>
+          <p className="qk__p">
+            Quidkey, {DEMO_MERCHANT.name}&rsquo; payment partner, initiates the request. We never
+            see or store your banking login.
+          </p>
+        </div>
+        <div className="phone__action">
+          <button type="button" className="phone__action-cta" onClick={() => setPhase('entry')}>
+            <span>Back to payment</span>
+          </button>
+        </div>
+      </QkChrome>
+    )
+  }
 
   if (phase === 'verify') {
     return (
-      <QkChrome>
+      <QkChrome payto>
+        <div className="phone__screen qk__screen">
+          <button type="button" className="qk__back" onClick={() => setPhase('entry')}>
+            <svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <path d="M10 3l-5 5 5 5" />
+            </svg>
+            Back
+          </button>
+          <h2 className="qk__h">Verify your mobile number</h2>
+          <p className="qk__p">
+            Your PayTo® agreement will be tied to this number. You'll use it to pay in one tap next
+            time, and to view or cancel the agreement.
+          </p>
+          <div className="qk__phone-row">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+              <rect x="6" y="2" width="12" height="20" rx="3" />
+              <path d="M11 18h2" />
+            </svg>
+            <span className="qk__phone-num num">{locale.phone}</span>
+          </div>
+        </div>
+        <div className="phone__action">
+          <button type="button" className="phone__action-cta" onClick={() => setPhase('code')}>
+            <span>Send verification code</span>
+          </button>
+          <p className="qk__footnote">
+            Nothing is sent to your bank and no money moves until your number is verified.
+          </p>
+        </div>
+      </QkChrome>
+    )
+  }
+
+  if (phase === 'code') {
+    return (
+      <QkChrome payto>
         <QkOtp
           phone={locale.phone}
           title="Verify your mobile number"
-          blurb="Your PayTo agreement is tied to this number. You'll use it to pay in one tap next time, and to view or cancel the agreement."
-          cta="Verify and continue"
+          blurb="Enter the 6-digit code we texted you."
+          cta="Verify and send to my bank"
+          footnote="Nothing is sent to your bank and no money moves until your number is verified."
           onVerified={() => setPhase('waiting')}
         />
       </QkChrome>
     )
   }
 
-  if (phase === 'waiting') {
+  if (phase === 'waiting' || phase === 'notify') {
     return (
-      <QkChrome>
+      <QkChrome payto>
+        {phase === 'notify' && (
+          <div className="qk__banner" role="status">
+            <span className="qk__banner-icon">
+              <img
+                src={bankLogoUrl(activeBank.domain)}
+                alt=""
+                width="22"
+                height="22"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none'
+                }}
+              />
+            </span>
+            <span className="qk__banner-body">
+              <span className="qk__banner-head">
+                <span className="qk__banner-app">{activeBank.name}</span>
+                <span className="qk__banner-time">now</span>
+              </span>
+              <span className="qk__banner-title">PayTo request</span>
+              <span className="qk__banner-text">
+                Quidkey has sent you a PayTo request to authorise. Tap to review.
+              </span>
+            </span>
+          </div>
+        )}
         <div className="phone__screen qk__screen qk__screen--center">
-          <h2 className="qk__h">Authorise your PayTo agreement to complete the payment</h2>
-          <div className="qk__timer">
-            <span className="qk__timer-dot" aria-hidden="true" />
-            <span className="num">29:58</span> remaining
+          <h2 className="qk__h">Authorise your PayTo® agreement to complete the payment</h2>
+          <div className="qk__timer-wrap">
+            <p className="qk__timer-note">You have 30 minutes to authorise</p>
+            <div className="qk__timer">
+              <span className="qk__timer-dot" aria-hidden="true" />
+              <span className="num">{clock}</span> remaining
+            </div>
           </div>
           <ol className="qk__steps-list">
             <li>Log in to your banking app</li>
             <li>Review and authorise your PayTo agreement</li>
             <li>Return here and the payment completes automatically</li>
           </ol>
+          <span className="qk__help">Not sure where to find PayTo in your app? Find out how</span>
           <div className="qk__push">
             <div className="qk__push-head">
               <span className="qk__push-icon" aria-hidden="true">
@@ -177,15 +313,21 @@ export function QkPayToScreen({ locale, onDone }: { locale: DemoLocale; onDone: 
             <span className="bnk__spinner" aria-hidden="true" />
             <span>Waiting for your authorisation…</span>
           </div>
+          <button type="button" className="qk__linkbtn" onClick={() => setPhase('entry')}>
+            Cancel and use another method
+          </button>
         </div>
       </QkChrome>
     )
   }
 
   return (
-    <QkChrome>
+    <QkChrome payto>
       <div className="phone__screen qk__screen">
         <h2 className="qk__h">Pay directly from your bank</h2>
+        <button type="button" className="qk__learn" onClick={() => setPhase('learn')}>
+          How PayTo® works ›
+        </button>
 
         <ol className="qk__steps">
           {PAYTO_STEPS.map((label, i) => (
@@ -247,7 +389,9 @@ export function QkPayToScreen({ locale, onDone }: { locale: DemoLocale; onDone: 
           <span className="qk__total-to">to {DEMO_MERCHANT.name}</span>
         </div>
         <p className="qk__terms">
-          By continuing you authorise a PayTo agreement on your account and this payment to be debited.
+          By selecting &ldquo;Send request to my bank&rdquo;, I authorise a PayTo agreement to be set
+          up on my account and this payment to be debited. I agree to the{' '}
+          <span className="qk__terms-link">PayTo terms</span>.
         </p>
       </div>
       <div className="phone__action">
@@ -258,6 +402,9 @@ export function QkPayToScreen({ locale, onDone }: { locale: DemoLocale; onDone: 
           onClick={() => setPhase('verify')}
         >
           <span>Send request to my bank</span>
+        </button>
+        <button type="button" className="qk__linkbtn" onClick={onCancel}>
+          Cancel and return to {DEMO_MERCHANT.name}
         </button>
       </div>
     </QkChrome>

@@ -45,6 +45,18 @@ describe('FLOWS', () => {
     expect(FLOWS.US.indexOf('qk-accounts')).toBeGreaterThan(FLOWS.US.indexOf('bank'))
     expect(FLOWS.US.indexOf('qk-verify')).toBeLessThan(FLOWS.US.indexOf('redirect'))
   })
+
+  it('gives AU the push-notification handoff: auto Face ID, no app launch or login', () => {
+    // PayTo arrives as a bank push notification — the shopper is already in
+    // the app, so AU never shows the login form. Everyone else still does.
+    expect(FLOWS.AU).toContain('faceid')
+    expect(FLOWS.AU).not.toContain('launch')
+    expect(FLOWS.AU).not.toContain('login')
+    for (const region of ['UK', 'EU', 'US'] as const) {
+      expect(FLOWS[region]).toContain('login')
+      expect(FLOWS[region]).not.toContain('faceid')
+    }
+  })
 })
 
 describe('nextStep', () => {
@@ -76,6 +88,8 @@ describe('nextStep', () => {
     expect(nextStep('UK', 'checkout')).toBe('redirect')
     expect(nextStep('AU', 'checkout')).toBe('qk-payto')
     expect(nextStep('US', 'checkout')).toBe('qk-verify')
+    expect(nextStep('AU', 'redirect')).toBe('faceid')
+    expect(nextStep('AU', 'faceid')).toBe('bank')
     expect(nextStep('AU', 'bank')).toBe('processing')
     expect(nextStep('US', 'bank')).toBe('qk-accounts')
   })

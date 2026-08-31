@@ -21,6 +21,7 @@ export type FlowStep =
   | 'redirect'
   | 'launch'
   | 'login'
+  | 'faceid' // AU — bank push handoff: Face ID runs on its own, no login form
   | 'bank'
   | 'qk-accounts' // US — Quidkey-hosted funding-account picker
   | 'processing'
@@ -31,7 +32,9 @@ const BANK_HANDOFF = ['redirect', 'launch', 'login', 'bank'] as const
 const RETURN_TO_MERCHANT = ['processing', 'app-launch-safari', 'success'] as const
 
 export const FLOWS: Record<DemoRegion, readonly FlowStep[]> = {
-  AU: ['checkout', 'qk-payto', ...BANK_HANDOFF, ...RETURN_TO_MERCHANT],
+  // AU has no app launch or login form: the bank's PayTo push notification put
+  // the shopper straight into the app, so Face ID fires by itself.
+  AU: ['checkout', 'qk-payto', 'redirect', 'faceid', 'bank', ...RETURN_TO_MERCHANT],
   UK: ['checkout', ...BANK_HANDOFF, ...RETURN_TO_MERCHANT],
   EU: ['checkout', ...BANK_HANDOFF, ...RETURN_TO_MERCHANT],
   US: ['checkout', 'qk-verify', ...BANK_HANDOFF, 'qk-accounts', ...RETURN_TO_MERCHANT],
@@ -46,6 +49,7 @@ export const STAGE_NAMES: Record<FlowStep, string> = {
   redirect: 'redirect_to_bank',
   launch: 'bank_app_launching',
   login: 'bank_login',
+  faceid: 'bank_faceid',
   bank: 'bank_authorize',
   'qk-accounts': 'quidkey_choose_account',
   processing: 'bank_processing',

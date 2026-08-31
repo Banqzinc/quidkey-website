@@ -2,12 +2,21 @@
 // launch, the login + Face ID sheet, the authorise screen, and the two
 // screens that bridge back to the merchant.
 //
-// The authorise screen is where the markets diverge — AU approves a standing
-// PayTo agreement, everywhere else picks a funding account.
+// The authorise screen is where the markets diverge — AU reviews and approves
+// a standing PayTo agreement (PayToAgreementScreen), everywhere else picks a
+// funding account (BankAppScreen). AU also skips the login form: the bank's
+// push notification put the shopper in the app, so FaceIdScreen runs the
+// biometric on its own.
+
+import { useEffect, useRef, useState } from 'react'
 
 import { DEMO_MERCHANT } from '@/components/homepage/demo-merchant'
 import { bankLogoUrl, type Bank, type DemoLocale } from '@/components/homepage/demo-locales'
 import { SafariIcon, bankBrandColor, type FaceIdState } from '@/components/homepage/demo/shared'
+
+// The date printed on the PayTo agreement. Fixed, like the phone's 9:41
+// status bar, so the demo (and its screenshots) never drift.
+const AGREEMENT_DATE = '26 September 2026'
 
 export function RedirectScreen({ activeBank }: { activeBank: Bank }) {
   return (
@@ -130,55 +139,122 @@ export function LoginScreen({
       </div>
 
       {faceIdState !== 'idle' && (
-        <div className="bnk__faceid-modal" role="dialog" aria-modal="true">
-          <div className="bnk__faceid-sheet">
-            <div className={`bnk__faceid-sheet-icon bnk__faceid-sheet-icon--${faceIdState}`}>
-              {faceIdState === 'scanning' && (
-                <svg
-                  viewBox="0 0 48 48"
-                  width="42"
-                  height="42"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M8 16V12a4 4 0 014-4h4" />
-                  <path d="M40 16V12a4 4 0 00-4-4h-4" />
-                  <path d="M8 32v4a4 4 0 004 4h4" />
-                  <path d="M40 32v4a4 4 0 01-4 4h-4" />
-                  <path d="M18 20v3" />
-                  <path d="M30 20v3" />
-                  <path d="M24 20v8h-2" />
-                  <path d="M18 32c1.8 1.5 4 2.2 6 2.2s4.2-.7 6-2.2" />
-                </svg>
-              )}
-              {faceIdState === 'approved' && (
-                <svg
-                  viewBox="0 0 48 48"
-                  width="42"
-                  height="42"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M10 24l9 9 19-19" />
-                </svg>
-              )}
-              {faceIdState === 'scanning' && <span className="bnk__faceid-scanline" aria-hidden="true" />}
-            </div>
-            <div className="bnk__faceid-sheet-title">{faceIdState === 'scanning' ? 'Scanning…' : 'Approved'}</div>
-            <div className="bnk__faceid-sheet-sub">
-              {faceIdState === 'scanning'
-                ? `Look at the camera to sign in to ${activeBank.name}`
-                : `Signing you into ${activeBank.name}`}
-            </div>
-          </div>
-        </div>
+        <FaceIdSheet
+          state={faceIdState}
+          title={faceIdState === 'scanning' ? 'Scanning…' : 'Approved'}
+          sub={
+            faceIdState === 'scanning'
+              ? `Look at the camera to sign in to ${activeBank.name}`
+              : `Signing you into ${activeBank.name}`
+          }
+        />
       )}
+    </div>
+  )
+}
+
+function FaceIdSheet({ state, title, sub }: { state: FaceIdState; title: string; sub: string }) {
+  return (
+    <div className="bnk__faceid-modal" role="dialog" aria-modal="true">
+      <div className="bnk__faceid-sheet">
+        <div className={`bnk__faceid-sheet-icon bnk__faceid-sheet-icon--${state}`}>
+          {state === 'scanning' && (
+            <svg
+              viewBox="0 0 48 48"
+              width="42"
+              height="42"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M8 16V12a4 4 0 014-4h4" />
+              <path d="M40 16V12a4 4 0 00-4-4h-4" />
+              <path d="M8 32v4a4 4 0 004 4h4" />
+              <path d="M40 32v4a4 4 0 01-4 4h-4" />
+              <path d="M18 20v3" />
+              <path d="M30 20v3" />
+              <path d="M24 20v8h-2" />
+              <path d="M18 32c1.8 1.5 4 2.2 6 2.2s4.2-.7 6-2.2" />
+            </svg>
+          )}
+          {state === 'approved' && (
+            <svg
+              viewBox="0 0 48 48"
+              width="42"
+              height="42"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M10 24l9 9 19-19" />
+            </svg>
+          )}
+          {state === 'scanning' && <span className="bnk__faceid-scanline" aria-hidden="true" />}
+        </div>
+        <div className="bnk__faceid-sheet-title">{title}</div>
+        <div className="bnk__faceid-sheet-sub">{sub}</div>
+      </div>
+    </div>
+  )
+}
+
+// AU only — the PayTo handoff arrives as a push notification, so there is no
+// login form: the bank app opens straight onto Face ID, which scans and
+// approves on its own before handing over to the agreement screen.
+export function FaceIdScreen({ activeBank, onDone }: { activeBank: Bank; onDone: () => void }) {
+  const [state, setState] = useState<FaceIdState>('scanning')
+  const done = useRef(onDone)
+  done.current = onDone
+
+  useEffect(() => {
+    const t1 = setTimeout(() => setState('approved'), 1100)
+    const t2 = setTimeout(() => done.current(), 2100)
+    return () => {
+      clearTimeout(t1)
+      clearTimeout(t2)
+    }
+  }, [])
+
+  return (
+    <div
+      className="bnk__login bnk__login--auto"
+      style={{ ['--bnk-brand' as string]: bankBrandColor(activeBank) }}
+    >
+      <div className="bnk__login-hero">
+        <div className="bnk__login-logo">
+          <img
+            src={bankLogoUrl(activeBank.domain)}
+            alt={activeBank.name}
+            width="56"
+            height="56"
+            onError={(e) => {
+              e.currentTarget.style.display = 'none'
+            }}
+          />
+        </div>
+        <div className="bnk__login-name">{activeBank.name}</div>
+      </div>
+      <div className="bnk__login-foot">
+        <span>Sign up</span>
+        <span>·</span>
+        <span>Open an account</span>
+        <span>·</span>
+        <span>Privacy</span>
+      </div>
+      <div data-hint-id="face-id" className="bnk__faceid-target" aria-hidden="true" />
+      <FaceIdSheet
+        state={state}
+        title={state === 'scanning' ? 'Face ID' : 'Approved'}
+        sub={
+          state === 'scanning'
+            ? `Look at the camera to log on to ${activeBank.name}`
+            : `Logging you on to ${activeBank.name}`
+        }
+      />
     </div>
   )
 }
@@ -225,71 +301,33 @@ export function BankAppScreen({
       </div>
       <div className="bnk__screen">
         <div className="bnk__pay-head">
-          <div className="bnk__pay-eyebrow">
-            {locale.authorise === 'payto' ? 'Authorise agreement' : 'Authorise payment'}
-          </div>
+          <div className="bnk__pay-eyebrow">Authorise payment</div>
           <div className="bnk__pay-amt num">{locale.price}</div>
           <div className="bnk__pay-to">
             to <strong>{DEMO_MERCHANT.name}</strong> · via Quidkey
           </div>
         </div>
 
-        {locale.authorise === 'payto' ? (
-          // AU / PayTo: the shopper approves a standing agreement, so the bank
-          // shows agreement terms rather than a one-off confirmation — who is
-          // paying whom, how much, and how often.
-          <>
-            <div className="bnk__sec-h">PayTo agreement</div>
-            <div className="bnk__payto">
-              <img className="bnk__payto-logo" src="/homepage/payto-logo.webp" alt="PayTo" width="72" height="30" />
-              <dl className="bnk__payto-rows">
-                <div className="bnk__payto-row">
-                  <dt>Status</dt>
-                  <dd>Pending</dd>
-                </div>
-                <div className="bnk__payto-row">
-                  <dt>PayID</dt>
-                  <dd className="num">{DEMO_MERCHANT.payId}</dd>
-                </div>
-                <div className="bnk__payto-row">
-                  <dt>Payee</dt>
-                  <dd>{DEMO_MERCHANT.name}</dd>
-                </div>
-                <div className="bnk__payto-row">
-                  <dt>Amount</dt>
-                  <dd className="num">{locale.price}</dd>
-                </div>
-                <div className="bnk__payto-row">
-                  <dt>Frequency</dt>
-                  <dd>Single payment</dd>
-                </div>
-              </dl>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="bnk__sec-h">Pay from</div>
-            <div className="bnk__accts">
-              {locale.accounts?.map((a, i) => (
-                <button
-                  type="button"
-                  key={a.id}
-                  className={`bnk__acct ${i === bankAccountIdx ? 'is-on' : ''}`}
-                  onClick={() => setBankAccountIdx(i)}
-                >
-                  <span className={`bnk__radio ${i === bankAccountIdx ? 'is-on' : ''}`}>
-                    <span />
-                  </span>
-                  <span className="bnk__acct-info">
-                    <span className="bnk__acct-name">{a.name}</span>
-                    <span className="bnk__acct-sub num">{a.sub}</span>
-                  </span>
-                  <span className="bnk__acct-bal num">{a.bal}</span>
-                </button>
-              ))}
-            </div>
-          </>
-        )}
+        <div className="bnk__sec-h">Pay from</div>
+        <div className="bnk__accts">
+          {locale.accounts?.map((a, i) => (
+            <button
+              type="button"
+              key={a.id}
+              className={`bnk__acct ${i === bankAccountIdx ? 'is-on' : ''}`}
+              onClick={() => setBankAccountIdx(i)}
+            >
+              <span className={`bnk__radio ${i === bankAccountIdx ? 'is-on' : ''}`}>
+                <span />
+              </span>
+              <span className="bnk__acct-info">
+                <span className="bnk__acct-name">{a.name}</span>
+                <span className="bnk__acct-sub num">{a.sub}</span>
+              </span>
+              <span className="bnk__acct-bal num">{a.bal}</span>
+            </button>
+          ))}
+        </div>
 
         <div className="bnk__detail">
           <div className="bnk__detail-row">
@@ -310,22 +348,95 @@ export function BankAppScreen({
           onClick={onPay}
           style={{ background: bankBrandColor(activeBank) }}
         >
-          <span>
-            {locale.authorise === 'payto' ? `Approve and pay ${locale.price}` : `Pay ${locale.price}`}
-          </span>
+          <span>Pay {locale.price}</span>
         </button>
       </div>
     </>
   )
 }
 
+// AU only — the bank-branded PayTo agreement the shopper reviews after Face
+// ID. A standing agreement rather than a one-off payment, so it shows the
+// full agreement record — who pays whom, from which PayID, how much, how
+// often — with an explicit Decline / Approve pair instead of a pay button.
+export function PayToAgreementScreen({
+  activeBank,
+  locale,
+  onApprove,
+  onDecline,
+}: {
+  activeBank: Bank
+  locale: DemoLocale
+  onApprove: () => void
+  onDecline: () => void
+}) {
+  const rows: Array<[string, string, boolean?]> = [
+    ['Status', 'Pending'],
+    ['PayID', locale.phone, true],
+    ['PayID Name', locale.customer.name],
+    ['Payee', DEMO_MERCHANT.name.toUpperCase()],
+    ['Payment amount', locale.price, true],
+    ['Payment frequency', 'Single'],
+    ['Start date', AGREEMENT_DATE],
+    ['First payment', AGREEMENT_DATE],
+  ]
+
+  return (
+    <div className="bnk__agree">
+      <div className="bnk__agree-bar">
+        <span className="bnk__agree-mark" style={{ background: bankBrandColor(activeBank) }}>
+          <img
+            src={bankLogoUrl(activeBank.domain)}
+            alt={`${activeBank.name} logo`}
+            width="18"
+            height="18"
+            onError={(e) => {
+              e.currentTarget.style.display = 'none'
+            }}
+          />
+        </span>
+        <span className="bnk__agree-bank">{activeBank.name}</span>
+        <span className="bnk__agree-avatar" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <circle cx="12" cy="9" r="3.5" />
+            <path d="M5 21c1.5-4 4-6 7-6s5.5 2 7 6" />
+          </svg>
+        </span>
+      </div>
+      <div className="bnk__agree-body">
+        <h2 className="bnk__agree-h">PayTo agreement</h2>
+        <div className="bnk__agree-sub">Awaiting authorisation</div>
+        <div className="bnk__agree-sec">Payment agreement details</div>
+        <dl className="bnk__payto-rows">
+          {rows.map(([k, v, isNum]) => (
+            <div key={k} className="bnk__payto-row">
+              <dt>{k}</dt>
+              <dd className={isNum ? 'num' : undefined}>{v}</dd>
+            </div>
+          ))}
+        </dl>
+        <div className="bnk__agree-due">Action required by {AGREEMENT_DATE}</div>
+      </div>
+      <div className="bnk__agree-actions">
+        <button type="button" className="bnk__agree-decline" onClick={onDecline}>
+          Decline
+        </button>
+        <button type="button" data-hint-id="bank-pay" className="bnk__agree-approve" onClick={onApprove}>
+          Approve
+        </button>
+      </div>
+    </div>
+  )
+}
+
 export function ProcessingScreen({ locale }: { locale: DemoLocale }) {
+  const payto = locale.authorise === 'payto'
   return (
     <div className="bnk__splash">
       <div className="bnk__spinner" aria-hidden="true" />
-      <div className="bnk__splash-title">Authorising payment…</div>
+      <div className="bnk__splash-title">{payto ? 'Authorising PayTo agreement…' : 'Authorising payment…'}</div>
       <div className="bnk__splash-sub">
-        Sending {locale.price} to {DEMO_MERCHANT.name}
+        {payto ? 'Paying' : 'Sending'} {locale.price} to {DEMO_MERCHANT.name}
       </div>
     </div>
   )

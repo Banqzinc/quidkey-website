@@ -1,7 +1,6 @@
 // The single merchant the hero demo checks out from. One home for what used to
 // be a dozen inline "Northgate Goods" string literals scattered through the
-// screens — including the PayID, which is merchant identity and used to sit on
-// the region pack (where it didn't belong).
+// screens.
 //
 // The merchant is deliberately region-independent: switching market changes the
 // banks, currency, and rails, never who you're buying from.
@@ -16,8 +15,6 @@ export type DemoMerchant = {
   reference: string
   // Order number on the merchant's confirmation page.
   orderNo: string
-  // AU only — the PayID the PayTo agreement resolves to.
-  payId: string
 }
 
 export const DEMO_MERCHANT: DemoMerchant = {
@@ -32,5 +29,4 @@ export const DEMO_MERCHANT: DemoMerchant = {
   },
   reference: 'QK-NG-8842',
   orderNo: '#NG-44218',
-  payId: 'pay@northgate-goods.com.au',
 }

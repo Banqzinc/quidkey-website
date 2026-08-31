@@ -26,8 +26,10 @@ import { STAGE_NAMES, flowFor, nextStep, stageIndex, type FlowStep } from '@/com
 import { CheckoutScreen } from '@/components/homepage/demo/checkout-screen'
 import {
   BankAppScreen,
+  FaceIdScreen,
   LaunchScreen,
   LoginScreen,
+  PayToAgreementScreen,
   ProcessingScreen,
   RedirectScreen,
   SafariLaunchScreen,
@@ -41,6 +43,7 @@ import { SuccessScreen } from '@/components/homepage/demo/success-screen'
 import type { FaceIdState, PaymentMethod } from '@/components/homepage/demo/shared'
 import { ScribbleHint, type ScribbleStage } from '@/components/homepage/scribble-hint'
 import { useDemoRegion } from '@/context/demo-region'
+import type { DemoRegion } from '@/lib/demo-region'
 import { track } from '@/lib/track'
 
 // Steps that move on by themselves, and how long they linger first. Everything
@@ -54,29 +57,41 @@ const AUTO_ADVANCE_MS: Partial<Record<FlowStep, number>> = {
 
 // Hand-drawn callouts overlaid on the viz. `screen` matches a FlowStep and `id`
 // matches the data-hint-id on the target element inside the phone. Stages whose
-// screen isn't in the active market's flow are filtered out, so the tour is
-// three steps shorter in the UK and EU than it is in Australia.
-const SCRIBBLE_STAGES: ScribbleStage[] = [
-  { screen: 'checkout', id: 'predicted-bank', label: "Customer's predicted bank" },
-  { screen: 'checkout', id: 'select-bank', label: 'They can still pick any other bank' },
-  { screen: 'checkout', id: 'checkout-cta', label: 'One tap to pay' },
-  { screen: 'qk-payto', id: 'qk-payto', label: 'Quidkey sets up the PayTo agreement' },
-  { screen: 'qk-verify', id: 'qk-verify', label: 'Quidkey checks it’s really them' },
-  {
-    screen: 'login',
-    id: 'face-id',
-    label: (
-      <>
-        Authorise with
-        <br />
-        Face ID
-      </>
-    ),
-  },
-  { screen: 'bank', id: 'bank-pay', label: 'Confirm in the bank app' },
-  { screen: 'qk-accounts', id: 'qk-accounts', label: 'Choose which account pays' },
-  { screen: 'success', id: 'replay', label: 'Done, replay?' },
-]
+// screen isn't in the active market's flow are filtered out; the checkout
+// stages differ per market because AU has no bank picking (PayTo identifies
+// the account by PayID, so there is nothing to predict or select).
+const FACE_ID_LABEL = (
+  <>
+    Authorise with
+    <br />
+    Face ID
+  </>
+)
+
+function scribbleStagesFor(region: DemoRegion): ScribbleStage[] {
+  const checkout: ScribbleStage[] =
+    region === 'AU'
+      ? [
+          { screen: 'checkout', id: 'predicted-bank', label: 'One Pay by Bank option — no bank picking' },
+          { screen: 'checkout', id: 'checkout-cta', label: 'One tap to pay' },
+        ]
+      : [
+          { screen: 'checkout', id: 'predicted-bank', label: "Customer's predicted bank" },
+          { screen: 'checkout', id: 'select-bank', label: 'They can still pick any other bank' },
+          { screen: 'checkout', id: 'checkout-cta', label: 'One tap to pay' },
+        ]
+  const rest: ScribbleStage[] = [
+    { screen: 'qk-payto', id: 'qk-payto', label: 'Quidkey sets up the PayTo agreement' },
+    { screen: 'qk-verify', id: 'qk-verify', label: 'Quidkey checks it’s really them' },
+    { screen: 'login', id: 'face-id', label: FACE_ID_LABEL },
+    { screen: 'faceid', id: 'face-id', label: FACE_ID_LABEL },
+    { screen: 'bank', id: 'bank-pay', label: 'Confirm in the bank app' },
+    { screen: 'qk-accounts', id: 'qk-accounts', label: 'Choose which account pays' },
+    { screen: 'success', id: 'replay', label: 'Done, replay?' },
+  ]
+  const flow = flowFor(region)
+  return [...checkout, ...rest.filter((s) => flow.includes(s.screen as FlowStep))]
+}
 
 export function MerchantHeroViz() {
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('predicted')
@@ -96,8 +111,7 @@ export function MerchantHeroViz() {
   const { region } = useDemoRegion()
   const locale = DEMO_LOCALES[region]
   const banks = locale.banks
-  const flow = flowFor(region)
-  const stages = SCRIBBLE_STAGES.filter((s) => flow.includes(s.screen as FlowStep))
+  const stages = scribbleStagesFor(region)
 
   const flowTimers = useRef<ReturnType<typeof setTimeout>[]>([])
   const queue = (fn: () => void, ms: number) => {
@@ -178,7 +192,9 @@ export function MerchantHeroViz() {
 
   const ctaLabel =
     paymentMethod === 'predicted'
-      ? `Pay with ${banks[0].name}`
+      ? locale.authorise === 'payto'
+        ? `Pay by Bank · ${locale.price}`
+        : `Pay with ${banks[0].name}`
       : paymentMethod === 'select'
       ? pickedBank
         ? `Pay with ${pickedBank.name}`
@@ -387,7 +403,12 @@ export function MerchantHeroViz() {
           )}
 
           {flowStep === 'qk-payto' && (
-            <QkPayToScreen locale={locale} onDone={() => advance('qk-payto')} />
+            <QkPayToScreen
+              locale={locale}
+              activeBank={activeBank}
+              onDone={() => advance('qk-payto')}
+              onCancel={resetFlow}
+            />
           )}
           {flowStep === 'qk-verify' && (
             <QkVerifyScreen locale={locale} activeBank={activeBank} onDone={() => advance('qk-verify')} />
@@ -398,16 +419,27 @@ export function MerchantHeroViz() {
           {flowStep === 'login' && (
             <LoginScreen activeBank={activeBank} faceIdState={faceIdState} onSignIn={handleFaceIdComplete} />
           )}
-          {flowStep === 'bank' && (
-            <BankAppScreen
-              activeBank={activeBank}
-              locale={locale}
-              bankAccountIdx={bankAccountIdx}
-              setBankAccountIdx={setBankAccountIdx}
-              onCancel={resetFlow}
-              onPay={handleBankPay}
-            />
+          {flowStep === 'faceid' && (
+            <FaceIdScreen activeBank={activeBank} onDone={() => advance('faceid')} />
           )}
+          {flowStep === 'bank' &&
+            (locale.authorise === 'payto' ? (
+              <PayToAgreementScreen
+                activeBank={activeBank}
+                locale={locale}
+                onApprove={handleBankPay}
+                onDecline={resetFlow}
+              />
+            ) : (
+              <BankAppScreen
+                activeBank={activeBank}
+                locale={locale}
+                bankAccountIdx={bankAccountIdx}
+                setBankAccountIdx={setBankAccountIdx}
+                onCancel={resetFlow}
+                onPay={handleBankPay}
+              />
+            ))}
 
           {flowStep === 'qk-accounts' && (
             <QkAccountsScreen locale={locale} activeBank={activeBank} onDone={() => advance('qk-accounts')} />
