@@ -146,7 +146,105 @@ function useCountdown(from: number, running: boolean) {
     const iv = setInterval(() => setRemain((r) => Math.max(0, r - 1)), 1000)
     return () => clearInterval(iv)
   }, [running])
-  return `${Math.floor(remain / 60)}:${String(remain % 60).padStart(2, '0')}`
+  return remain
+}
+
+// The green tick on the pre-filled PayID: opens as a "✓ verified" pill, then
+// collapses to just the tick after a beat — same as the prototype.
+function VerifiedBadge() {
+  const [expanded, setExpanded] = useState(true)
+  useEffect(() => {
+    const t = setTimeout(() => setExpanded(false), 2500)
+    return () => clearTimeout(t)
+  }, [])
+  return (
+    <span className={`qk__vbadge ${expanded ? 'is-open' : ''}`}>
+      <span className="qk__vbadge-txt">verified</span>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M20 6 9 17l-5-5" />
+      </svg>
+    </span>
+  )
+}
+
+// AU code beat: the prototype's single wide code box that fills digit by
+// digit, with the resend countdown underneath and the CTA held disabled
+// until the code is in.
+function QkCode({
+  phone,
+  onVerified,
+  onBack,
+  onChange,
+}: {
+  phone: string
+  onVerified: () => void
+  onBack: () => void
+  onChange: () => void
+}) {
+  const [code, setCode] = useState('')
+  const resend = useCountdown(30, true)
+  useEffect(() => {
+    const start = setTimeout(() => {
+      const iv = setInterval(() => {
+        setCode((c) => {
+          if (c.length >= OTP_CODE.length) {
+            clearInterval(iv)
+            return c
+          }
+          return OTP_CODE.slice(0, c.length + 1)
+        })
+      }, 120)
+    }, 900)
+    return () => clearTimeout(start)
+  }, [])
+  const ready = code.length === OTP_CODE.length
+  const masked = maskPhone(phone)
+
+  return (
+    <>
+      <div className="phone__screen qk__screen">
+        <button type="button" className="qk__back" onClick={onBack}>
+          <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <path d="M10 3l-5 5 5 5" />
+          </svg>
+          Back
+        </button>
+        <h2 className="qk__h">Verify your mobile number</h2>
+        <p className="qk__p">
+          Your PayTo® agreement will be tied to this number. You'll use it to pay in one tap next
+          time, and to view or cancel the agreement.
+        </p>
+        <div className="qk__phone-row">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+            <rect x="6" y="2" width="12" height="20" rx="3" />
+            <path d="M11 18h2" />
+          </svg>
+          <span className="qk__phone-num num">{masked}</span>
+          <button type="button" className="qk__change" onClick={onChange}>
+            Change
+          </button>
+        </div>
+        <div className="qk__lbl">Enter the 6-digit code</div>
+        <div className={`qk__code num ${ready ? 'is-filled' : ''}`} aria-label="Six digit code">
+          {code.padEnd(OTP_CODE.length, ' ').split('').map((ch, i) => (
+            <span key={i} className={ch === ' ' ? 'qk__code-ph' : ''}>{ch === ' ' ? '0' : ch}</span>
+          ))}
+        </div>
+        <div className="qk__code-note">
+          <span>Code sent to {masked}</span>
+          <span className="num">{resend > 0 ? `Resend in ${resend}s` : 'Resend'}</span>
+        </div>
+      </div>
+      <div className="phone__action">
+        <button type="button" className="phone__action-cta" disabled={!ready} onClick={onVerified}>
+          <span>Verify and send to my bank</span>
+        </button>
+        <p className="qk__footnote">
+          Nothing is sent to your bank and no money moves until your number is verified.
+        </p>
+      </div>
+    </>
+  )
 }
 
 export function QkPayToScreen({
@@ -162,7 +260,8 @@ export function QkPayToScreen({
 }) {
   const [phase, setPhase] = useState<PayToPhase>('entry')
   const [idKind, setIdKind] = useState<'payid' | 'bsb'>('payid')
-  const clock = useCountdown(30 * 60, phase === 'waiting' || phase === 'notify')
+  const windowLeft = useCountdown(30 * 60, phase === 'waiting' || phase === 'notify')
+  const clock = `${Math.floor(windowLeft / 60)}:${String(windowLeft % 60).padStart(2, '0')}`
 
   // waiting: after a beat the bank's push notification lands (notify), then
   // the shopper "follows" it into the banking app.
@@ -218,11 +317,14 @@ export function QkPayToScreen({
             time, and to view or cancel the agreement.
           </p>
           <div className="qk__phone-row">
-            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
               <rect x="6" y="2" width="12" height="20" rx="3" />
               <path d="M11 18h2" />
             </svg>
             <span className="qk__phone-num num">{locale.phone}</span>
+            <button type="button" className="qk__change" onClick={() => setPhase('entry')}>
+              Change
+            </button>
           </div>
         </div>
         <div className="phone__action">
@@ -240,13 +342,11 @@ export function QkPayToScreen({
   if (phase === 'code') {
     return (
       <QkChrome payto>
-        <QkOtp
+        <QkCode
           phone={locale.phone}
-          title="Verify your mobile number"
-          blurb="Enter the 6-digit code we texted you."
-          cta="Verify and send to my bank"
-          footnote="Nothing is sent to your bank and no money moves until your number is verified."
           onVerified={() => setPhase('waiting')}
+          onBack={() => setPhase('verify')}
+          onChange={() => setPhase('verify')}
         />
       </QkChrome>
     )
@@ -338,7 +438,7 @@ export function QkPayToScreen({
           ))}
         </ol>
 
-        <div className="qk__sec-h">Identify your account with</div>
+        <div className="qk__lbl">Identify your account with</div>
         <div className="qk__idkind">
           <button
             type="button"
@@ -346,7 +446,9 @@ export function QkPayToScreen({
             aria-pressed={idKind === 'payid'}
             onClick={() => setIdKind('payid')}
           >
-            <span className="qk__idkind-t">PayID</span>
+            <span className="qk__idkind-t">
+              PayID<sup>®</sup>
+            </span>
             <span className="qk__idkind-s">Mobile, email or ABN</span>
           </button>
           <button
@@ -361,16 +463,19 @@ export function QkPayToScreen({
         </div>
 
         {idKind === 'payid' ? (
-          <div className="qk__field">
-            <span className="qk__field-lbl">Mobile number</span>
-            <span className="qk__field-val num">{locale.phone}</span>
-            <span className="qk__field-ok">
-              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M20 6 9 17l-5-5" />
+          <>
+            <div className="qk__lbl qk__lbl--field">PayID type</div>
+            <div className="qk__select-fake" aria-hidden="true">
+              <span>Mobile number</span>
+              <svg viewBox="0 0 12 8" width="12" height="8" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <path d="M1 1l5 5 5-5" />
               </svg>
-              verified
-            </span>
-          </div>
+            </div>
+            <div className="qk__input">
+              <span className="num">{locale.phone}</span>
+              <VerifiedBadge />
+            </div>
+          </>
         ) : (
           <div className="qk__field-pair">
             <div className="qk__field">
@@ -388,11 +493,6 @@ export function QkPayToScreen({
           <span className="qk__total-amt num">{locale.price}</span>
           <span className="qk__total-to">to {DEMO_MERCHANT.name}</span>
         </div>
-        <p className="qk__terms">
-          By selecting &ldquo;Send request to my bank&rdquo;, I authorise a PayTo agreement to be set
-          up on my account and this payment to be debited. I agree to the{' '}
-          <span className="qk__terms-link">PayTo terms</span>.
-        </p>
       </div>
       <div className="phone__action">
         <button
@@ -403,6 +503,11 @@ export function QkPayToScreen({
         >
           <span>Send request to my bank</span>
         </button>
+        <p className="qk__terms">
+          By selecting &ldquo;Send request to my bank&rdquo;, I authorise a PayTo agreement to be set
+          up on my account and this payment to be debited. I agree to the{' '}
+          <span className="qk__terms-link">PayTo terms</span>.
+        </p>
         <button type="button" className="qk__linkbtn" onClick={onCancel}>
           Cancel and return to {DEMO_MERCHANT.name}
         </button>

@@ -291,149 +291,198 @@ html.nav-menu-open .nav__mobile {
   color: var(--muted);
 }
 
-.hp .qk__screen{ display: flex; flex-direction: column; gap: 10px; padding: 16px 16px 12px; }
-.hp .qk__screen--center{ align-items: center; text-align: center; justify-content: center; gap: 13px; }
+.hp .qk__screen{ display: flex; flex-direction: column; gap: 12px; padding: 20px 20px 14px; }
+.hp .qk__screen--center{ align-items: center; text-align: center; justify-content: center; gap: 14px; }
 
 .hp .qk__h{
   margin: 0;
-  font-size: 19px; line-height: 1.2; font-weight: 600;
-  letter-spacing: -0.02em; text-wrap: balance;
+  font-size: 26px; line-height: 1.15; font-weight: 800;
+  letter-spacing: -0.022em; text-wrap: balance;
   color: var(--ink);
 }
-.hp .qk__p{ margin: 0; font-size: 12px; line-height: 1.45; color: var(--muted); }
+.hp .qk__p{ margin: 0; font-size: 14.5px; line-height: 1.5; color: var(--muted); }
 .hp .qk__sec-h{
   margin-top: 4px;
-  font-size: 10px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase;
+  font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase;
   color: var(--faint, #9a9a9a);
 }
+/* Bold sentence-case field/section labels, as in the prototype. */
+.hp .qk__lbl{ margin-top: 6px; font-size: 14px; font-weight: 700; color: var(--ink); }
+.hp .qk__lbl--field{ margin-top: 2px; font-size: 13px; font-weight: 600; }
 
 /* Three-step progress rail on the PayTo entry screen. */
-.hp .qk__steps{ display: flex; gap: 4px; margin: 4px 0 2px; padding: 0; list-style: none; }
-.hp .qk__step{ flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; position: relative; }
+.hp .qk__steps{ display: flex; gap: 4px; margin: 6px 0 2px; padding: 0; list-style: none; }
+.hp .qk__step{ flex: 1; display: flex; flex-direction: column; align-items: center; gap: 7px; position: relative; }
 .hp .qk__step::after{
-  content: ""; position: absolute; top: 10px; left: calc(50% + 13px); right: calc(-50% + 13px);
-  height: 1px; background: var(--line);
+  content: ""; position: absolute; top: 13px; left: calc(50% + 16px); right: calc(-50% + 16px);
+  height: 1.5px; background: var(--line);
 }
 .hp .qk__step:last-child::after{ display: none; }
 .hp .qk__step-n{
-  width: 20px; height: 20px; border-radius: 999px;
+  width: 27px; height: 27px; border-radius: 999px;
   display: grid; place-items: center;
-  font-size: 10px; font-weight: 600;
-  background: #fff; color: var(--muted); border: 1px solid var(--line);
+  font-size: 13px; font-weight: 700;
+  background: #fff; color: var(--muted); border: 1.5px solid var(--line);
   position: relative; z-index: 1;
 }
 .hp .qk__step.is-on .qk__step-n{ background: var(--ink); color: var(--bg); border-color: var(--ink); }
 .hp .qk__step-l{
-  font-size: 9px; line-height: 1.25; text-align: center; text-wrap: balance;
-  color: var(--muted); max-width: 78px;
+  font-size: 11.5px; line-height: 1.25; font-weight: 600; text-align: center; text-wrap: balance;
+  color: var(--muted); max-width: 96px;
 }
-.hp .qk__step.is-on .qk__step-l{ color: var(--ink); font-weight: 500; }
+.hp .qk__step.is-on .qk__step-l{ color: var(--ink); }
 
 /* PayID vs BSB choice. */
-.hp .qk__idkind{ display: flex; gap: 8px; }
+.hp .qk__idkind{ display: flex; gap: 9px; }
 .hp .qk__idkind-opt{
   flex: 1; text-align: left; cursor: pointer;
-  padding: 9px 10px; border-radius: 10px;
+  padding: 12px 13px; border-radius: 11px;
   border: 1px solid var(--line-strong); background: #fff;
+  font-family: inherit;
   transition: border-color .15s, background .15s, box-shadow .15s;
 }
-.hp .qk__idkind-opt.is-on{ border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); background: var(--bg-soft); }
-.hp .qk__idkind-t{ display: block; font-size: 12.5px; font-weight: 600; color: var(--ink); }
-.hp .qk__idkind-s{ display: block; margin-top: 2px; font-size: 10px; color: var(--muted); }
+.hp .qk__idkind-opt.is-on{ border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); background: #f2f8f4; }
+.hp .qk__idkind-t{ display: block; font-size: 15px; font-weight: 700; color: var(--ink); }
+.hp .qk__idkind-t sup{ font-size: 0.6em; }
+.hp .qk__idkind-s{ display: block; margin-top: 3px; font-size: 12px; color: var(--muted); }
 
-/* Read-only pre-filled field rows. */
-.hp .qk__field-pair{ display: flex; gap: 8px; }
+/* Input-look rows: the faux PayID-type select and the pre-filled number. */
+.hp .qk__select-fake{
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 13px 14px;
+  border: 1px solid var(--line-strong); border-radius: 10px; background: #fff;
+  font-size: 15.5px; color: var(--ink);
+}
+.hp .qk__select-fake svg{ color: var(--muted); flex-shrink: 0; }
+.hp .qk__input{
+  position: relative;
+  display: flex; align-items: center;
+  padding: 13px 14px; padding-right: 100px;
+  border: 1px solid var(--line-strong); border-radius: 10px; background: #fff;
+  font-size: 15.5px; font-weight: 500; color: var(--ink);
+}
+.hp .qk__vbadge{
+  position: absolute; right: 11px; top: 50%; transform: translateY(-50%);
+  display: inline-flex; align-items: center;
+  padding: 4px; border-radius: 999px;
+  background: #edf6f0; color: #4f9d72;
+  max-width: 24px; overflow: hidden;
+  transition: max-width .4s ease;
+}
+.hp .qk__vbadge.is-open{ max-width: 120px; }
+.hp .qk__vbadge svg{ flex-shrink: 0; }
+.hp .qk__vbadge-txt{
+  font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden;
+  max-width: 0; opacity: 0; margin: 0;
+  transition: max-width .4s ease, opacity .25s ease, margin .35s ease;
+}
+.hp .qk__vbadge.is-open .qk__vbadge-txt{ max-width: 100px; opacity: 1; margin: 0 5px 0 4px; }
+
+/* Read-only pre-filled field rows (BSB & account). */
+.hp .qk__field-pair{ display: flex; gap: 10px; margin-top: 2px; }
 .hp .qk__field-pair .qk__field{ flex: 1; min-width: 0; }
 .hp .qk__field{
   position: relative;
-  display: flex; flex-direction: column; gap: 2px;
-  padding: 9px 11px;
-  border: 1px solid var(--line); border-radius: 10px; background: var(--bg-soft);
+  display: flex; flex-direction: column; gap: 3px;
+  padding: 11px 13px;
+  border: 1px solid var(--line-strong); border-radius: 10px; background: #fff;
 }
-.hp .qk__field-lbl{ font-size: 9.5px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--faint, #9a9a9a); }
-.hp .qk__field-val{ font-size: 14px; font-weight: 600; color: var(--ink); }
-.hp .qk__field-ok{
-  position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
-  display: inline-flex; align-items: center; gap: 4px;
-  padding: 3px 8px; border-radius: 999px;
-  background: #edf6f0; color: #4f9d72;
-  font-size: 10px; font-weight: 600;
-}
+.hp .qk__field-lbl{ font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--faint, #9a9a9a); }
+.hp .qk__field-val{ font-size: 15.5px; font-weight: 600; color: var(--ink); }
 
 .hp .qk__total{
-  display: flex; align-items: baseline; justify-content: center; gap: 6px;
-  margin-top: auto; padding-top: 12px;
-  border-top: 1px solid var(--line);
+  display: flex; align-items: baseline; justify-content: center; gap: 7px;
+  margin-top: auto; padding-top: 14px;
 }
-.hp .qk__total-amt{ font-size: 20px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
-.hp .qk__total-to{ font-size: 12px; color: var(--muted); }
-.hp .qk__terms{ margin: 0; font-size: 10px; line-height: 1.45; color: var(--muted); text-align: center; }
+.hp .qk__total-amt{ font-size: 25px; font-weight: 800; letter-spacing: -0.01em; color: var(--ink); }
+.hp .qk__total-to{ font-size: 14.5px; color: var(--muted); }
+.hp .qk__terms{ margin: 10px 0 0; font-size: 12px; line-height: 1.5; color: var(--muted); text-align: center; }
 
-/* Six-digit code. */
+/* Pre-filled mobile row on the verify screens. */
 .hp .qk__phone-row{
-  display: flex; align-items: center; gap: 8px;
-  padding: 10px 11px; margin-top: 2px;
-  border: 1px solid var(--line); border-radius: 10px; background: var(--bg-soft);
+  display: flex; align-items: center; gap: 11px;
+  padding: 14px 15px; margin-top: 2px;
+  border: 1px solid var(--line); border-radius: 12px; background: var(--bg-2, var(--bg-soft));
   color: var(--muted);
 }
-.hp .qk__phone-num{ font-size: 14px; font-weight: 600; color: var(--ink); letter-spacing: 0.02em; }
-.hp .qk__otp{ display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin-top: 6px; }
+.hp .qk__phone-num{ flex: 1; font-size: 16.5px; font-weight: 700; color: var(--ink); letter-spacing: 0.03em; }
+.hp .qk__change{
+  background: none; border: 0; padding: 0; cursor: pointer;
+  font-family: inherit; font-size: 14px; font-weight: 600; color: var(--ink);
+  text-decoration: underline; text-underline-offset: 3px;
+}
+
+/* AU: the single wide code box that fills digit by digit. */
+.hp .qk__code{
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px 12px;
+  border: 1px solid var(--line-strong); border-radius: 13px; background: #fff;
+  font-size: 30px; font-weight: 700; color: var(--ink);
+}
+.hp .qk__code.is-filled{ border-color: var(--ink); }
+.hp .qk__code span{ width: 0.55em; margin: 0 0.14em; text-align: center; }
+.hp .qk__code .qk__code-ph{ color: var(--faint, #c2c2c2); }
+.hp .qk__code-note{
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  font-size: 12.5px; color: var(--muted);
+}
+.hp .qk__otp{ display: grid; grid-template-columns: repeat(6, 1fr); gap: 7px; margin-top: 6px; }
 .hp .qk__otp-cell{
   display: grid; place-items: center;
-  height: 42px; border-radius: 9px;
+  height: 52px; border-radius: 10px;
   border: 1px solid var(--line); background: #fff;
-  font-size: 19px; font-weight: 600; color: var(--ink);
+  font-size: 23px; font-weight: 600; color: var(--ink);
   transition: border-color .15s, background .15s;
 }
 .hp .qk__otp-cell.is-filled{ border-color: var(--ink); background: var(--bg-soft); }
-.hp .qk__otp-note{ font-size: 10.5px; color: var(--muted); text-align: center; }
+.hp .qk__otp-note{ font-size: 12.5px; color: var(--muted); text-align: center; }
 
 /* Waiting-for-authorisation screen. */
 .hp .qk__timer{
-  display: inline-flex; align-items: center; gap: 7px;
-  padding: 6px 12px; border-radius: 999px;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 15px; border-radius: 999px;
   border: 1px solid var(--line); background: var(--bg-soft);
-  font-size: 11.5px; font-weight: 500; color: var(--ink);
+  font-size: 14px; font-weight: 600; color: var(--ink);
 }
-.hp .qk__timer-dot{ width: 6px; height: 6px; border-radius: 999px; background: var(--pill-green, #10B981); }
+.hp .qk__timer-dot{ width: 8px; height: 8px; border-radius: 999px; background: var(--pill-green, #10B981); }
 .hp .qk__steps-list{
   width: 100%; margin: 0; padding: 0; list-style: none;
   text-align: left; counter-reset: qkstep;
 }
 .hp .qk__steps-list li{
-  display: flex; gap: 9px; align-items: center;
-  padding: 8px 0; font-size: 11.5px; font-weight: 500; color: var(--ink);
+  display: flex; gap: 12px; align-items: center;
+  padding: 10px 2px; font-size: 14px; font-weight: 600; color: var(--ink);
   border-bottom: 1px solid var(--line);
   counter-increment: qkstep;
 }
 .hp .qk__steps-list li:last-child{ border-bottom: 0; }
 .hp .qk__steps-list li::before{
   content: counter(qkstep);
-  flex-shrink: 0; width: 19px; height: 19px; border-radius: 999px;
+  flex-shrink: 0; width: 23px; height: 23px; border-radius: 999px;
   background: var(--ink); color: var(--bg);
-  font-size: 9.5px; font-weight: 600;
+  font-size: 11.5px; font-weight: 700;
   display: grid; place-items: center;
 }
 .hp .qk__push{
   width: 100%; text-align: left;
   background: #0e0e10; color: #fff;
-  border-radius: 13px; padding: 11px;
+  border-radius: 15px; padding: 14px;
 }
-.hp .qk__push-head{ display: flex; align-items: center; gap: 7px; margin-bottom: 7px; }
+.hp .qk__push-head{ display: flex; align-items: center; gap: 9px; margin-bottom: 9px; }
 .hp .qk__push-icon{
-  width: 20px; height: 20px; border-radius: 6px; background: #2a2a2e;
+  width: 24px; height: 24px; border-radius: 7px; background: #2a2a2e;
   display: grid; place-items: center; color: #ededed;
 }
-.hp .qk__push-app{ flex: 1; font-size: 10px; font-weight: 600; }
-.hp .qk__push-time{ font-size: 9px; color: #9a9aa0; }
-.hp .qk__push-body{ font-size: 11.5px; font-weight: 600; line-height: 1.3; }
+.hp .qk__push-app{ flex: 1; font-size: 12px; font-weight: 700; }
+.hp .qk__push-time{ font-size: 10.5px; color: #9a9aa0; }
+.hp .qk__push-body{ font-size: 13px; font-weight: 700; line-height: 1.3; }
 .hp .qk__push-foot{
-  margin-top: 7px; padding-top: 7px;
+  margin-top: 8px; padding-top: 8px;
   border-top: 1px solid rgba(255,255,255,0.1);
-  font-size: 9.5px; color: #8f8f96;
+  font-size: 11px; color: #8f8f96;
 }
-.hp .qk__waiting{ display: flex; align-items: center; gap: 9px; font-size: 12.5px; font-weight: 500; color: var(--ink); }
-.hp .qk__paying{ font-size: 15px; font-weight: 600; color: var(--ink); }
+.hp .qk__waiting{ display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 700; color: var(--ink); }
+.hp .qk__paying{ font-size: 17px; font-weight: 600; color: var(--ink); }
 
 /* Connected-account picker (US). */
 .hp .qk__accts{ display: flex; flex-direction: column; gap: 8px; }
@@ -465,18 +514,18 @@ html.nav-menu-open .nav__mobile {
 
 /* "Pay by Bank with PayTo" strip + NPP attribution on the AU Quidkey pages. */
 .hp .qk__rails{
-  display: flex; align-items: center; justify-content: center; gap: 7px;
-  padding: 7px 14px;
+  display: flex; align-items: center; justify-content: center; gap: 9px;
+  padding: 10px 16px;
   border-bottom: 1px solid var(--line);
   flex-shrink: 0;
-  font-size: 11.5px; color: var(--muted);
+  font-size: 15px; color: var(--muted);
 }
-.hp .qk__rails img{ height: 16px; width: auto; display: block; }
+.hp .qk__rails img{ height: 21px; width: auto; display: block; }
 .hp .qk__npp{
-  padding: 8px 16px 12px;
+  padding: 10px 18px 14px;
   flex-shrink: 0;
   text-align: center;
-  font-size: 8.5px; line-height: 1.5; color: var(--faint, #9a9a9a);
+  font-size: 11px; line-height: 1.5; color: var(--faint, #9a9a9a);
 }
 .hp .qk__npp strong{ color: var(--muted); font-weight: 600; }
 
@@ -486,40 +535,40 @@ html.nav-menu-open .nav__mobile {
   font-family: inherit; font-weight: 600; color: var(--ink);
   text-decoration: underline; text-underline-offset: 3px;
 }
-.hp .qk__learn{ align-self: flex-start; font-size: 11.5px; }
+.hp .qk__learn{ align-self: flex-start; margin-top: 2px; font-size: 15px; }
 .hp .qk__linkbtn{
   display: block; width: 100%;
-  margin-top: 9px;
-  font-size: 10.5px; font-weight: 500; color: var(--muted);
+  margin-top: 12px;
+  font-size: 13.5px; font-weight: 600;
   text-align: center;
 }
 .hp .qk__back{
   align-self: flex-start;
-  display: inline-flex; align-items: center; gap: 4px;
-  font-size: 10.5px; color: var(--muted);
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 14px; color: var(--ink); font-weight: 700;
   text-decoration: none;
 }
 .hp .qk__terms-link{ text-decoration: underline; text-underline-offset: 2px; }
 .hp .qk__footnote{
-  margin: 8px 0 0;
-  font-size: 9.5px; line-height: 1.45; color: var(--muted); text-align: center;
+  margin: 10px 0 0;
+  font-size: 12px; line-height: 1.5; color: var(--muted); text-align: center;
 }
 
 /* Waiting screen: the 30-minute window and the helper line. */
-.hp .qk__timer-wrap{ display: flex; flex-direction: column; align-items: center; gap: 5px; }
-.hp .qk__timer-note{ margin: 0; font-size: 11px; font-weight: 600; color: var(--ink); }
+.hp .qk__timer-wrap{ display: flex; flex-direction: column; align-items: center; gap: 7px; }
+.hp .qk__timer-note{ margin: 0; font-size: 14px; font-weight: 600; color: var(--ink); }
 .hp .qk__help{
-  font-size: 9.5px; color: var(--muted);
+  font-size: 12.5px; color: var(--muted);
   text-decoration: underline; text-underline-offset: 3px;
 }
 
 /* The bank's push notification dropping in over the waiting screen — the
    moment the handoff to the banking app starts. Anchored to .phone. */
 .hp .qk__banner{
-  position: absolute; top: 46px; left: 10px; right: 10px; z-index: 40;
-  display: flex; gap: 9px; align-items: flex-start;
-  padding: 9px 11px;
-  border-radius: 16px;
+  position: absolute; top: 52px; left: 12px; right: 12px; z-index: 40;
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 12px 14px;
+  border-radius: 20px;
   background: rgba(250,250,250,0.92);
   -webkit-backdrop-filter: blur(18px);
   backdrop-filter: blur(18px);
@@ -531,17 +580,17 @@ html.nav-menu-open .nav__mobile {
   to   { opacity: 1; transform: translateY(0); }
 }
 .hp .qk__banner-icon{
-  flex-shrink: 0; width: 30px; height: 30px; border-radius: 8px;
+  flex-shrink: 0; width: 40px; height: 40px; border-radius: 10px;
   background: #fff; border: 1px solid var(--line);
   display: grid; place-items: center; overflow: hidden;
 }
-.hp .qk__banner-icon img{ width: 20px; height: 20px; object-fit: contain; }
+.hp .qk__banner-icon img{ width: 27px; height: 27px; object-fit: contain; }
 .hp .qk__banner-body{ flex: 1; min-width: 0; display: flex; flex-direction: column; }
 .hp .qk__banner-head{ display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-.hp .qk__banner-app{ font-size: 10.5px; font-weight: 700; color: #111; }
-.hp .qk__banner-time{ font-size: 9px; color: #8a8a8f; }
-.hp .qk__banner-title{ margin-top: 1px; font-size: 10.5px; font-weight: 700; color: #111; }
-.hp .qk__banner-text{ font-size: 10px; line-height: 1.3; color: #3a3a3e; }
+.hp .qk__banner-app{ font-size: 13.5px; font-weight: 700; color: #111; }
+.hp .qk__banner-time{ font-size: 11.5px; color: #8a8a8f; }
+.hp .qk__banner-title{ margin-top: 2px; font-size: 13.5px; font-weight: 700; color: #111; }
+.hp .qk__banner-text{ font-size: 13px; line-height: 1.35; color: #3a3a3e; }
 
 /* AU checkout: the single collapsed Pay by Bank row's bank chips + PayTo mark. */
 .hp .mck__pbb-marks{ display: inline-flex; align-items: center; gap: 4px; margin-left: auto; }
@@ -576,42 +625,42 @@ html.nav-menu-open .nav__mobile {
   background: #fff;
 }
 .hp .bnk__agree-bar{
-  display: flex; align-items: center; gap: 9px;
-  padding: 12px 16px 10px;
+  display: flex; align-items: center; gap: 12px;
+  padding: 16px 20px 12px;
   flex-shrink: 0;
 }
 .hp .bnk__agree-mark{
-  width: 28px; height: 28px; border-radius: 999px;
+  width: 38px; height: 38px; border-radius: 999px;
   display: grid; place-items: center; overflow: hidden;
 }
-.hp .bnk__agree-mark img{ width: 16px; height: 16px; object-fit: contain; }
-.hp .bnk__agree-bank{ flex: 1; font-size: 14px; font-weight: 700; color: var(--ink); }
+.hp .bnk__agree-mark img{ width: 23px; height: 23px; object-fit: contain; }
+.hp .bnk__agree-bank{ flex: 1; font-size: 18px; font-weight: 800; color: var(--ink); }
 .hp .bnk__agree-avatar{
-  width: 26px; height: 26px; border-radius: 999px;
+  width: 34px; height: 34px; border-radius: 999px;
   background: var(--bg-soft); border: 1px solid var(--line);
   display: grid; place-items: center; color: var(--faint, #9a9a9a);
 }
 .hp .bnk__agree-body{
   flex: 1; min-height: 0; overflow: hidden;
   display: flex; flex-direction: column;
-  padding: 4px 16px 0;
+  padding: 8px 20px 0;
 }
 .hp .bnk__agree-h{
   margin: 0;
-  font-size: 19px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink);
+  font-size: 27px; font-weight: 800; letter-spacing: -0.02em; color: var(--ink);
 }
-.hp .bnk__agree-sub{ margin-top: 1px; font-size: 11.5px; color: var(--muted); }
-.hp .bnk__agree-sec{ margin: 10px 0 4px; font-size: 12px; font-weight: 700; color: var(--ink); }
-.hp .bnk__agree-body .bnk__payto-row{ padding: 6.5px 9px; font-size: 11px; }
-.hp .bnk__agree-due{ margin-top: 8px; font-size: 11px; font-weight: 700; color: var(--ink); }
+.hp .bnk__agree-sub{ margin-top: 3px; font-size: 15px; color: var(--muted); }
+.hp .bnk__agree-sec{ margin: 14px 0 7px; font-size: 15.5px; font-weight: 800; color: var(--ink); }
+.hp .bnk__agree-body .bnk__payto-row{ padding: 10px 12px; font-size: 14px; }
+.hp .bnk__agree-due{ margin-top: 12px; font-size: 14px; font-weight: 800; color: var(--ink); }
 .hp .bnk__agree-actions{
   flex-shrink: 0;
-  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-  padding: 12px 16px 20px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  padding: 14px 20px 24px;
 }
 .hp .bnk__agree-decline, .hp .bnk__agree-approve{
-  height: 42px; border-radius: 999px;
-  font-family: inherit; font-size: 13px; font-weight: 600;
+  height: 54px; border-radius: 999px;
+  font-family: inherit; font-size: 16px; font-weight: 700;
   cursor: pointer;
   transition: opacity .15s, transform .15s;
 }
