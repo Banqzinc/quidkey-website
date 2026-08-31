@@ -1,11 +1,14 @@
 // Per-region content for the merchant hero demo (merchant-hero-viz.tsx).
 //
-// Everything locale-dependent — the bank list, the "predicted" bank, currency
-// formatting, the bank-app accounts, and the receipt identity — lives here so
-// the demo component stays presentational and adding a new market (UK, EU…) is
-// just another entry in DEMO_LOCALES.
+// Everything market-dependent — the bank list, the "predicted" bank, currency
+// formatting, the bank-app accounts, how the payment is authorised, and the
+// shopper identity — lives here so the screens stay presentational and adding a
+// market is just another entry in DEMO_LOCALES.
 //
-// NOTE: the AU figures (price/save), the PayID, and the customer identity are
+// Who you're buying FROM is not in here: see demo-merchant.ts. The flow shape
+// per market (which Quidkey-hosted steps appear) is in demo-flows.ts.
+//
+// NOTE: the prices, saves, phone numbers and shopper identities are
 // placeholders pending real values from the team. Bank logos resolve via
 // logo.dev by domain; the components hide any logo that fails to load.
 
@@ -28,9 +31,23 @@ export type Bank = {
 export type BankAccount = {
   id: string
   name: string
+  // Shorter label for Quidkey's account picker ("Chase Checking"), where the
+  // bank name is prefixed; defaults to `name`.
+  short?: string
   sub: string
   bal: string
+  // US only — pre-ticked on the bank's consent screen, and the only accounts
+  // Quidkey's picker offers afterwards.
+  connected?: boolean
 }
+
+// How the bank app authorises the payment:
+//  - 'payto'    AU. A standing PayTo agreement is reviewed and approved; there
+//               is no account picker because the agreement names the account.
+//  - 'accounts' UK / EU. A "Pay from" radio picker; the bank sends the payment.
+//  - 'connect'  US. The bank leg only CONNECTS accounts (checkbox consent);
+//               the payment itself happens later on Quidkey's picker.
+export type AuthoriseMode = 'payto' | 'accounts' | 'connect'
 
 export type DemoLocale = {
   region: DemoRegion
@@ -40,34 +57,13 @@ export type DemoLocale = {
   // Pre-formatted so the demo never has to do currency math.
   price: string
   save: string
-  // How the bank-app screen authorises payment. Exactly one is set:
-  //  - accounts: a "Pay from" account picker (US-style).
-  //  - payId: a single PayID confirmation card, no account selection (AU/Osko).
+  authorise: AuthoriseMode
+  // Required when authorise === 'accounts'; absent for 'payto'.
   accounts?: BankAccount[]
-  payId?: string
+  // Pre-filled mobile on the Quidkey-hosted verify screens, in local format.
+  phone: string
   // Identity shown on the success receipt.
   customer: { name: string; postcode: string; email: string }
-}
-
-const US: DemoLocale = {
-  region: 'US',
-  banks: [
-    { name: 'Chase', domain: 'chase.com', brandColor: '#0A2A66' },
-    { name: 'Bank of America', domain: 'bankofamerica.com', brandColor: '#9C1B2E' },
-    { name: 'Wells Fargo', domain: 'wellsfargo.com', brandColor: '#A8181E' },
-    { name: 'Citi', domain: 'citi.com', brandColor: '#003A6E' },
-    { name: 'Capital One', domain: 'capitalone.com', brandColor: '#0E3A5F' },
-    { name: 'U.S. Bank', domain: 'usbank.com', brandColor: '#0E2A66' },
-  ],
-  currencyCode: 'USD',
-  price: '$149.00',
-  save: '$4.32',
-  accounts: [
-    { id: 'current', name: 'Current Account', sub: '••3082', bal: '$8,412.59' },
-    { id: 'savings', name: 'Savings', sub: '••7714', bal: '$24,930.10' },
-    { id: 'checking', name: 'Everyday Checking', sub: '••0461', bal: '$1,206.84' },
-  ],
-  customer: { name: 'Alex Marchetti', postcode: '02118', email: 'alex@…' },
 }
 
 const AU: DemoLocale = {
@@ -83,10 +79,80 @@ const AU: DemoLocale = {
   currencyCode: 'AUD',
   price: 'A$229.00',
   save: 'A$6.65',
-  // AU authorises via PayID (Osko) — a single confirmation, no account picker.
-  // The value is the merchant's PayID the payment resolves to.
-  payId: 'pay@northgate-goods.com.au',
+  // AU runs on PayTo: the shopper approves a standing agreement in their bank,
+  // so there is no account picker.
+  authorise: 'payto',
+  phone: '0423 771 620',
   customer: { name: 'Mia Nguyen', postcode: '2000', email: 'mia@…' },
 }
 
-export const DEMO_LOCALES: Record<DemoRegion, DemoLocale> = { US, AU }
+const UK: DemoLocale = {
+  region: 'UK',
+  banks: [
+    { name: 'Monzo', domain: 'monzo.com', brandColor: '#14233C' },
+    { name: 'Barclays', domain: 'barclays.co.uk', brandColor: '#00395D' },
+    { name: 'HSBC', domain: 'hsbc.co.uk', brandColor: '#DB0011' },
+    { name: 'Lloyds Bank', domain: 'lloydsbank.com', brandColor: '#024731' },
+    { name: 'NatWest', domain: 'natwest.com', brandColor: '#42145F' },
+    { name: 'Santander', domain: 'santander.co.uk', brandColor: '#CC0000' },
+  ],
+  currencyCode: 'GBP',
+  price: '£129.00',
+  save: '£3.74',
+  authorise: 'accounts',
+  accounts: [
+    { id: 'current', name: 'Current Account', sub: '••4417', bal: '£6,208.44' },
+    { id: 'savings', name: 'Instant Saver', sub: '••9032', bal: '£18,740.15' },
+    { id: 'joint', name: 'Joint Account', sub: '••2865', bal: '£980.27' },
+  ],
+  phone: '07700 900620',
+  customer: { name: 'Olivia Hartley', postcode: 'E1 6AN', email: 'olivia@…' },
+}
+
+const EU: DemoLocale = {
+  region: 'EU',
+  banks: [
+    { name: 'Deutsche Bank', domain: 'db.com', brandColor: '#001489' },
+    { name: 'Sparkasse', domain: 'sparkasse.de', brandColor: '#C00000' },
+    { name: 'Commerzbank', domain: 'commerzbank.de', brandColor: '#00223A' },
+    { name: 'DKB', domain: 'dkb.de', brandColor: '#00427A' },
+    { name: 'ING', domain: 'ing.de', brandColor: '#D65200' },
+    { name: 'N26', domain: 'n26.com', brandColor: '#1F6F60' },
+  ],
+  currencyCode: 'EUR',
+  price: '€139.00',
+  save: '€4.03',
+  authorise: 'accounts',
+  accounts: [
+    { id: 'giro', name: 'Girokonto', sub: '••7741', bal: '€7,315.90' },
+    { id: 'tagesgeld', name: 'Tagesgeld', sub: '••1180', bal: '€21,460.00' },
+    { id: 'gemeinschaft', name: 'Gemeinschaftskonto', sub: '••3369', bal: '€1,104.62' },
+  ],
+  phone: '+49 151 5550620',
+  customer: { name: 'Jonas Brandt', postcode: '10115', email: 'jonas@…' },
+}
+
+const US: DemoLocale = {
+  region: 'US',
+  banks: [
+    { name: 'Chase', domain: 'chase.com', brandColor: '#0A2A66' },
+    { name: 'Bank of America', domain: 'bankofamerica.com', brandColor: '#9C1B2E' },
+    { name: 'Wells Fargo', domain: 'wellsfargo.com', brandColor: '#A8181E' },
+    { name: 'Citi', domain: 'citi.com', brandColor: '#003A6E' },
+    { name: 'Capital One', domain: 'capitalone.com', brandColor: '#0E3A5F' },
+    { name: 'U.S. Bank', domain: 'usbank.com', brandColor: '#0E2A66' },
+  ],
+  currencyCode: 'USD',
+  price: '$149.00',
+  save: '$4.32',
+  authorise: 'connect',
+  accounts: [
+    { id: 'checking', name: 'Checking Account', short: 'Checking', sub: '••4821', bal: '$6,240.18', connected: true },
+    { id: 'joint', name: 'Joint Checking', sub: '••7718', bal: '$11,905.72' },
+    { id: 'savings', name: 'Savings', sub: '••0461', bal: '$18,330.44', connected: true },
+  ],
+  phone: '(415) 555-0620',
+  customer: { name: 'Alex Marchetti', postcode: '02118', email: 'alex@…' },
+}
+
+export const DEMO_LOCALES: Record<DemoRegion, DemoLocale> = { AU, UK, EU, US }

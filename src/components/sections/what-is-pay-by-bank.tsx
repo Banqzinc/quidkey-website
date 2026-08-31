@@ -3,6 +3,8 @@
 // is defined in the prototype but is NOT rendered by App(), so it's dead code
 // and intentionally not ported.
 
+import { DEMO_MERCHANT } from '@/components/homepage/demo-merchant'
+
 const LOGO_DEV_TOKEN = 'pk_DsNHFndhT3yo-85c5vdKKg'
 
 export function WhatIsPayByBank() {
@@ -129,11 +131,11 @@ export function WhatIsPayByBank() {
                 <div className="pbb__mock-rule" />
                 <div className="pbb__mock-kv">
                   <span>To</span>
-                  <span>Northgate Goods</span>
+                  <span>{DEMO_MERCHANT.name}</span>
                 </div>
                 <div className="pbb__mock-kv">
                   <span>Ref</span>
-                  <span>QK-NG-8842</span>
+                  <span>{DEMO_MERCHANT.reference}</span>
                 </div>
               </div>
             </div>
