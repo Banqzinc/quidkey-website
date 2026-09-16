@@ -177,50 +177,31 @@
   margin: 8px 4px 0;
 }
 
-/* Providers: one panel, three columns split by rules */
-.hp .fxc-prov__panel {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+/* Providers: the homepage "Why Quidkey" badge grid (why__grid--four) */
+.hp .fxc-prov__grid {
   margin-top: 40px;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: var(--bg);
-  overflow: hidden;
 }
-.hp .fxc-prov__col {
-  display: flex;
-  flex-direction: column;
-  padding: clamp(26px, 3vw, 40px) clamp(24px, 2.6vw, 36px);
+/* Solid ink marks, 32px tall, width from each mark's own shape. The shared
+   badge rule forces a 38px square and a 1.5 stroke, so both are reset here. */
+.hp .fxc-prov .why__cardx-icon {
+  color: var(--ink);
 }
-.hp .fxc-prov__col + .fxc-prov__col {
-  border-left: 1px solid var(--line);
+.hp .fxc-prov .why__cardx-icon .fxc-prov__mark {
+  display: block;
+  width: auto;
+  height: 32px;
+  stroke-width: 2.6;
 }
-.hp .fxc-prov__name {
-  font-size: 22px;
+.hp .fxc-prov__talk {
+  color: inherit;
   font-weight: 600;
-  letter-spacing: -0.015em;
-  margin: 0 0 6px;
-}
-.hp .fxc-prov__lead {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--ink-soft);
-  margin: 0 0 12px;
-}
-.hp .fxc-prov__body {
-  font-size: 15.5px;
-  line-height: 1.55;
-  color: var(--muted);
-  margin: 0 0 28px;
-}
-.hp .fxc-prov__cta {
-  margin-top: auto;
-  align-self: flex-start;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 /* The shared large ink button trims its right padding for an arrow box. Ours
-   have no arrow, so give them the same padding as the ghost buttons. */
-.hp .fxc-prov__cta.btn--ink,
-.hp .fxc-calc__cta.btn--ink {
+   has no arrow, so give it the same padding as the ghost buttons. */
+.hp .fxc-calc__cta.btn--ink,
+.hp .fxc-how__btn.btn--ink {
   padding-right: 20px;
 }
 
@@ -257,19 +238,24 @@
   color: var(--muted);
   margin: 0;
 }
+.hp .fxc-how__cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 18px;
+  margin-top: 32px;
+}
+.hp .fxc-how__cta-note {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
 
 /* Responsive */
 @media (max-width: 899px) {
   .hp .fxc-calc {
     max-width: none;
     justify-self: stretch;
-  }
-  .hp .fxc-prov__panel {
-    grid-template-columns: 1fr;
-  }
-  .hp .fxc-prov__col + .fxc-prov__col {
-    border-left: 0;
-    border-top: 1px solid var(--line);
   }
   .hp .fxc-how__grid {
     grid-template-columns: 1fr;

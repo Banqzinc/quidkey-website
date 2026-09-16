@@ -14,7 +14,7 @@ declare global {
 
 export type CtaLabel = 'get_started' | 'sign_in' | 'demo' | 'docs' | 'developers' | 'contact' | 'anchor'
 export type CtaLocation = 'nav' | 'hero' | 'closer' | 'pricing' | 'footer'
-export type FxCheckCtaLocation = 'hero' | 'providers' | 'closer'
+export type FxCheckCtaLocation = 'hero' | 'providers' | 'how_it_works' | 'closer'
 export type FxCheckCtaTarget = 'connect_stripe' | 'talk_to_us'
 export type FlowKind = 'merchant' | 'fintech'
 export type ToggleSource = 'nav' | 'hero'

@@ -1,6 +1,12 @@
 // The promises here (we only read, login stays yours, nothing changes, gone in
 // 48 hours) mirror the consent copy the merchant sees inside the check itself
 // (stripe-connect-consent.tsx in the monorepo console app). Keep them in step.
+//
+// The button sits under the steps, not inside step 01: the reader has just
+// had the trust questions answered, and the closer is a whole FAQ away.
+
+import { track } from '@/lib/track'
+import { FX_CHECK_URL } from '@/lib/urls'
 
 type Step = {
   n: string
@@ -45,6 +51,18 @@ export function FxCheckHowItWorks() {
               <p className="fxc-how__b">{step.body}</p>
             </div>
           ))}
+        </div>
+        <div className="fxc-how__cta">
+          <a
+            href={FX_CHECK_URL}
+            className="btn btn--lg btn--ink fxc-how__btn"
+            onClick={() =>
+              track({ name: 'fx_check_cta_click', location: 'how_it_works', target: 'connect_stripe' })
+            }
+          >
+            Connect Stripe
+          </a>
+          <p className="fxc-how__cta-note">Disconnect any time.</p>
         </div>
       </div>
     </section>
