@@ -1,6 +1,7 @@
 /** External CTA URLs - merchants portal, signup, demo playground, docs */
 export const MERCHANTS_LOGIN_URL = 'https://console.quidkey.com'
 export const MERCHANTS_SIGNUP_URL = 'https://console.quidkey.com/signup'
+export const FX_CHECK_URL = 'https://console.quidkey.com/fx-check'
 export const DEMO_PLAYGROUND_URL = 'https://playground.quidkey.com/'
 export const DOCS_URL = 'https://docs.quidkey.com/'
 /** Sales / book-a-demo scheduling page (Cal.com). Opens in a new tab. */

@@ -1,0 +1,263 @@
+/* /fx-check page-specific styles. Loaded after the shared homepage bundle
+   (base/headings/refresh) so these rules win at equal specificity. Same trick
+   as calculator.css. Everything is namespaced fxc- and reuses the homepage
+   design tokens (--ink, --muted, --line, ...). */
+
+/* Hero: homepage-style split, copy left and the calculator card right */
+.hp .fxc-hero .hero__title {
+  font-size: clamp(36px, min(4.2vw, 6.6vh), 62px);
+}
+/* Keep "Save money on FX." on its own line on desktop; phones wrap naturally. */
+.hp .fxc-hero .hero__title em {
+  white-space: nowrap;
+}
+@media (max-width: 899px) {
+  .hp .fxc-hero__break {
+    display: none;
+  }
+  .hp .fxc-hero .hero__title em {
+    white-space: normal;
+  }
+}
+.hp .fxc-hero .hero__sub {
+  max-width: 34ch;
+}
+.hp .fxc-hero .hero__proof {
+  grid-template-columns: 1fr;
+  margin: 4px 0 0;
+}
+.hp .fxc-hero .hero__proof-item {
+  white-space: normal;
+}
+
+/* Calculator card */
+.hp .fxc-calc {
+  /* Same emerald family as the calculators' --green (#10b981), darkened so it
+     passes contrast on this white card. */
+  --fxc-gain: #047857;
+  width: 100%;
+  max-width: 520px;
+  justify-self: end;
+}
+.hp .fxc-calc__card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--bg);
+  box-shadow: var(--shadow-lg);
+  padding: clamp(22px, 2.4vw, 32px);
+}
+.hp .fxc-calc__h {
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin: 0 0 18px;
+}
+.hp .fxc-calc__label {
+  display: block;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+}
+.hp .fxc-calc__input {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  background: var(--bg);
+  padding: 0 14px;
+}
+.hp .fxc-calc__input:focus-within {
+  border-color: var(--ink);
+}
+.hp .fxc-calc__prefix {
+  color: var(--faint);
+  font-size: 18px;
+  margin-right: 6px;
+}
+.hp .fxc-calc__input input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  padding: 12px 0;
+  color: var(--ink);
+}
+.hp .fxc-calc__presets {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.hp .fxc-calc__preset {
+  font: inherit;
+  font-size: 13px;
+  padding: 6px 13px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--muted);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.hp .fxc-calc__preset:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+/* The global focus ring is Tailwind's indigo, off-palette inside .hp. */
+.hp .fxc-calc__preset:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+.hp .fxc-calc__preset.is-on {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--bg);
+}
+.hp .fxc-calc__delta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 22px;
+  padding: 18px 0 18px;
+  border-top: 1px solid var(--line);
+}
+.hp .fxc-calc__delta-lbl {
+  font-size: 14px;
+  color: var(--muted);
+}
+.hp .fxc-calc__delta-val {
+  font-size: clamp(34px, 3.4vw, 44px);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  font-variant-numeric: tabular-nums;
+  color: var(--fxc-gain);
+}
+.hp .fxc-calc__delta-per {
+  font-size: 0.45em;
+  font-weight: 500;
+  color: var(--muted);
+  margin-left: 4px;
+}
+.hp .fxc-calc__delta-sub {
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--fxc-gain);
+}
+.hp .fxc-calc__cta {
+  width: 100%;
+  justify-content: center;
+}
+.hp .fxc-calc__more {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink);
+  margin: 14px 4px 0;
+}
+.hp .fxc-calc__more a {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--line-strong);
+}
+.hp .fxc-calc__more a:hover {
+  text-decoration-color: var(--ink);
+}
+.hp .fxc-calc__disclaimer {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--faint);
+  margin: 8px 4px 0;
+}
+
+/* Providers: the homepage "Why Quidkey" badge grid (why__grid--four) */
+.hp .fxc-prov__grid {
+  margin-top: 40px;
+}
+/* Solid ink marks, 32px tall, width from each mark's own shape. The shared
+   badge rule forces a 38px square and a 1.5 stroke, so both are reset here. */
+.hp .fxc-prov .why__cardx-icon {
+  color: var(--ink);
+}
+.hp .fxc-prov .why__cardx-icon .fxc-prov__mark {
+  display: block;
+  width: auto;
+  height: 32px;
+  stroke-width: 2.6;
+}
+.hp .fxc-prov__talk {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+/* The shared large ink button trims its right padding for an arrow box. Ours
+   has no arrow, so give it the same padding as the ghost buttons. */
+.hp .fxc-calc__cta.btn--ink,
+.hp .fxc-how__btn.btn--ink {
+  padding-right: 20px;
+}
+
+/* How connecting works (a real sequence, so numbered) */
+.hp .fxc-how__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(24px, 3vw, 44px);
+  margin-top: 40px;
+}
+.hp .fxc-how__card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--bg);
+  padding: 28px 26px;
+}
+.hp .fxc-how__n {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--faint);
+  margin-bottom: 18px;
+}
+.hp .fxc-how__t {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 10px;
+}
+.hp .fxc-how__b {
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: var(--muted);
+  margin: 0;
+}
+.hp .fxc-how__cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 18px;
+  margin-top: 32px;
+}
+.hp .fxc-how__cta-note {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* Responsive */
+@media (max-width: 899px) {
+  .hp .fxc-calc {
+    max-width: none;
+    justify-self: stretch;
+  }
+  .hp .fxc-how__grid {
+    grid-template-columns: 1fr;
+  }
+}

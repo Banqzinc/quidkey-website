@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { track } from '@/lib/track'
 
-type FaqItem = { q: string; a: string }
+export type FaqItem = { q: string; a: string }
 
 const FAQS: FaqItem[] = [
   {
@@ -66,14 +66,21 @@ const CloseIcon = (
   </svg>
 )
 
-export function Faq() {
-  const items = FAQS
+export function Faq({
+  items = FAQS,
+  heading = 'Questions, answered.',
+  onOpen = (question) => track({ name: 'homepage_faq_open', question }),
+}: {
+  items?: FaqItem[]
+  heading?: string
+  onOpen?: (question: string) => void
+} = {}) {
   const [open, setOpen] = useState<number>(0)
 
   const toggle = (index: number) => {
     const closing = open === index
     if (!closing) {
-      track({ name: 'homepage_faq_open', question: items[index]?.q ?? '' })
+      onOpen(items[index]?.q ?? '')
     }
     setOpen(closing ? -1 : index)
   }
@@ -85,7 +92,7 @@ export function Faq() {
           <span className="section__eyebrow-dot" />
           FAQ
         </div>
-        <h2 className="section__h">Questions, answered.</h2>
+        <h2 className="section__h">{heading}</h2>
         <div className="faq__list">
           {items.map((item, i) => (
             <div key={item.q} className={`faq__item ${open === i ? 'faq__item--open' : ''}`}>
