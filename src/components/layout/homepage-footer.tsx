@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router'
-import { type FormEvent, useState } from 'react'
 
+import { NewsletterForm } from '@/components/layout/newsletter-form'
 import { openCookiebotPreferences } from '@/lib/cookiebot'
 import { track } from '@/lib/track'
 import { DOCS_URL } from '@/lib/urls'
@@ -53,24 +53,6 @@ function FooterColumn({ heading, links }: { heading: string; links: FooterLink[]
 }
 
 export function HomepageFooter() {
-  const [newsletterSent, setNewsletterSent] = useState(false)
-
-  const handleNewsletterSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const form = event.currentTarget
-    const input = form.querySelector('input') as HTMLInputElement | null
-    const email = input?.value.trim()
-    if (!email) {
-      track({ name: 'homepage_newsletter_submit', outcome: 'error', reason: 'empty' })
-      return
-    }
-    // Newsletter is a visual stub for now — wired (Mailchimp/Netlify form) before merge.
-    form.classList.add('is-sent')
-    if (input) input.value = ''
-    setNewsletterSent(true)
-    track({ name: 'homepage_newsletter_submit', outcome: 'success' })
-  }
-
   const trackOutbound = (href: string, label: string) => () => {
     track({ name: 'homepage_outbound_click', href, label })
   }
@@ -168,43 +150,7 @@ export function HomepageFooter() {
             <p className="ft__tag">
               Pay by Bank checkout and programmable treasury, on one ledger.
             </p>
-            <form
-              className={`ft__news${newsletterSent ? ' is-sent' : ''}`}
-              onSubmit={handleNewsletterSubmit}
-              noValidate
-            >
-              <label className="ft__news-lbl" htmlFor="ft-news-email">
-                Get product updates
-              </label>
-              <div className="ft__news-row">
-                <input
-                  id="ft-news-email"
-                  className="ft__news-input"
-                  type="email"
-                  required
-                  placeholder="you@company.com"
-                  autoComplete="email"
-                />
-                <button type="submit" className="ft__news-btn" aria-label="Subscribe">
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M5 12h14" />
-                    <path d="M13 5l7 7-7 7" />
-                  </svg>
-                </button>
-              </div>
-              <span className="ft__news-hint">Only product updates. No spam.</span>
-              <span className="ft__news-ok">Thanks, you're on the list.</span>
-            </form>
+            <NewsletterForm />
           </div>
           <div className="ft__cols">
             <FooterColumn heading="Products" links={productLinks} />

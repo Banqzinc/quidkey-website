@@ -1,5 +1,10 @@
 # Copy to .dev.vars for local development (git-ignored).
-# Both values come from the HubSpot form's embed code and are not secrets.
+# The HubSpot values come from each form's embed code and are not secrets.
 HUBSPOT_PORTAL_ID=
 HUBSPOT_FORM_GUID=
 HUBSPOT_CONTACT_FORM_GUID=
+# Mailchimp: the API key (Account > Extras > API keys) is a secret; in
+# production it is set with `wrangler secret put MAILCHIMP_API_KEY`. The
+# audience id is under Audience > Settings > Audience name and defaults.
+MAILCHIMP_API_KEY=
+MAILCHIMP_AUDIENCE_ID=

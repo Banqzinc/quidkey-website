@@ -4138,7 +4138,7 @@
 @media (min-width: 900px) { .hp .ft__top{ grid-template-columns: 1.2fr 2fr; } }
 .hp .ft__brand-logo{ height: 32px; width: auto; display: block; margin-bottom: 16px; filter: invert(1) brightness(2); }
 .hp .ft__tag{ color: rgba(255,255,255,0.55); font-size: 14px; max-width: 280px; line-height: 1.5; }
-.hp .ft__news{ margin-top: 22px; max-width: 320px; }
+.hp .ft__news{ position: relative; margin-top: 22px; max-width: 320px; }
 .hp .ft__news-lbl{ display: block; font-size: 12px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: #fff; margin-bottom: 8px; }
 .hp .ft__news-row{ display: flex; gap: 6px; align-items: stretch; }
 .hp .ft__news-input{
@@ -4172,10 +4172,13 @@
   transition: background 140ms ease, transform 140ms ease;
 }
 .hp .ft__news-btn:hover{ background: rgba(255,255,255,0.88); transform: translateX(1px); }
-.hp .ft__news-ok{ display: none; margin-top: 8px; font-size: 13px; color: oklch(0.78 0.14 150); }
+.hp .ft__news-ok{ display: block; margin-top: 8px; font-size: 13px; color: oklch(0.78 0.14 150); }
+.hp .ft__news-err{ display: block; margin-top: 8px; font-size: 13px; color: oklch(0.8 0.12 25); }
 .hp .ft__news-hint{ display: block; margin-top: 10px; font-size: 12px; color: rgba(255,255,255,0.45); letter-spacing: 0.005em; }
-.hp .ft__news.is-sent .ft__news-hint{ display: none; }
-.hp .ft__news.is-sent .ft__news-ok{ display: block; }
+.hp .ft__news.is-error .ft__news-input{ border-color: oklch(0.7 0.15 25); }
+.hp .ft__news-input:disabled{ opacity: 0.6; cursor: default; }
+/* Honeypot: off-screen, not display:none, so bots still fill it. */
+.hp .ft__news-hp{ position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .hp .ft__cols{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
 @media (min-width: 700px) { .hp .ft__cols{ grid-template-columns: repeat(4, 1fr); } }
 .hp .ft__col h4{ font-size: 12px; color: rgba(255,255,255,0.45); margin: 0 0 14px; font-weight: 500; }

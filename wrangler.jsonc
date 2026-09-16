@@ -26,10 +26,16 @@
   // src/lib/submit-contact.ts.
   // The portal is EU-hosted, so submissions go to api-eu1.hsforms.com; the code
   // defaults to that host and HUBSPOT_FORMS_HOST only exists to override it.
+  // MAILCHIMP_AUDIENCE_ID: the audience (list) the footer newsletter form
+  //   subscribes to; see src/lib/subscribe-newsletter.ts. Not a secret (it is
+  //   in every Mailchimp embed form). The API key IS a secret and lives in
+  //   `wrangler secret put MAILCHIMP_API_KEY`. If either is missing the form
+  //   fails closed and asks the visitor to try again later.
   "vars": {
     "HUBSPOT_PORTAL_ID": "145375174",
     "HUBSPOT_FORM_GUID": "e8103289-bf6f-4fdc-8e0b-3067f33bb298",
-    "HUBSPOT_CONTACT_FORM_GUID": "a708aac4-87da-4568-9c4b-d528efed202e"
+    "HUBSPOT_CONTACT_FORM_GUID": "a708aac4-87da-4568-9c4b-d528efed202e",
+    "MAILCHIMP_AUDIENCE_ID": "65ab5af61e"
   },
   // Static assets (the client build) are wired automatically to dist/client by
   // @cloudflare/vite-plugin — no explicit "assets" block needed.
