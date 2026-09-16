@@ -4,12 +4,7 @@ import { useContactLink } from '@/context/contact'
 import { track } from '@/lib/track'
 import { FX_CHECK_URL } from '@/lib/urls'
 
-import {
-  CURRENT_FEE_PERCENT,
-  estimateFxSavings,
-  QUIDKEY_FEE_PERCENT,
-  TALK_TO_US_FROM,
-} from './fx-savings'
+import { estimateFxSavings, SAVING_PERCENT, TALK_TO_US_FROM } from './fx-savings'
 import { compact, money } from './money'
 
 const PRESETS = [100_000, 250_000, 1_000_000]
@@ -66,7 +61,7 @@ export function FxCheckCalculatorCard() {
             {money(yearlySaving)} a year in lower conversion fees
           </span>
           <span className="fxc-calc__delta-note">
-            Assumes conversion fees fall from {CURRENT_FEE_PERCENT}% to {QUIDKEY_FEE_PERCENT}%.
+            Assumes Quidkey saves you {SAVING_PERCENT}% of the money you convert.
           </span>
         </div>
         <a

@@ -1,11 +1,12 @@
-import { CURRENT_FEE_PERCENT, QUIDKEY_FEE_PERCENT, savingOn } from './fx-savings'
+import { CURRENT_FEE_PERCENT, SAVING_PERCENT, savingOn } from './fx-savings'
 import { money } from './money'
 
 // A worked example of the result the check produces, so a visitor knows what
-// they get in exchange for connecting Stripe. It shows only the fields the
-// real results view shows (fx-savings-panel.tsx in the monorepo console app):
-// converted volume, the Stripe fee, the Quidkey fee and the estimated saving,
-// over the same 90-day window. Keep the two in step.
+// they get in exchange for connecting Stripe. It follows the real results view
+// (fx-savings-panel.tsx in the monorepo console app): converted volume, the
+// Stripe fee and the estimated saving over the same 90-day window. Where the
+// report shows Quidkey's fee, this shows the saving instead, because merchants
+// are on different deals and one fee figure would be wrong for many of them.
 const WINDOW_DAYS = 90
 // Three months at the calculator's default $250k a month.
 const CONVERTED_VOLUME = 750_000
@@ -14,7 +15,7 @@ export function FxCheckSampleResult() {
   const rows: [string, string][] = [
     ['Currency converted', money(CONVERTED_VOLUME)],
     ['Stripe conversion fee', `${CURRENT_FEE_PERCENT}%`],
-    ['Quidkey conversion fee', `${QUIDKEY_FEE_PERCENT}%`],
+    ['Quidkey conversion saving', `${SAVING_PERCENT}%`],
   ]
 
   return (

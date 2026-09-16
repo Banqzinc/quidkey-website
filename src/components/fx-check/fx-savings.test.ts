@@ -6,7 +6,6 @@ import { describe, expect, it } from 'vitest'
 import {
   CURRENT_FEE_PERCENT,
   estimateFxSavings,
-  QUIDKEY_FEE_PERCENT,
   SAVING_PERCENT,
   savingOn,
   TALK_TO_US_FROM,
@@ -18,10 +17,8 @@ describe('estimateFxSavings', () => {
     expect(TALK_TO_US_FROM).toBe(1_000_000)
   })
 
-  it('states the assumption as conversion fees falling from 2% to 1.5%', () => {
+  it('quotes the Stripe and Shopify rate at 2%', () => {
     expect(CURRENT_FEE_PERCENT).toBe(2)
-    expect(QUIDKEY_FEE_PERCENT).toBe(1.5)
-    expect(CURRENT_FEE_PERCENT - QUIDKEY_FEE_PERCENT).toBe(SAVING_PERCENT)
   })
 
   it('prices the 90-day sample result off the same rate', () => {
