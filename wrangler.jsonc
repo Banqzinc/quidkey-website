@@ -35,7 +35,7 @@
     "HUBSPOT_PORTAL_ID": "145375174",
     "HUBSPOT_FORM_GUID": "e8103289-bf6f-4fdc-8e0b-3067f33bb298",
     "HUBSPOT_CONTACT_FORM_GUID": "a708aac4-87da-4568-9c4b-d528efed202e",
-    "MAILCHIMP_AUDIENCE_ID": ""
+    "MAILCHIMP_AUDIENCE_ID": "65ab5af61e"
   },
   // Static assets (the client build) are wired automatically to dist/client by
   // @cloudflare/vite-plugin — no explicit "assets" block needed.
