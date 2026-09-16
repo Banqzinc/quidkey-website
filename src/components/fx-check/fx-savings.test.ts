@@ -3,12 +3,29 @@ import { join } from 'node:path'
 
 import { describe, expect, it } from 'vitest'
 
-import { estimateFxSavings, SAVING_PERCENT, TALK_TO_US_FROM } from './fx-savings'
+import {
+  CURRENT_FEE_PERCENT,
+  estimateFxSavings,
+  QUIDKEY_FEE_PERCENT,
+  SAVING_PERCENT,
+  savingOn,
+  TALK_TO_US_FROM,
+} from './fx-savings'
 
 describe('estimateFxSavings', () => {
   it('uses a flat 0.5% saving and invites a conversation from $1m a month', () => {
     expect(SAVING_PERCENT).toBe(0.5)
     expect(TALK_TO_US_FROM).toBe(1_000_000)
+  })
+
+  it('states the assumption as conversion fees falling from 2% to 1.5%', () => {
+    expect(CURRENT_FEE_PERCENT).toBe(2)
+    expect(QUIDKEY_FEE_PERCENT).toBe(1.5)
+    expect(CURRENT_FEE_PERCENT - QUIDKEY_FEE_PERCENT).toBe(SAVING_PERCENT)
+  })
+
+  it('prices the 90-day sample result off the same rate', () => {
+    expect(savingOn(750_000)).toBe(3750) // 750000 * 0.5%
   })
 
   it('matches the hand-computed $250k default', () => {

@@ -6,6 +6,7 @@ import { FX_CHECK_FAQS } from '@/components/fx-check/faq-items'
 import { FxCheckHero } from '@/components/fx-check/hero'
 import { FxCheckHowItWorks } from '@/components/fx-check/how-it-works'
 import { FxCheckProviders } from '@/components/fx-check/providers'
+import { FxCheckSampleResult } from '@/components/fx-check/sample-result'
 import { HomepageFooter } from '@/components/layout/homepage-footer'
 import { HomepageNav } from '@/components/layout/homepage-nav'
 import { Faq } from '@/components/sections/faq'
@@ -62,6 +63,7 @@ function FxCheckPage() {
         <HomepageNav />
         <main id="main">
           <FxCheckHero />
+          <FxCheckSampleResult />
           <FxCheckProviders />
           <FxCheckHowItWorks />
           <Faq

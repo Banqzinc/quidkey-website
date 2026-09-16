@@ -43,8 +43,7 @@ export function FxCheckHero() {
               <li className="hero__proof-item">
                 {ProofCheck}
                 <span>
-                  <strong>Nothing to move.</strong> Your accounts, checkout and integrations stay as
-                  they are
+                  <strong>Keep</strong> your existing checkout and integrations
                 </span>
               </li>
               <li className="hero__proof-item">
