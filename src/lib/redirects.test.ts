@@ -14,7 +14,6 @@ describe('normalizePath', () => {
 describe('resolveRedirect', () => {
   it('redirects retired pages to the homepage / its sections', () => {
     expect(resolveRedirect('/about')).toBe('/')
-    expect(resolveRedirect('/contact')).toBe('/')
     expect(resolveRedirect('/pricing')).toBe('/#pricing')
     expect(resolveRedirect('/workflows')).toBe('/#treasury')
     expect(resolveRedirect('/products/shopify')).toBe('/#integrations')
@@ -22,6 +21,11 @@ describe('resolveRedirect', () => {
     expect(resolveRedirect('/partners')).toBe('/fintechs')
     expect(resolveRedirect('/solutions/fintechs')).toBe('/fintechs')
     expect(resolveRedirect('/solutions/saas')).toBe('/')
+  })
+
+  it('leaves /contact alone now that it is a live page again', () => {
+    expect(resolveRedirect('/contact')).toBeNull()
+    expect(resolveRedirect('/contact/')).toBeNull()
   })
 
   it('is trailing-slash insensitive', () => {

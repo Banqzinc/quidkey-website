@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react'
 
+import { useContactLink } from '@/context/contact'
 import { track } from '@/lib/track'
-import { buildMailto } from '@/lib/urls'
 
 // Same badge treatment as the homepage "Why Quidkey" grid (icon, short title,
 // one line), so the page reads as part of the site. No per-item CTAs: the hero
@@ -81,6 +81,8 @@ const PROVIDERS: Provider[] = [
 ]
 
 export function FxCheckProviders() {
+  const talk = useContactLink('fx_provider', 'fx_providers')
+
   return (
     <section className="section fxc-prov">
       <div className="container">
@@ -89,11 +91,12 @@ export function FxCheckProviders() {
           You keep your own accounts, setup and integrations. Quidkey only handles the conversion.
           Stripe connects in minutes. For everything else,{' '}
           <a
-            href={buildMailto('FX savings for my business')}
+            href={talk.href}
             className="fxc-prov__talk"
-            onClick={() =>
+            onClick={(event) => {
               track({ name: 'fx_check_cta_click', location: 'providers', target: 'talk_to_us' })
-            }
+              talk.onClick(event)
+            }}
           >
             talk to us
           </a>{' '}

@@ -11,15 +11,22 @@
   "compatibility_flags": ["nodejs_compat"],
   "observability": { "enabled": true },
 
-  // HubSpot Forms API target for the surcharge calculator's lead gate. Neither
-  // value is a secret (both are public in any HubSpot embed snippet), so they
-  // live here rather than in `wrangler secret`. The gate reports an error and
-  // stays locked until HUBSPOT_FORM_GUID is filled in.
+  // HubSpot Forms API targets. None of these values is a secret (they are all
+  // public in any HubSpot embed snippet), so they live here rather than in
+  // `wrangler secret`.
+  // HUBSPOT_FORM_GUID: the surcharge calculator's lead gate. The gate reports
+  //   an error and stays locked until it is filled in.
+  // HUBSPOT_CONTACT_FORM_GUID: the "Talk to us" dialog and /contact. Until it
+  //   is filled in the form reports an error and shows the support email as
+  //   the fallback. The HubSpot form must carry exactly these fields:
+  //   firstname, email, company, message, and a hidden custom single-line
+  //   text contact property `contact_topic`.
   // The portal is EU-hosted, so submissions go to api-eu1.hsforms.com; the code
   // defaults to that host and HUBSPOT_FORMS_HOST only exists to override it.
   "vars": {
     "HUBSPOT_PORTAL_ID": "145375174",
-    "HUBSPOT_FORM_GUID": ""
+    "HUBSPOT_FORM_GUID": "",
+    "HUBSPOT_CONTACT_FORM_GUID": ""
   },
   // Static assets (the client build) are wired automatically to dist/client by
   // @cloudflare/vite-plugin — no explicit "assets" block needed.

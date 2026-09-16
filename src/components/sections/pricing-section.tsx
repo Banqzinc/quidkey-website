@@ -6,8 +6,8 @@
 
 import { useState, type ReactNode } from 'react'
 
+import { useContactLink } from '@/context/contact'
 import { track } from '@/lib/track'
-import { CONTACT_EMAIL } from '@/lib/urls'
 
 type Currency = {
   code: 'USD' | 'EUR' | 'GBP' | 'AUD'
@@ -97,6 +97,7 @@ export function PricingSection() {
   const trackHighVolume = () => {
     track({ name: 'homepage_pricing_cta_click', tier: 'high_volume', audience: 'merchants' })
   }
+  const highVolume = useContactLink('pricing_high_volume', 'pricing')
 
   return (
     <section id="pricing" className="section section--soft section--pricing-fit">
@@ -134,7 +135,14 @@ export function PricingSection() {
           ))}
         </div>
 
-        <a className="pricing__highvol" href={`mailto:${CONTACT_EMAIL}?subject=High%20volume%20pricing`} onClick={trackHighVolume}>
+        <a
+          className="pricing__highvol"
+          href={highVolume.href}
+          onClick={(event) => {
+            trackHighVolume()
+            highVolume.onClick(event)
+          }}
+        >
           <div className="pricing__highvol-icon" aria-hidden="true">
             <svg
               viewBox="0 0 24 24"

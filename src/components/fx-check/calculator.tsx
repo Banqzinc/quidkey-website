@@ -1,7 +1,8 @@
 import { useState } from 'react'
 
+import { useContactLink } from '@/context/contact'
 import { track } from '@/lib/track'
-import { buildMailto, FX_CHECK_URL } from '@/lib/urls'
+import { FX_CHECK_URL } from '@/lib/urls'
 
 import { estimateFxSavings, SAVING_PERCENT, TALK_TO_US_FROM } from './fx-savings'
 
@@ -19,6 +20,7 @@ const compact = (n: number) => (n >= 1_000_000 ? `$${n / 1_000_000}m` : `$${n / 
 export function FxCheckCalculatorCard() {
   const [volume, setVolume] = useState(DEFAULT_VOLUME)
   const { monthlySaving, yearlySaving } = estimateFxSavings(volume)
+  const talk = useContactLink('fx_high_volume', 'fx_hero')
 
   return (
     <div className="fxc-calc">
@@ -76,10 +78,11 @@ export function FxCheckCalculatorCard() {
       <p className="fxc-calc__more">
         Converting more than {compact(TALK_TO_US_FROM)} a month?{' '}
         <a
-          href={buildMailto('FX savings for a high-volume business')}
-          onClick={() =>
+          href={talk.href}
+          onClick={(event) => {
             track({ name: 'fx_check_cta_click', location: 'hero', target: 'talk_to_us' })
-          }
+            talk.onClick(event)
+          }}
         >
           Talk to us
         </a>
