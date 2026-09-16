@@ -10,7 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SurchargeCalculatorRouteImport } from './routes/surcharge-calculator'
-import { Route as StripeFxCheckRouteImport } from './routes/stripe-fx-check'
+import { Route as FxCheckRouteImport } from './routes/fx-check'
 import { Route as FintechsRouteImport } from './routes/fintechs'
 import { Route as CalculatorRouteImport } from './routes/calculator'
 import { Route as IndexRouteImport } from './routes/index'
@@ -22,9 +22,9 @@ const SurchargeCalculatorRoute = SurchargeCalculatorRouteImport.update({
   path: '/surcharge-calculator',
   getParentRoute: () => rootRouteImport,
 } as any)
-const StripeFxCheckRoute = StripeFxCheckRouteImport.update({
-  id: '/stripe-fx-check',
-  path: '/stripe-fx-check',
+const FxCheckRoute = FxCheckRouteImport.update({
+  id: '/fx-check',
+  path: '/fx-check',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FintechsRoute = FintechsRouteImport.update({
@@ -57,7 +57,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/calculator': typeof CalculatorRoute
   '/fintechs': typeof FintechsRoute
-  '/stripe-fx-check': typeof StripeFxCheckRoute
+  '/fx-check': typeof FxCheckRoute
   '/surcharge-calculator': typeof SurchargeCalculatorRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
@@ -66,7 +66,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/calculator': typeof CalculatorRoute
   '/fintechs': typeof FintechsRoute
-  '/stripe-fx-check': typeof StripeFxCheckRoute
+  '/fx-check': typeof FxCheckRoute
   '/surcharge-calculator': typeof SurchargeCalculatorRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog': typeof BlogIndexRoute
@@ -76,7 +76,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/calculator': typeof CalculatorRoute
   '/fintechs': typeof FintechsRoute
-  '/stripe-fx-check': typeof StripeFxCheckRoute
+  '/fx-check': typeof FxCheckRoute
   '/surcharge-calculator': typeof SurchargeCalculatorRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
@@ -87,7 +87,7 @@ export interface FileRouteTypes {
     | '/'
     | '/calculator'
     | '/fintechs'
-    | '/stripe-fx-check'
+    | '/fx-check'
     | '/surcharge-calculator'
     | '/blog/$slug'
     | '/blog/'
@@ -96,7 +96,7 @@ export interface FileRouteTypes {
     | '/'
     | '/calculator'
     | '/fintechs'
-    | '/stripe-fx-check'
+    | '/fx-check'
     | '/surcharge-calculator'
     | '/blog/$slug'
     | '/blog'
@@ -105,7 +105,7 @@ export interface FileRouteTypes {
     | '/'
     | '/calculator'
     | '/fintechs'
-    | '/stripe-fx-check'
+    | '/fx-check'
     | '/surcharge-calculator'
     | '/blog/$slug'
     | '/blog/'
@@ -115,7 +115,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CalculatorRoute: typeof CalculatorRoute
   FintechsRoute: typeof FintechsRoute
-  StripeFxCheckRoute: typeof StripeFxCheckRoute
+  FxCheckRoute: typeof FxCheckRoute
   SurchargeCalculatorRoute: typeof SurchargeCalculatorRoute
   BlogSlugRoute: typeof BlogSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
@@ -130,11 +130,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SurchargeCalculatorRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/stripe-fx-check': {
-      id: '/stripe-fx-check'
-      path: '/stripe-fx-check'
-      fullPath: '/stripe-fx-check'
-      preLoaderRoute: typeof StripeFxCheckRouteImport
+    '/fx-check': {
+      id: '/fx-check'
+      path: '/fx-check'
+      fullPath: '/fx-check'
+      preLoaderRoute: typeof FxCheckRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/fintechs': {
@@ -179,7 +179,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CalculatorRoute: CalculatorRoute,
   FintechsRoute: FintechsRoute,
-  StripeFxCheckRoute: StripeFxCheckRoute,
+  FxCheckRoute: FxCheckRoute,
   SurchargeCalculatorRoute: SurchargeCalculatorRoute,
   BlogSlugRoute: BlogSlugRoute,
   BlogIndexRoute: BlogIndexRoute,

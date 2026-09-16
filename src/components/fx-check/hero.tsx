@@ -1,23 +1,4 @@
-import { track } from '@/lib/track'
-import { FX_CHECK_URL } from '@/lib/urls'
-
-const ArrowIcon = (
-  <span className="btn__arrow" aria-hidden="true">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="100%"
-      viewBox="0 0 16 16"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M2.5 8h11" />
-      <path d="M9.5 4l4 4-4 4" />
-    </svg>
-  </span>
-)
+import { FxCheckCalculatorCard } from './calculator'
 
 const ProofCheck = (
   <svg
@@ -34,47 +15,53 @@ const ProofCheck = (
   </svg>
 )
 
+// Same split layout as the homepage hero (copy left, interactive thing
+// right). The calculator card carries the one call to action, so the copy
+// column has no buttons of its own.
 export function FxCheckHero() {
-  const trackCta = () => {
-    track({ name: 'fx_check_cta_click', location: 'hero' })
-  }
-
   return (
-    <section className="hero fxc-hero">
+    <section className="hero hero--split fxc-hero">
       <div className="container">
-        <div className="hero__copy fxc-hero__copy">
-          <h1 className="hero__title">
-            See what Stripe FX fees <em>really cost you.</em>
-          </h1>
-          <p className="hero__sub">
-            Connect your Stripe account read-only and get a free estimate of what you’d save on
-            currency conversion with Quidkey. Keep the connection if you like the number — or
-            disconnect on the spot.
-          </p>
-          <div className="hero__ctas">
-            <a href={FX_CHECK_URL} className="btn btn--xl btn--ink" onClick={trackCta}>
-              Run the free FX check
-              {ArrowIcon}
-            </a>
+        <div className="hero__split">
+          <div className="hero__copy fxc-hero__copy">
+            <h1 className="hero__title">
+              Selling or paying abroad?{' '}
+              <br className="fxc-hero__break" />
+              <em>Save money on FX.</em>
+            </h1>
+            <p className="hero__sub">
+              Stripe, Shopify and your bank charge around 2% to convert your money. Quidkey saves
+              you 25% or more on those conversion fees.
+            </p>
+            <ul className="hero__proof">
+              <li className="hero__proof-item">
+                {ProofCheck}
+                <span>
+                  <strong>No setup</strong> or monthly fees
+                </span>
+              </li>
+              <li className="hero__proof-item">
+                {ProofCheck}
+                <span>
+                  <strong>Nothing to move.</strong> Your accounts, checkout and integrations stay as
+                  they are
+                </span>
+              </li>
+              <li className="hero__proof-item">
+                {ProofCheck}
+                <span>
+                  <strong>Paid out</strong> on the same schedule as today
+                </span>
+              </li>
+              <li className="hero__proof-item">
+                {ProofCheck}
+                <span>
+                  <strong>Reconciles</strong> in your accounting software as before
+                </span>
+              </li>
+            </ul>
           </div>
-          <ul className="hero__proof">
-            <li className="hero__proof-item">
-              {ProofCheck}
-              <span>
-                <strong>Read-only</strong> — nothing about your Stripe changes
-              </span>
-            </li>
-            <li className="hero__proof-item">
-              {ProofCheck}
-              <span>No account needed</span>
-            </li>
-            <li className="hero__proof-item">
-              {ProofCheck}
-              <span>
-                Auto-disconnects in <strong>48h</strong> if you walk away
-              </span>
-            </li>
-          </ul>
+          <FxCheckCalculatorCard />
         </div>
       </div>
     </section>

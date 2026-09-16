@@ -5,8 +5,7 @@ import { FxCheckCloser } from '@/components/fx-check/closer'
 import { FX_CHECK_FAQS } from '@/components/fx-check/faq-items'
 import { FxCheckHero } from '@/components/fx-check/hero'
 import { FxCheckHowItWorks } from '@/components/fx-check/how-it-works'
-import { FxCheckSavingsTeaser } from '@/components/fx-check/savings-teaser'
-import { FxCheckTrust } from '@/components/fx-check/trust'
+import { FxCheckProviders } from '@/components/fx-check/providers'
 import { HomepageFooter } from '@/components/layout/homepage-footer'
 import { HomepageNav } from '@/components/layout/homepage-nav'
 import { Faq } from '@/components/sections/faq'
@@ -15,8 +14,8 @@ import { buildFaqSchema, buildSeo } from '@/lib/seo'
 import { track } from '@/lib/track'
 
 // Share the homepage's chrome (nav, footer, typography, container), with
-// fx-check.css loading last so its fxc-* rules win at equal specificity —
-// same trick as calculator.css.
+// fx-check.css loading last so its fxc-* rules win at equal specificity.
+// Same trick as calculator.css.
 import '@/styles/homepage/base.css'
 import '@/styles/homepage/headings.css'
 import '@/styles/homepage/section-padding.css'
@@ -24,28 +23,29 @@ import '@/styles/homepage/mobile.css'
 import '@/styles/homepage/overrides.css'
 import '@/components/fx-check/fx-check.css'
 
-export const Route = createFileRoute('/stripe-fx-check')({
-  component: StripeFxCheckPage,
+export const Route = createFileRoute('/fx-check')({
+  component: FxCheckPage,
   head: () =>
     buildSeo({
-      title: 'Free Stripe FX Fee Check · Quidkey',
+      title: 'Save money on FX fees · Quidkey',
       description:
-        'Connect Stripe read-only and see what you’d save on currency-conversion fees with Quidkey. Free, no account needed, auto-disconnects within 48 hours.',
+        'Selling or paying abroad? Stripe and Shopify charge about 2% to convert your sales, and banks often more. Quidkey saves you 0.5%, and more on bank conversions. Connect Stripe and see your exact savings for free.',
       keywords: [
         'Stripe FX fees',
         'Stripe currency conversion fee',
-        'Stripe exchange rate fee',
-        'reduce Stripe fees',
-        'Stripe fee checker',
+        'Shopify currency conversion fee',
+        'cross-border payment fees',
+        'reduce FX fees',
+        'international payments FX',
       ],
-      path: '/stripe-fx-check',
+      path: '/fx-check',
       structuredData: [
         buildFaqSchema(FX_CHECK_FAQS.map((faq) => ({ question: faq.q, answer: faq.a }))),
       ],
     }),
 })
 
-function StripeFxCheckPage() {
+function FxCheckPage() {
   // One page-view event, fanned out to GA + Clarity + Snitcher via track().
   // Ref-guarded so React's dev StrictMode double-mount doesn't emit it twice.
   const fired = useRef(false)
@@ -62,9 +62,8 @@ function StripeFxCheckPage() {
         <HomepageNav />
         <main id="main">
           <FxCheckHero />
+          <FxCheckProviders />
           <FxCheckHowItWorks />
-          <FxCheckSavingsTeaser />
-          <FxCheckTrust />
           <Faq
             items={FX_CHECK_FAQS}
             heading="Fair questions, straight answers."
