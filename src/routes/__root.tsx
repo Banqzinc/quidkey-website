@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { useRouterState } from '@tanstack/react-router'
 
 import appCss from '../styles.css?url'
+import { ContactProvider } from '@/context/contact'
 import { initClarityWithCookiebot } from '@/lib/clarity'
 import { trackPageView, updateGoogleConsentFromCookiebot } from '@/lib/google-analytics'
 import { initUserbackWithCookiebot } from '@/lib/userback'
@@ -138,7 +139,9 @@ function NotFoundPage() {
 function RootComponent() {
   return (
     <RootDocument>
-      <Outlet />
+      <ContactProvider>
+        <Outlet />
+      </ContactProvider>
     </RootDocument>
   )
 }

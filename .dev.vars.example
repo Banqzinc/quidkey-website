@@ -2,3 +2,4 @@
 # Both values come from the HubSpot form's embed code and are not secrets.
 HUBSPOT_PORTAL_ID=
 HUBSPOT_FORM_GUID=
+HUBSPOT_CONTACT_FORM_GUID=

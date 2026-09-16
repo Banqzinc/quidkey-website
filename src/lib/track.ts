@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 
 import type { Audience } from '@/context/audience'
+import type { ContactSource, ContactTopic } from '@/lib/contact-topics'
 import type { DemoRegion } from '@/lib/demo-region'
 
 // The globals for gtag, lintrk, and Snitcher are already declared by their
@@ -13,7 +14,7 @@ declare global {
 }
 
 export type CtaLabel = 'get_started' | 'sign_in' | 'demo' | 'docs' | 'developers' | 'contact' | 'anchor'
-export type CtaLocation = 'nav' | 'hero' | 'closer' | 'pricing' | 'footer'
+export type CtaLocation = 'nav' | 'hero' | 'closer' | 'pricing' | 'footer' | 'contact'
 export type FxCheckCtaLocation = 'hero' | 'providers' | 'how_it_works' | 'closer'
 export type FxCheckCtaTarget = 'connect_stripe' | 'talk_to_us'
 export type FlowKind = 'merchant' | 'fintech'
@@ -38,6 +39,9 @@ export type HomepageEvent =
   | { name: 'fx_check_view' }
   | { name: 'fx_check_cta_click'; location: FxCheckCtaLocation; target: FxCheckCtaTarget }
   | { name: 'fx_check_faq_open'; question: string }
+  | { name: 'contact_view'; topic: ContactTopic }
+  | { name: 'contact_open'; topic: ContactTopic; source: ContactSource }
+  | { name: 'contact_submit'; topic: ContactTopic; outcome: 'success' | 'error' }
   | { name: 'article_share_click'; slug: string; channel: ShareChannel }
   | { name: 'article_toc_click'; slug: string; section_id: string }
   | { name: 'article_related_click'; from_slug: string; to_slug: string }

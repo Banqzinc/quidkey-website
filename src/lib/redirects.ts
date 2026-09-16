@@ -25,7 +25,8 @@ export const REDIRECTS: Record<string, string> = {
   // Retired pages -> homepage sections (the redesign folded these into `/`).
   '/about': '/',
   '/careers': '/',
-  '/contact': '/',
+  // '/contact' is a live page again (the Talk to us form), so it is deliberately
+  // absent from this map.
   '/pricing': '/#pricing',
   '/workflows': '/#treasury',
   '/products/hosted-checkout': '/#integrations',

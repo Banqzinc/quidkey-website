@@ -3,7 +3,7 @@ import { type FormEvent, useState } from 'react'
 
 import { openCookiebotPreferences } from '@/lib/cookiebot'
 import { track } from '@/lib/track'
-import { CONTACT_EMAIL, DOCS_URL } from '@/lib/urls'
+import { DOCS_URL } from '@/lib/urls'
 
 const STATUS_URL = 'https://status.quidkey.com'
 const DEVELOPERS_URL = 'https://quidkey.dev'
@@ -93,7 +93,7 @@ export function HomepageFooter() {
 
   const companyLinks: FooterLink[] = [
     { label: 'Blog', href: '/blog' },
-    { label: 'Contact', href: `mailto:${CONTACT_EMAIL}` },
+    { label: 'Contact', href: '/contact' },
   ]
 
   const developerLinks: FooterLink[] = [

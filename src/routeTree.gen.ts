@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SurchargeCalculatorRouteImport } from './routes/surcharge-calculator'
 import { Route as FxCheckRouteImport } from './routes/fx-check'
 import { Route as FintechsRouteImport } from './routes/fintechs'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CalculatorRouteImport } from './routes/calculator'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
@@ -30,6 +31,11 @@ const FxCheckRoute = FxCheckRouteImport.update({
 const FintechsRoute = FintechsRouteImport.update({
   id: '/fintechs',
   path: '/fintechs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CalculatorRoute = CalculatorRouteImport.update({
@@ -56,6 +62,7 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/calculator': typeof CalculatorRoute
+  '/contact': typeof ContactRoute
   '/fintechs': typeof FintechsRoute
   '/fx-check': typeof FxCheckRoute
   '/surcharge-calculator': typeof SurchargeCalculatorRoute
@@ -65,6 +72,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/calculator': typeof CalculatorRoute
+  '/contact': typeof ContactRoute
   '/fintechs': typeof FintechsRoute
   '/fx-check': typeof FxCheckRoute
   '/surcharge-calculator': typeof SurchargeCalculatorRoute
@@ -75,6 +83,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/calculator': typeof CalculatorRoute
+  '/contact': typeof ContactRoute
   '/fintechs': typeof FintechsRoute
   '/fx-check': typeof FxCheckRoute
   '/surcharge-calculator': typeof SurchargeCalculatorRoute
@@ -86,6 +95,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/calculator'
+    | '/contact'
     | '/fintechs'
     | '/fx-check'
     | '/surcharge-calculator'
@@ -95,6 +105,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/calculator'
+    | '/contact'
     | '/fintechs'
     | '/fx-check'
     | '/surcharge-calculator'
@@ -104,6 +115,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/calculator'
+    | '/contact'
     | '/fintechs'
     | '/fx-check'
     | '/surcharge-calculator'
@@ -114,6 +126,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CalculatorRoute: typeof CalculatorRoute
+  ContactRoute: typeof ContactRoute
   FintechsRoute: typeof FintechsRoute
   FxCheckRoute: typeof FxCheckRoute
   SurchargeCalculatorRoute: typeof SurchargeCalculatorRoute
@@ -142,6 +155,13 @@ declare module '@tanstack/react-router' {
       path: '/fintechs'
       fullPath: '/fintechs'
       preLoaderRoute: typeof FintechsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/calculator': {
@@ -178,6 +198,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CalculatorRoute: CalculatorRoute,
+  ContactRoute: ContactRoute,
   FintechsRoute: FintechsRoute,
   FxCheckRoute: FxCheckRoute,
   SurchargeCalculatorRoute: SurchargeCalculatorRoute,

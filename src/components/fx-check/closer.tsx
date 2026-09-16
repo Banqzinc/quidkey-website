@@ -1,7 +1,10 @@
+import { useContactLink } from '@/context/contact'
 import { track } from '@/lib/track'
-import { buildMailto, FX_CHECK_URL } from '@/lib/urls'
+import { FX_CHECK_URL } from '@/lib/urls'
 
 export function FxCheckCloser() {
+  const talk = useContactLink('fx', 'fx_closer')
+
   return (
     <section className="closer">
       <div className="container closer__inner">
@@ -22,11 +25,12 @@ export function FxCheckCloser() {
               Connect Stripe
             </a>
             <a
-              href={buildMailto('FX savings for my business')}
+              href={talk.href}
               className="closer__cta closer__cta--secondary"
-              onClick={() =>
+              onClick={(event) => {
                 track({ name: 'fx_check_cta_click', location: 'closer', target: 'talk_to_us' })
-              }
+                talk.onClick(event)
+              }}
             >
               Talk to us
             </a>
