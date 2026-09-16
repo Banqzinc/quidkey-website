@@ -5,18 +5,14 @@ import { track } from '@/lib/track'
 import { FX_CHECK_URL } from '@/lib/urls'
 
 import { estimateFxSavings, SAVING_PERCENT, TALK_TO_US_FROM } from './fx-savings'
+import { compact, money } from './money'
 
 const PRESETS = [100_000, 250_000, 1_000_000]
 const DEFAULT_VOLUME = 250_000
 
-const money = (n: number) =>
-  '$' + Math.round(n).toLocaleString('en-US', { maximumFractionDigits: 0 })
-
-// Short labels for the preset pills and the high-volume line: $100k, $250k, $1m.
-const compact = (n: number) => (n >= 1_000_000 ? `$${n / 1_000_000}m` : `$${n / 1_000}k`)
-
 // Sits in the hero's right-hand column, where the homepage puts its phone
-// demo. One input, the saving in dollars, one button.
+// demo. One input, the saving in dollars first, the assumption behind it in
+// plain words, one button.
 export function FxCheckCalculatorCard() {
   const [volume, setVolume] = useState(DEFAULT_VOLUME)
   const { monthlySaving, yearlySaving } = estimateFxSavings(volume)
@@ -56,13 +52,16 @@ export function FxCheckCalculatorCard() {
           ))}
         </div>
         <div className="fxc-calc__delta">
-          <span className="fxc-calc__delta-lbl">You could save</span>
+          <span className="fxc-calc__delta-lbl">Save an estimated</span>
           <span className="fxc-calc__delta-val">
-            +{money(monthlySaving)}
+            {money(monthlySaving)}
             <span className="fxc-calc__delta-per">/month</span>
           </span>
           <span className="fxc-calc__delta-sub">
-            +{money(yearlySaving)} a year, at {SAVING_PERCENT}%
+            {money(yearlySaving)} a year in lower conversion fees
+          </span>
+          <span className="fxc-calc__delta-note">
+            Assumes Quidkey saves you {SAVING_PERCENT}% of the money you convert.
           </span>
         </div>
         <a
@@ -74,6 +73,7 @@ export function FxCheckCalculatorCard() {
         >
           Connect Stripe for your exact savings
         </a>
+        <p className="fxc-calc__cta-note">Free · No Quidkey signup required</p>
       </div>
       <p className="fxc-calc__more">
         Converting more than {compact(TALK_TO_US_FROM)} a month?{' '}

@@ -1,11 +1,16 @@
-// Illustrative FX savings maths for the /fx-check hero calculator.
+// Illustrative FX savings maths for the /fx-check page.
 //
 // Stripe and Shopify convert international sales at about 2% for stores
 // outside the US. Against that, Quidkey saves a flat 0.5% of the converted
-// volume. Higher volumes are priced in a conversation, so the page quotes no
-// other rate. Bank conversions save more, but the calculator stays on the
-// conservative Stripe and Shopify rate. The exact number comes from the
+// volume. The page talks about the saving, never about Quidkey's own fee:
+// merchants are on different deals, so "Quidkey charges 1.5%" would be wrong
+// for many of them. Higher volumes are priced in a conversation, so the page
+// quotes no other rate. Bank conversions save more, but the numbers stay on
+// the conservative Stripe and Shopify rate. The exact figure comes from the
 // merchant's own Stripe data via the console fx-check flow.
+/** What Stripe and Shopify charge to convert, for stores outside the US. */
+export const CURRENT_FEE_PERCENT = 2
+/** How much of the converted volume Quidkey saves, in percentage points. */
 export const SAVING_PERCENT = 0.5
 /** Monthly volume from which the page invites merchants to talk to us instead. */
 export const TALK_TO_US_FROM = 1_000_000
@@ -15,8 +20,13 @@ export type FxSavings = {
   yearlySaving: number
 }
 
+/** The saving on a given converted volume, whatever the period. */
+export function savingOn(volume: number): number {
+  const safe = Number.isFinite(volume) && volume > 0 ? volume : 0
+  return (safe * SAVING_PERCENT) / 100
+}
+
 export function estimateFxSavings(monthlyVolume: number): FxSavings {
-  const volume = Number.isFinite(monthlyVolume) && monthlyVolume > 0 ? monthlyVolume : 0
-  const monthlySaving = (volume * SAVING_PERCENT) / 100
+  const monthlySaving = savingOn(monthlyVolume)
   return { monthlySaving, yearlySaving: monthlySaving * 12 }
 }
