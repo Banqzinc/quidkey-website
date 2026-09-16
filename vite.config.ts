@@ -9,6 +9,11 @@ import { fileURLToPath, URL } from 'url'
 // The Cloudflare plugin starts a workerd runtime that conflicts with Vitest's
 // node/jsdom runner ("module is not defined"). Exclude it under test — the unit
 // tests exercise pure logic + components and don't need the Worker environment.
+//
+// TanStack Start is excluded under test as well: its SSR `noExternal` list makes
+// Vitest inline `react` while react-dom still loads Node's copy, so rendering a
+// component in jsdom fails with "Invalid hook call". Server functions are only
+// defined, never invoked, in unit tests, so they need no compilation there.
 const isVitest = process.env.VITEST === 'true'
 
 const config = defineConfig({
@@ -25,7 +30,7 @@ const config = defineConfig({
       projects: ['./tsconfig.json'],
     }),
     tailwindcss(),
-    tanstackStart(),
+    ...(isVitest ? [] : [tanstackStart()]),
     viteReact(),
   ],
 })
