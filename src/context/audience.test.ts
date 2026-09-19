@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { readStoredAudience, writeStoredAudience } from './audience'
+import { audiencePath, readStoredAudience, writeStoredAudience } from './audience'
 
 function createMemoryStorage(): Storage {
   const map = new Map<string, string>()
@@ -49,5 +49,21 @@ describe('audience storage round-trip', () => {
   it('treats null storage as a no-op (SSR safety)', () => {
     expect(readStoredAudience(null)).toBe('merchants')
     expect(() => writeStoredAudience(null, 'fintechs')).not.toThrow()
+  })
+})
+
+describe('agents audience', () => {
+  it('reads back the agents audience', () => {
+    const storage = createMemoryStorage()
+    writeStoredAudience(storage, 'agents')
+    expect(readStoredAudience(storage)).toBe('agents')
+  })
+})
+
+describe('audiencePath', () => {
+  it('maps each audience to its landing page', () => {
+    expect(audiencePath('merchants')).toBe('/')
+    expect(audiencePath('fintechs')).toBe('/fintechs')
+    expect(audiencePath('agents')).toBe('/agents')
   })
 })

@@ -72,6 +72,7 @@ export function HomepageFooter() {
     },
     { label: 'Calculator', href: '/calculator' },
     { label: 'FX savings check', href: '/fx-check' },
+    { label: 'Agent accounts', href: '/agents' },
   ]
 
   const companyLinks: FooterLink[] = [

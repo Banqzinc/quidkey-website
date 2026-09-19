@@ -66,3 +66,10 @@ describe('CONTACT_TOPICS page metadata', () => {
     expect(new Set(descriptions).size).toBe(descriptions.length)
   })
 })
+
+describe('agents topic', () => {
+  it('is an allowlisted topic with its own contact path', () => {
+    expect(parseTopic('agents')).toBe('agents')
+    expect(contactPath('agents')).toBe('/contact?topic=agents')
+  })
+})

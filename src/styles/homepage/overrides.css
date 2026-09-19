@@ -802,3 +802,31 @@ html.nav-menu-open .nav__mobile {
   .hp .qk__otp-cell, .hp .qk__acct, .hp .qk__idkind-opt, .hp .demo-region__opt{ transition: none; }
   .hp .qk__banner{ animation: none; }
 }
+
+/* ── Audience toggle · three positions ──────────────────────────────
+   base.css sizes the pill thumb for two options (50%) and only knows the
+   merchants/fintechs positions. With AI agents as a third audience the
+   buttons share the width equally so the thumb lands under each label. */
+.hp .aud-toggle__thumb {
+  width: calc((100% - 8px) / 3);
+}
+.hp .aud-toggle__thumb[data-pos='agents'] {
+  transform: translateX(200%);
+}
+.hp .aud-toggle__btn {
+  flex: 1 1 0;
+  text-align: center;
+}
+.hp .aud-toggle--box .aud-toggle__btn {
+  flex: none;
+}
+/* The hero line wraps each "/ Option" pair so a narrow screen breaks between
+   options, never between a separator and its label. */
+.hp .hero__aud-item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.hp .hero__aud {
+  flex-wrap: wrap;
+}

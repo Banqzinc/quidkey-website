@@ -1,9 +1,27 @@
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react'
 
-export type Audience = 'merchants' | 'fintechs'
+import { AGENTS_PATH, FINTECHS_PATH } from '@/lib/urls'
+
+export const AUDIENCES = ['merchants', 'fintechs', 'agents'] as const
+export type Audience = (typeof AUDIENCES)[number]
 
 const STORAGE_KEY = 'quidkey:audience'
 const DEFAULT_AUDIENCE: Audience = 'merchants'
+
+const AUDIENCE_PATHS: Record<Audience, string> = {
+  merchants: '/',
+  fintechs: FINTECHS_PATH,
+  agents: AGENTS_PATH,
+}
+
+/** The landing page each audience switches to. */
+export function audiencePath(audience: Audience): string {
+  return AUDIENCE_PATHS[audience]
+}
+
+function isAudience(raw: unknown): raw is Audience {
+  return typeof raw === 'string' && (AUDIENCES as readonly string[]).includes(raw)
+}
 
 type AudienceContextValue = {
   audience: Audience
@@ -16,7 +34,7 @@ export function readStoredAudience(storage: Storage | null | undefined): Audienc
   if (!storage) return DEFAULT_AUDIENCE
   try {
     const raw = storage.getItem(STORAGE_KEY)
-    return raw === 'merchants' || raw === 'fintechs' ? raw : DEFAULT_AUDIENCE
+    return isAudience(raw) ? raw : DEFAULT_AUDIENCE
   } catch {
     return DEFAULT_AUDIENCE
   }

@@ -13,7 +13,15 @@ declare global {
   }
 }
 
-export type CtaLabel = 'get_started' | 'sign_in' | 'demo' | 'docs' | 'developers' | 'contact' | 'anchor'
+export type CtaLabel =
+  | 'get_started'
+  | 'sign_in'
+  | 'demo'
+  | 'docs'
+  | 'developers'
+  | 'contact'
+  | 'anchor'
+  | 'register'
 export type CtaLocation = 'nav' | 'hero' | 'closer' | 'pricing' | 'footer' | 'contact'
 export type FxCheckCtaLocation = 'hero' | 'providers' | 'how_it_works' | 'closer'
 export type FxCheckCtaTarget = 'connect_stripe' | 'talk_to_us'
@@ -43,6 +51,7 @@ export type HomepageEvent =
   | { name: 'fx_check_faq_open'; question: string }
   | { name: 'marketplace_view' }
   | { name: 'marketplace_cta_click'; location: MarketplaceCtaLocation; target: MarketplaceCtaTarget }
+  | { name: 'agents_view' }
   | { name: 'contact_view'; topic: ContactTopic }
   | { name: 'contact_open'; topic: ContactTopic; source: ContactSource }
   | { name: 'contact_submit'; topic: ContactTopic; outcome: 'success' | 'error' }

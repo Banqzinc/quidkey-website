@@ -1,0 +1,518 @@
+/* /agents page-specific styles. Loaded after the shared homepage bundle
+   (base / headings / section-padding / mobile / overrides) so these rules win
+   at equal specificity, the same way marketplace.css and partners.css do.
+   Everything is namespaced ag- and reuses the homepage tokens (--ink,
+   --muted, --line, --bg-soft, --mono ...). Shared chrome (nav, footer,
+   hero split, .why cards, .closer, .faq, .dev__ code block, .cform) comes
+   from the shared bundle and is not redeclared here. */
+
+.hp .ag-mute {
+  color: var(--muted);
+}
+.hp .ag-section--white {
+  background: var(--bg);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.hp .ag-label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ─── Hero ───────────────────────────────────────────────────────── */
+.hp .ag-hero .hero__title {
+  font-size: clamp(38px, min(4.6vw, 7vh), 70px);
+}
+.hp .ag-hero .hero__sub {
+  max-width: 42ch;
+}
+.hp .ag-hero .hero__proof {
+  margin: 4px 0 28px;
+}
+.hp .ag-hero .hero__proof-item {
+  white-space: normal;
+}
+
+/* The registration snippet: the site's dark code block with a header and footer. */
+.hp .ag-snippet-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+  min-width: 0;
+}
+.hp .ag-snippet__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  border-bottom: 1px solid #2a2a2a;
+  background: #1a1a1a;
+}
+.hp .ag-snippet__label {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #a3a3a3;
+}
+.hp .ag-snippet__copy {
+  border: 1px solid #3a3a3a;
+  background: transparent;
+  border-radius: 8px;
+  padding: 7px 12px;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--bg);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.hp .ag-snippet__copy:hover {
+  background: #2a2a2a;
+  border-color: #555;
+}
+.hp .ag-snippet .dev__tabs {
+  border-top: 0;
+}
+.hp .ag-snippet .dev__code {
+  font-size: 12.5px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.hp .ag-snippet__foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px 16px;
+  padding: 12px 18px 14px;
+  border-top: 1px solid #2a2a2a;
+  font-size: 12px;
+  color: #a3a3a3;
+}
+.hp .ag-snippet__foot a {
+  color: var(--bg);
+  text-underline-offset: 3px;
+}
+.hp .ag-snippet__status {
+  flex-basis: 100%;
+  min-height: 1em;
+  color: #d4d4d4;
+}
+.hp .ag-caption {
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* ─── Two-column sections ────────────────────────────────────────── */
+.hp .ag-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(28px, 5vw, 72px);
+  align-items: center;
+}
+.hp .ag-list {
+  list-style: none;
+  margin: 28px 0 0;
+  padding: 0;
+}
+.hp .ag-list li {
+  display: flex;
+  gap: 12px;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.hp .ag-list li:last-child {
+  border-bottom: 1px solid var(--line);
+}
+.hp .ag-list__check {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin-top: 3px;
+  color: var(--pill-green);
+}
+
+/* Cards shared by the receiving-details, profile and register panels. */
+.hp .ag-card {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--bg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.hp .ag-card__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-soft);
+}
+.hp .ag-card__title {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+/* Receiving details */
+.hp .ag-receive__row {
+  display: grid;
+  grid-template-columns: 52px 1fr auto;
+  gap: 14px;
+  align-items: center;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--line);
+}
+.hp .ag-receive__row:last-of-type {
+  border-bottom: 0;
+}
+.hp .ag-ccy {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 5px 0;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  text-align: center;
+  color: var(--ink);
+}
+.hp .ag-receive__detail {
+  font-size: 13.5px;
+  color: var(--ink);
+  font-feature-settings: 'tnum' 1;
+  overflow-wrap: anywhere;
+}
+.hp .ag-receive__move {
+  text-align: right;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  font-feature-settings: 'tnum' 1;
+  white-space: nowrap;
+}
+.hp .ag-receive__move small {
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.hp .ag-receive__link {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 14px 20px;
+  border-top: 1px solid var(--line);
+  background: var(--bg-soft);
+  font-size: 13px;
+  color: var(--muted);
+}
+.hp .ag-receive__link code {
+  font-family: var(--mono);
+  color: var(--ink);
+}
+
+/* ─── Profile ────────────────────────────────────────────────────── */
+.hp .ag-profile {
+  max-width: 440px;
+  justify-self: center;
+  width: 100%;
+}
+.hp .ag-profile__body {
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.hp .ag-profile__id {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.hp .ag-profile__avatar {
+  width: 48px;
+  height: 48px;
+  flex: none;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--bg);
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+  font-size: 18px;
+}
+.hp .ag-profile__handle {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.hp .ag-profile__owner {
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.hp .ag-profile__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: var(--pill-green-bg);
+  color: #065f46;
+  font-size: 12px;
+  font-weight: 600;
+}
+.hp .ag-profile__rep {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg-soft);
+}
+.hp .ag-profile__facts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.hp .ag-profile__facts strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  font-feature-settings: 'tnum' 1;
+  white-space: nowrap;
+}
+.hp .ag-profile__facts small {
+  display: block;
+  margin-top: 2px;
+  font-size: 11.5px;
+  color: var(--muted);
+}
+.hp .ag-profile__pay {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font-size: 13px;
+  color: var(--ink);
+}
+.hp .ag-profile__pay code {
+  font-family: var(--mono);
+  color: var(--muted);
+}
+.hp .ag-profile__fine {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+/* ─── Register ───────────────────────────────────────────────────── */
+.hp .ag-reg__layout {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: clamp(28px, 5vw, 72px);
+  align-items: start;
+}
+.hp .ag-reg__card {
+  padding: 20px;
+}
+/* The contact form was styled for the dialog and /contact; inside the card it
+   needs no outer chrome of its own. */
+.hp .ag-owner-form .cform {
+  padding: 0;
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+}
+
+/* ─── Mobile ─────────────────────────────────────────────────────── */
+@media (max-width: 899px) {
+  .hp .ag-hero .hero__proof {
+    grid-template-columns: 1fr;
+  }
+  .hp .ag-split,
+  .hp .ag-reg__layout {
+    grid-template-columns: 1fr;
+  }
+  .hp .ag-split > .ag-card {
+    order: 2;
+  }
+  .hp .ag-profile {
+    max-width: none;
+  }
+  .hp .ag-profile__facts {
+    grid-template-columns: 1fr 1fr;
+  }
+  .hp .ag-receive__row {
+    grid-template-columns: 48px 1fr;
+  }
+  .hp .ag-receive__move {
+    grid-column: 2;
+    text-align: left;
+  }
+  .hp .ag-reg__card {
+    padding: 16px;
+  }
+}
+
+/* ─── Soft section variant (alternates with white between the .why blocks) ─ */
+.hp .ag-section--soft {
+  background: var(--bg-soft);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+/* ─── Accounts: the accounts list and the notification feed, stacked ───── */
+.hp .ag-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+.hp .ag-events__row {
+  display: grid;
+  grid-template-columns: 140px 1fr auto;
+  gap: 12px;
+  align-items: baseline;
+  padding: 11px 20px;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+}
+.hp .ag-events__row:last-child {
+  border-bottom: 0;
+}
+.hp .ag-events__name {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink);
+}
+.hp .ag-events__detail {
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.hp .ag-events__when {
+  font-size: 12px;
+  color: var(--faint);
+  white-space: nowrap;
+}
+
+/* ─── Pay: the disposable card ───────────────────────────────────────── */
+.hp .ag-vcard-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  min-width: 0;
+}
+.hp .ag-vcard {
+  width: min(100%, 420px);
+  aspect-ratio: 1.586;
+  border-radius: 18px;
+  background: var(--ink);
+  color: var(--bg);
+  padding: clamp(20px, 2.4vw, 28px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--shadow-lg);
+  transform: rotate(-2deg);
+}
+.hp .ag-vcard__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.hp .ag-vcard__brand {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+.hp .ag-vcard__tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  padding: 4px 9px;
+}
+.hp .ag-vcard__chip {
+  width: 38px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  background: linear-gradient(90deg, transparent 45%, rgba(255, 255, 255, 0.45) 45%, rgba(255, 255, 255, 0.45) 50%, transparent 50%);
+}
+.hp .ag-vcard__number {
+  font-family: var(--mono);
+  font-size: clamp(15px, 1.6vw, 19px);
+  letter-spacing: 0.12em;
+  font-feature-settings: 'tnum' 1;
+}
+.hp .ag-vcard__meta {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.hp .ag-vcard__meta small {
+  display: block;
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 4px;
+}
+
+@media (max-width: 899px) {
+  .hp .ag-split > .ag-vcard-wrap,
+  .hp .ag-split > .ag-stack {
+    order: 2;
+  }
+  .hp .ag-vcard {
+    transform: none;
+  }
+  .hp .ag-vcard__meta {
+    grid-template-columns: 1fr 1fr;
+  }
+  .hp .ag-events__row {
+    grid-template-columns: 1fr auto;
+  }
+  .hp .ag-events__detail {
+    grid-column: 1 / -1;
+  }
+}

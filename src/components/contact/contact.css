@@ -5,8 +5,11 @@
    are doubled (.cform .cform__x) so they beat .hp button / .hp a whichever
    stylesheet the bundler emits first. */
 
+/* The form carries its own tokens so it renders the same on /contact, in the
+   dialog, and embedded in another page's card (the /agents register panel). */
 .cdlg,
-.cpage {
+.cpage,
+.cform {
   --c-bg: var(--bg, #ffffff);
   --c-soft: var(--bg-soft, #f9f9fb);
   --c-ink: var(--ink, #0a0a0a);
