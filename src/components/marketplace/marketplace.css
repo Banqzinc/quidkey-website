@@ -534,6 +534,23 @@
   font-size: 14.5px;
   color: var(--muted);
 }
+/* SWIFT spans the row beneath the four markets: code, currencies and rails
+   sit on one baseline instead of stacking. */
+.hp .mkt-rail--wide {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 18px;
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+.hp .mkt-rail--wide .mkt-rail__code {
+  margin-bottom: 0;
+  min-width: 48px;
+}
+.hp .mkt-rail--wide .mkt-rail__rails {
+  color: var(--muted);
+}
 .hp .mkt-global__who {
   margin: 36px 0 0;
   border-top: 1px solid var(--line-strong);
@@ -926,6 +943,16 @@
 @media (max-width: 540px) {
   .hp .mkt-rails {
     grid-template-columns: 1fr;
+  }
+  .hp .mkt-rail--wide {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding-top: 22px;
+    padding-bottom: 20px;
+  }
+  .hp .mkt-rail--wide .mkt-rail__code {
+    margin-bottom: 14px;
   }
   .hp .mkt-order__parties {
     grid-template-columns: 1fr;

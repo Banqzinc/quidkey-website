@@ -5,6 +5,15 @@ const RAILS = [
   { code: 'US', region: 'United States', rails: 'Supported local rails' },
 ]
 
+// Beyond the four local-rail markets, sellers elsewhere are paid over SWIFT in
+// their own currency. One wide tile under the four so it reads as the
+// complement to local rails, not a fifth market.
+const SWIFT = {
+  code: 'SWIFT',
+  region: 'Over 30 more currencies',
+  rails: 'Local-currency SWIFT payments, alongside the local rails above',
+}
+
 const WHO = [
   { who: 'The buyer', what: 'sees one all-in price in their own currency.' },
   { who: 'The seller', what: 'receives into their supported account and currency.' },
@@ -29,6 +38,11 @@ export function MarketplaceGlobal() {
               <span className="mkt-rail__rails">{r.rails}</span>
             </li>
           ))}
+          <li className="mkt-rail mkt-rail--wide">
+            <span className="mkt-rail__code">{SWIFT.code}</span>
+            <span className="mkt-rail__region">{SWIFT.region}</span>
+            <span className="mkt-rail__rails">{SWIFT.rails}</span>
+          </li>
         </ul>
 
         <dl className="mkt-global__who">
