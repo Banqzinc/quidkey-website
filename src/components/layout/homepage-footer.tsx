@@ -81,6 +81,7 @@ export function HomepageFooter() {
   const productLinks: FooterLink[] = [
     { label: 'Checkout', href: '/', hash: 'integrations' },
     { label: 'Treasury', href: '/', hash: 'treasury' },
+    { label: 'Marketplace', href: '/marketplace' },
     {
       label: 'API',
       href: DEVELOPERS_URL,

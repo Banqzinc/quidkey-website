@@ -39,7 +39,9 @@ export const REDIRECTS: Record<string, string> = {
   '/solutions/ecommerce': '/',
   '/solutions/fintechs': '/fintechs',
   '/partners': '/fintechs',
-  '/solutions/marketplaces': '/',
+  // Marketplaces got their own page again (Protected Pay), so the old
+  // solutions URL lands there rather than on the homepage.
+  '/solutions/marketplaces': '/marketplace',
   '/solutions/professional-services': '/',
   '/solutions/saas': '/',
   '/solutions/travel': '/',
