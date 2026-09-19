@@ -1,0 +1,968 @@
+/* /marketplace page-specific styles. Loaded after the shared homepage bundle
+   (base/headings/section-padding/mobile/overrides) so these rules win at
+   equal specificity. Same trick as fx-check.css. Everything is namespaced
+   mkt- and reuses the homepage design tokens (--ink, --muted, --line, ...).
+
+   Shared shorthands used across sections:
+     .mkt-h        a section__h that may carry a muted second sentence
+     .mkt-mute     the muted tail of a heading (matches hero em / closer mute)
+     .mkt-label    small tracked caps label inside cards and lists
+     .mkt-card     the bordered white panel used by the hero and side cards
+     .mkt-section--white   sections that sit on white instead of the page's
+                           soft grey, so the page alternates like the homepage */
+
+.hp .mkt-section--white {
+  background: var(--bg);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.hp .mkt-section--white + .mkt-section--white {
+  border-top: 0;
+}
+
+.hp .mkt-h .mkt-mute {
+  color: var(--muted);
+}
+
+/* The shared eyebrow ships a leading dot span; this page carries the text
+   alone, as tracked caps, so the margin below is all it needs. */
+.hp .mkt .section__eyebrow {
+  margin-bottom: 18px;
+}
+.hp .mkt-eyebrow-sep {
+  margin: 0 8px;
+  opacity: 0.5;
+}
+
+.hp .mkt-label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.hp .mkt-card {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--bg);
+  box-shadow: var(--shadow);
+  padding: clamp(20px, 2.2vw, 28px) clamp(22px, 2.4vw, 32px);
+}
+.hp .mkt-card__head {
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 6px;
+}
+
+/* ─── Hero ───────────────────────────────────────────────────────── */
+.hp .mkt-hero .hero__title {
+  font-size: clamp(36px, min(4.4vw, 6.9vh), 66px);
+}
+.hp .mkt-hero .hero__sub {
+  max-width: 36ch;
+}
+.hp .mkt-hero .hero__proof {
+  grid-template-columns: 1fr;
+  margin: 4px 0 28px;
+}
+.hp .mkt-hero .hero__proof-item {
+  white-space: normal;
+}
+/* The shared ghost button has no arrow box, so match the ink button's height
+   without its trimmed right padding. */
+.hp .mkt-hero .btn--ghost.btn--xl {
+  padding: 0 28px;
+}
+
+/* The order card: a Protected Pay order as the marketplace sees it. */
+.hp .mkt-order {
+  --mkt-ok: #047857;
+  width: 100%;
+  max-width: 500px;
+  justify-self: end;
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--bg);
+  box-shadow: var(--shadow-lg);
+  padding: clamp(20px, 2.2vw, 26px) clamp(22px, 2.4vw, 30px);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.hp .mkt-order__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+.hp .mkt-order__tag {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.hp .mkt-order__id {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--faint);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.hp .mkt-order__parties {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+}
+.hp .mkt-order__party {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.hp .mkt-order__party--to {
+  text-align: right;
+}
+.hp .mkt-order__party-l {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.hp .mkt-order__party-n {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+  overflow-wrap: anywhere;
+}
+.hp .mkt-order__party-m {
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.hp .mkt-order__party-arrow {
+  color: var(--line-strong);
+  display: inline-flex;
+}
+.hp .mkt-order__amount {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.hp .mkt-order__amount-v {
+  font-size: clamp(28px, 2.6vw, 34px);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  line-height: 1.1;
+}
+.hp .mkt-order__amount-s {
+  font-size: 13.5px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.hp .mkt-order__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+}
+.hp .mkt-order__status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--pill-orange);
+  box-shadow: 0 0 0 3px var(--pill-orange-bg);
+  transition: background 0.3s, box-shadow 0.3s;
+}
+.hp .mkt-order__status-dot.is-released {
+  background: var(--pill-green);
+  box-shadow: 0 0 0 3px var(--pill-green-bg);
+}
+.hp .mkt-order__steps {
+  list-style: none;
+  margin: -6px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.hp .mkt-order__step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 7px 0;
+  font-size: 14px;
+  color: var(--faint);
+  transition: color 0.3s;
+}
+/* Rail between the marks */
+.hp .mkt-order__step::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--line);
+}
+.hp .mkt-order__step:first-child::before {
+  top: 50%;
+}
+.hp .mkt-order__step:last-child::before {
+  bottom: 50%;
+}
+.hp .mkt-order__step-mark {
+  position: relative;
+  z-index: 1;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  border: 1.5px solid var(--line-strong);
+  background: var(--bg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bg);
+  transition: background 0.3s, border-color 0.3s;
+}
+.hp .mkt-order__step.is-done {
+  color: var(--muted);
+}
+.hp .mkt-order__step.is-done .mkt-order__step-mark {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+.hp .mkt-order__step.is-active {
+  color: var(--ink);
+  font-weight: 600;
+}
+.hp .mkt-order__step.is-active .mkt-order__step-mark {
+  border-color: var(--ink);
+  box-shadow: inset 0 0 0 3.5px var(--bg), inset 0 0 0 8px var(--ink);
+}
+.hp .mkt-order__foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 13px;
+  color: var(--muted);
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.hp .mkt-order__foot + .mkt-order__foot {
+  padding-top: 0;
+  border-top: 0;
+  margin-top: -8px;
+}
+.hp .mkt-order__foot span:last-child {
+  color: var(--ink);
+  font-weight: 500;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── Flow chain (Protected Pay + agentic) ───────────────────────── */
+.hp .mkt-flow {
+  list-style: none;
+  margin: 44px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(var(--mkt-steps, 5), minmax(0, 1fr));
+  gap: 0 clamp(16px, 2vw, 28px);
+}
+.hp .mkt-flow__step {
+  position: relative;
+  border-top: 1px solid var(--line-strong);
+  padding: 20px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.hp .mkt-flow__step::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--ink);
+}
+.hp .mkt-flow__n {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--faint);
+}
+.hp .mkt-flow__label {
+  font-size: 16.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+.hp .mkt-flow__note {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.hp .mkt-flow--compact .mkt-flow__label {
+  font-size: 15px;
+}
+
+/* ─── Problem ────────────────────────────────────────────────────── */
+.hp .mkt-problem__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(28px, 4vw, 64px);
+  margin-top: 44px;
+  align-items: start;
+}
+@media (min-width: 900px) {
+  .hp .mkt-problem__grid {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  }
+}
+.hp .mkt-problem__list {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--line-strong);
+}
+.hp .mkt-problem__list li {
+  display: grid;
+  grid-template-columns: 16px 1fr;
+  gap: 14px;
+  align-items: baseline;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+}
+.hp .mkt-problem__x {
+  color: var(--faint);
+  display: inline-flex;
+  align-self: center;
+}
+.hp .mkt-problem__aside {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 6px;
+}
+.hp .mkt-problem__p {
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.5;
+  color: var(--muted);
+  text-wrap: pretty;
+  max-width: 44ch;
+}
+.hp .mkt-problem__p--fix {
+  color: var(--ink);
+  font-weight: 500;
+  padding-top: 20px;
+  border-top: 1px solid var(--line-strong);
+}
+
+/* ─── Protected Pay ──────────────────────────────────────────────── */
+.hp .mkt-pp__fail {
+  margin: 28px 0 0;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 60ch;
+}
+.hp .mkt-pp__who {
+  margin-top: 48px;
+}
+/* No icons on these three, so the title sits straight on the card top. */
+.hp .mkt-pp__who .why__cardx-t {
+  color: var(--ink);
+}
+
+/* ─── Economics (dark) ───────────────────────────────────────────── */
+.hp .mkt-econ {
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+.hp .mkt-econ__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(36px, 5vw, 80px);
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .hp .mkt-econ__grid {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  }
+}
+.hp .mkt-econ__eyebrow {
+  color: rgba(255, 255, 255, 0.55);
+}
+.hp .mkt-econ__h {
+  color: #fff;
+}
+.hp .mkt-econ__sub {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+.hp .mkt-econ__nos {
+  list-style: none;
+  margin: 28px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 28px;
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+}
+.hp .mkt-econ__nos li {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.hp .mkt-econ__nos li::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.45);
+}
+.hp .mkt-econ__stats {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  overflow: hidden;
+}
+.hp .mkt-econ__stat {
+  padding: clamp(24px, 2.6vw, 34px) clamp(24px, 2.6vw, 32px);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.hp .mkt-econ__stat + .mkt-econ__stat {
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+.hp .mkt-econ__stat-v {
+  font-size: clamp(56px, 6vw, 84px);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+.hp .mkt-econ__stat-unit {
+  font-size: 0.5em;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.6);
+  margin-left: 2px;
+}
+.hp .mkt-econ__stat-v--word {
+  letter-spacing: -0.02em;
+}
+.hp .mkt-econ__stat-l {
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.005em;
+}
+.hp .mkt-econ__stat-b {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* ─── Global A2A ─────────────────────────────────────────────────── */
+.hp .mkt-rails {
+  list-style: none;
+  margin: 44px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+.hp .mkt-rail {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--bg);
+  padding: 22px 22px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.hp .mkt-rail__code {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--faint);
+  margin-bottom: 14px;
+}
+.hp .mkt-rail__region {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.hp .mkt-rail__rails {
+  font-size: 14.5px;
+  color: var(--muted);
+}
+/* SWIFT spans the row beneath the four markets: code, currencies and rails
+   sit on one baseline instead of stacking. */
+.hp .mkt-rail--wide {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 18px;
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+.hp .mkt-rail--wide .mkt-rail__code {
+  margin-bottom: 0;
+  min-width: 48px;
+}
+.hp .mkt-rail--wide .mkt-rail__rails {
+  color: var(--muted);
+}
+.hp .mkt-global__who {
+  margin: 36px 0 0;
+  border-top: 1px solid var(--line-strong);
+}
+.hp .mkt-global__who-row {
+  display: grid;
+  grid-template-columns: minmax(0, 140px) 1fr;
+  gap: 24px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 17px;
+  line-height: 1.45;
+}
+.hp .mkt-global__who-row dt {
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+}
+.hp .mkt-global__who-row dd {
+  margin: 0;
+  color: var(--muted);
+}
+
+/* ─── Workflows ──────────────────────────────────────────────────── */
+.hp .mkt-wf__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 44px;
+}
+.hp .mkt-wf__card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--bg);
+  padding: 26px 26px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.hp .mkt-wf__t {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.hp .mkt-wf__b {
+  margin: 0 0 8px;
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+/* The rule in the console's shorthand. --mono is Outfit on this site, so a
+   real monospace stack is named here (same as the /fintechs code block). */
+.hp .mkt-wf__rule {
+  display: block;
+  margin-top: auto;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg-soft);
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  overflow-wrap: anywhere;
+}
+.hp .mkt-wf__rule i {
+  font-style: normal;
+  color: var(--muted);
+}
+.hp .mkt-wf__rule b {
+  font-weight: 600;
+  color: var(--ink);
+}
+.hp .mkt-wf__foot {
+  margin: 24px 0 0;
+  font-size: 15px;
+  color: var(--muted);
+}
+
+/* ─── Seller of record ───────────────────────────────────────────── */
+.hp .mkt-sor__grid,
+.hp .mkt-wl__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(28px, 4vw, 72px);
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .hp .mkt-sor__grid,
+  .hp .mkt-wl__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+.hp .mkt-sor__p {
+  margin: 24px 0 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--line-strong);
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--ink);
+  font-weight: 500;
+  max-width: 48ch;
+  text-wrap: pretty;
+}
+.hp .mkt-sor__card {
+  max-width: 520px;
+  justify-self: end;
+  width: 100%;
+}
+.hp .mkt-sor__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.hp .mkt-sor__list li {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 14px;
+  align-items: start;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 15.5px;
+  line-height: 1.45;
+  color: var(--ink);
+}
+.hp .mkt-sor__list li:last-child {
+  border-bottom: 0;
+  padding-bottom: 4px;
+}
+.hp .mkt-sor__check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--bg);
+  margin-top: 1px;
+}
+
+/* ─── Compared ───────────────────────────────────────────────────── */
+/* The table hangs 18px past the container's left edge so the highlighted
+   row's background can wrap its label while every label still starts on the
+   same line as the headings above. Column widths are pinned so the short
+   Protection column doesn't collapse against the long Cost column. */
+.hp .mkt-cmp__table {
+  width: calc(100% + 18px);
+  margin-left: -18px;
+  table-layout: fixed;
+  border-collapse: collapse;
+  margin-top: 40px;
+  font-size: 15px;
+  line-height: 1.45;
+}
+.hp .mkt-cmp__table col.mkt-cmp__col-name {
+  width: 20%;
+}
+.hp .mkt-cmp__table col.mkt-cmp__col-protection {
+  width: 13%;
+}
+.hp .mkt-cmp__table col.mkt-cmp__col-funds {
+  width: 25%;
+}
+.hp .mkt-cmp__table col.mkt-cmp__col-setup {
+  width: 15%;
+}
+.hp .mkt-cmp__table thead th {
+  text-align: left;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--faint);
+  padding: 0 18px 12px 0;
+  border-bottom: 1px solid var(--line-strong);
+}
+.hp .mkt-cmp__table thead th:first-child {
+  padding-left: 18px;
+}
+.hp .mkt-cmp__table tbody th,
+.hp .mkt-cmp__table tbody td {
+  text-align: left;
+  vertical-align: top;
+  padding: 20px 18px 20px 0;
+  border-bottom: 1px solid var(--line);
+}
+.hp .mkt-cmp__table tbody th {
+  padding-left: 18px;
+}
+.hp .mkt-cmp__table tbody th {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.hp .mkt-cmp__table tbody td {
+  color: var(--muted);
+}
+.hp .mkt-cmp__table tbody tr:last-child th,
+.hp .mkt-cmp__table tbody tr:last-child td {
+  border-bottom: 0;
+}
+.hp .mkt-cmp__table tr.is-highlight th,
+.hp .mkt-cmp__table tr.is-highlight td {
+  color: var(--ink);
+  background: var(--bg-soft);
+}
+.hp .mkt-cmp__table tr.is-highlight th {
+  border-radius: 12px 0 0 12px;
+}
+.hp .mkt-cmp__table tr.is-highlight td:last-child {
+  border-radius: 0 12px 12px 0;
+}
+.hp .mkt-cmp__table tr.is-highlight td {
+  font-weight: 500;
+}
+.hp .mkt-cmp__table td::before {
+  display: none;
+}
+
+/* ─── White label ────────────────────────────────────────────────── */
+.hp .mkt-wl__stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.hp .mkt-chips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.hp .mkt-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 8px;
+  border: 1px solid var(--line-strong);
+  background: var(--bg);
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+/* ─── Agentic ────────────────────────────────────────────────────── */
+.hp .mkt-agent__foot {
+  margin: 36px 0 0;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--ink);
+  font-weight: 500;
+  max-width: 56ch;
+  text-wrap: pretty;
+}
+
+/* ─── Closer ─────────────────────────────────────────────────────── */
+.hp .mkt-closer {
+  border-top: 0;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 1080px) {
+  .hp .mkt-rails {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 899px) {
+  .hp .mkt-order {
+    max-width: none;
+    justify-self: stretch;
+  }
+  .hp .mkt-hero .btn--ghost.btn--xl {
+    padding: 0 20px;
+  }
+
+  /* Flow chain stacks down a left rail. */
+  .hp .mkt-flow {
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin-top: 36px;
+    border-left: 1px solid var(--line-strong);
+  }
+  .hp .mkt-flow__step {
+    border-top: 0;
+    padding: 0 0 22px 24px;
+    gap: 4px;
+  }
+  .hp .mkt-flow__step:last-child {
+    padding-bottom: 0;
+  }
+  .hp .mkt-flow__step::before {
+    top: 6px;
+    left: -4px;
+  }
+
+  .hp .mkt-econ__stats {
+    grid-template-columns: 1fr;
+  }
+  .hp .mkt-wf__grid {
+    grid-template-columns: 1fr;
+  }
+  .hp .mkt-sor__card {
+    max-width: none;
+  }
+  .hp .mkt-global__who-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+    font-size: 16px;
+  }
+  .hp .mkt-problem__list li {
+    font-size: 16px;
+  }
+  .hp .mkt-problem__p {
+    font-size: 16.5px;
+  }
+  .hp .mkt-chip {
+    height: 36px;
+    font-size: 13.5px;
+    padding: 0 13px;
+  }
+
+  /* Comparison table folds into one card per option. */
+  .hp .mkt-cmp__table,
+  .hp .mkt-cmp__table tbody,
+  .hp .mkt-cmp__table tr,
+  .hp .mkt-cmp__table th,
+  .hp .mkt-cmp__table td {
+    display: block;
+  }
+  .hp .mkt-cmp__table thead {
+    display: none;
+  }
+  .hp .mkt-cmp__table {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 32px;
+  }
+  .hp .mkt-cmp__table tbody tr {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--bg);
+    padding: 6px 18px 8px;
+    margin-bottom: 12px;
+  }
+  .hp .mkt-cmp__table tbody tr.is-highlight {
+    border-color: var(--ink);
+  }
+  .hp .mkt-cmp__table tr.is-highlight th,
+  .hp .mkt-cmp__table tr.is-highlight td {
+    background: transparent;
+    border-radius: 0;
+  }
+  .hp .mkt-cmp__table thead th:first-child,
+  .hp .mkt-cmp__table tbody th {
+    padding-left: 0;
+  }
+  .hp .mkt-cmp__table tbody th {
+    padding: 14px 0 10px;
+    white-space: normal;
+    border-bottom: 1px solid var(--line-strong);
+  }
+  .hp .mkt-cmp__table tbody td {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .hp .mkt-cmp__table tbody tr:last-child td:last-child,
+  .hp .mkt-cmp__table tbody td:last-child {
+    border-bottom: 0;
+  }
+  .hp .mkt-cmp__table td::before {
+    content: attr(data-label);
+    display: block;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin-bottom: 3px;
+  }
+}
+@media (max-width: 540px) {
+  .hp .mkt-rails {
+    grid-template-columns: 1fr;
+  }
+  .hp .mkt-rail--wide {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding-top: 22px;
+    padding-bottom: 20px;
+  }
+  .hp .mkt-rail--wide .mkt-rail__code {
+    margin-bottom: 14px;
+  }
+  .hp .mkt-order__parties {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .hp .mkt-order__party--to {
+    text-align: left;
+  }
+  .hp .mkt-order__party-arrow {
+    transform: rotate(90deg);
+    width: 16px;
+  }
+}

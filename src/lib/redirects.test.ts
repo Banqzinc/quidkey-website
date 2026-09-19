@@ -21,6 +21,7 @@ describe('resolveRedirect', () => {
     expect(resolveRedirect('/partners')).toBe('/fintechs')
     expect(resolveRedirect('/solutions/fintechs')).toBe('/fintechs')
     expect(resolveRedirect('/solutions/saas')).toBe('/')
+    expect(resolveRedirect('/solutions/marketplaces')).toBe('/marketplace')
   })
 
   it('leaves /contact alone now that it is a live page again', () => {
@@ -56,6 +57,7 @@ describe('resolveRedirect', () => {
     expect(resolveRedirect('/fintechs')).toBeNull()
     expect(resolveRedirect('/calculator')).toBeNull()
     expect(resolveRedirect('/surcharge-calculator')).toBeNull()
+    expect(resolveRedirect('/marketplace')).toBeNull()
     // A redirect *target* must not itself be treated as a redirect source.
     expect(resolveRedirect('/blog/pay-by-bank-the-future-of-payments')).toBeNull()
   })

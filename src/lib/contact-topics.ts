@@ -11,12 +11,20 @@ export const CONTACT_TOPIC_KEYS = [
   'fx_high_volume',
   'fx_provider',
   'pricing_high_volume',
+  'marketplace',
 ] as const
 
 export type ContactTopic = (typeof CONTACT_TOPIC_KEYS)[number]
 
 /** Where the dialog was opened from. Tracked, never sent to HubSpot. */
-export type ContactSource = 'fx_hero' | 'fx_providers' | 'fx_closer' | 'pricing' | 'page'
+export type ContactSource =
+  | 'fx_hero'
+  | 'fx_providers'
+  | 'fx_closer'
+  | 'pricing'
+  | 'marketplace_hero'
+  | 'marketplace_closer'
+  | 'page'
 
 export type ContactTopicCopy = {
   /** Dialog heading. Sentence case, ends with a full stop like the site's other headings. */
@@ -53,6 +61,12 @@ export const CONTACT_TOPICS: Record<ContactTopic, ContactTopicCopy> = {
     heading: 'Let’s talk high-volume pricing.',
     prompt: 'Roughly how many payments a month, the average value, and which markets?',
     label: 'Pricing: high volume',
+  },
+  marketplace: {
+    heading: 'Let’s build Protected Pay on your marketplace.',
+    prompt:
+      'What does your marketplace sell, where are your buyers and sellers, and how do they pay each other today?',
+    label: 'Marketplace: Protected Pay',
   },
 }
 
