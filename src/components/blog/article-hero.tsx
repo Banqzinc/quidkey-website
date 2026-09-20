@@ -23,7 +23,7 @@ export function ArticleHero({ post }: { post: BlogPost }) {
         <div className="ahero__meta">
           <span className="ahero__cat">{category}</span>
           <span className="ahero__dot" aria-hidden="true" />
-          <span>{date}</span>
+          <time dateTime={post.dateISO}>{date}</time>
           <span className="ahero__dot" aria-hidden="true" />
           <span>{readMin} min read</span>
         </div>
@@ -43,7 +43,9 @@ export function ArticleHero({ post }: { post: BlogPost }) {
           </div>
           <div className="ahero__stat">
             <span className="ahero__stat-lbl">Published</span>
-            <span className="ahero__stat-val">{date}</span>
+            <time className="ahero__stat-val" dateTime={post.dateISO}>
+              {date}
+            </time>
           </div>
           <div className="ahero__stat">
             <span className="ahero__stat-lbl">Reading time</span>

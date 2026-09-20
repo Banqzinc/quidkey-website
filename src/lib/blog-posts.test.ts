@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { getBlogPost, getRelatedPosts, getYouTubeEmbedUrl } from './blog-posts'
+import { articleAuthor, blogPosts, getBlogPost, getRelatedPosts, getYouTubeEmbedUrl } from './blog-posts'
 
 describe('blog post slug resolution', () => {
   it('resolves canonical posts from legacy slugs', () => {
@@ -26,5 +26,34 @@ describe('blog post slug resolution', () => {
 describe('youtube embeds', () => {
   it('uses the privacy-enhanced YouTube embed domain', () => {
     expect(getYouTubeEmbedUrl('abc123')).toBe('https://www.youtube-nocookie.com/embed/abc123')
+  })
+})
+
+describe('articleAuthor', () => {
+  it('credits the company byline to the organisation, not a person', () => {
+    const post = blogPosts.find((p) => p.author === 'Quidkey Team')
+
+    expect(post).toBeDefined()
+    expect(articleAuthor(post!)).toEqual({ kind: 'organization' })
+  })
+
+  it('credits a named byline to that person with their profile link', () => {
+    const post = getBlogPost('the-missing-primitive-in-the-agent-economy')
+
+    expect(articleAuthor(post!)).toEqual({
+      kind: 'person',
+      name: 'Rabea Bader',
+      url: 'https://www.linkedin.com/in/rabea-bader/',
+    })
+  })
+})
+
+describe('author profile links', () => {
+  it('are LinkedIn profile URLs wherever a post sets one', () => {
+    for (const post of blogPosts) {
+      if (post.authorLinkedIn) {
+        expect(post.authorLinkedIn).toMatch(/^https:\/\/www\.linkedin\.com\/in\/[^/]+\/$/)
+      }
+    }
   })
 })

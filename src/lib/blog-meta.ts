@@ -8,6 +8,7 @@
 //   minute, rounded up, with a 4-minute floor.
 
 import type { BlogPost } from '@/lib/blog-posts'
+import { slugify } from './slugify'
 
 export type BlogCategory = 'Engineering' | 'Product' | 'Leadership'
 
@@ -88,20 +89,6 @@ export function countWords(blocks: BlogPost['blocks']): number {
   return blocks.reduce((n, b) => n + countBlockWords(b), 0)
 }
 
-/**
- * Convert a heading into a URL-safe slug for use as an in-page anchor.
- * Lowercases, strips non-word chars, collapses whitespace to hyphens.
- */
-export function slugifyHeading(text: string): string {
-  return text
-    .normalize('NFKD')
-    .replace(/[̀-ͯ]/g, '') // strip combining diacritics
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, '') // drop punctuation
-    .trim()
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-}
 
 export type BlogSection = {
   id: string
@@ -121,7 +108,7 @@ export function deriveSections(blocks: BlogPost['blocks']): BlogSection[] {
   const seen = new Map<string, number>()
   for (const b of blocks) {
     if (b.type !== 'h2') continue
-    const base = slugifyHeading(b.text) || 'section'
+    const base = slugify(b.text) || 'section'
     const count = (seen.get(base) ?? 0) + 1
     seen.set(base, count)
     const id = count === 1 ? base : `${base}-${count}`

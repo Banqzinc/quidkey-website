@@ -5,7 +5,7 @@ export function ShopifyInstallMock() {
     <div className="intg__shopify">
       <div className="intg__shopify-head">
         <div className="intg__shopify-head-l">
-          <img src="/homepage/shopify-bag-black.webp" alt="Shopify" className="intg__shopify-headlogo" width="14" height="14" />
+          <img src="/homepage/shopify-bag-black.webp" alt="Shopify" className="intg__shopify-headlogo" width="14" height="14" loading="lazy" decoding="async" />
           <span>Shopify App Store</span>
         </div>
         <span />
@@ -13,7 +13,7 @@ export function ShopifyInstallMock() {
       <div className="intg__shopify-body">
         <div className="intg__shopify-app">
           <div className="intg__shopify-icon">
-            <img src="/quidkey-logo.svg" alt="Quidkey" width="32" height="32" />
+            <img src="/quidkey-logo.svg" alt="Quidkey" width="32" height="32" loading="lazy" decoding="async" />
           </div>
           <div className="intg__shopify-meta">
             <div className="intg__shopify-name">Quidkey · Pay by Bank</div>

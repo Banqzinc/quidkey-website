@@ -12,6 +12,7 @@ export function ArticleHeroFigure({ post }: { post: BlogPost }) {
             width={post.imageWidth ?? 1600}
             height={post.imageHeight ?? 900}
             loading="eager"
+            fetchPriority="high"
             decoding="async"
           />
         </div>
