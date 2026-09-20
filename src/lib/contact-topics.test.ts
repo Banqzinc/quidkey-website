@@ -6,6 +6,7 @@ describe('parseTopic', () => {
   it('returns a known topic unchanged', () => {
     expect(parseTopic('fx_high_volume')).toBe('fx_high_volume')
     expect(parseTopic('pricing_high_volume')).toBe('pricing_high_volume')
+    expect(parseTopic('marketplace')).toBe('marketplace')
   })
 
   it('falls back to the general topic for anything unknown', () => {
@@ -43,5 +44,6 @@ describe('contactPath', () => {
 
   it('carries any other topic as a search param', () => {
     expect(contactPath('fx_high_volume')).toBe('/contact?topic=fx_high_volume')
+    expect(contactPath('marketplace')).toBe('/contact?topic=marketplace')
   })
 })

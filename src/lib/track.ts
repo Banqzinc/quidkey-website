@@ -17,6 +17,8 @@ export type CtaLabel = 'get_started' | 'sign_in' | 'demo' | 'docs' | 'developers
 export type CtaLocation = 'nav' | 'hero' | 'closer' | 'pricing' | 'footer' | 'contact'
 export type FxCheckCtaLocation = 'hero' | 'providers' | 'how_it_works' | 'closer'
 export type FxCheckCtaTarget = 'connect_stripe' | 'talk_to_us'
+export type MarketplaceCtaLocation = 'hero' | 'closer'
+export type MarketplaceCtaTarget = 'talk_to_us' | 'how_it_works' | 'build'
 export type FlowKind = 'merchant' | 'fintech'
 export type ToggleSource = 'nav' | 'hero'
 export type ShareChannel = 'x' | 'linkedin' | 'email' | 'copy_link'
@@ -39,6 +41,8 @@ export type HomepageEvent =
   | { name: 'fx_check_view' }
   | { name: 'fx_check_cta_click'; location: FxCheckCtaLocation; target: FxCheckCtaTarget }
   | { name: 'fx_check_faq_open'; question: string }
+  | { name: 'marketplace_view' }
+  | { name: 'marketplace_cta_click'; location: MarketplaceCtaLocation; target: MarketplaceCtaTarget }
   | { name: 'contact_view'; topic: ContactTopic }
   | { name: 'contact_open'; topic: ContactTopic; source: ContactSource }
   | { name: 'contact_submit'; topic: ContactTopic; outcome: 'success' | 'error' }
