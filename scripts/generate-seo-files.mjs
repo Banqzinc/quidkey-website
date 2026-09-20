@@ -1,9 +1,28 @@
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
 
+import { parseBlogPosts } from './lib/blog-post-index.mjs'
+
 const ROOT = path.resolve(new URL('.', import.meta.url).pathname, '..')
 const ROUTES_DIR = path.join(ROOT, 'src', 'routes')
 const PUBLIC_DIR = path.join(ROOT, 'public')
+const BLOG_POSTS_FILE = path.join(ROOT, 'src', 'lib', 'blog-posts.ts')
+
+const SITE_SUMMARY =
+  'Add Pay by Bank to your checkout and automate what happens after payment: tax, splits, and FX. Global coverage, one integration.'
+
+// One line per static route for llms.txt. A route without an entry fails the
+// build so a new page cannot ship unlabelled.
+const PAGE_LABELS = {
+  '/': 'Homepage: Pay by Bank checkout for merchants, coverage, pricing and integrations',
+  '/blog': 'Blog: articles on pay by bank, open banking, card fees and payments infrastructure',
+  '/calculator': 'Fee calculator: compare Shopify card fees with Quidkey Pay by Bank',
+  '/contact': 'Contact: talk to the Quidkey team',
+  '/fintechs': 'For PSPs and fintechs: white-labelled Pay by Bank rails and treasury',
+  '/fx-check': 'FX check: what Stripe or Shopify FX costs on cross-border sales',
+  '/marketplace': 'For B2B marketplaces: Protected Pay between buyers and sellers',
+  '/surcharge-calculator': 'Surcharge calculator: what the Australian card surcharge ban costs a business',
+}
 
 function normalizeOrigin(input) {
   try {
@@ -62,19 +81,6 @@ function routePathFromFile(filePath) {
   return `/${withoutExt}`
 }
 
-async function extractBlogPosts() {
-  const file = path.join(ROOT, 'src', 'lib', 'blog-posts.ts')
-  const text = await fs.readFile(file, 'utf8')
-
-  const posts = []
-  const re = /slug:\s*'([^']+)'[\s\S]*?dateISO:\s*'([^']+)'/g
-  let match
-  while ((match = re.exec(text))) {
-    posts.push({ slug: match[1], dateISO: match[2] })
-  }
-  return posts
-}
-
 function formatDateISO(date = new Date()) {
   return date.toISOString().slice(0, 10)
 }
@@ -99,7 +105,7 @@ async function generate() {
     // don't include error pages etc (none today), but keep deterministic ordering
     .sort((a, b) => a.localeCompare(b))
 
-  const blogPosts = await extractBlogPosts()
+  const blogPosts = parseBlogPosts(await fs.readFile(BLOG_POSTS_FILE, 'utf8'))
   const blogRoutes = blogPosts.map((p) => ({
     path: `/blog/${p.slug}`,
     lastmod: p.dateISO,
@@ -129,6 +135,30 @@ async function generate() {
     '',
   ].join('\n')
 
+  const llms = [
+    '# Quidkey',
+    '',
+    `> ${SITE_SUMMARY}`,
+    '',
+    '## Pages',
+    ...staticRoutes.map((p) => {
+      const label = PAGE_LABELS[p]
+      if (!label) throw new Error(`No llms.txt label for route ${p}; add it to PAGE_LABELS`)
+      return `- [${label}](${siteOrigin}${p})`
+    }),
+    '',
+    '## Blog',
+    ...[...blogPosts]
+      .sort((a, b) => b.dateISO.localeCompare(a.dateISO))
+      .map((p) => `- [${p.title}](${siteOrigin}/blog/${p.slug}): ${p.dateISO}`),
+    '',
+    '## Developers',
+    '- [API docs](https://docs.quidkey.com)',
+    `- [OpenAPI](${siteOrigin}/openapi.json)`,
+    `- [Agent skills](${siteOrigin}/.well-known/agent-skills/index.json)`,
+    '',
+  ].join('\n')
+
   const robots = [
     '# https://www.robotstxt.org/robotstxt.html',
     'User-agent: *',
@@ -142,9 +172,10 @@ async function generate() {
   await fs.mkdir(PUBLIC_DIR, { recursive: true })
   await fs.writeFile(path.join(PUBLIC_DIR, 'sitemap.xml'), xml, 'utf8')
   await fs.writeFile(path.join(PUBLIC_DIR, 'robots.txt'), robots, 'utf8')
+  await fs.writeFile(path.join(PUBLIC_DIR, 'llms.txt'), llms, 'utf8')
 
   // eslint-disable-next-line no-console
-  console.log(`[generate-seo-files] Wrote sitemap.xml + robots.txt for ${siteOrigin} (${paths.length} URLs)`)
+  console.log(`[generate-seo-files] Wrote sitemap.xml, robots.txt and llms.txt for ${siteOrigin} (${paths.length} URLs)`)
 }
 
 await generate()
