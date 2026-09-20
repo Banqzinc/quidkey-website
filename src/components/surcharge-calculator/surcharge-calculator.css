@@ -400,18 +400,6 @@
   opacity: 0.55;
   cursor: default;
 }
-/* Visually hidden but still reachable by bots that parse the DOM. */
-.sc-calc .sc-gate__hp {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-  border: 0;
-}
 .sc-calc .sc-consent {
   display: flex;
   align-items: flex-start;

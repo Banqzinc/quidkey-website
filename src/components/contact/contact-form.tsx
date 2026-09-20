@@ -1,5 +1,6 @@
 import { useId, useRef, useState, type FormEvent, type ReactNode } from 'react'
 
+import { HoneypotField } from '@/components/forms/honeypot-field'
 import { CONTACT_TOPICS, type ContactSource, type ContactTopic } from '@/lib/contact-topics'
 import {
   CONTACT_LIMITS,
@@ -254,17 +255,7 @@ export function ContactForm({ topic, source, headingId, heading, intro }: Props)
         </Field>
       </div>
 
-      {/* Honeypot: bots fill hidden inputs, humans never see this. */}
-      <input
-        className="cform__hp"
-        type="text"
-        name="website"
-        tabIndex={-1}
-        autoComplete="off"
-        aria-hidden="true"
-        value={hp}
-        onChange={(e) => setHp(e.target.value)}
-      />
+      <HoneypotField value={hp} onChange={setHp} />
 
       {status === 'error' ? (
         <p className="cform__alert" role="alert">

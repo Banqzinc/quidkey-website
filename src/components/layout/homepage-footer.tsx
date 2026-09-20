@@ -20,7 +20,7 @@ type FooterLink = {
 function FooterColumn({ heading, links }: { heading: string; links: FooterLink[] }) {
   return (
     <div className="ft__col">
-      <h4>{heading}</h4>
+      <h2>{heading}</h2>
       <ul>
         {links.map((link) => {
           const isMailto = link.href.startsWith('mailto:')
@@ -147,7 +147,7 @@ export function HomepageFooter() {
       <div className="container">
         <div className="ft__top">
           <div>
-            <img src="/quidkey-logo.svg" alt="Quidkey" className="ft__brand-logo" width="116" height="32" />
+            <img src="/quidkey-logo.svg" alt="Quidkey" className="ft__brand-logo" width="116" height="32" loading="lazy" decoding="async" />
             <p className="ft__tag">
               Pay by Bank checkout and programmable treasury, on one ledger.
             </p>

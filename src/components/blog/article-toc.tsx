@@ -39,7 +39,7 @@ export function ArticleTOC({ slug, sections }: Props) {
 
   return (
     <aside className="atoc" aria-label="On this page">
-      <h4 className="atoc__h">On this page</h4>
+      <h2 className="atoc__h">On this page</h2>
       <ol className="atoc__list">
         {sections.map((s) => (
           <li key={s.id}>

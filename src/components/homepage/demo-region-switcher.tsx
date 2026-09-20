@@ -56,7 +56,7 @@ export function DemoRegionSwitcher() {
               btns.current[i] = el
             }}
             aria-checked={region === r}
-            aria-label={REGION_LABELS[r]}
+            aria-label={`${r}, ${REGION_LABELS[r]}`}
             tabIndex={region === r ? 0 : -1}
             className={`demo-region__opt ${region === r ? 'is-on' : ''}`}
             onClick={() => pick(r)}
