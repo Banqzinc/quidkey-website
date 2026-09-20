@@ -41,7 +41,7 @@
     },
     "response": {
       "fields": {
-        "success": "true when the registration succeeded.",
+        "success": "True when the registration succeeded.",
         "data": {
           "registration_id": "Identifier for this registration. Quote it when you ask about it.",
           "handle": "The handle in its canonical spelling, with its leading @.",
