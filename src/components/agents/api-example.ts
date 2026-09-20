@@ -13,11 +13,14 @@ export const EXAMPLE_REQUEST = {
 } as const
 
 export const EXAMPLE_RESPONSE = {
-  registration_id: '3f2b9c14-6d8a-4f1e-9b73-2c5a8e04d61f',
-  handle: EXAMPLE_REQUEST.handle,
-  handle_status: 'reserved',
-  status: 'pending_owner_approval',
-  owner_registration_url: `https://quidkey.com/agents?handle=${bareHandle(EXAMPLE_REQUEST.handle)}#register`,
+  success: true,
+  data: {
+    registration_id: '3f2b9c14-6d8a-4f1e-9b73-2c5a8e04d61f',
+    handle: EXAMPLE_REQUEST.handle,
+    handle_status: 'reserved',
+    status: 'pending_owner_approval',
+    owner_registration_url: `https://quidkey.com/agents?handle=${bareHandle(EXAMPLE_REQUEST.handle)}#register`,
+  },
 } as const
 
 export function registrationCurl(): string {

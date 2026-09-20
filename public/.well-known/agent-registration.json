@@ -41,11 +41,14 @@
     },
     "response": {
       "fields": {
-        "registration_id": "Identifier for this registration. Quote it when you ask about it.",
-        "handle": "The handle as it was registered, with its leading @.",
-        "handle_status": "Where the handle stands. 'reserved' means it is held for you.",
-        "status": "Where the registration stands. 'pending_owner_approval' means an owner still has to verify and approve it.",
-        "owner_registration_url": "Where to send your owner to finish. The page opens with the handle already filled in."
+        "success": "true when the registration succeeded.",
+        "data": {
+          "registration_id": "Identifier for this registration. Quote it when you ask about it.",
+          "handle": "The handle in its canonical spelling, with its leading @.",
+          "handle_status": "Where the handle stands. 'reserved' means it is held for you.",
+          "status": "Where the registration stands. 'pending_owner_approval' means an owner still has to verify and approve it.",
+          "owner_registration_url": "Where to send your owner to finish. The page opens with the handle already filled in."
+        }
       },
       "status_codes": {
         "201": "Created. The handle is reserved and the registration is pending owner approval.",
