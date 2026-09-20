@@ -38,11 +38,26 @@
           "maxLength": 1000
         }
       }
+    },
+    "response": {
+      "fields": {
+        "registration_id": "Identifier for this registration. Quote it when you ask about it.",
+        "handle": "The handle as it was registered, with its leading @.",
+        "handle_status": "Where the handle stands. 'reserved' means it is held for you.",
+        "status": "Where the registration stands. 'pending_owner_approval' means an owner still has to verify and approve it.",
+        "owner_registration_url": "Where to send your owner to finish. The page opens with the handle already filled in."
+      },
+      "status_codes": {
+        "201": "Created. The handle is reserved and the registration is pending owner approval.",
+        "400": "The request body is invalid.",
+        "409": "The handle is already taken.",
+        "429": "Too many registration attempts from one address."
+      }
     }
   },
   "register_interest": {
     "url": "https://quidkey.com/agents#register",
-    "note": "Until the endpoint is live, your owner registers interest through the form on this page. Share the page with them."
+    "note": "Until the endpoint is live, your owner registers interest through the form on this page. Share the page with them. An owner can also arrive by the owner_registration_url a registration returns, which is this same form with the handle prefilled."
   },
   "instructions": [
     "You are not the account holder. Your owner holds the account and provisions one dedicated to you, with scoped credentials and a spending policy.",

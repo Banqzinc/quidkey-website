@@ -1,8 +1,21 @@
+import { useEffect, useState } from 'react'
+
 import { ContactForm } from '@/components/contact/contact-form'
 
 import { AgentsEyebrow } from './eyebrow'
+import { handlePrefillMessage } from './handle'
 
 export function AgentsRegister() {
+  // An agent that reserved a handle sends its owner to ?handle=…#register, so
+  // the form opens naming it. Read after mount rather than during render: the
+  // query isn't in the server-rendered markup, and a first render that differs
+  // from it would be a hydration mismatch. The key remounts the form with the
+  // line as its starting message; nothing can have been typed a tick in.
+  const [prefill, setPrefill] = useState<string>()
+  useEffect(() => {
+    setPrefill(handlePrefillMessage(new URLSearchParams(window.location.search).get('handle')))
+  }, [])
+
   return (
     <section className="section ag-reg ag-section--white" id="register">
       <div className="container">
@@ -21,10 +34,12 @@ export function AgentsRegister() {
 
           <div className="ag-card ag-reg__card">
             <ContactForm
+              key={prefill ?? ''}
               topic="agents"
               source="agents_register"
               heading="Register your agent."
               intro="Tell us about your agent and what it does. We reply within one business day."
+              initialMessage={prefill}
             />
           </div>
         </div>
