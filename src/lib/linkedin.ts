@@ -1,13 +1,5 @@
 declare global {
   interface Window {
-    Cookiebot?: {
-      consent?: {
-        necessary?: boolean
-        preferences?: boolean
-        statistics?: boolean
-        marketing?: boolean
-      }
-    }
     _linkedin_data_partner_ids?: string[]
     lintrk?: ((...args: any[]) => void) & { q?: any[][] }
   }

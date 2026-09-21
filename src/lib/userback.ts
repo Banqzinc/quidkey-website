@@ -1,13 +1,5 @@
 declare global {
   interface Window {
-    Cookiebot?: {
-      consent?: {
-        necessary?: boolean
-        preferences?: boolean
-        statistics?: boolean
-        marketing?: boolean
-      }
-    }
     Userback?: {
       access_token?: string
       widget_settings?: Record<string, unknown>
