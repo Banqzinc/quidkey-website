@@ -88,7 +88,7 @@
   letter-spacing: 0.04em;
   color: var(--muted);
 }
-.hp .bhero__meta > span{ white-space: nowrap; }
+.hp .bhero__meta > span, .hp .bhero__meta > time{ white-space: nowrap; }
 .hp .bhero__meta-dot{
   width: 3px; height: 3px;
   border-radius: 999px;

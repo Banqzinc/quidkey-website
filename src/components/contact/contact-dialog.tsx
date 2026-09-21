@@ -48,7 +48,8 @@ export function ContactDialog({
     <dialog
       ref={ref}
       className="cdlg"
-      aria-labelledby={TITLE_ID}
+      aria-label="Talk to us"
+      aria-labelledby={request ? TITLE_ID : undefined}
       onClose={onClose}
       onClick={onBackdropClick}
     >

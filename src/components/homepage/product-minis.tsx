@@ -40,6 +40,8 @@ export function CheckoutMini() {
       <div className="cv__opt cv__opt--active">
         <div className="cv__logo">
           <img
+            loading="lazy"
+            decoding="async"
             src={`https://img.logo.dev/${bank.domain}?token=${LOGO_DEV_TOKEN}`}
             alt={`${bank.name} logo`}
             className={fading ? 'is-fading' : ''}

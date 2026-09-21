@@ -71,7 +71,9 @@ function PostCard({ post }: { post: BlogPost }) {
         </div>
         <div className="bcard__body">
           <div className="bcard__meta">
-            <span className="bcard__date">{formatBlogDate(post.dateISO)}</span>
+            <time className="bcard__date" dateTime={post.dateISO}>
+              {formatBlogDate(post.dateISO)}
+            </time>
             <span className="bcard__cat">{category}</span>
           </div>
           <h3 className="bcard__h">{post.title}</h3>
@@ -114,7 +116,7 @@ function BlogHero({ post }: { post: BlogPost }) {
               <div className="bhero__meta">
                 <span style={{ color: 'var(--ink)', fontWeight: 600 }}>Latest</span>
                 <span className="bhero__meta-dot" />
-                <span>{formatBlogDate(post.dateISO)}</span>
+                <time dateTime={post.dateISO}>{formatBlogDate(post.dateISO)}</time>
                 <span className="bhero__meta-dot" />
                 <span>{category}</span>
                 <span className="bhero__meta-dot" />

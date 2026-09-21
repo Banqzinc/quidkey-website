@@ -47,3 +47,22 @@ describe('contactPath', () => {
     expect(contactPath('marketplace')).toBe('/contact?topic=marketplace')
   })
 })
+
+describe('CONTACT_TOPICS page metadata', () => {
+  it('gives every topic its own page title', () => {
+    const titles = Object.values(CONTACT_TOPICS).map((copy) => copy.title)
+
+    for (const title of titles) expect(title.trim().length).toBeGreaterThan(0)
+    expect(new Set(titles).size).toBe(titles.length)
+  })
+
+  it('gives every topic its own meta description at a length search engines show in full', () => {
+    const descriptions = Object.values(CONTACT_TOPICS).map((copy) => copy.description)
+
+    for (const description of descriptions) {
+      expect(description.length).toBeGreaterThanOrEqual(120)
+      expect(description.length).toBeLessThanOrEqual(160)
+    }
+    expect(new Set(descriptions).size).toBe(descriptions.length)
+  })
+})

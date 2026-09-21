@@ -13,6 +13,7 @@ import {
   type CardTypeId,
 } from './surcharge-fees'
 import { formatMix, parseMix, type SurchargeSearch } from './surcharge-params'
+import { HoneypotField } from '@/components/forms/honeypot-field'
 import { isValidEmail, normalizeEmail, submitLead } from '@/lib/submit-lead'
 import { track } from '@/lib/track'
 import { DEMO_BOOKING_URL, MERCHANTS_SIGNUP_URL, buildMailto } from '@/lib/urls'
@@ -321,17 +322,7 @@ function LeadGate({
         </button>
       </div>
 
-      {/* Honeypot: bots fill hidden inputs, humans never see this. */}
-      <input
-        className="sc-gate__hp"
-        type="text"
-        name="website"
-        tabIndex={-1}
-        autoComplete="off"
-        aria-hidden="true"
-        value={hp}
-        onChange={(e) => setHp(e.target.value)}
-      />
+      <HoneypotField value={hp} onChange={setHp} />
 
       <label className="sc-consent">
         <input

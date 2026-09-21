@@ -1,5 +1,6 @@
 import { type FormEvent, useState } from 'react'
 
+import { HoneypotField } from '@/components/forms/honeypot-field'
 import { type NewsletterError, subscribeNewsletter } from '@/lib/subscribe-newsletter'
 import { track } from '@/lib/track'
 
@@ -106,17 +107,7 @@ export function NewsletterForm() {
         </button>
       </div>
 
-      {/* Honeypot: bots fill hidden inputs, humans never see this. */}
-      <input
-        className="ft__news-hp"
-        type="text"
-        name="website"
-        tabIndex={-1}
-        autoComplete="off"
-        aria-hidden="true"
-        value={hp}
-        onChange={(event) => setHp(event.target.value)}
-      />
+      <HoneypotField value={hp} onChange={setHp} />
 
       {status === 'sent' ? (
         <span className="ft__news-ok" role="status">

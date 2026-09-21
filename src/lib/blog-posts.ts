@@ -1,3 +1,5 @@
+import type { ArticleAuthor } from './seo'
+
 export type BlogPostBlock =
   | { type: 'h2' | 'h3' | 'p'; text: string }
   | { type: 'ul' | 'ol'; items: string[] }
@@ -180,7 +182,7 @@ export const blogPosts: BlogPost[] = [
       { type: 'h2', text: 'What is PayTo and why are businesses looking into it?' },
       {
         type: 'html',
-        html: "PayTo is Australia’s account-to-account payment system, built on the New Payments Platform by NPP Australia in collaboration with the RBA. It was introduced to modernise bank payments, giving businesses and consumers a real-time alternative to cards and direct debits. Instead of paying with a card, customers approve a payment directly from their bank account using their banking app. (<a href=\"https://payto.com.au/wp-content/uploads/2022/06/PayTo-Service-Overview-Nov-2021-2.0-2.pdf\">Australian Payments Plus</a>)",
+        html: "PayTo is Australia’s account-to-account payment system, built on the New Payments Platform by NPP Australia in collaboration with the RBA. It was introduced to modernise bank payments, giving businesses and consumers a real-time alternative to cards and direct debits. Instead of paying with a card, customers approve a payment directly from their bank account using their banking app. (<a href=\"https://www.auspayplus.com.au/solutions/payto\">Australian Payments Plus</a>)",
       },
       {
         type: 'p',
@@ -680,7 +682,7 @@ export const blogPosts: BlogPost[] = [
       "AI agents can do real work but can\u2019t safely spend money. Bounded financial authority is the last missing primitive \u2014 and it\u2019s hiding in plain sight.",
     keyword: 'AI agent payments',
     author: 'Rabea Bader',
-    authorLinkedIn: 'https://www.linkedin.com/in/rabeabader/',
+    authorLinkedIn: 'https://www.linkedin.com/in/rabea-bader/',
     image: '/images/blog/missing-primitive-agent-economy.webp',
     imageWidth: 1600,
     imageHeight: 900,
@@ -2544,4 +2546,12 @@ export function getRelatedPosts(slugs: string[]): BlogPost[] {
   return slugs
     .map((slug) => getBlogPost(slug))
     .filter((post): post is BlogPost => post !== undefined)
+}
+
+const COMPANY_BYLINE = 'Quidkey Team'
+
+/** Who the Article schema credits: the company for the team byline, otherwise the named writer. */
+export function articleAuthor(post: BlogPost): ArticleAuthor {
+  if (post.author === COMPANY_BYLINE) return { kind: 'organization' }
+  return { kind: 'person', name: post.author, url: post.authorLinkedIn }
 }

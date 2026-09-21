@@ -42,7 +42,9 @@ function RelatedCard({ post, fromSlug }: { post: BlogPost; fromSlug: string }) {
         </div>
         <div className="bcard__body">
           <div className="bcard__meta">
-            <span className="bcard__date">{formatBlogDate(post.dateISO)}</span>
+            <time className="bcard__date" dateTime={post.dateISO}>
+              {formatBlogDate(post.dateISO)}
+            </time>
             <span className="bcard__cat">{category}</span>
           </div>
           <h3 className="bcard__h">{post.title}</h3>

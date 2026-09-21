@@ -5,7 +5,7 @@ import { ContactForm } from '@/components/contact/contact-form'
 import { HomepageFooter } from '@/components/layout/homepage-footer'
 import { HomepageNav } from '@/components/layout/homepage-nav'
 import { AudienceProvider } from '@/context/audience'
-import { DEFAULT_TOPIC, parseTopic, type ContactTopic } from '@/lib/contact-topics'
+import { CONTACT_TOPICS, DEFAULT_TOPIC, parseTopic, type ContactTopic } from '@/lib/contact-topics'
 import { buildSeo } from '@/lib/seo'
 import { track } from '@/lib/track'
 import { CONTACT_EMAIL, DEMO_BOOKING_URL, PARTNERS_EMAIL } from '@/lib/urls'
@@ -29,14 +29,15 @@ export const Route = createFileRoute('/contact')({
     topic: parseTopic(search.topic),
   }),
   search: { middlewares: [stripSearchParams(DEFAULT_SEARCH)] },
-  head: () =>
-    buildSeo({
-      title: 'Talk to us · Quidkey',
-      description:
-        'Ask about Pay by Bank, FX savings on cross-border sales, or high-volume pricing. Send a message or book a call, and a person replies within one business day.',
+  head: ({ match }) => {
+    const copy = CONTACT_TOPICS[match.search.topic]
+    return buildSeo({
+      title: `${copy.title} · Quidkey`,
+      description: copy.description,
       keywords: ['contact Quidkey', 'Quidkey sales', 'Pay by Bank enquiry'],
       path: '/contact',
-    }),
+    })
+  },
 })
 
 function ContactPage() {

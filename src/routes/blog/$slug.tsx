@@ -1,9 +1,12 @@
+import type { ComponentProps } from 'react'
+
 import { createFileRoute, Link } from '@tanstack/react-router'
 
 import { HomepageNav } from '@/components/layout/homepage-nav'
 import { HomepageFooter } from '@/components/layout/homepage-footer'
 import { AudienceProvider } from '@/context/audience'
 import {
+  articleAuthor,
   getBlogPost,
   getYouTubeEmbedUrl,
 } from '@/lib/blog-posts'
@@ -39,16 +42,17 @@ import '@/styles/homepage/overrides.css'
 const FONT_HREF =
   'https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Caveat:wght@500;600;700&family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap'
 
-function withHomepageFonts(seo: ReturnType<typeof buildSeo>) {
-  return {
-    ...seo,
-    links: [
-      ...(seo.links ?? []),
-      { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-      { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' },
-      { rel: 'stylesheet', href: FONT_HREF },
-    ],
-  }
+type HeadLink = ComponentProps<'link'>
+
+function withHomepageFonts(seo: ReturnType<typeof buildSeo>, extraLinks: HeadLink[] = []) {
+  const links: HeadLink[] = [
+    ...(seo.links ?? []),
+    { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+    { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' },
+    { rel: 'stylesheet', href: FONT_HREF },
+    ...extraLinks,
+  ]
+  return { ...seo, links }
 }
 
 export const Route = createFileRoute('/blog/$slug')({
@@ -73,7 +77,7 @@ export const Route = createFileRoute('/blog/$slug')({
       title: post.title,
       description: post.description,
       datePublished: post.dateISO,
-      author: post.author,
+      author: articleAuthor(post),
       url: `${siteUrl}/blog/${post.slug}`,
       imageUrl,
       keywords: post.keyword,
@@ -109,6 +113,8 @@ export const Route = createFileRoute('/blog/$slug')({
         },
         structuredData: [articleSchema, ...videoSchemas],
       }),
+      // The hero image is the LCP element on every post; let the browser start it early.
+      [{ rel: 'preload', as: 'image', href: post.image, fetchPriority: 'high' }],
     )
   },
   component: BlogPostPage,
@@ -166,23 +172,27 @@ function BlogPostPage() {
         <HomepageNav />
         <div className="article-page">
           <ArticleBreadcrumb category={category} />
-          <ArticleHero post={post} />
-          <ArticleHeroFigure post={post} />
-          <section className="abody">
-            <div className="container">
-              <div
-                className={`abody__grid${sections.length < 2 ? ' abody__grid--notoc' : ''}`}
-              >
-                <ArticleTOC slug={post.slug} sections={sections} />
-                <main id="main">
-                  <ArticleBody post={post} />
-                  <ArticleFooter post={post} />
-                </main>
-              </div>
-            </div>
-            <ArticleShareRail slug={post.slug} title={post.title} url={canonical} />
-          </section>
-          <ArticleRelated fromSlug={post.slug} relatedSlugs={post.relatedSlugs} />
+          <main id="main">
+            <article>
+              <ArticleHero post={post} />
+              <ArticleHeroFigure post={post} />
+              <section className="abody">
+                <div className="container">
+                  <div
+                    className={`abody__grid${sections.length < 2 ? ' abody__grid--notoc' : ''}`}
+                  >
+                    <ArticleTOC slug={post.slug} sections={sections} />
+                    <div>
+                      <ArticleBody post={post} />
+                      <ArticleFooter post={post} />
+                    </div>
+                  </div>
+                </div>
+                <ArticleShareRail slug={post.slug} title={post.title} url={canonical} />
+              </section>
+            </article>
+            <ArticleRelated fromSlug={post.slug} relatedSlugs={post.relatedSlugs} />
+          </main>
         </div>
         <HomepageFooter />
       </div>

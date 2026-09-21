@@ -1,3 +1,7 @@
+import type { JSX } from 'react'
+
+import { slugify } from './slugify'
+
 function normalizeOrigin(input: string) {
   // Accept both full origins and full URLs.
   // Always return an origin (no path/query/hash), without trailing slash.
@@ -35,6 +39,9 @@ const DEFAULT_OG_IMAGE =
 type JsonLdPrimitive = string | number | boolean | null
 type JsonLdValue = JsonLdPrimitive | JsonLdValue[] | { [key: string]: JsonLdValue | undefined }
 export type JsonLdObject = { [key: string]: JsonLdValue | undefined }
+
+// What a route head's `meta` accepts, plus the JSON-LD entry TanStack Start renders as a <script>.
+type HeadMeta = JSX.IntrinsicElements['meta'] & { 'script:ld+json'?: JsonLdObject }
 
 type BuildSeoInput = {
   title: string
@@ -98,7 +105,7 @@ export function buildSeo({
     typeof keywords === 'string' ? keywords : keywords?.filter(Boolean).join(', ')
   const sharingTitle = ogTitle ?? title
 
-  const meta = [
+  const meta: HeadMeta[] = [
     { title },
     { name: 'description', content: description },
     ...(keywordsContent ? [{ name: 'keywords', content: keywordsContent }] : []),
@@ -145,6 +152,38 @@ export function buildSeo({
   }
 }
 
+export type ArticleAuthor =
+  | { kind: 'person'; name: string; url?: string }
+  | { kind: 'organization' }
+
+function organizationNode() {
+  const site = getSiteUrl()
+  return {
+    '@type': 'Organization' as const,
+    '@id': `${site}/#organization`,
+    name: 'Quidkey',
+    url: site,
+    logo: {
+      '@type': 'ImageObject' as const,
+      '@id': `${site}/#logo`,
+      url: DEFAULT_OG_IMAGE,
+    },
+  }
+}
+
+function personNode({ name, url }: { name: string; url?: string }) {
+  return {
+    '@type': 'Person' as const,
+    '@id': `${getSiteUrl()}/#person-${slugify(name)}`,
+    name,
+    ...(url ? { url, sameAs: [url] } : {}),
+  }
+}
+
+function authorNode(author: ArticleAuthor) {
+  return author.kind === 'organization' ? organizationNode() : personNode(author)
+}
+
 /**
  * Generates Article schema JSON-LD for blog posts.
  * Inject this into the page as a <script type="application/ld+json"> tag.
@@ -163,7 +202,7 @@ export function buildArticleSchema({
   description: string
   datePublished: string
   dateModified?: string
-  author: string
+  author: ArticleAuthor
   url: string
   imageUrl?: string
   keywords?: string | string[]
@@ -173,24 +212,15 @@ export function buildArticleSchema({
   return {
     '@context': 'https://schema.org',
     '@type': 'Article',
+    '@id': `${url}#article`,
     headline: title,
     description: description,
     image: imageUrl ?? DEFAULT_OG_IMAGE,
     datePublished: datePublished,
     dateModified: dateModified ?? datePublished,
     ...(keywordsValue ? { keywords: keywordsValue } : {}),
-    author: {
-      '@type': 'Person',
-      name: author,
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: 'Quidkey',
-      logo: {
-        '@type': 'ImageObject',
-        url: DEFAULT_OG_IMAGE,
-      },
-    },
+    author: authorNode(author),
+    publisher: organizationNode(),
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': url,
