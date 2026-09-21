@@ -16,7 +16,6 @@ const PRODUCT_COPY: {
   headPill: Pill
   sub: string
   also: string[]
-  card: { id: string; title: string }
 } = {
   eyebrow: 'Programmable treasury',
   h: (
@@ -35,7 +34,6 @@ const PRODUCT_COPY: {
     'Audit-ready ledger',
     'Webhooks for everything',
   ],
-  card: { id: 'treasury', title: 'Treasury' },
 }
 
 export function Products() {
@@ -68,10 +66,7 @@ export function Products() {
         </div>
 
         <div className="products__grid products__grid--1">
-          <div
-            id={c.card.id}
-            className="product product--split product--stacked product--viz-only"
-          >
+          <div className="product product--split product--stacked product--viz-only">
             <div className="product__col product__col--viz">
               <div className="products__mockup-wrap">
                 <Suspense fallback={<TreasuryMockupSkeleton />}>
