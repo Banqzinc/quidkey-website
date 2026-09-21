@@ -1,4 +1,4 @@
-// Illustrative FX savings maths for the /fx-check page.
+// Illustrative FX savings maths for the /fx-savings page.
 //
 // Stripe and Shopify convert international sales at about 2% for stores
 // outside the US. Against that, Quidkey saves a flat 0.5% of the converted
@@ -6,8 +6,8 @@
 // merchants are on different deals, so "Quidkey charges 1.5%" would be wrong
 // for many of them. Higher volumes are priced in a conversation, so the page
 // quotes no other rate. Bank conversions save more, but the numbers stay on
-// the conservative Stripe and Shopify rate. The exact figure comes from the
-// merchant's own Stripe data via the console fx-check flow.
+// the conservative Stripe and Shopify rate. The exact figure is worked out
+// with the merchant once they tell us what they convert.
 /** What Stripe and Shopify charge to convert, for stores outside the US. */
 export const CURRENT_FEE_PERCENT = 2
 /** How much of the converted volume Quidkey saves, in percentage points. */

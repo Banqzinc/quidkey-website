@@ -1,17 +1,18 @@
 import type { FaqItem } from '@/components/sections/faq'
 
-// Every answer stays within what the fx-check code actually enforces:
-// Stripe OAuth grant used only to read, immediate release on disconnect, 48h auto-disconnect,
-// 90-day estimate window, no account required. Keep this file in step with
-// the console consent copy (stripe-connect-consent.tsx in the monorepo).
-export const FX_CHECK_FAQS: FaqItem[] = [
+// Every answer stays within what Quidkey actually does for FX today: the
+// merchant keeps their provider and checkout, only the foreign-currency payout
+// account changes, the saving is worked out from what they tell us and the
+// rate is agreed at signup. Nothing here depends on the console's Stripe
+// check, which the website does not offer for now.
+export const FX_SAVINGS_FAQS: FaqItem[] = [
   {
     q: 'Do I have to move from Stripe to Quidkey?',
     a: 'No. You keep your Stripe account, your checkout, your integrations and your Stripe setup, and you keep taking payments exactly as you do now. Quidkey only takes over the currency conversion. The one change is where Stripe pays out your foreign currency: to a Quidkey account in that currency, which we convert and pass on to your bank. Everything else runs as it does today.',
   },
   {
     q: 'Do you only work with Stripe?',
-    a: 'No. Stripe is the one you can connect yourself, so we can show you your exact savings in minutes. Shopify works too. You add Quidkey’s local account to Shopify for your payouts and we handle the rest. If you use another provider, or you move money between countries, talk to us and we’ll work out your saving.',
+    a: 'No. Stripe and Shopify both work the same way: you add Quidkey’s local account for your payouts and we handle the conversion. If you use another provider, or you move money between countries, talk to us and we’ll work out your saving.',
   },
   {
     q: 'How does Quidkey save me money on FX?',
@@ -34,23 +35,11 @@ export const FX_CHECK_FAQS: FaqItem[] = [
     a: 'Yes. Your Stripe and Shopify payout reports do not change, so tools like Xero, QuickBooks and A2X keep working as they do today. For every payout we give you a statement with the amount we received, the rate we used and what we sent to your bank, so each deposit matches up.',
   },
   {
-    q: 'Does Quidkey change anything in my Stripe account?',
-    a: 'No. Stripe’s connection comes with broader access than we need, and we only use it to read your payments and payouts. We never take payments, touch payouts or change your checkout. You approve the connection on Stripe’s own page, so your login never touches Quidkey, and you can see and revoke it any time under authorised applications in your Stripe dashboard.',
-  },
-  {
-    q: 'What does Quidkey keep about me?',
-    a: 'Nothing, unless you sign up. If you disconnect, or simply do nothing, Quidkey removes its access and keeps nothing about you or your business.',
-  },
-  {
-    q: 'What does the check cost?',
-    a: 'Nothing. The check is free and you don’t need a Quidkey account to run it.',
+    q: 'What does it cost to find out my saving?',
+    a: 'Nothing. Tell us what you convert and we’ll work out your saving for free, with no Quidkey account needed. If you go ahead, there are no setup or monthly fees and your rate is agreed before you sign up.',
   },
   {
     q: 'How is the estimate worked out?',
-    a: 'From your last 90 days of Stripe activity: what you paid in FX fees against what the same sales would cost with Quidkey. It is an estimate, not a quote. Your final rate is agreed when you sign up.',
-  },
-  {
-    q: 'How do I disconnect?',
-    a: 'One click on the results page, or any time from your Stripe dashboard under authorised applications. If you do nothing, Quidkey disconnects automatically within 48 hours.',
+    a: 'From what you convert each month, against what Stripe, Shopify or your bank charge you to convert it today. The calculator on this page assumes their standard 2% rate and a 0.5% saving. It is an estimate, not a quote. Your final rate is agreed when you sign up.',
   },
 ]

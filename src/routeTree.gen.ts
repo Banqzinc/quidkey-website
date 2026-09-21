@@ -11,7 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SurchargeCalculatorRouteImport } from './routes/surcharge-calculator'
 import { Route as MarketplaceRouteImport } from './routes/marketplace'
-import { Route as FxCheckRouteImport } from './routes/fx-check'
+import { Route as FxSavingsRouteImport } from './routes/fx-savings'
 import { Route as FintechsRouteImport } from './routes/fintechs'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CalculatorRouteImport } from './routes/calculator'
@@ -29,9 +29,9 @@ const MarketplaceRoute = MarketplaceRouteImport.update({
   path: '/marketplace',
   getParentRoute: () => rootRouteImport,
 } as any)
-const FxCheckRoute = FxCheckRouteImport.update({
-  id: '/fx-check',
-  path: '/fx-check',
+const FxSavingsRoute = FxSavingsRouteImport.update({
+  id: '/fx-savings',
+  path: '/fx-savings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FintechsRoute = FintechsRouteImport.update({
@@ -70,7 +70,7 @@ export interface FileRoutesByFullPath {
   '/calculator': typeof CalculatorRoute
   '/contact': typeof ContactRoute
   '/fintechs': typeof FintechsRoute
-  '/fx-check': typeof FxCheckRoute
+  '/fx-savings': typeof FxSavingsRoute
   '/marketplace': typeof MarketplaceRoute
   '/surcharge-calculator': typeof SurchargeCalculatorRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -81,7 +81,7 @@ export interface FileRoutesByTo {
   '/calculator': typeof CalculatorRoute
   '/contact': typeof ContactRoute
   '/fintechs': typeof FintechsRoute
-  '/fx-check': typeof FxCheckRoute
+  '/fx-savings': typeof FxSavingsRoute
   '/marketplace': typeof MarketplaceRoute
   '/surcharge-calculator': typeof SurchargeCalculatorRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -93,7 +93,7 @@ export interface FileRoutesById {
   '/calculator': typeof CalculatorRoute
   '/contact': typeof ContactRoute
   '/fintechs': typeof FintechsRoute
-  '/fx-check': typeof FxCheckRoute
+  '/fx-savings': typeof FxSavingsRoute
   '/marketplace': typeof MarketplaceRoute
   '/surcharge-calculator': typeof SurchargeCalculatorRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -106,7 +106,7 @@ export interface FileRouteTypes {
     | '/calculator'
     | '/contact'
     | '/fintechs'
-    | '/fx-check'
+    | '/fx-savings'
     | '/marketplace'
     | '/surcharge-calculator'
     | '/blog/$slug'
@@ -117,7 +117,7 @@ export interface FileRouteTypes {
     | '/calculator'
     | '/contact'
     | '/fintechs'
-    | '/fx-check'
+    | '/fx-savings'
     | '/marketplace'
     | '/surcharge-calculator'
     | '/blog/$slug'
@@ -128,7 +128,7 @@ export interface FileRouteTypes {
     | '/calculator'
     | '/contact'
     | '/fintechs'
-    | '/fx-check'
+    | '/fx-savings'
     | '/marketplace'
     | '/surcharge-calculator'
     | '/blog/$slug'
@@ -140,7 +140,7 @@ export interface RootRouteChildren {
   CalculatorRoute: typeof CalculatorRoute
   ContactRoute: typeof ContactRoute
   FintechsRoute: typeof FintechsRoute
-  FxCheckRoute: typeof FxCheckRoute
+  FxSavingsRoute: typeof FxSavingsRoute
   MarketplaceRoute: typeof MarketplaceRoute
   SurchargeCalculatorRoute: typeof SurchargeCalculatorRoute
   BlogSlugRoute: typeof BlogSlugRoute
@@ -163,11 +163,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MarketplaceRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/fx-check': {
-      id: '/fx-check'
-      path: '/fx-check'
-      fullPath: '/fx-check'
-      preLoaderRoute: typeof FxCheckRouteImport
+    '/fx-savings': {
+      id: '/fx-savings'
+      path: '/fx-savings'
+      fullPath: '/fx-savings'
+      preLoaderRoute: typeof FxSavingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/fintechs': {
@@ -220,7 +220,7 @@ const rootRouteChildren: RootRouteChildren = {
   CalculatorRoute: CalculatorRoute,
   ContactRoute: ContactRoute,
   FintechsRoute: FintechsRoute,
-  FxCheckRoute: FxCheckRoute,
+  FxSavingsRoute: FxSavingsRoute,
   MarketplaceRoute: MarketplaceRoute,
   SurchargeCalculatorRoute: SurchargeCalculatorRoute,
   BlogSlugRoute: BlogSlugRoute,

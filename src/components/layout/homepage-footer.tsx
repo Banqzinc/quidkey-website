@@ -71,7 +71,7 @@ export function HomepageFooter() {
       onClick: trackOutbound(DEVELOPERS_URL, 'footer_api'),
     },
     { label: 'Calculator', href: '/calculator' },
-    { label: 'FX savings check', href: '/fx-check' },
+    { label: 'FX savings', href: '/fx-savings' },
   ]
 
   const companyLinks: FooterLink[] = [
