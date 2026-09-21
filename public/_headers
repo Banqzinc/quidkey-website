@@ -18,6 +18,10 @@
   Content-Type: text/markdown; charset=utf-8
   Cache-Control: public, max-age=300
 
+/sitemap.md
+  Content-Type: text/markdown; charset=utf-8
+  Cache-Control: public, max-age=300
+
 # Fingerprinted / long-lived static assets — immutable for a year.
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
