@@ -13,9 +13,9 @@ import { CrossBorderProof } from '@/components/sections/cross-border-proof'
 import { Developer } from '@/components/sections/developer'
 import { PricingSection } from '@/components/sections/pricing-section'
 import { Products } from '@/components/sections/products'
-import { Faq } from '@/components/sections/faq'
+import { FAQS, Faq } from '@/components/sections/faq'
 import { Closer } from '@/components/sections/closer'
-import { buildSeo } from '@/lib/seo'
+import { buildFaqSchema, buildSeo } from '@/lib/seo'
 
 import '@/styles/homepage/base.css'
 import '@/styles/homepage/tm2.css'
@@ -38,6 +38,7 @@ export const Route = createFileRoute('/')({
         'Add Pay by Bank to your checkout and automate what happens after payment: tax, splits, and FX. Global coverage, one integration.',
       path: '/',
       keywords: ['pay by bank', 'AI clearing house', 'open banking payments'],
+      structuredData: [buildFaqSchema(FAQS.map(({ q, a }) => ({ question: q, answer: a })))],
     })
     return {
       ...seo,

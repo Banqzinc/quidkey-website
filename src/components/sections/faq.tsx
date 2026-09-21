@@ -4,7 +4,7 @@ import { track } from '@/lib/track'
 
 export type FaqItem = { q: string; a: string }
 
-const FAQS: FaqItem[] = [
+export const FAQS: FaqItem[] = [
   {
     q: 'What is Pay by Bank?',
     a: 'Pay by Bank lets customers pay you directly from their bank account, no card in the middle. They pick their bank at checkout, approve in their banking app with biometrics, and funds move on instant rails (FedNow, RTP, FPS, SEPA Instant) in seconds.',

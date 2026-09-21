@@ -3,7 +3,7 @@ import { Link } from '@tanstack/react-router'
 import { NewsletterForm } from '@/components/layout/newsletter-form'
 import { openCookiebotPreferences } from '@/lib/cookiebot'
 import { track } from '@/lib/track'
-import { DOCS_URL } from '@/lib/urls'
+import { DOCS_URL, GITHUB_URL } from '@/lib/urls'
 
 const STATUS_URL = 'https://status.quidkey.com'
 const DEVELOPERS_URL = 'https://quidkey.dev'
@@ -94,9 +94,9 @@ export function HomepageFooter() {
     },
     {
       label: 'GitHub',
-      href: 'https://github.com/Banqzinc',
+      href: GITHUB_URL,
       external: true,
-      onClick: trackOutbound('https://github.com/Banqzinc', 'footer_github'),
+      onClick: trackOutbound(GITHUB_URL, 'footer_github'),
     },
   ]
 

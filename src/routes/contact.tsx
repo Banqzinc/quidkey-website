@@ -5,7 +5,13 @@ import { ContactForm } from '@/components/contact/contact-form'
 import { HomepageFooter } from '@/components/layout/homepage-footer'
 import { HomepageNav } from '@/components/layout/homepage-nav'
 import { AudienceProvider } from '@/context/audience'
-import { CONTACT_TOPICS, DEFAULT_TOPIC, parseTopic, type ContactTopic } from '@/lib/contact-topics'
+import {
+  CONTACT_TOPICS,
+  contactPath,
+  DEFAULT_TOPIC,
+  parseTopic,
+  type ContactTopic,
+} from '@/lib/contact-topics'
 import { buildSeo } from '@/lib/seo'
 import { track } from '@/lib/track'
 import { CONTACT_EMAIL, DEMO_BOOKING_URL, PARTNERS_EMAIL } from '@/lib/urls'
@@ -35,7 +41,8 @@ export const Route = createFileRoute('/contact')({
       title: `${copy.title} · Quidkey`,
       description: copy.description,
       keywords: ['contact Quidkey', 'Quidkey sales', 'Pay by Bank enquiry'],
-      path: '/contact',
+      // Each topic is its own page: own heading, prompt and title, so its own canonical.
+      path: contactPath(match.search.topic),
     })
   },
 })
