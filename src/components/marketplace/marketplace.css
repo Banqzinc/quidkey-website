@@ -1,6 +1,6 @@
 /* /marketplace page-specific styles. Loaded after the shared homepage bundle
    (base/headings/section-padding/mobile/overrides) so these rules win at
-   equal specificity. Same trick as fx-check.css. Everything is namespaced
+   equal specificity. Same trick as fx-savings.css. Everything is namespaced
    mkt- and reuses the homepage design tokens (--ink, --muted, --line, ...).
 
    Shared shorthands used across sections:

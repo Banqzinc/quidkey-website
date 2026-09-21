@@ -20,7 +20,7 @@ const ProofCheck = (
 
 const PROOF = ['Buyer pays locally.', 'Seller gets paid directly.', 'The transaction stays with you.']
 
-// Same split layout as the homepage and /fx-check heroes: copy left, the
+// Same split layout as the homepage and /fx-savings heroes: copy left, the
 // product right. The card is a Protected Pay order as the marketplace would
 // see it in its own console, stepping through the flow on a loop.
 export function MarketplaceHero() {
