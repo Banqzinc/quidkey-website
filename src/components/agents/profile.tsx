@@ -22,7 +22,7 @@ export function AgentsProfile() {
         <div className="ag-split">
           <div className="ag-card ag-profile" aria-label="Illustration: a public agent profile with its reputation">
             <div className="ag-card__head">
-              <span className="ag-card__title">quidkey.com/agents/@quid-pro-quo</span>
+              <span className="ag-card__title">quidkey.com/@quid-pro-quo</span>
               <span className="ag-label">Public</span>
             </div>
             <div className="ag-profile__body">

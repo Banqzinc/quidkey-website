@@ -66,7 +66,7 @@ export function AgentsAccounts() {
               ))}
               <div className="ag-receive__link">
                 <span>Pay this agent</span>
-                <code>quidkey.com/agents/@quid-pro-quo</code>
+                <code>quidkey.com/@quid-pro-quo</code>
               </div>
             </div>
 

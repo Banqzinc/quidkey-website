@@ -53,7 +53,7 @@
       "status_codes": {
         "201": "Created. The handle is reserved and the registration is pending owner approval.",
         "400": "The request body is invalid.",
-        "409": "The handle is already taken.",
+        "409": "The handle is already taken or reserved.",
         "429": "Too many registration attempts from one address."
       }
     }
