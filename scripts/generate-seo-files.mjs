@@ -23,7 +23,7 @@ const PAGE_LABELS = {
   '/calculator': 'Fee calculator: compare Shopify card fees with Quidkey Pay by Bank',
   '/contact': 'Contact: talk to the Quidkey team',
   '/fintechs': 'For PSPs and fintechs: white-labelled Pay by Bank rails and treasury',
-  '/fx-check': 'FX check: what Stripe or Shopify FX costs on cross-border sales',
+  '/fx-savings': 'FX savings: cut what Stripe, Shopify or your bank charge to convert cross-border sales',
   '/marketplace': 'For B2B marketplaces: Protected Pay between buyers and sellers',
   '/surcharge-calculator': 'Surcharge calculator: what the Australian card surcharge ban costs a business',
 }

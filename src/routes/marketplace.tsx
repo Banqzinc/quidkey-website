@@ -20,7 +20,7 @@ import { track } from '@/lib/track'
 
 // Share the homepage's chrome (nav, footer, typography, container), with
 // marketplace.css loading last so its mkt-* rules win at equal specificity.
-// Same trick as fx-check.css.
+// Same trick as fx-savings.css.
 import '@/styles/homepage/base.css'
 import '@/styles/homepage/headings.css'
 import '@/styles/homepage/section-padding.css'

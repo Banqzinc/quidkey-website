@@ -1,8 +1,7 @@
 import { useContactLink } from '@/context/contact'
 import { track } from '@/lib/track'
-import { FX_CHECK_URL } from '@/lib/urls'
 
-export function FxCheckCloser() {
+export function FxSavingsCloser() {
   const talk = useContactLink('fx', 'fx_closer')
 
   return (
@@ -11,24 +10,15 @@ export function FxCheckCloser() {
         <h2 className="closer__h">Find out what you’d save.</h2>
         <div className="closer__right">
           <p className="closer__sub">
-            Free, no account needed, and we never change anything. Gone within 48 hours if you walk
-            away.
+            Tell us what you convert each month and we’ll work out your saving. No setup or monthly
+            fees, and nothing about how you charge customers changes.
           </p>
           <div className="closer__ctas">
             <a
-              href={FX_CHECK_URL}
-              className="closer__cta closer__cta--primary"
-              onClick={() =>
-                track({ name: 'fx_check_cta_click', location: 'closer', target: 'connect_stripe' })
-              }
-            >
-              Connect Stripe
-            </a>
-            <a
               href={talk.href}
-              className="closer__cta closer__cta--secondary"
+              className="closer__cta closer__cta--primary"
               onClick={(event) => {
-                track({ name: 'fx_check_cta_click', location: 'closer', target: 'talk_to_us' })
+                track({ name: 'fx_savings_cta_click', location: 'closer', target: 'talk_to_us' })
                 talk.onClick(event)
               }}
             >

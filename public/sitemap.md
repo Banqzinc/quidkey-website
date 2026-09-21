@@ -9,7 +9,7 @@
 - [Fee calculator: compare Shopify card fees with Quidkey Pay by Bank](https://quidkey.com/calculator)
 - [Contact: talk to the Quidkey team](https://quidkey.com/contact)
 - [For PSPs and fintechs: white-labelled Pay by Bank rails and treasury](https://quidkey.com/fintechs)
-- [FX check: what Stripe or Shopify FX costs on cross-border sales](https://quidkey.com/fx-check)
+- [FX savings: cut what Stripe, Shopify or your bank charge to convert cross-border sales](https://quidkey.com/fx-savings)
 - [For B2B marketplaces: Protected Pay between buyers and sellers](https://quidkey.com/marketplace)
 - [Surcharge calculator: what the Australian card surcharge ban costs a business](https://quidkey.com/surcharge-calculator)
 

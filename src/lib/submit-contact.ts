@@ -27,7 +27,7 @@ export type ContactInput = {
   message: string
   /** A ContactTopic key. Validated server-side; unknown values become `general`. */
   topic: string
-  /** Path of the page the dialog was opened on, e.g. "/fx-check". */
+  /** Path of the page the dialog was opened on, e.g. "/fx-savings". */
   page?: string
   /** Honeypot. Bots fill hidden fields; humans never see this one. */
   hp?: string

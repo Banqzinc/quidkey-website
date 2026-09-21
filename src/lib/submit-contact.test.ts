@@ -59,7 +59,7 @@ describe('validateContact', () => {
 
 describe('safePagePath', () => {
   it('keeps an ordinary same-site path', () => {
-    expect(safePagePath('/fx-check')).toBe('/fx-check')
+    expect(safePagePath('/fx-savings')).toBe('/fx-savings')
   })
 
   it('drops the query string so nothing personal leaks into HubSpot page context', () => {
@@ -85,7 +85,7 @@ describe('buildContactPayload', () => {
   }
 
   it('maps the message to HubSpot form fields with the human-readable topic', () => {
-    const payload = buildContactPayload(value, 'https://quidkey.com/fx-check')
+    const payload = buildContactPayload(value, 'https://quidkey.com/fx-savings')
     expect(payload.fields).toEqual([
       { name: 'firstname', value: 'Rabea Bader' },
       { name: 'email', value: 'rabea@quidkey.com' },
@@ -93,7 +93,7 @@ describe('buildContactPayload', () => {
       { name: 'message', value: 'Hello' },
       { name: 'contact_topic', value: 'FX: high volume' },
     ])
-    expect(payload.context).toEqual({ pageUri: 'https://quidkey.com/fx-check', pageName: 'Contact' })
+    expect(payload.context).toEqual({ pageUri: 'https://quidkey.com/fx-savings', pageName: 'Contact' })
   })
 
   it('omits the company field when the visitor left it blank', () => {

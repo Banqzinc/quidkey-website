@@ -21,7 +21,7 @@ describe('estimateFxSavings', () => {
     expect(CURRENT_FEE_PERCENT).toBe(2)
   })
 
-  it('prices the 90-day sample result off the same rate', () => {
+  it('prices any converted volume off the same flat rate', () => {
     expect(savingOn(750_000)).toBe(3750) // 750000 * 0.5%
   })
 
@@ -45,13 +45,27 @@ describe('estimateFxSavings', () => {
   })
 })
 
-describe('fx-check copy', () => {
+describe('fx-savings copy', () => {
+  const dir = join(__dirname)
+  const sources = readdirSync(dir).filter(
+    (f) => /\.(tsx?|css)$/.test(f) && !f.endsWith('.test.ts'),
+  )
+  const offenders = (needle: string | RegExp) =>
+    sources.filter((f) => {
+      const text = readFileSync(join(dir, f), 'utf8')
+      return typeof needle === 'string' ? text.includes(needle) : needle.test(text)
+    })
+
   // House style for this page: plain language, no em dashes.
-  it('contains no em dashes in any fx-check source file', () => {
-    const dir = join(__dirname)
-    const offenders = readdirSync(dir)
-      .filter((f) => /\.(tsx?|css)$/.test(f) && !f.endsWith('.test.ts'))
-      .filter((f) => readFileSync(join(dir, f), 'utf8').includes('—'))
-    expect(offenders).toEqual([])
+  it('contains no em dashes in any fx-savings source file', () => {
+    expect(offenders('—')).toEqual([])
+  })
+
+  // The console's Connect Stripe check is not offered on the website until it
+  // is finished and tested. Every CTA on this page opens the contact dialog.
+  it('never asks the merchant to connect Stripe or links to the console check', () => {
+    expect(offenders(/connect(ing)? stripe/i)).toEqual([])
+    expect(offenders('console.quidkey.com/fx-check')).toEqual([])
+    expect(offenders('FX_CHECK_URL')).toEqual([])
   })
 })

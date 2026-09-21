@@ -21,6 +21,7 @@ export type ContactTopic = (typeof CONTACT_TOPIC_KEYS)[number]
 export type ContactSource =
   | 'fx_hero'
   | 'fx_providers'
+  | 'fx_how_it_works'
   | 'fx_closer'
   | 'pricing'
   | 'marketplace_hero'

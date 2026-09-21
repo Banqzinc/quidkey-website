@@ -42,6 +42,9 @@ export const REDIRECTS: Record<string, string> = {
   // Marketplaces got their own page again (Protected Pay), so the old
   // solutions URL lands there rather than on the homepage.
   '/solutions/marketplaces': '/marketplace',
+  // The FX page dropped the console's Connect Stripe check and now leads with
+  // the saving itself, so it moved from "check" to "savings".
+  '/fx-check': '/fx-savings',
   '/solutions/professional-services': '/',
   '/solutions/saas': '/',
   '/solutions/travel': '/',

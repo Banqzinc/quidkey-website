@@ -23,8 +23,11 @@ export type CtaLabel =
   | 'anchor'
   | 'register'
 export type CtaLocation = 'nav' | 'hero' | 'closer' | 'pricing' | 'footer' | 'contact'
-export type FxCheckCtaLocation = 'hero' | 'providers' | 'how_it_works' | 'closer'
-export type FxCheckCtaTarget = 'connect_stripe' | 'talk_to_us'
+export type FxSavingsCtaLocation = 'hero' | 'providers' | 'how_it_works' | 'closer'
+// Every CTA on /fx-savings opens the contact dialog while the console's Connect
+// Stripe check stays off the website. Kept as a field so the event keeps the
+// same shape as marketplace_cta_click and a second target can return later.
+export type FxSavingsCtaTarget = 'talk_to_us'
 export type MarketplaceCtaLocation = 'hero' | 'closer'
 export type MarketplaceCtaTarget = 'talk_to_us' | 'how_it_works' | 'build'
 export type FlowKind = 'merchant' | 'fintech'
@@ -46,9 +49,9 @@ export type HomepageEvent =
   | { name: 'surcharge_calculator_view' }
   | { name: 'surcharge_calculator_input'; field: string }
   | { name: 'surcharge_lead_submit'; outcome: 'success' | 'error' }
-  | { name: 'fx_check_view' }
-  | { name: 'fx_check_cta_click'; location: FxCheckCtaLocation; target: FxCheckCtaTarget }
-  | { name: 'fx_check_faq_open'; question: string }
+  | { name: 'fx_savings_view' }
+  | { name: 'fx_savings_cta_click'; location: FxSavingsCtaLocation; target: FxSavingsCtaTarget }
+  | { name: 'fx_savings_faq_open'; question: string }
   | { name: 'marketplace_view' }
   | { name: 'marketplace_cta_click'; location: MarketplaceCtaLocation; target: MarketplaceCtaTarget }
   | { name: 'agents_view' }

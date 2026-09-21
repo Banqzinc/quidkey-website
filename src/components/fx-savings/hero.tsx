@@ -1,4 +1,4 @@
-import { FxCheckCalculatorCard } from './calculator'
+import { FxSavingsCalculatorCard } from './calculator'
 
 const ProofCheck = (
   <svg
@@ -18,15 +18,15 @@ const ProofCheck = (
 // Same split layout as the homepage hero (copy left, interactive thing
 // right). The calculator card carries the one call to action, so the copy
 // column has no buttons of its own.
-export function FxCheckHero() {
+export function FxSavingsHero() {
   return (
-    <section className="hero hero--split fxc-hero">
+    <section className="hero hero--split fxs-hero">
       <div className="container">
         <div className="hero__split">
-          <div className="hero__copy fxc-hero__copy">
+          <div className="hero__copy fxs-hero__copy">
             <h1 className="hero__title">
               Selling or paying abroad?{' '}
-              <br className="fxc-hero__break" />
+              <br className="fxs-hero__break" />
               <em>Save money on FX.</em>
             </h1>
             <p className="hero__sub">
@@ -60,7 +60,7 @@ export function FxCheckHero() {
               </li>
             </ul>
           </div>
-          <FxCheckCalculatorCard />
+          <FxSavingsCalculatorCard />
         </div>
       </div>
     </section>

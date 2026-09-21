@@ -24,6 +24,11 @@ describe('resolveRedirect', () => {
     expect(resolveRedirect('/solutions/marketplaces')).toBe('/marketplace')
   })
 
+  it('redirects the retired /fx-check URL to /fx-savings', () => {
+    expect(resolveRedirect('/fx-check')).toBe('/fx-savings')
+    expect(resolveRedirect('/fx-check/')).toBe('/fx-savings')
+  })
+
   it('leaves /contact alone now that it is a live page again', () => {
     expect(resolveRedirect('/contact')).toBeNull()
     expect(resolveRedirect('/contact/')).toBeNull()
@@ -58,6 +63,7 @@ describe('resolveRedirect', () => {
     expect(resolveRedirect('/calculator')).toBeNull()
     expect(resolveRedirect('/surcharge-calculator')).toBeNull()
     expect(resolveRedirect('/marketplace')).toBeNull()
+    expect(resolveRedirect('/fx-savings')).toBeNull()
     // A redirect *target* must not itself be treated as a redirect source.
     expect(resolveRedirect('/blog/pay-by-bank-the-future-of-payments')).toBeNull()
   })
