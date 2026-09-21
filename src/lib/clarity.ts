@@ -1,18 +1,5 @@
 import Clarity from '@microsoft/clarity'
 
-declare global {
-  interface Window {
-    Cookiebot?: {
-      consent?: {
-        necessary?: boolean
-        preferences?: boolean
-        statistics?: boolean
-        marketing?: boolean
-      }
-    }
-  }
-}
-
 let clarityStarted = false
 
 function getCookiebotConsent() {

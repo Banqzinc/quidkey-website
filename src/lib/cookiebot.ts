@@ -1,6 +1,14 @@
+// The Cookiebot script attaches this global. It is declared once, here: the
+// tracking loaders read `consent`, the footer's Cookies link calls `renew`/`show`.
 declare global {
   interface Window {
     Cookiebot?: {
+      consent?: {
+        necessary?: boolean
+        preferences?: boolean
+        statistics?: boolean
+        marketing?: boolean
+      }
       renew?: () => void
       show?: () => void
     }

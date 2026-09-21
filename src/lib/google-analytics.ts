@@ -1,13 +1,5 @@
 declare global {
   interface Window {
-    Cookiebot?: {
-      consent?: {
-        necessary?: boolean
-        preferences?: boolean
-        statistics?: boolean
-        marketing?: boolean
-      }
-    }
     dataLayer?: unknown[]
     gtag?: (...args: any[]) => void
   }
