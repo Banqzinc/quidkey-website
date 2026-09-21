@@ -2,12 +2,14 @@ import { promises as fs } from 'node:fs'
 import path from 'node:path'
 
 import { parseBlogPosts } from './lib/blog-post-index.mjs'
+import { parseContactTopics } from './lib/contact-topics-index.mjs'
 import { renderSiteIndex } from './lib/site-index.mjs'
 
 const ROOT = path.resolve(new URL('.', import.meta.url).pathname, '..')
 const ROUTES_DIR = path.join(ROOT, 'src', 'routes')
 const PUBLIC_DIR = path.join(ROOT, 'public')
 const BLOG_POSTS_FILE = path.join(ROOT, 'src', 'lib', 'blog-posts.ts')
+const CONTACT_TOPICS_FILE = path.join(ROOT, 'src', 'lib', 'contact-topics.ts')
 
 const SITE_SUMMARY =
   'Add Pay by Bank to your checkout and automate what happens after payment: tax, splits, and FX. Global coverage, one integration.'
@@ -116,6 +118,12 @@ async function generate() {
 
   for (const p of staticRoutes) entries.set(p, { path: p, lastmod: today })
   for (const r of blogRoutes) entries.set(r.path, r)
+  // Each non-default contact topic is its own canonical page (see routes/contact.tsx).
+  const { keys, defaultTopic } = parseContactTopics(await fs.readFile(CONTACT_TOPICS_FILE, 'utf8'))
+  for (const topic of keys.filter((k) => k !== defaultTopic)) {
+    const p = `/contact?topic=${topic}`
+    entries.set(p, { path: p, lastmod: today })
+  }
 
   // Ensure homepage is first
   const paths = [...entries.keys()].sort((a, b) => {

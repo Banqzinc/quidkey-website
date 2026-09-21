@@ -1,6 +1,7 @@
 import type { JSX } from 'react'
 
 import { slugify } from './slugify'
+import { GITHUB_URL } from './urls'
 
 function normalizeOrigin(input: string) {
   // Accept both full origins and full URLs.
@@ -138,11 +139,27 @@ export function buildSeo({
     }
   }
 
-  if (structuredData?.length) {
-    for (const schema of structuredData) {
-      meta.push({ 'script:ld+json': schema })
-    }
+  // One graph per page: the page itself, the site it belongs to, the
+  // organisation behind the site, then whatever the route adds (Article,
+  // FAQPage, VideoObject). An article page is dated by the article, anything
+  // else by the build.
+  const site = getSiteUrl()
+  const page = {
+    '@type': 'WebPage',
+    '@id': url,
+    url,
+    name: title,
+    headline: title,
+    description,
+    dateModified: article ? (article.dateModified ?? article.datePublished) : buildDate(),
+    isPartOf: { '@id': `${site}/#website` },
   }
+  meta.push({
+    'script:ld+json': {
+      '@context': 'https://schema.org',
+      '@graph': [page, webSiteNode(), organizationNode(), ...anchoredToPage(url, structuredData ?? [])],
+    },
+  })
 
   return {
     // TanStack Router supports a dedicated `title` field; keep it separate from `meta`.
@@ -152,22 +169,60 @@ export function buildSeo({
   }
 }
 
+// Route nodes are built without knowing their page; give any that lack an @id
+// one under the page URL so the graph holds no blank nodes.
+function anchoredToPage(url: string, nodes: JsonLdObject[]): JsonLdObject[] {
+  const seen = new Map<string, number>()
+  const repeats = new Map<string, number>()
+  for (const node of nodes) {
+    const type = String(node['@type']).toLowerCase()
+    seen.set(type, (seen.get(type) ?? 0) + 1)
+  }
+  return nodes.map((node) => {
+    if (node['@id']) return node
+    const type = String(node['@type']).toLowerCase()
+    if ((seen.get(type) ?? 0) === 1) return { '@id': `${url}#${type}`, ...node }
+    const n = (repeats.get(type) ?? 0) + 1
+    repeats.set(type, n)
+    return { '@id': `${url}#${type}-${n}`, ...node }
+  })
+}
+
+function buildDate(): string {
+  const date = import.meta.env.VITE_BUILD_DATE
+  if (typeof date !== 'string') throw new Error('VITE_BUILD_DATE is not defined; vite.config.ts stamps it')
+  return date
+}
+
 export type ArticleAuthor =
   | { kind: 'person'; name: string; url?: string }
   | { kind: 'organization' }
 
+function organizationRef() {
+  return { '@id': `${getSiteUrl()}/#organization` }
+}
+
+// Validators want `logo` as a URL string, not an ImageObject.
 function organizationNode() {
   const site = getSiteUrl()
   return {
     '@type': 'Organization' as const,
-    '@id': `${site}/#organization`,
+    ...organizationRef(),
     name: 'Quidkey',
-    url: site,
-    logo: {
-      '@type': 'ImageObject' as const,
-      '@id': `${site}/#logo`,
-      url: DEFAULT_OG_IMAGE,
-    },
+    url: `${site}/`,
+    sameAs: [GITHUB_URL],
+    logo: DEFAULT_OG_IMAGE,
+  }
+}
+
+function webSiteNode() {
+  const site = getSiteUrl()
+  return {
+    '@type': 'WebSite' as const,
+    '@id': `${site}/#website`,
+    url: `${site}/`,
+    name: 'Quidkey',
+    publisher: organizationRef(),
   }
 }
 
@@ -210,7 +265,6 @@ export function buildArticleSchema({
   const keywordsValue = typeof keywords === 'string' ? keywords : keywords?.filter(Boolean)
 
   return {
-    '@context': 'https://schema.org',
     '@type': 'Article',
     '@id': `${url}#article`,
     headline: title,
@@ -219,6 +273,7 @@ export function buildArticleSchema({
     datePublished: datePublished,
     dateModified: dateModified ?? datePublished,
     ...(keywordsValue ? { keywords: keywordsValue } : {}),
+    // Inline rather than a reference: validators check the Article node alone.
     author: authorNode(author),
     publisher: organizationNode(),
     mainEntityOfPage: {
@@ -248,7 +303,6 @@ export function buildVideoSchema({
   embedUrl: string
 }) {
   return {
-    '@context': 'https://schema.org',
     '@type': 'VideoObject',
     name,
     description,
@@ -266,7 +320,6 @@ export function buildFaqSchema(
   }>
 ): JsonLdObject {
   return {
-    '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: faqs.map((faq) => ({
       '@type': 'Question',

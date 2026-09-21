@@ -4,6 +4,7 @@ export const MERCHANTS_SIGNUP_URL = 'https://console.quidkey.com/signup'
 export const FX_CHECK_URL = 'https://console.quidkey.com/fx-check'
 export const DEMO_PLAYGROUND_URL = 'https://playground.quidkey.com/'
 export const DOCS_URL = 'https://docs.quidkey.com/'
+export const GITHUB_URL = 'https://github.com/Banqzinc'
 /** Sales / book-a-demo scheduling page (Cal.com). Opens in a new tab. */
 export const DEMO_BOOKING_URL = 'https://cal.com/quidkey/demo'
 

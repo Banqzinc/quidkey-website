@@ -107,6 +107,6 @@ export function parseTopic(raw: unknown): ContactTopic {
  * href so the link still works before hydration, in a new tab, and for
  * crawlers; the click handler upgrades it to the dialog.
  */
-export function contactPath(topic: ContactTopic): string {
+export function contactPath(topic: ContactTopic): `/${string}` {
   return topic === DEFAULT_TOPIC ? '/contact' : `/contact?topic=${topic}`
 }
