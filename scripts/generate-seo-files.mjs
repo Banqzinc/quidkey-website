@@ -2,6 +2,7 @@ import { promises as fs } from 'node:fs'
 import path from 'node:path'
 
 import { parseBlogPosts } from './lib/blog-post-index.mjs'
+import { renderSiteIndex } from './lib/site-index.mjs'
 
 const ROOT = path.resolve(new URL('.', import.meta.url).pathname, '..')
 const ROUTES_DIR = path.join(ROOT, 'src', 'routes')
@@ -11,8 +12,8 @@ const BLOG_POSTS_FILE = path.join(ROOT, 'src', 'lib', 'blog-posts.ts')
 const SITE_SUMMARY =
   'Add Pay by Bank to your checkout and automate what happens after payment: tax, splits, and FX. Global coverage, one integration.'
 
-// One line per static route for llms.txt. A route without an entry fails the
-// build so a new page cannot ship unlabelled.
+// One line per static route for the site index (llms.txt and sitemap.md). A
+// route without an entry fails the build so a new page cannot ship unlabelled.
 const PAGE_LABELS = {
   '/': 'Homepage: Pay by Bank checkout for merchants, coverage, pricing and integrations',
   '/blog': 'Blog: articles on pay by bank, open banking, card fees and payments infrastructure',
@@ -135,29 +136,12 @@ async function generate() {
     '',
   ].join('\n')
 
-  const llms = [
-    '# Quidkey',
-    '',
-    `> ${SITE_SUMMARY}`,
-    '',
-    '## Pages',
-    ...staticRoutes.map((p) => {
-      const label = PAGE_LABELS[p]
-      if (!label) throw new Error(`No llms.txt label for route ${p}; add it to PAGE_LABELS`)
-      return `- [${label}](${siteOrigin}${p})`
-    }),
-    '',
-    '## Blog',
-    ...[...blogPosts]
-      .sort((a, b) => b.dateISO.localeCompare(a.dateISO))
-      .map((p) => `- [${p.title}](${siteOrigin}/blog/${p.slug}): ${p.dateISO}`),
-    '',
-    '## Developers',
-    '- [API docs](https://docs.quidkey.com)',
-    `- [OpenAPI](${siteOrigin}/openapi.json)`,
-    `- [Agent skills](${siteOrigin}/.well-known/agent-skills/index.json)`,
-    '',
-  ].join('\n')
+  const pages = staticRoutes.map((p) => {
+    const label = PAGE_LABELS[p]
+    if (!label) throw new Error(`No site index label for route ${p}; add it to PAGE_LABELS`)
+    return { path: p, label }
+  })
+  const siteIndex = renderSiteIndex({ siteOrigin, summary: SITE_SUMMARY, pages, posts: blogPosts })
 
   const robots = [
     '# https://www.robotstxt.org/robotstxt.html',
@@ -172,10 +156,11 @@ async function generate() {
   await fs.mkdir(PUBLIC_DIR, { recursive: true })
   await fs.writeFile(path.join(PUBLIC_DIR, 'sitemap.xml'), xml, 'utf8')
   await fs.writeFile(path.join(PUBLIC_DIR, 'robots.txt'), robots, 'utf8')
-  await fs.writeFile(path.join(PUBLIC_DIR, 'llms.txt'), llms, 'utf8')
+  await fs.writeFile(path.join(PUBLIC_DIR, 'llms.txt'), siteIndex, 'utf8')
+  await fs.writeFile(path.join(PUBLIC_DIR, 'sitemap.md'), siteIndex, 'utf8')
 
   // eslint-disable-next-line no-console
-  console.log(`[generate-seo-files] Wrote sitemap.xml, robots.txt and llms.txt for ${siteOrigin} (${paths.length} URLs)`)
+  console.log(`[generate-seo-files] Wrote sitemap.xml, robots.txt, llms.txt and sitemap.md for ${siteOrigin} (${paths.length} URLs)`)
 }
 
 await generate()
