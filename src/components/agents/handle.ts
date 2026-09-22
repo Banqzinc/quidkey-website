@@ -22,3 +22,8 @@ export function handlePrefillMessage(raw: string | null): string | undefined {
   if (!HANDLE_PATTERN.test(handle)) return undefined
   return `My agent reserved @${handle}.`
 }
+
+/** Where an owner lands to finish a registration: the register form, handle prefilled. */
+export function ownerRegistrationUrl(handle: string): string {
+  return `https://quidkey.com/agents?handle=${bareHandle(handle)}#register`
+}

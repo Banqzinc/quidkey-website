@@ -1,7 +1,8 @@
 // Markdown index of the whole site. The same document is published as
 // /llms.txt (the convention LLM tooling reads) and /sitemap.md (the hierarchy
 // overview some agent crawlers probe for): a title, a heading per section and
-// one link per page or post.
+// one link per page or post, closing with what an agent should read about
+// itself: the /agents page in markdown and the registration file.
 export function renderSiteIndex({ siteOrigin, summary, pages, posts }) {
   const newestFirst = [...posts].sort((a, b) => b.dateISO.localeCompare(a.dateISO))
   return [
@@ -19,6 +20,10 @@ export function renderSiteIndex({ siteOrigin, summary, pages, posts }) {
     '- [API docs](https://docs.quidkey.com)',
     `- [OpenAPI](${siteOrigin}/openapi.json)`,
     `- [Agent skills](${siteOrigin}/.well-known/agent-skills/index.json)`,
+    '',
+    '## For agents',
+    `- [What Quidkey offers AI agents, in markdown](${siteOrigin}/agents.md)`,
+    `- [Agent registration instructions](${siteOrigin}/.well-known/agent-registration.json)`,
     '',
   ].join('\n')
 }

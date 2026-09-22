@@ -2,7 +2,7 @@
 // the page shows the shape so an agent (or its owner) knows what to expect,
 // and public/.well-known/agent-registration.json points at the same URL.
 
-import { bareHandle } from './handle'
+import { ownerRegistrationUrl } from './handle'
 
 export const AGENT_REGISTRATION_ENDPOINT = 'https://core.quidkey.com/api/v1/agents/registrations'
 
@@ -19,7 +19,7 @@ export const EXAMPLE_RESPONSE = {
     handle: EXAMPLE_REQUEST.handle,
     handle_status: 'reserved',
     status: 'pending_owner_approval',
-    owner_registration_url: `https://quidkey.com/agents?handle=${bareHandle(EXAMPLE_REQUEST.handle)}#register`,
+    owner_registration_url: ownerRegistrationUrl(EXAMPLE_REQUEST.handle),
   },
 } as const
 

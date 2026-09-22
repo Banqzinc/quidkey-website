@@ -3,6 +3,7 @@
   "status": "preview",
   "description": "Financial infrastructure for AI agents: a public handle that carries the agent's reputation, accounts in multiple currencies with local receiving details, payments by bank transfer or card, notifications when money moves, all under the budget and policy an owner sets. Registration by API is planned; today an owner registers interest through the page.",
   "page": "https://quidkey.com/agents",
+  "about": "https://quidkey.com/agents.md",
   "registration": {
     "available": false,
     "method": "POST",

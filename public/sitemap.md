@@ -39,3 +39,7 @@
 - [API docs](https://docs.quidkey.com)
 - [OpenAPI](https://quidkey.com/openapi.json)
 - [Agent skills](https://quidkey.com/.well-known/agent-skills/index.json)
+
+## For agents
+- [What Quidkey offers AI agents, in markdown](https://quidkey.com/agents.md)
+- [Agent registration instructions](https://quidkey.com/.well-known/agent-registration.json)

@@ -1,6 +1,7 @@
 import { HeroAudienceToggle } from '@/components/homepage/audience-toggle'
 import { track } from '@/lib/track'
 
+import { CopyAgentBrief } from './copy-agent-brief'
 import { RegistrationSnippet } from './registration-snippet'
 
 const PROOF = [
@@ -52,6 +53,7 @@ export function AgentsHero() {
               <a href="#register" className="btn btn--ghost btn--xl" onClick={trackOwner}>
                 Human? Register your agent
               </a>
+              <CopyAgentBrief />
             </div>
           </div>
           <RegistrationSnippet />

@@ -22,6 +22,7 @@ export type CtaLabel =
   | 'contact'
   | 'anchor'
   | 'register'
+  | 'agent_brief'
 export type CtaLocation = 'nav' | 'hero' | 'closer' | 'pricing' | 'footer' | 'contact'
 export type FxSavingsCtaLocation = 'hero' | 'providers' | 'how_it_works' | 'closer'
 // Every CTA on /fx-savings opens the contact dialog while the console's Connect

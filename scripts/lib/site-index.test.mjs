@@ -20,10 +20,24 @@ describe('renderSiteIndex', () => {
     const lines = renderSiteIndex(input).split('\n').filter(Boolean)
 
     expect(lines[0]).toBe('# Quidkey')
-    expect(lines.filter((line) => line.startsWith('## '))).toEqual(['## Pages', '## Blog', '## Developers'])
+    expect(lines.filter((line) => line.startsWith('## '))).toEqual([
+      '## Pages',
+      '## Blog',
+      '## Developers',
+      '## For agents',
+    ])
     for (const line of lines.slice(1)) {
       expect(line).toMatch(/^(## |> |- \[[^\]]+\]\(https?:\/\/[^)]+\))/)
     }
+  })
+
+  it('points agents at the offering in markdown and the registration file, on this origin', () => {
+    const md = renderSiteIndex(input)
+
+    expect(md).toContain('- [What Quidkey offers AI agents, in markdown](https://example.com/agents.md)')
+    expect(md).toContain(
+      '- [Agent registration instructions](https://example.com/.well-known/agent-registration.json)',
+    )
   })
 
   it('links every page and lists posts newest first with their dates', () => {
