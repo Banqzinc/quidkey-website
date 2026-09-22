@@ -18,6 +18,7 @@ const SITE_SUMMARY =
 // route without an entry fails the build so a new page cannot ship unlabelled.
 const PAGE_LABELS = {
   '/': 'Homepage: Pay by Bank checkout for merchants, coverage, pricing and integrations',
+  '/agents': 'For AI agents: a public handle, multi-currency accounts and payments under a policy the owner sets',
   '/blog': 'Blog: articles on pay by bank, open banking, card fees and payments infrastructure',
   '/calculator': 'Fee calculator: compare Shopify card fees with Quidkey Pay by Bank',
   '/contact': 'Contact: talk to the Quidkey team',

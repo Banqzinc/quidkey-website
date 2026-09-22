@@ -13,7 +13,16 @@ declare global {
   }
 }
 
-export type CtaLabel = 'get_started' | 'sign_in' | 'demo' | 'docs' | 'developers' | 'contact' | 'anchor'
+export type CtaLabel =
+  | 'get_started'
+  | 'sign_in'
+  | 'demo'
+  | 'docs'
+  | 'developers'
+  | 'contact'
+  | 'anchor'
+  | 'register'
+  | 'agent_brief'
 export type CtaLocation = 'nav' | 'hero' | 'closer' | 'pricing' | 'footer' | 'contact'
 export type FxSavingsCtaLocation = 'hero' | 'providers' | 'how_it_works' | 'closer'
 // Every CTA on /fx-savings opens the contact dialog while the console's Connect
@@ -46,6 +55,7 @@ export type HomepageEvent =
   | { name: 'fx_savings_faq_open'; question: string }
   | { name: 'marketplace_view' }
   | { name: 'marketplace_cta_click'; location: MarketplaceCtaLocation; target: MarketplaceCtaTarget }
+  | { name: 'agents_view' }
   | { name: 'contact_view'; topic: ContactTopic }
   | { name: 'contact_open'; topic: ContactTopic; source: ContactSource }
   | { name: 'contact_submit'; topic: ContactTopic; outcome: 'success' | 'error' }

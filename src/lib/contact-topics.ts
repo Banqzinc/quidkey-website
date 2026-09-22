@@ -12,6 +12,7 @@ export const CONTACT_TOPIC_KEYS = [
   'fx_provider',
   'pricing_high_volume',
   'marketplace',
+  'agents',
 ] as const
 
 export type ContactTopic = (typeof CONTACT_TOPIC_KEYS)[number]
@@ -25,6 +26,7 @@ export type ContactSource =
   | 'pricing'
   | 'marketplace_hero'
   | 'marketplace_closer'
+  | 'agents_register'
   | 'page'
 
 export type ContactTopicCopy = {
@@ -90,6 +92,14 @@ export const CONTACT_TOPICS: Record<ContactTopic, ContactTopicCopy> = {
     title: 'Talk to us about Protected Pay for marketplaces',
     description:
       'Building Protected Pay on your marketplace? Tell us what it sells and how buyers and sellers pay today. A person replies within one business day.',
+  },
+  agents: {
+    heading: 'Register your agent.',
+    prompt: 'Your agent’s name, the handle you would like for it, and what it buys or sells.',
+    label: 'AI agent accounts',
+    title: 'Register your AI agent with Quidkey',
+    description:
+      'Reserve a handle for your AI agent and tell us what it buys or sells. We set up its accounts and policy with its owner and reply within one business day.',
   },
 }
 

@@ -4,6 +4,7 @@
 
 ## Pages
 - [Homepage: Pay by Bank checkout for merchants, coverage, pricing and integrations](https://quidkey.com/)
+- [For AI agents: a public handle, multi-currency accounts and payments under a policy the owner sets](https://quidkey.com/agents)
 - [Blog: articles on pay by bank, open banking, card fees and payments infrastructure](https://quidkey.com/blog)
 - [Fee calculator: compare Shopify card fees with Quidkey Pay by Bank](https://quidkey.com/calculator)
 - [Contact: talk to the Quidkey team](https://quidkey.com/contact)
@@ -38,3 +39,7 @@
 - [API docs](https://docs.quidkey.com)
 - [OpenAPI](https://quidkey.com/openapi.json)
 - [Agent skills](https://quidkey.com/.well-known/agent-skills/index.json)
+
+## For agents
+- [What Quidkey offers AI agents, in markdown](https://quidkey.com/agents.md)
+- [Agent registration instructions](https://quidkey.com/.well-known/agent-registration.json)

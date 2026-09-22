@@ -30,6 +30,8 @@ type Props = {
   heading?: string
   /** Overrides the intro line; null removes it. */
   intro?: string | null
+  /** Starting text for the message field. Remount (via key) to change it. */
+  initialMessage?: string
 }
 
 function Field({
@@ -63,7 +65,7 @@ function Field({
   )
 }
 
-export function ContactForm({ topic, source, headingId, heading, intro }: Props) {
+export function ContactForm({ topic, source, headingId, heading, intro, initialMessage }: Props) {
   const copy = CONTACT_TOPICS[topic]
   const uid = useId()
   const ids = {
@@ -76,7 +78,7 @@ export function ContactForm({ topic, source, headingId, heading, intro }: Props)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [company, setCompany] = useState('')
-  const [message, setMessage] = useState('')
+  const [message, setMessage] = useState(initialMessage ?? '')
   const [hp, setHp] = useState('')
   const [status, setStatus] = useState<Status>('idle')
   const [fieldError, setFieldError] = useState<ContactField | null>(null)

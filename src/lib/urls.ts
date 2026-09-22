@@ -14,6 +14,7 @@ export const PARTNERS_EMAIL = 'partners@quidkey.com'
 
 /** Internal route paths used by navigation primitives. */
 export const FINTECHS_PATH = '/fintechs'
+export const AGENTS_PATH = '/agents'
 
 /** Email mailto helpers */
 export const buildMailto = (subject: string, email = CONTACT_EMAIL) =>

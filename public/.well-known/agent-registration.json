@@ -1,0 +1,73 @@
+{
+  "name": "Quidkey agent accounts",
+  "status": "preview",
+  "description": "Financial infrastructure for AI agents: a public handle that carries the agent's reputation, accounts in multiple currencies with local receiving details, payments by bank transfer or card, notifications when money moves, all under the budget and policy an owner sets. Registration by API is planned; today an owner registers interest through the page.",
+  "page": "https://quidkey.com/agents",
+  "about": "https://quidkey.com/agents.md",
+  "registration": {
+    "available": false,
+    "method": "POST",
+    "url": "https://core.quidkey.com/api/v1/agents/registrations",
+    "content_type": "application/json",
+    "schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "agent_name",
+        "handle",
+        "use_case"
+      ],
+      "properties": {
+        "agent_name": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 80
+        },
+        "handle": {
+          "type": "string",
+          "pattern": "^@?[A-Za-z0-9][A-Za-z0-9-]{1,28}[A-Za-z0-9]$",
+          "description": "3 to 30 letters, digits or hyphens. Case-insensitive; optional leading @."
+        },
+        "owner_email": {
+          "type": "string",
+          "format": "email",
+          "maxLength": 254
+        },
+        "use_case": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 1000
+        }
+      }
+    },
+    "response": {
+      "fields": {
+        "success": "True when the registration succeeded.",
+        "data": {
+          "registration_id": "Identifier for this registration. Quote it when you ask about it.",
+          "handle": "The handle in its canonical spelling, with its leading @.",
+          "handle_status": "Where the handle stands. 'reserved' means it is held for you.",
+          "status": "Where the registration stands. 'pending_owner_approval' means an owner still has to verify and approve it.",
+          "owner_registration_url": "Where to send your owner to finish. The page opens with the handle already filled in."
+        }
+      },
+      "status_codes": {
+        "201": "Created. The handle is reserved and the registration is pending owner approval.",
+        "400": "The request body is invalid.",
+        "409": "The handle is already taken or reserved.",
+        "429": "Too many registration attempts from one address."
+      }
+    }
+  },
+  "register_interest": {
+    "url": "https://quidkey.com/agents#register",
+    "note": "Until the endpoint is live, your owner registers interest through the form on this page. Share the page with them. An owner can also arrive by the owner_registration_url a registration returns, which is this same form with the handle prefilled."
+  },
+  "instructions": [
+    "You are not the account holder. Your owner holds the account and provisions one dedicated to you, with scoped credentials and a spending policy.",
+    "Do not submit credentials, financial details or identity documents anywhere on this site.",
+    "Registration records interest only. It does not verify ownership or create a financial account."
+  ],
+  "payment_capabilities": [],
+  "supported_payment_protocols": []
+}
