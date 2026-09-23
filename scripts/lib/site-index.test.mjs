@@ -17,7 +17,7 @@ const input = {
 
 describe('renderSiteIndex', () => {
   it('is a markdown outline: one title, a heading per section, a link per entry', () => {
-    const lines = renderSiteIndex(input).split('\n').filter(Boolean)
+    const lines = renderSiteIndex({ ...input, agents: true }).split('\n').filter(Boolean)
 
     expect(lines[0]).toBe('# Quidkey')
     expect(lines.filter((line) => line.startsWith('## '))).toEqual([
@@ -31,8 +31,15 @@ describe('renderSiteIndex', () => {
     }
   })
 
+  it('leaves out the For agents section while the agents page is hidden', () => {
+    const lines = renderSiteIndex({ ...input, agents: false }).split('\n').filter(Boolean)
+
+    expect(lines.filter((line) => line.startsWith('## '))).toEqual(['## Pages', '## Blog', '## Developers'])
+    expect(renderSiteIndex({ ...input, agents: false })).not.toContain('agents.md')
+  })
+
   it('points agents at the offering in markdown and the registration file, on this origin', () => {
-    const md = renderSiteIndex(input)
+    const md = renderSiteIndex({ ...input, agents: true })
 
     expect(md).toContain('- [What Quidkey offers AI agents, in markdown](https://example.com/agents.md)')
     expect(md).toContain(

@@ -10,7 +10,7 @@ import {
   registrationCurl,
 } from './api-example'
 
-const DISCOVERY_FILE = new URL('../../../public/.well-known/agent-registration.json', import.meta.url)
+const DISCOVERY_FILE = new URL('../../../src/content/agents/agent-registration.json', import.meta.url)
 
 describe('registration API example', () => {
   it('posts to the core host', () => {

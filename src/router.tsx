@@ -1,5 +1,7 @@
 import { createRouter } from '@tanstack/react-router'
 
+import { NotFoundPage } from '@/components/not-found-page'
+
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
 
@@ -8,6 +10,9 @@ export const getRouter = () => {
   const router = createRouter({
     routeTree,
     context: {},
+    // A route that throws notFound from its loader is rendered in place with
+    // this, not with the root's notFoundComponent; keep the two the same page.
+    defaultNotFoundComponent: NotFoundPage,
 
     // Disable automatic scroll restoration - we'll handle it manually
     scrollRestoration: false,

@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { agentsLaunch } from '@/lib/agents-launch'
 
 import { NewsletterForm } from '@/components/layout/newsletter-form'
 import { openCookiebotPreferences } from '@/lib/cookiebot'
@@ -72,7 +73,7 @@ export function HomepageFooter() {
     },
     { label: 'Calculator', href: '/calculator' },
     { label: 'FX savings', href: '/fx-savings' },
-    { label: 'Agent accounts', href: '/agents' },
+    ...(agentsLaunch.live ? [{ label: 'Agent accounts', href: '/agents' }] : []),
   ]
 
   const companyLinks: FooterLink[] = [

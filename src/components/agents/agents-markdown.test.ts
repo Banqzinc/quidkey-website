@@ -6,12 +6,12 @@ import { AGENTS_MARKDOWN_URL, DISCOVERY_URL } from './agent-brief'
 import { AGENT_REGISTRATION_ENDPOINT } from './api-example'
 import { AGENTS_FAQ } from './faq-items'
 
-const MARKDOWN_FILE = new URL('../../../public/agents.md', import.meta.url)
-const DISCOVERY_FILE = new URL('../../../public/.well-known/agent-registration.json', import.meta.url)
+const MARKDOWN_FILE = new URL('../../../src/content/agents/agents.md', import.meta.url)
+const DISCOVERY_FILE = new URL('../../../src/content/agents/agent-registration.json', import.meta.url)
 
 // The markdown copy of /agents an agent reads to learn what is on offer. It is
 // hand-written, so these checks hold it to the page and the discovery file.
-describe('public/agents.md', () => {
+describe('agents.md (published at /agents.md once live)', () => {
   const md = readFileSync(MARKDOWN_FILE, 'utf8')
   const discovery = JSON.parse(readFileSync(DISCOVERY_FILE, 'utf8'))
 

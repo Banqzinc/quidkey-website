@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest'
 import { agentBrief, AGENTS_MARKDOWN_URL, OWNER_LINK_PLACEHOLDER } from './agent-brief'
 import { handlePrefillMessage } from './handle'
 
-const DISCOVERY_FILE = new URL('../../../public/.well-known/agent-registration.json', import.meta.url)
+const DISCOVERY_FILE = new URL('../../../src/content/agents/agent-registration.json', import.meta.url)
 const discovery = JSON.parse(readFileSync(DISCOVERY_FILE, 'utf8'))
 
 describe('the brief an owner pastes into their agent', () => {
