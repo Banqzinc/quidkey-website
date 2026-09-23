@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest'
 
-import { audiencePath, readStoredAudience, writeStoredAudience } from './audience'
+import type { AgentsLaunch } from '@/lib/agents-launch'
+
+import { audiencePath, readStoredAudience, visibleAudiences, writeStoredAudience } from './audience'
+
+const hidden: AgentsLaunch = { live: false, previewToken: 't' }
+const live: AgentsLaunch = { live: true, previewToken: 't' }
 
 function createMemoryStorage(): Storage {
   const map = new Map<string, string>()
@@ -53,10 +58,22 @@ describe('audience storage round-trip', () => {
 })
 
 describe('agents audience', () => {
-  it('reads back the agents audience', () => {
+  it('reads back the agents audience once the page is live', () => {
     const storage = createMemoryStorage()
     writeStoredAudience(storage, 'agents')
-    expect(readStoredAudience(storage)).toBe('agents')
+    expect(readStoredAudience(storage, live)).toBe('agents')
+  })
+
+  it('treats a remembered agents audience as merchants while the page is hidden', () => {
+    // Otherwise a visitor from before the page was hidden lands on its 404.
+    const storage = createMemoryStorage()
+    writeStoredAudience(storage, 'agents')
+    expect(readStoredAudience(storage, hidden)).toBe('merchants')
+  })
+
+  it('offers the agents audience in the switch only once the page is live', () => {
+    expect(visibleAudiences(live)).toEqual(['merchants', 'fintechs', 'agents'])
+    expect(visibleAudiences(hidden)).toEqual(['merchants', 'fintechs'])
   })
 })
 

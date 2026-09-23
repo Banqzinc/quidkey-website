@@ -10,6 +10,14 @@ const ROUTES_DIR = path.join(ROOT, 'src', 'routes')
 const PUBLIC_DIR = path.join(ROOT, 'public')
 const BLOG_POSTS_FILE = path.join(ROOT, 'src', 'lib', 'blog-posts.ts')
 const CONTACT_TOPICS_FILE = path.join(ROOT, 'src', 'lib', 'contact-topics.ts')
+const AGENTS_LAUNCH_FILE = path.join(ROOT, 'src', 'lib', 'agents-launch.json')
+// The files agents read about /agents. Their sources live outside public/ and
+// are published only while the page is live (see src/lib/agents-launch.ts).
+const AGENTS_CONTENT_DIR = path.join(ROOT, 'src', 'content', 'agents')
+const AGENTS_FILES = [
+  { source: 'agents.md', target: 'agents.md' },
+  { source: 'agent-registration.json', target: path.join('.well-known', 'agent-registration.json') },
+]
 
 const SITE_SUMMARY =
   'Add Pay by Bank to your checkout and automate what happens after payment: tax, splits, and FX. Global coverage, one integration.'
@@ -102,10 +110,15 @@ async function generate() {
   const siteOrigin = resolveSiteOrigin()
   const today = formatDateISO()
 
+  const agentsLaunch = JSON.parse(await fs.readFile(AGENTS_LAUNCH_FILE, 'utf8'))
+  const agentsLive = agentsLaunch.live === true
+
   const routeFiles = (await walk(ROUTES_DIR)).filter((f) => f.endsWith('.tsx'))
   const staticRoutes = routeFiles
     .map(routePathFromFile)
     .filter(Boolean)
+    // /agents answers 404 until its launch switch is on; keep it out of every index until then.
+    .filter((p) => agentsLive || p !== '/agents')
     // don't include error pages etc (none today), but keep deterministic ordering
     .sort((a, b) => a.localeCompare(b))
 
@@ -121,7 +134,7 @@ async function generate() {
   for (const r of blogRoutes) entries.set(r.path, r)
   // Each non-default contact topic is its own canonical page (see routes/contact.tsx).
   const { keys, defaultTopic } = parseContactTopics(await fs.readFile(CONTACT_TOPICS_FILE, 'utf8'))
-  for (const topic of keys.filter((k) => k !== defaultTopic)) {
+  for (const topic of keys.filter((k) => k !== defaultTopic && (agentsLive || k !== 'agents'))) {
     const p = `/contact?topic=${topic}`
     entries.set(p, { path: p, lastmod: today })
   }
@@ -150,7 +163,7 @@ async function generate() {
     if (!label) throw new Error(`No site index label for route ${p}; add it to PAGE_LABELS`)
     return { path: p, label }
   })
-  const siteIndex = renderSiteIndex({ siteOrigin, summary: SITE_SUMMARY, pages, posts: blogPosts })
+  const siteIndex = renderSiteIndex({ siteOrigin, summary: SITE_SUMMARY, pages, posts: blogPosts, agents: agentsLive })
 
   const robots = [
     '# https://www.robotstxt.org/robotstxt.html',
@@ -168,8 +181,20 @@ async function generate() {
   await fs.writeFile(path.join(PUBLIC_DIR, 'llms.txt'), siteIndex, 'utf8')
   await fs.writeFile(path.join(PUBLIC_DIR, 'sitemap.md'), siteIndex, 'utf8')
 
+  for (const { source, target } of AGENTS_FILES) {
+    const dest = path.join(PUBLIC_DIR, target)
+    if (agentsLive) {
+      await fs.mkdir(path.dirname(dest), { recursive: true })
+      await fs.copyFile(path.join(AGENTS_CONTENT_DIR, source), dest)
+    } else {
+      await fs.rm(dest, { force: true })
+    }
+  }
+
   // eslint-disable-next-line no-console
-  console.log(`[generate-seo-files] Wrote sitemap.xml, robots.txt, llms.txt and sitemap.md for ${siteOrigin} (${paths.length} URLs)`)
+  console.log(
+    `[generate-seo-files] Wrote sitemap.xml, robots.txt, llms.txt and sitemap.md for ${siteOrigin} (${paths.length} URLs); /agents ${agentsLive ? 'live, agent files published' : 'hidden, agent files withheld'}`,
+  )
 }
 
 await generate()

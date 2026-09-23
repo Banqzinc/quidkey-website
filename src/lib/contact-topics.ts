@@ -1,3 +1,5 @@
+import { agentsLaunch, type AgentsLaunch } from './agents-launch'
+
 // The contact dialog knows why the visitor opened it. Each CTA passes a topic,
 // and the topic drives the heading, the message prompt, and the value HubSpot
 // receives, so sales sees "FX: high volume" instead of asking.
@@ -109,8 +111,13 @@ export function isContactTopic(raw: unknown): raw is ContactTopic {
   return typeof raw === 'string' && (CONTACT_TOPIC_KEYS as readonly string[]).includes(raw)
 }
 
-export function parseTopic(raw: unknown): ContactTopic {
-  return isContactTopic(raw) ? raw : DEFAULT_TOPIC
+export function parseTopic(raw: unknown, launch: AgentsLaunch = agentsLaunch): ContactTopic {
+  if (!isContactTopic(raw)) return DEFAULT_TOPIC
+  // The agents topic's page reads "Register your agent", so it stays off the
+  // URL while the agents page is hidden. The hidden page's preview form still
+  // submits the topic: this guards the page, not the field.
+  if (raw === 'agents' && !launch.live) return DEFAULT_TOPIC
+  return raw
 }
 
 /**

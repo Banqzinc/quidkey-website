@@ -1,6 +1,6 @@
 // The registration API as /agents documents it. The endpoint is not live yet;
 // the page shows the shape so an agent (or its owner) knows what to expect,
-// and public/.well-known/agent-registration.json points at the same URL.
+// and .well-known/agent-registration.json (source: src/content/agents) points at the same URL.
 
 import { ownerRegistrationUrl } from './handle'
 

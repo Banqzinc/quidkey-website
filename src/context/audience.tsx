@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react'
 
+import { agentsLaunch, type AgentsLaunch } from '@/lib/agents-launch'
 import { AGENTS_PATH, FINTECHS_PATH } from '@/lib/urls'
 
 export const AUDIENCES = ['merchants', 'fintechs', 'agents'] as const
@@ -12,6 +13,11 @@ const AUDIENCE_PATHS: Record<Audience, string> = {
   merchants: '/',
   fintechs: FINTECHS_PATH,
   agents: AGENTS_PATH,
+}
+
+/** The audiences the site switch offers: agents only once its page is live. */
+export function visibleAudiences(launch: AgentsLaunch = agentsLaunch): readonly Audience[] {
+  return launch.live ? AUDIENCES : AUDIENCES.filter((a) => a !== 'agents')
 }
 
 /** The landing page each audience switches to. */
@@ -30,11 +36,17 @@ type AudienceContextValue = {
 
 const AudienceContext = createContext<AudienceContextValue | null>(null)
 
-export function readStoredAudience(storage: Storage | null | undefined): Audience {
+export function readStoredAudience(
+  storage: Storage | null | undefined,
+  launch: AgentsLaunch = agentsLaunch,
+): Audience {
   if (!storage) return DEFAULT_AUDIENCE
   try {
     const raw = storage.getItem(STORAGE_KEY)
-    return isAudience(raw) ? raw : DEFAULT_AUDIENCE
+    if (!isAudience(raw)) return DEFAULT_AUDIENCE
+    // A visitor who chose agents before the page was hidden would otherwise
+    // be switched onto its 404.
+    return visibleAudiences(launch).includes(raw) ? raw : DEFAULT_AUDIENCE
   } catch {
     return DEFAULT_AUDIENCE
   }

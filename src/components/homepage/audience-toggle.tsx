@@ -1,9 +1,16 @@
 import { useRouter, useRouterState } from '@tanstack/react-router'
 
-import { AUDIENCES, audiencePath, useAudience, type Audience } from '@/context/audience'
+import { audiencePath, useAudience, visibleAudiences, type Audience } from '@/context/audience'
 import { track, type ToggleSource } from '@/lib/track'
 
 // One label set for the segmented pill, one for the "I'm a ..." hero line.
+// The switch offers the visible audiences. On a hidden page's preview the
+// current audience is not among them, so it is added back for that page only.
+function shownAudiences(current: Audience): readonly Audience[] {
+  const visible = visibleAudiences()
+  return visible.includes(current) ? visible : [...visible, current]
+}
+
 const LABELS: Record<Audience, { pill: string; hero: string }> = {
   merchants: { pill: 'Merchants', hero: 'Merchant' },
   fintechs: { pill: 'Fintechs', hero: 'Fintech' },
@@ -38,7 +45,7 @@ export function AudienceToggle({ size = 'sm', variant = 'pill', source = 'nav' }
       aria-label="Audience"
     >
       <span className="aud-toggle__thumb" data-pos={audience} />
-      {AUDIENCES.map((id) => (
+      {shownAudiences(audience).map((id) => (
         <button
           key={id}
           type="button"
@@ -80,7 +87,7 @@ export function HeroAudienceToggle({ source = 'nav' }: HeroAudienceToggleProps =
   return (
     <div className="hero__aud" role="tablist" aria-label="Audience">
       <span className="hero__aud-lbl">I'm a</span>
-      {AUDIENCES.map((id, index) => (
+      {shownAudiences(audience).map((id, index) => (
         <span key={id} className="hero__aud-item">
           {index > 0 ? (
             <span className="hero__aud-sep" aria-hidden="true">
